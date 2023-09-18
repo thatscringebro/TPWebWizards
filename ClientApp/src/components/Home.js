@@ -22,7 +22,7 @@ export class Home extends Component {
             <Row>
               <Col md={4}>
                 <Card>
-                  <CardImg top src="/images/product1.jpg" alt="Product 1" />
+                  <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto' }}/>
                   <CardBody>
                     <CardTitle>Product 1</CardTitle>
                     <CardSubtitle>$19.99</CardSubtitle>
@@ -33,7 +33,7 @@ export class Home extends Component {
               </Col>
               <Col md={4}>
                 <Card>
-                  <CardImg top src="/images/product2.jpg" alt="Product 2" />
+                  <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto' }} />
                   <CardBody>
                     <CardTitle>Product 2</CardTitle>
                     <CardSubtitle>$24.99</CardSubtitle>
@@ -44,7 +44,7 @@ export class Home extends Component {
               </Col>
               <Col md={4}>
                 <Card>
-                  <CardImg top src="/images/product3.jpg" alt="Product 3" />
+                  <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto' }}/>
                   <CardBody>
                     <CardTitle>Product 3</CardTitle>
                     <CardSubtitle>$29.99</CardSubtitle>
