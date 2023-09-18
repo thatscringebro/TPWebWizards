@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -6,21 +7,77 @@ export class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+        <section className="hero-banner">
+          {/* Hero banner content goes here */}
+          <Container>
+            <h1>Welcome to Our E-Commerce Store</h1>
+            <p>Shop the latest trends in fashion, electronics, and more.</p>
+            <a href="/products" className="btn btn-primary">Shop Now</a>
+          </Container>
+        </section>
+
+        <section className="featured-products">
+          <Container>
+            <h2>Featured Products</h2>
+            <Row>
+              <Col md={4}>
+                <Card>
+                  <CardImg top src="/images/product1.jpg" alt="Product 1" />
+                  <CardBody>
+                    <CardTitle>Product 1</CardTitle>
+                    <CardSubtitle>$19.99</CardSubtitle>
+                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CardText>
+                    <a href="/product/1" className="btn btn-secondary">Details</a>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={4}>
+                <Card>
+                  <CardImg top src="/images/product2.jpg" alt="Product 2" />
+                  <CardBody>
+                    <CardTitle>Product 2</CardTitle>
+                    <CardSubtitle>$24.99</CardSubtitle>
+                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CardText>
+                    <a href="/product/2" className="btn btn-secondary">Details</a>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={4}>
+                <Card>
+                  <CardImg top src="/images/product3.jpg" alt="Product 3" />
+                  <CardBody>
+                    <CardTitle>Product 3</CardTitle>
+                    <CardSubtitle>$29.99</CardSubtitle>
+                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CardText>
+                    <a href="/product/3" className="btn btn-secondary">Details</a>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+        <section className="partners">
+          <Container>
+            <h2>Our Partners</h2>
+            <Row>
+              <Col md={3}>
+                <img src="/images/partner1.png" alt="Partner 1" />
+              </Col>
+              <Col md={3}>
+                <img src="/images/partner2.png" alt="Partner 2" />
+              </Col>
+              <Col md={3}>
+                <img src="/images/partner3.png" alt="Partner 3" />
+              </Col>
+              <Col md={3}>
+                <img src="/images/partner4.png" alt="Partner 4" />
+              </Col>
+            </Row>
+          </Container>
+        </section>
       </div>
     );
   }
 }
+
