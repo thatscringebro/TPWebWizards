@@ -51,6 +51,7 @@ export class NavMenu extends Component {
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/account">Account</NavLink>
               </NavItem>
+
             </ul>
             <div className="ml-auto">
               <div className="input-group">
