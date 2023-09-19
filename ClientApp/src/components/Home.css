@@ -39,3 +39,26 @@
 .card-width {
     width: stretch;
 }
+.cardHREF {
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Add transition properties */
+}
+
+.cardHREF:hover {
+  background-color: #f0f0f0; /* Change the background color on hover */
+  color: darkred; /* Change text color on hover */
+}
+
+.cardHREF .flex-grow-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cardHREF .card-body {
+  padding: 20px; /* Adjust the padding as needed */
+}
+
