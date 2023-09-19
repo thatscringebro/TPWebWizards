@@ -79,7 +79,7 @@ export class Home extends Component {
               </Col>
               <Col md={4}>
                 <Card>
-                  <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain'}} />
+                    <CardImg top src={require("./images/Vinyl/AversionsCrown-Tyrant.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain'}} />
                   <CardBody>
                     <CardTitle>Product 2</CardTitle>
                     <CardSubtitle>$24.99</CardSubtitle>
@@ -111,7 +111,7 @@ export class Home extends Component {
                 <Row>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./images/Vinyl/Gojira-EnfantSauvage.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 1</CardTitle>
                                 <CardSubtitle>$19.99</CardSubtitle>
@@ -122,7 +122,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./images/Vinyl/Nirvana-InUtero.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 2</CardTitle>
                                 <CardSubtitle>$24.99</CardSubtitle>
@@ -133,7 +133,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./images/Vinyl/NormaJean-AllHail.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 3</CardTitle>
                                 <CardSubtitle>$29.99</CardSubtitle>
@@ -165,7 +165,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./images/CD/Metallica-MasterOfPuppets.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 2</CardTitle>
                                 <CardSubtitle>$24.99</CardSubtitle>
@@ -176,7 +176,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./images/CD/TheKillers-HotFuss.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 3</CardTitle>
                                 <CardSubtitle>$29.99</CardSubtitle>
@@ -197,7 +197,7 @@ export class Home extends Component {
                 <Row>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./images/Vinyl/Emarosa-131.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 1</CardTitle>
                                 <CardSubtitle>$19.99</CardSubtitle>
@@ -208,7 +208,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                             <CardImg top src={require("./images/Vinyl/BadOmens-FindingGodbeforeGodFindsMe.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 2</CardTitle>
                                 <CardSubtitle>$24.99</CardSubtitle>
@@ -219,7 +219,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./images/Vinyl/Bmth-Sempiternal.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 3</CardTitle>
                                 <CardSubtitle>$29.99</CardSubtitle>
@@ -240,10 +240,10 @@ export class Home extends Component {
                 <Row>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./images/CD/Fushitsusha-1st.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 1</CardTitle>
-                                <CardSubtitle>$19.99</CardSubtitle>
+                                <CardSubtitle>$99.99</CardSubtitle>
                                 <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CardText>
                                 <a href="/product/1" className="btn btn-secondary">Details</a>
                             </CardBody>
@@ -251,7 +251,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/Fushitsusha-1st.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./images/CD/ThreeDaysGrace-OneX.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 2</CardTitle>
                                 <CardSubtitle>$24.99</CardSubtitle>
@@ -262,7 +262,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                         <Card>
-                            <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./images/CD/FallOutBoys-FromUnderTheCorkTree.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                             <CardBody>
                                 <CardTitle>Product 3</CardTitle>
                                 <CardSubtitle>$29.99</CardSubtitle>
@@ -293,6 +293,8 @@ export class Home extends Component {
                 </Row>
             </Container>
         </section>
+
+            <hr className="my-divider" />
 
         {/* Ajout de la section du formulaire */}
         <section className="contact-form">
