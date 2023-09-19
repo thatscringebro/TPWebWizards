@@ -75,15 +75,11 @@ ul{
     transition: all 0.5s ease;
     overflow: hidden;
 }
-    .footer-col .social-links a img {
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
-        margin: auto;
-    }
-.footer-col .social-links a:hover{
-  color: darkred;
-  background-color: #ffffff;
+.footer-col .social-links a img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
 }
 
 /*responsive*/
