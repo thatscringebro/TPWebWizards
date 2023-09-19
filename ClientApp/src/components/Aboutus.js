@@ -1,5 +1,7 @@
 ﻿import React from 'react';
 import './AboutUs.css';
+import GoogleMapComponent from './GoogleMap';
+import AddressInfo from './AddressInfo';
 function AboutUs() {
     const Membres = [
         {
@@ -49,7 +51,6 @@ function AboutUs() {
         <div>
             <h1>About Us</h1>
             <p>Welcome to our company's About Us page. We are...</p>
-
             <div className="team">
                 {Membres.map((member, index) => (
                     <div key={index} className="team-member">
@@ -60,6 +61,11 @@ function AboutUs() {
                     </div>
                 ))}
             </div>
+            <div className="Display" >
+                <GoogleMapComponent />
+                <AddressInfo />
+            </div>
+           
         </div>
     );
   
