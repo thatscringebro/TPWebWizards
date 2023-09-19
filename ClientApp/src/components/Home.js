@@ -75,13 +75,15 @@ export class Home extends Component {
                         <h2>Featured Products</h2>
                         <Row>
                             <Col md={4} className="d-flex">
-                                <Card className="h-100 card-width" >
+                                <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Essenger - After Dark</CardTitle>
-                                        <CardSubtitle><b>$19.99</b></CardSubtitle>
-                                        <CardText></CardText>
-                                        <div style={{textAlign:'center'}}>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Essenger - After Dark</CardTitle>
+                                            <CardSubtitle><b>$19.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
+                                        <div style={{ textAlign: 'center' }}>
                                             <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
                                     </CardBody>
@@ -90,10 +92,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/AversionsCrown-Tyrant.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Aversions Crown - Tyrant</CardTitle>
-                                        <CardSubtitle><b>$24.99</b></CardSubtitle>
-                                        <CardText></CardText>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Aversions Crown - Tyrant</CardTitle>
+                                            <CardSubtitle><b>$24.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/2" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -103,10 +107,12 @@ export class Home extends Component {
                             <Col md={4}>
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Make Them Suffer - How To Survive A Funeral</CardTitle>
-                                        <CardSubtitle><b>$29.99</b></CardSubtitle>
-                                        <CardText></CardText>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Make Them Suffer - How To Survive A Funeral</CardTitle>
+                                            <CardSubtitle><b>$29.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/3" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -126,10 +132,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/Gojira-EnfantSauvage.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Gojira - Enfant Sauvage</CardTitle>
-                                        <CardSubtitle><b>$29.99</b></CardSubtitle>
-                                        <CardText></CardText>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Gojira - Enfant Sauvage</CardTitle>
+                                            <CardSubtitle><b>$29.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -139,10 +147,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/Nirvana-InUtero.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Nirvana - In Utero</CardTitle>
-                                        <CardSubtitle><b>$24.99</b></CardSubtitle>
-                                        <CardText></CardText>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Nirvana - In Utero</CardTitle>
+                                            <CardSubtitle><b>$24.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/2" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -152,10 +162,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/NormaJean-AllHail.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
-                                        <CardTitle>Norma Jean - All Hail</CardTitle>
-                                        <CardSubtitle><b>$29.99</b></CardSubtitle>
-                                        <CardText></CardText>
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
+                                            <CardTitle>Norma Jean - All Hail</CardTitle>
+                                            <CardSubtitle><b>$29.99</b></CardSubtitle>
+                                            <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/3" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -175,10 +187,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/RedHorChiliPeppers-Californication.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Red Hot Chili Peppers - Californication</CardTitle>
                                         <CardSubtitle><b>$19.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -188,10 +202,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/Metallica-MasterOfPuppets.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Metallica - Masters Of Puppets</CardTitle>
                                         <CardSubtitle><b>$24.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/2" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -201,10 +217,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/TheKillers-HotFuss.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>The Killers - Hot Fuss</CardTitle>
                                         <CardSubtitle><b>$29.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/3" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -224,10 +242,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/Emarosa-131.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Emarosa - 131</CardTitle>
                                         <CardSubtitle><b>$19.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -237,10 +257,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/BadOmens-FindingGodbeforeGodFindsMe.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Bad Omens - Finding God Before God Finds Me</CardTitle>
                                         <CardSubtitle><b>$24.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/2" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -250,10 +272,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/Vinyl/Bmth-Sempiternal.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Bring Me The Horizon -  Sempiternal</CardTitle>
                                         <CardSubtitle><b>$29.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/3" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -273,10 +297,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/Fushitsusha-1st.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Fushitsusha - 1st</CardTitle>
                                         <CardSubtitle><b>$99.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -286,10 +312,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/ThreeDaysGrace-OneX.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Three Days Grace - One-X</CardTitle>
                                         <CardSubtitle><b>$24.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/2" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
@@ -299,10 +327,12 @@ export class Home extends Component {
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
                                     <CardImg top src={require("./Images/CD/FallOutBoys-FromUnderTheCorkTree.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="flex-grow-1">
+                                    <CardBody className="d-flex flex-column">
+                                        <div className="flex-grow-1">
                                         <CardTitle>Fall Out Boy - From Under The Cork Tree</CardTitle>
                                         <CardSubtitle><b>$29.99</b></CardSubtitle>
                                         <CardText></CardText>
+                                        </div>
                                         <div style={{ textAlign: 'center' }}>
                                             <a href="/product/3" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
                                         </div>
