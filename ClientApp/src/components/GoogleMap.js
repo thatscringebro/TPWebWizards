@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 function GoogleMapComponent() {
     const mapStyles = {
         height: '300px',
@@ -8,12 +8,12 @@ function GoogleMapComponent() {
     };
 
     const defaultCenter = {
-        lat: 53.00, 
-        lng: -70.00, 
+        lat: 46.829853, 
+        lng: -71.254028, 
     };
 
     return (
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap mapContainerStyle={mapStyles} center={defaultCenter} zoom={10}>
                 <Marker position={defaultCenter} />
             </GoogleMap>
