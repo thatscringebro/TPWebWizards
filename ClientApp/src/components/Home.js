@@ -55,7 +55,7 @@ export class Home extends Component {
           {/* Hero banner content goes here */}
           <Container>
             <h1>Wizard Records</h1>
-            <p>Buy records, or we'll break your legs.</p>
+                    <p>"From yesterday's vinyls to today's hits."</p>
             <a href="/products" className="btn btn-primary">Shop Now</a>
           </Container>
         </section>
