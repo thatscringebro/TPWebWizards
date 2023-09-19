@@ -50,23 +50,16 @@ export class Home extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                <section className="hero-banner">
-                    {/* Hero banner content goes here */}
-                    <Container>
-                        <p className="slogan">"From yesterday's vinyls to today's hits."</p>
-                    </Container>
-                </section>
-
-                <div style={{ maxWidth: 1275, marginLeft: 'auto', marginRight: 'auto', marginBottom: 64 }}>
-                    <Carousel>
-                        <img src={require("./Images/CarouselImage1.jpg")} alt="placeholder" />
-                        <img src={require("./Images/CarouselImage2.jpg")} alt="placeholder" />
-                        <img src={require("./Images/CarouselImage3.jpg")} alt="placeholder" />
-                    </Carousel>
-                </div>
+  render() {
+    return (
+      <div>
+        <div style={{ maxWidth: 1275, marginLeft: 'auto', marginRight: 'auto', marginBottom: 64 }}>
+            <Carousel>
+                    <img src={require("./Images/CarouselImage1.jpg")} alt="placeholder" />
+                    <img src={require("./Images/CarouselImage2.jpg")} alt="placeholder" />
+                    <img src={require("./Images/CarouselImage3.jpg")} alt="placeholder" />
+            </Carousel>
+        </div>
 
                 <hr className="my-divider" />
 

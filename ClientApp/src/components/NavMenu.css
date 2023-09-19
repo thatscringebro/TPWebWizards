@@ -1,20 +1,53 @@
 /* NavMenu.css */
+#header_container {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+}
+
+.slogan {
+    font-family: 'PatrenaRolane';
+    font-size: calc(20px + (30) * ((100vw - 320px) / (1920 - 320)));
+    color: white;
+}
+
+.mobile {
+    display: none;
+}
+
+/* if mobile device max width 576px */
+@media only screen and (max-device-width: 576px) {
+    .mobile {
+        display: block;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    #menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-fluid {
+        justify-content: center !important;
+    }
+}
+.form-control {
+    background-color: #121212;
+}
 
 /* Navbar styles */
-header .navbar {
+header {
   background-color: darkred;
 }
-
+.hero-banner {
+    background-color: darkred;
+}
 /* NavbarBrand styles */
 header .navbar-brand {
-  font-size: 24px;
-  color: white;
-  text-decoration: none;
-}
-
-/* NavbarToggler styles */
-header .navbar-toggler {
-  border-color: white;
+    font-size: 24px;
 }
 
 /* NavItem styles */
@@ -23,25 +56,24 @@ header .nav-item {
 }
 
 header .nav-link {
-  color: white;
   text-decoration: none;
   font-size: 18px;
 }
 
 header .form-control {
-  border-color: darkred;
-  border-radius: 20px;
+    border-color: #0a58ca;
+    border-radius: 20px;
 }
 
 header .input-group-append button {
-  background-color: darkred;
-  border-color: darkred;
-  color: white;
-  border-radius: 0 20px 20px 0; /* Rounded on the right side, flat on the left */
-  padding: 8px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+    background-color: darkred;
+    border-color: #0a58ca;
+    border-radius: 0 20px 20px 0; /* Rounded on the right side, flat on the left */
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-block
 }
 
 header .input-group-append button:hover {
@@ -69,3 +101,10 @@ header .input-group-append button:hover {
   }
 }
 
+/*footer*/
+.bg-light {
+    position: relative;
+    margin-bottom: 0;
+    bottom: 0;
+    width: 100%;
+}
