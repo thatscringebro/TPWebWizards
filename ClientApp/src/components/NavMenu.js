@@ -34,22 +34,22 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/">My E-Commerce Store</NavbarBrand>
+          <Navbar style={{ backgroundColor: 'darkred' }} className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
+          <NavbarBrand tag={Link} to="/" className="text-light">My E-Commerce Store</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                <NavLink tag={Link} className="text-light" to="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/products">Products</NavLink>
+                <NavLink tag={Link} className="text-light" to="/products">Products</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/cart">Cart</NavLink>
+                <NavLink tag={Link} className="text-light" to="/cart">Cart</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/account">Account</NavLink>
+                <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
               </NavItem>
 
             </ul>
@@ -62,7 +62,7 @@ export class NavMenu extends Component {
                   onChange={this.handleSearchChange}
                 />
                 <div className="input-group-append">
-                  <Button color="primary" onClick={this.handleSearchSubmit}>
+                  <Button color="dark" onClick={this.handleSearchSubmit}>
                     Search
                   </Button>
                 </div>
