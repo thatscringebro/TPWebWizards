@@ -10,12 +10,16 @@ const Carousel = (props) => {
     const next = () => {
         if (currentIndex < (length - 1)) {
             setCurrentIndex(prevState => prevState + 1)
+        } else {
+            setCurrentIndex(0);
         }
     }
 
     const prev = () => {
         if (currentIndex > 0) {
             setCurrentIndex(prevState => prevState - 1)
+        } else {
+            setCurrentIndex(length - 1);
         }
     }
 
