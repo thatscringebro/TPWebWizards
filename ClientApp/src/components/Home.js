@@ -54,7 +54,7 @@ export class Home extends Component {
         <section className="hero-banner">
           {/* Hero banner content goes here */}
           <Container>
-            <h1>Wizard Recrods</h1>
+            <h1>Wizard Records</h1>
             <p>Buy records, or we'll break your legs.</p>
             <a href="/products" className="btn btn-primary">Shop Now</a>
           </Container>
