@@ -68,19 +68,16 @@ export class Home extends Component {
                         <h2>Featured Products</h2>
                         <Row>
                             <Col md={4} className="d-flex">
-                                <Card className="h-100 card-width">
-                                    <CardImg top src={require("./Images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                    <CardBody className="d-flex flex-column">
-                                        <div className="flex-grow-1">
+                                <a href="/product/1" className="cardHREF h-100 card-width">
+                                <Card className="h-100 card-width" >
+                                        <CardImg top src={require("./Images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', objectFit: 'contain' }} />
+                                        <CardBody className="flex-grow-1">
                                             <CardTitle>Essenger - After Dark</CardTitle>
                                             <CardSubtitle><b>$19.99</b></CardSubtitle>
                                             <CardText></CardText>
-                                        </div>
-                                        <div style={{ textAlign: 'center' }}>
-                                            <a href="/product/1" className="btn btn-secondary" style={{ width: '100px' }}>Details</a>
-                                        </div>
-                                    </CardBody>
+                                        </CardBody>
                                 </Card>
+                                </a>
                             </Col>
                             <Col md={4} className="d-flex">
                                 <Card className="h-100 card-width">
