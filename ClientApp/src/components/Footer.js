@@ -38,10 +38,10 @@ export class Footer extends Component {
         <div class="footer-col">
           <h4>follow us</h4>
           <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><img src="../../../Images/Social/facebook.png" alt="Facebook" /></a>
+            <a href="#"><img src="../../../Images/Social/twitterX.png" alt="Twitter" /></a>
+            <a href="#"><img src="../../../Images/Social/instagram.png" alt="Instagram" /></a>
+            <a href="#"><img src="../../../Images/Social/pinterest.png" alt="Pinterest" /></a>
           </div>
         </div>
       </div>
