@@ -30,7 +30,7 @@ export class Footer extends Component {
                             <h5>Quick Links</h5>
                             <ul className="list-unstyled">
                                 <li>
-                                    <a href="/home" className="text-dark">Home</a>
+                                    <a href="/" className="text-dark">Home</a>
                                 </li>
                                 <li>
                                     <a href="/products" className="text-dark">Products</a>
