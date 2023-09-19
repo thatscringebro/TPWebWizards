@@ -1,8 +1,52 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
+
 
 export class Home extends Component {
-  static displayName = Home.name;
+    static displayName = Home.name;
+
+    state = {
+        formData: {
+            name: '',
+            email: '',
+            description: ''
+        },
+        errors: {}
+    };
+
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState(prevState => ({
+            formData: {
+                ...prevState.formData,
+                [name]: value
+            }
+        }));
+    }
+
+    handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Asynchronous validation logic here
+        // For the sake of this example, let's assume we need the name and email to be filled in.
+        const errors = {};
+
+        if (!this.state.formData.name.trim()) {
+            errors.name = "Name is required.";
+        }
+        if (!this.state.formData.email.trim()) {
+            errors.email = "Email is required.";
+        }
+        if (!this.state.formData.description.trim()) {
+            errors.description = "A description is required.";
+        }
+
+        this.setState({ errors });
+
+        if (!Object.keys(errors).length) {
+            console.log('Form is valid!'); // Or do whatever you need on valid submission
+        }
+    }
 
   render() {
     return (
@@ -10,11 +54,13 @@ export class Home extends Component {
         <section className="hero-banner">
           {/* Hero banner content goes here */}
           <Container>
-            <h1>Welcome to Our E-Commerce Store</h1>
-            <p>Shop the latest trends in fashion, electronics, and more.</p>
+            <h1>Wizard Records</h1>
+            <p>Buy records, or we'll break your legs.</p>
             <a href="/products" className="btn btn-primary">Shop Now</a>
           </Container>
         </section>
+
+            
 
         <section className="featured-products">
           <Container>
@@ -73,6 +119,32 @@ export class Home extends Component {
                     </Row>
                 </Container>
             </section>
+
+            {/* Ajout de la section du formulaire */}
+            <section className="contact-form">
+                <Container>
+                    <h2>Contact Us</h2>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                            <Label for="name">Name</Label>
+                            <Input type="text" name="name" id="name" placeholder="Enter your name" value={this.state.formData.name} onChange={this.handleInputChange} />
+                            {this.state.errors.name && <Alert color="danger">{this.state.errors.name}</Alert>}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="email">Email</Label>
+                            <Input type="email" name="email" id="email" placeholder="Enter your email" value={this.state.formData.email} onChange={this.handleInputChange} />
+                            {this.state.errors.email && <Alert color="danger">{this.state.errors.email}</Alert>}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="description">Description</Label>
+                            <Input type="textarea" name="description" id="description" placeholder="Describe your request" value={this.state.formData.description} onChange={this.handleInputChange} />
+                            {this.state.errors.description && <Alert color="danger">{this.state.errors.description}</Alert>}
+                        </FormGroup>
+                        <Button type="submit">Submit</Button>
+                    </Form>
+                </Container>
+            </section>
+            
       </div>
     );
   }
