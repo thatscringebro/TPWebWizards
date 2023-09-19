@@ -1,36 +1,36 @@
 ﻿import React from 'react';
-
+import './AboutUs.css';
 function AboutUs() {
     const Membres = [
         {
             name: 'Merlin Gélinas',
-            role: '',
-            imgageSrc: '/'
+            role: 'OpenSource Master',
+            imageSrc: './PhotoAboutUs/184.png'
         },
         {
             name: 'Mathieu Duval',
-            role: '',
-            imgageSrc: '/'
+            role: 'Speaker Crasher',
+            imageSrc: './PhotoAboutUs/300.png'
         },
         {
             name: 'Gabriel Bruneau',
-            role: '',
-            imgageSrc: '/'
+            role: 'PhotoShop Doctor',
+            imageSrc: './PhotoAboutUs/312.png'
         },
         {
             name: 'Kyle Lussier',
-            role: '',
-            imgageSrc: '/'
+            role: 'Gym Leader',
+            imageSrc: './PhotoAboutUs/431.png'
         },
         {
             name: 'Thomas-Alexandre Barrette',
-            role: '',
-            imgageSrc: '/'
+            role: 'Master Crafter',
+            imageSrc: './PhotoAboutUs/494.png'
         },
         {
             name: 'Claudel D. Roy',
-            role: '',
-            imgageSrc: '/'
+            role: 'Woman',
+            imageSrc: './PhotoAboutUs/573.png'
         },
 
 
@@ -47,7 +47,7 @@ function AboutUs() {
             <div className="team">
                 {Membres.map((member, index) => (
                     <div key={index} className="team-member">
-                        <img src={member.imageSrc} alt={member.name} />
+                        <img src={process.env.PUBLIC_URL + member.imageSrc } alt={member.name} />
                         <h2>{member.name}</h2>
                         <p>{member.role}</p>
                     </div>
