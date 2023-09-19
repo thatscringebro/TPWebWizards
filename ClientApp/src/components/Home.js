@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Carousel from "../components/Carousel/Carousel";
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import './Home.css';
 
@@ -56,9 +57,16 @@ export class Home extends Component {
           <Container>
             <h1>Wizard Records</h1>
                     <p>"From yesterday's vinyls to today's hits."</p>
-            <a href="/products" className="btn btn-primary">Shop Now</a>
           </Container>
         </section>
+
+            <div style={{ maxWidth: 1275, marginLeft: 'auto', marginRight: 'auto', marginBottom: 64 }}>
+                <Carousel>
+                    <img src={require("./images/CarouselImage1.jpg")} alt="placeholder" />
+                    <img src={require("./images/CarouselImage2.jpg")} alt="placeholder" />
+                    <img src={require("./images/CarouselImage3.jpg")} alt="placeholder" />
+                </Carousel>
+            </div>
 
             <hr className="my-divider" />   
 
@@ -68,7 +76,7 @@ export class Home extends Component {
             <Row>
               <Col md={4}>
                 <Card>
-                  <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }}/>
+                  <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain', marginTop: '15px' }}/>
                   <CardBody>
                     <CardTitle>Product 1</CardTitle>
                     <CardSubtitle>$19.99</CardSubtitle>
@@ -90,7 +98,7 @@ export class Home extends Component {
               </Col>
               <Col md={4}>
                 <Card>
-                  <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }}/>
+                  <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain', marginTop: '15px' }}/>
                   <CardBody>
                     <CardTitle>Product 3</CardTitle>
                     <CardSubtitle>$29.99</CardSubtitle>
