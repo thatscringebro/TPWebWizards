@@ -29,6 +29,18 @@ const Carousel = (props) => {
         setLength(children.length)
     }, [children])
 
+    useEffect(() => {
+        // Démarrez un intervalle pour changer automatiquement d'image toutes les 10 secondes (10000 ms)
+        const interval = setInterval(() => {
+            next(); // Appelez la fonction next pour passer à l'image suivante
+        }, 10000); // Intervalle de 10 secondes
+
+        // Nettoyez l'intervalle lorsque le composant est démonté
+        return () => {
+            clearInterval(interval);
+        }
+    }, [currentIndex]);
+
     return (
         <div className="carousel-container">
             <div className="carousel-wrapper">
