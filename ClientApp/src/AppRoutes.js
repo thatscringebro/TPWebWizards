@@ -1,4 +1,5 @@
 import AboutUs from "./components/Aboutus";
+import ContactForm from "./components/ContactUs";
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
@@ -11,6 +12,10 @@ const AppRoutes = [
     {
         path: '/aboutus',
         element: <AboutUs />
+    },
+    {
+        path: '/contactus',
+        element: <ContactForm />
     },
     //{
     //    path: '/counter',
