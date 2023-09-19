@@ -38,6 +38,9 @@
 
 .card-width {
     width: stretch;
+    display: flex;
+  flex-direction: column; /* Affiche les éléments de haut en bas */
+  justify-content: flex-end; /* Aligne les éléments au bas */
 }
 .cardHREF {
   text-decoration: none;
