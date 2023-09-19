@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Carousel from "../components/Carousel/Carousel";
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import './Home.css';
+import './Fonts.css'
 
 export class Home extends Component {
     static displayName = Home.name;
@@ -55,8 +56,7 @@ export class Home extends Component {
         <section className="hero-banner">
           {/* Hero banner content goes here */}
           <Container>
-            <h1>Wizard Records</h1>
-                    <p>"From yesterday's vinyls to today's hits."</p>
+                <p className="slogan">"From yesterday's vinyls to today's hits."</p>
           </Container>
         </section>
 
