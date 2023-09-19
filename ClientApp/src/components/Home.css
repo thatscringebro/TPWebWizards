@@ -1,0 +1,32 @@
+﻿.my-divider {
+    border: none; 
+    height: 2px;
+    background-color: #333; 
+    margin: 20px 0;
+}
+
+.partners img {
+    width: 300px;
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.featured-products img {
+    margin-top: 20px;
+}
+
+.new-vinyl img {
+    margin-top: 20px;
+}
+
+.used-vinyl img {
+    margin-top: 20px;
+}
+
+.new-compact-disc img {
+    margin-top: 20px;
+}
+
+.used-compact-disc img {
+    margin-top: 20px;
+}

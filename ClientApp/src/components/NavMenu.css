@@ -1,24 +1,71 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+/* NavMenu.css */
+
+/* Navbar styles */
+header .navbar {
+  background-color: darkred;
 }
 
-html {
-  font-size: 14px;
+/* NavbarBrand styles */
+header .navbar-brand {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
 }
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+
+/* NavbarToggler styles */
+header .navbar-toggler {
+  border-color: white;
+}
+
+/* NavItem styles */
+header .nav-item {
+  margin-right: 10px;
+}
+
+header .nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+header .form-control {
+  border-color: darkred;
+  border-radius: 20px;
+}
+
+header .input-group-append button {
+  background-color: darkred;
+  border-color: darkred;
+  color: white;
+  border-radius: 0 20px 20px 0; /* Rounded on the right side, flat on the left */
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+header .input-group-append button:hover {
+  background-color: #a10000;
+}
+/* Mobile responsive styles */
+@media (max-width: 576px) {
+  header .navbar-toggler {
+    margin-right: 0;
   }
-}
 
-.partners img {
-    width: 300px;
-    max-width: 150px;
+  header .navbar-collapse {
+    background-color: darkred;
+    padding: 10px;
+  }
 
-}
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  header .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  header .navbar-nav .nav-item {
+    margin: 10px 0;
+  }
 }
 

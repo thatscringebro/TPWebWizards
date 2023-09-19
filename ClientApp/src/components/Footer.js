@@ -1,61 +1,52 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import './Footer.css'; 
 
 export class Footer extends Component {
     render() {
         return (
-            <footer className="bg-light mt-5 py-4">
-                <Container>
-                    <Row>
-                        <Col md={4}>
-                            <h5>Contact Us</h5>
-                            <p>Email: contact@example.com</p>
-                            <p>Phone: +1 (123) 456-7890</p>
-                        </Col>
-                        <Col md={4}>
-                            <h5>Follow Us</h5>
-                            <ul className="list-inline">
-                                <li className="list-inline-item">
-                                    <a href="#" className="text-dark">Facebook</a>
-                                </li>
-                                <li className="list-inline-item">
-                                    <a href="#" className="text-dark">Twitter</a>
-                                </li>
-                                <li className="list-inline-item">
-                                    <a href="#" className="text-dark">Instagram</a>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col md={4}>
-                            <h5>Quick Links</h5>
-                            <ul className="list-unstyled">
-                                <li>
-                                    <a href="/" className="text-dark">Home</a>
-                                </li>
-                                <li>
-                                    <a href="/products" className="text-dark">Products</a>
-                                </li>
-                                <li>
-                                    <a href="/cart" className="text-dark">Cart</a>
-                                </li>
-                                <li>
-                                    <a href="/account" className="text-dark">Account</a>
-                                </li>
-                                <li>
-                                    <a href="/aboutus" className="text-dark">About Us</a>
-                                </li>
-                            </ul>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <p className="text-center mt-3">
-                                &copy; {new Date().getFullYear()} My E-Commerce Store
-                            </p>
-                        </Col>
-                    </Row>
-                </Container>
-            </footer>
+            <footer class="footer">
+     <div class="container">
+      <div class="row">
+        <div class="footer-col">
+          <h4>company</h4>
+          <ul>
+            <li><a href="/aboutus">about us</a></li>
+            <li><a href="#">our services</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="/contactus">Contact us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>get help</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">shipping</a></li>
+            <li><a href="#">returns</a></li>
+            <li><a href="#">order status</a></li>
+            <li><a href="#">payment options</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>online shop</h4>
+          <ul>
+            <li><a href="#">Vinyls</a></li>
+            <li><a href="#">Compact disks</a></li>
+            <li><a href="#">Tape</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>follow us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+     </div>
+  </footer>
         );
     }
 }
