@@ -62,9 +62,9 @@ export class Home extends Component {
 
         <div style={{ maxWidth: 1275, marginLeft: 'auto', marginRight: 'auto', marginBottom: 64 }}>
             <Carousel>
-                <img src={require("./images/CarouselImage1.jpg")} alt="placeholder" />
-                <img src={require("./images/CarouselImage2.jpg")} alt="placeholder" />
-                <img src={require("./images/CarouselImage3.jpg")} alt="placeholder" />
+                    <img src={require("./Images/CarouselImage1.jpg")} alt="placeholder" />
+                    <img src={require("./Images/CarouselImage2.jpg")} alt="placeholder" />
+                    <img src={require("./Images/CarouselImage3.jpg")} alt="placeholder" />
             </Carousel>
         </div>
 
@@ -76,7 +76,7 @@ export class Home extends Component {
                 <Row>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/Essenger-AfterDark.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Essenger - After Dark</CardTitle>
                                 <CardSubtitle><b>$19.99</b></CardSubtitle>
@@ -87,7 +87,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/AversionsCrown-Tyrant.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/AversionsCrown-Tyrant.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Aversions Crown - Tyrant</CardTitle>
                                 <CardSubtitle><b>$24.99</b></CardSubtitle>
@@ -98,7 +98,7 @@ export class Home extends Component {
                     </Col>
                     <Col md={4}>
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/MakeThemSuffer-HowToSurviveAFuneral.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Make Them Suffer - How To Survive A Funeral</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -119,7 +119,7 @@ export class Home extends Component {
                 <Row>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/Gojira-EnfantSauvage.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/Gojira-EnfantSauvage.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Gojira - Enfant Sauvage</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -130,7 +130,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/Nirvana-InUtero.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/Nirvana-InUtero.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Nirvana - In Utero</CardTitle>
                                 <CardSubtitle><b>$24.99</b></CardSubtitle>
@@ -141,7 +141,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/NormaJean-AllHail.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/NormaJean-AllHail.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Norma Jean - All Hail</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -162,7 +162,7 @@ export class Home extends Component {
                 <Row>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/RedHorChiliPeppers-Californication.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/RedHorChiliPeppers-Californication.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Red Hot Chili Peppers - Californication</CardTitle>
                                 <CardSubtitle><b>$19.99</b></CardSubtitle>
@@ -173,7 +173,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/Metallica-MasterOfPuppets.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/Metallica-MasterOfPuppets.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Metallica - Masters Of Puppets</CardTitle>
                                 <CardSubtitle><b>$24.99</b></CardSubtitle>
@@ -184,7 +184,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/TheKillers-HotFuss.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/TheKillers-HotFuss.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>The Killers - Hot Fuss</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -205,7 +205,7 @@ export class Home extends Component {
                 <Row>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/Emarosa-131.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/Emarosa-131.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Emarosa - 131</CardTitle>
                                 <CardSubtitle><b>$19.99</b></CardSubtitle>
@@ -216,7 +216,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/BadOmens-FindingGodbeforeGodFindsMe.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/BadOmens-FindingGodbeforeGodFindsMe.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Bad Omens - Finding God Before God Finds Me</CardTitle>
                                 <CardSubtitle><b>$24.99</b></CardSubtitle>
@@ -227,7 +227,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/Vinyl/Bmth-Sempiternal.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/Vinyl/Bmth-Sempiternal.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Bring Me The Horizon -  Sempiternal</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -248,7 +248,7 @@ export class Home extends Component {
                 <Row>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/Fushitsusha-1st.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/Fushitsusha-1st.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Fushitsusha - 1st</CardTitle>
                                 <CardSubtitle><b>$99.99</b></CardSubtitle>
@@ -259,7 +259,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/ThreeDaysGrace-OneX.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                                <CardImg top src={require("./Images/CD/ThreeDaysGrace-OneX.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Three Days Grace - One-X</CardTitle>
                                 <CardSubtitle><b>$24.99</b></CardSubtitle>
@@ -270,7 +270,7 @@ export class Home extends Component {
                     </Col>
                         <Col md={4} className="d-flex">
                             <Card className="h-100">
-                            <CardImg top src={require("./images/CD/FallOutBoys-FromUnderTheCorkTree.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
+                            <CardImg top src={require("./Images/CD/FallOutBoys-FromUnderTheCorkTree.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
                                 <CardBody className="flex-grow-1">
                                 <CardTitle>Fall Out Boy - From Under The Cork Tree</CardTitle>
                                 <CardSubtitle><b>$29.99</b></CardSubtitle>
@@ -290,13 +290,13 @@ export class Home extends Component {
                 <h4>Our Partners</h4>
                 <Row>
                     <Col md={2}>
-                        <img src="../../../images/partners/adisq.png" alt="Partner 1" />
+                        <img src="../../../Images/Partners/adisq.png" alt="Partner 1" />
                     </Col>
                     <Col md={2}>
-                        <img src="../../../images/partners/desjardins.png" alt="Partner 2" />
+                        <img src="../../../Images/Partners/desjardins.png" alt="Partner 2" />
                     </Col>
                     <Col md={2}>
-                        <img src="../../../images/partners/vice.png" alt="Partner 3" />
+                        <img src="../../../Images/Partners/vice.png" alt="Partner 3" />
                     </Col>
                 </Row>
             </Container>

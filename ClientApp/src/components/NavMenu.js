@@ -35,7 +35,7 @@ export class NavMenu extends Component {
     return (
       <header>
           <Navbar style={{ backgroundColor: 'darkred' }} className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-                <NavbarBrand tag={Link} to="/"><img src={require("./images/WizardRecords.png")} alt="logo" style={{ maxHeight: '50px', maxWidth: '250px'}} /></NavbarBrand>
+                <NavbarBrand tag={Link} to="/"><img src={require("./Images/WizardRecords.png")} alt="logo" style={{ maxHeight: '50px', maxWidth: '250px'}} /></NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
