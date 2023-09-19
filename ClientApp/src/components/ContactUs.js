@@ -15,11 +15,29 @@ class ContactForm extends Component {
         };
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission logic here
-        // You can access form data using this.state.formData
-    };
+    handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Asynchronous validation logic here
+        // For the sake of this example, let's assume we need the name and email to be filled in.
+        const errors = {};
+
+        if (!this.state.formData.name.trim()) {
+            errors.name = "Name is required.";
+        }
+        if (!this.state.formData.email.trim()) {
+            errors.email = "Email is required.";
+        }
+        if (!this.state.formData.description.trim()) {
+            errors.description = "A description is required.";
+        }
+
+        this.setState({ errors });
+
+        if (!Object.keys(errors).length) {
+            console.log('Form is valid!'); // Or do whatever you need on valid submission
+        }
+    }
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
