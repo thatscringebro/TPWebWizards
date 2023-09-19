@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Form, FormGroup, Label, Input, Alert, Button } from 'reactstrap';
+import './ContactUs.css';
 
 class ContactForm extends Component {
     constructor(props) {
