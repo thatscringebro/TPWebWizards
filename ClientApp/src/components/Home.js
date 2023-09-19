@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
-import Carousel from "../components/Carousel/Carousel"
+import Carousel from "../components/Carousel/Carousel";
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import './Home.css';
 
