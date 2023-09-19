@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import './AboutUs.css';
-import GoogleMapComponent from './GoogleMap';
+import MapContainer from './GoogleMap';
 import AddressInfo from './AddressInfo';
 function AboutUs() {
     const Membres = [
@@ -62,7 +62,8 @@ function AboutUs() {
                 ))}
             </div>
             <div className="Display" >
-                <GoogleMapComponent />
+
+                <MapContainer />
                 <AddressInfo />
             </div>
            
