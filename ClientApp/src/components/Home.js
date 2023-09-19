@@ -10,8 +10,8 @@ export class Home extends Component {
         <section className="hero-banner">
           {/* Hero banner content goes here */}
           <Container>
-            <h1>Welcome to Our E-Commerce Store</h1>
-            <p>Shop the latest trends in fashion, electronics, and more.</p>
+            <h1>Wizard Recrods</h1>
+            <p>Buy records, or we'll break your legs.</p>
             <a href="/products" className="btn btn-primary">Shop Now</a>
           </Container>
         </section>
