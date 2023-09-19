@@ -30,3 +30,8 @@
 .used-compact-disc img {
     margin-top: 20px;
 }
+
+.slogan {
+    font-family: 'PatrenaRolane';
+    font-size: calc(20px + (95 - 20) * ((100vw - 320px) / (1920 - 320)));
+}
