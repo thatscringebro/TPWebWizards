@@ -57,25 +57,22 @@ export class Home extends Component {
           </Container>
         </section>
 
-        <section className="partners">
-          <Container>
-            <h2>Our Partners</h2>
-            <Row>
-              <Col md={3}>
-                <img src="/images/partner1.png" alt="Partner 1" />
-              </Col>
-              <Col md={3}>
-                <img src="/images/partner2.png" alt="Partner 2" />
-              </Col>
-              <Col md={3}>
-                <img src="/images/partner3.png" alt="Partner 3" />
-              </Col>
-              <Col md={3}>
-                <img src="/images/partner4.png" alt="Partner 4" />
-              </Col>
-            </Row>
-          </Container>
-        </section>
+            <section className="partners">
+                <Container>
+                    <h2>Our Partners</h2>
+                    <Row>
+                        <Col md={2}>
+                            <img src="../../../images/partners/adisq.png" alt="Partner 1" />
+                        </Col>
+                        <Col md={2}>
+                            <img src="../../../images/partners/desjardins.png" alt="Partner 2" />
+                        </Col>
+                        <Col md={2}>
+                            <img src="../../../images/partners/vice.png" alt="Partner 3" />
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
       </div>
     );
   }
