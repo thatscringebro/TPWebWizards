@@ -37,21 +37,28 @@
 }
 
 .card-width {
-    width: stretch;
-    display: flex;
+  width: stretch;
+  display: flex;
   flex-direction: column; /* Affiche les éléments de haut en bas */
   justify-content: flex-end; /* Aligne les éléments au bas */
+  transition: border 0.3s ease;
 }
-.cardHREF {
-  text-decoration: none;
-  color: inherit;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Add transition properties */
+.card-width:hover {
+    
 }
 
-.cardHREF:hover {
-  background-color: #f0f0f0; /* Change the background color on hover */
-  color: darkred; /* Change text color on hover */
+.cardHREF {
+    border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.1s ease; /* Add transition properties */
 }
+
+    .cardHREF:hover {
+        background-color: #f0f0f0; /* Change the background color on hover */
+        color: darkred; /* Change text color on hover */
+        border: 3px solid darkred;
+    }
 
 .cardHREF .flex-grow-1 {
   display: flex;

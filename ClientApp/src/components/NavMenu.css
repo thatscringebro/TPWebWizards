@@ -61,13 +61,13 @@ header .nav-link {
 }
 
 header .form-control {
-    border-color: #0a58ca;
+    border-color: white;
     border-radius: 20px;
 }
 
 header .input-group-append button {
     background-color: darkred;
-    border-color: #0a58ca;
+    border-color: white;
     border-radius: 0 20px 20px 0; /* Rounded on the right side, flat on the left */
     padding: 8px 20px;
     font-size: 16px;

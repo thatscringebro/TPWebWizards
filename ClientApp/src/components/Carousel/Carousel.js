@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BiSolidLeftArrow } from 'react-icons/bi';
+import { BiSolidRightArrow } from 'react-icons/bi';
 import './Carousel.css'
 
 const Carousel = (props) => {
@@ -33,7 +35,7 @@ const Carousel = (props) => {
         // Démarrez un intervalle pour changer automatiquement d'image toutes les 10 secondes (10000 ms)
         const interval = setInterval(() => {
             next(); // Appelez la fonction next pour passer à l'image suivante
-        }, 10000); // Intervalle de 10 secondes
+        }, 7000); // Intervalle de 10 secondes
 
         // Nettoyez l'intervalle lorsque le composant est démonté
         return () => {
@@ -45,7 +47,7 @@ const Carousel = (props) => {
         <div className="carousel-container">
             <div className="carousel-wrapper">
                 <button onClick={prev} className="left-arrow">
-                    &lt;
+                    <BiSolidLeftArrow className="arrow" />
                 </button>
                 <div className="carousel-content-wrapper">
                     <div className="carousel-content" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
@@ -53,7 +55,7 @@ const Carousel = (props) => {
                     </div>
                 </div>
                 <button onClick={next} className="right-arrow">
-                    &gt;
+                    <BiSolidRightArrow className="arrow" />
                 </button>
             </div>
         </div>

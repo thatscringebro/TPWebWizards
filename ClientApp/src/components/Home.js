@@ -54,7 +54,7 @@ export class Home extends Component {
     return (
       <div>
         <div style={{ maxWidth: 1275, marginLeft: 'auto', marginRight: 'auto', marginBottom: 64 }}>
-            <Carousel>
+                <Carousel>
                     <img src={require("./Images/CarouselImage1.jpg")} alt="placeholder" />
                     <img src={require("./Images/CarouselImage2.jpg")} alt="placeholder" />
                     <img src={require("./Images/CarouselImage3.jpg")} alt="placeholder" />
