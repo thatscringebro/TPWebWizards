@@ -296,7 +296,7 @@ export class Home extends Component {
                 <section className="partners">
                     <Container>
                         <h4>Our Partners</h4>
-                        <Row>
+                    <Row style={{ display: 'flex', justifyContent: 'center' }}>
                             <Col md={2}>
                                 <img src="../../../Images/Partners/adisq.png" alt="Partner 1" />
                             </Col>
