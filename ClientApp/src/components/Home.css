@@ -41,24 +41,38 @@
   display: flex;
   flex-direction: column; /* Affiche les éléments de haut en bas */
   justify-content: flex-end; /* Aligne les éléments au bas */
-  transition: border 0.3s ease;
-}
-.card-width:hover {
-    
 }
 
 .cardHREF {
-    border-radius: 8px;
+  border-radius: 8px;
   text-decoration: none;
   color: inherit;
   transition: background-color 0.3s ease, color 0.3s ease, border 0.1s ease; /* Add transition properties */
 }
 
+    .cardHREF .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .cardHREF .card-title,
+    .cardHREF .card-subtitle {
+        transition: color 0.3s ease;
+    }
+
     .cardHREF:hover {
         background-color: #f0f0f0; /* Change the background color on hover */
-        color: darkred; /* Change text color on hover */
-        border: 3px solid darkred;
+        box-shadow: 0 0 0 3px darkred;
     }
+
+        .cardHREF:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .cardHREF:hover .card-title,
+        .cardHREF:hover .card-subtitle {
+            transform: scale(1.01);
+            color: darkred;
+        }
 
 .cardHREF .flex-grow-1 {
   display: flex;
