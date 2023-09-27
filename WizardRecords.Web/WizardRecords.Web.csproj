@@ -36,68 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\components\Images\Vinyl\AversionsCrown-Tyrant.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\BadOmens-FindingGodbeforeGodFindsMe.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Bmth-Sempiternal.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Emarosa-131.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Essenger-AfterDark.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\FallOutBoys-FromUnderTheCorkTree.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Fushitsusha-1st.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Gojira-EnfantSauvage.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\GreenDay-21stCenturyBreakdown.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\ImagineDragons-NightVisions.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\MakeThemSuffer-HowToSurviveAFuneral.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Metallica-MasterOfPuppets.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\Nirvana-InUtero.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\NormaJean-AllHail.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\RedHorChiliPeppers-Californication.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\RiseAgainst-EndGame.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\TheKillers-HotFuss.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\ThirtySecondsToMars-BeautifulLie.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ClientApp\src\components\Images\Vinyl\ThreeDaysGrace-OneX.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\components\Images\Pochettes\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="ClientApp\src\components\Images\AlbumCovers\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace WizardRecords.Core.Data {
     public class Constants {
         public enum ArtistType {
-            SOLO,
-            BAND
+            SINGLE_NAME,
+            FULL_NAME
         }
 
         public enum ArtistGenre {
@@ -16,6 +16,7 @@ namespace WizardRecords.Core.Data {
             POP,
             JAZZ,
             HIPHOP,
+            ALTERNATIVE,
             CLASSICAL,
             METAL,
             PUNK,
