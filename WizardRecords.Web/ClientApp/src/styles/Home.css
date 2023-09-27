@@ -1,4 +1,9 @@
-﻿.my-divider {
+﻿h1 {
+    font-family: 'PatrenaRolane';
+    margin-bottom: 20px;
+}
+
+.my-divider {
     border: none; 
     height: 2px;
     background-color: #333; 

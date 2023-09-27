@@ -20,7 +20,7 @@ export class Home extends Component {
 
                 <section className="featured-products">
                     <Container>
-                        <h2>Featured Products</h2>
+                        <h1>Featured Products</h1>
                         <Row>
                             <Col md={4} className="d-flex">
                                 <a href="/product/1" className="cardHREF h-100 card-width">
@@ -66,7 +66,7 @@ export class Home extends Component {
 
                 <section className="new-vinyl">
                     <Container>
-                        <h2>New vinyl</h2>
+                        <h1>New vinyl</h1>
                         <Row>
                             <Col md={4} className="d-flex">
                                 <a href="/product/1" className="cardHREF h-100 card-width">
@@ -112,7 +112,7 @@ export class Home extends Component {
 
                 <section className="new-compact-disc">
                     <Container>
-                        <h2>New CD</h2>
+                        <h1>New CD</h1>
                         <Row>
                             <Col md={4} className="d-flex">
                                 <a href="/product/1" className="cardHREF h-100 card-width">
@@ -158,7 +158,7 @@ export class Home extends Component {
 
                 <section className="used-vinyl">
                     <Container>
-                        <h2>Used vinyl</h2>
+                        <h1>Used vinyl</h1>
                         <Row>
                             <Col md={4} className="d-flex">
                                 <a href="/product/1" className="cardHREF h-100 card-width">
@@ -204,7 +204,7 @@ export class Home extends Component {
 
                 <section className="used-compact-disc">
                     <Container>
-                        <h2>Used CDs</h2>
+                        <h1>Used CDs</h1>
                         <Row>
                             <Col md={4} className="d-flex">
                                 <a href="/product/1" className="cardHREF h-100 card-width">
