@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WizardRecords.Web", "WizardRecords.Web.csproj", "{70D91A72-D60C-494C-95D9-6C348D637D74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WizardRecords.Web", "..\WizardRecords.Web.csproj", "{70D91A72-D60C-494C-95D9-6C348D637D74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WizardRecords.Core", "..\WizardRecords.Core\WizardRecords.Core.csproj", "{155E7B50-DF12-48D8-AE1C-BBC4E96CAB83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WizardRecords.Core", "..\WizardRecords.Core.csproj", "{155E7B50-DF12-48D8-AE1C-BBC4E96CAB83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
