@@ -25,12 +25,13 @@ namespace WizardRecords.Core.Domain.Entities {
 
         internal Album() { }
 
-        public Album(int albumId, int artistId, int qty, float price, string title) {
+        public Album(int albumId, int artistId, int qty, float price, string title, MediaType mediaType) {
             AlbumId = albumId;
             ArtistId = artistId;
             StockQuantity = qty;
             Price = price;
             Title = title;
+            Media = mediaType;
         }
 
     }
