@@ -2,9 +2,10 @@
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
-namespace WizardRecords.Controllers {
-    [Route("[controller]")]
+namespace WizardRecords.Controllers
+{
     [ApiController]
+    [Route("[controller]")]
     public class AlbumController : ControllerBase {
         private readonly IAlbumRepository _repository;
 
@@ -14,7 +15,7 @@ namespace WizardRecords.Controllers {
 
         [HttpGet]
         public IEnumerable<Album> GetAlbums() {
-            return _repository.GetAlbums();
+            return _repository.GetAllAlbums();
         }
     }
 }

@@ -111,10 +111,6 @@ namespace WizardRecords.Repositories {
 
         };
 
-        public IEnumerable<Album> GetAlbumsByArtist(int artistId) {
-            throw new NotImplementedException();
-        }
-
         public Artist GetArtistById(int artistId) {
             var artist = _artists.FirstOrDefault(a => a.ArtistId == artistId);
 
@@ -135,7 +131,10 @@ namespace WizardRecords.Repositories {
             return artist;
         }
 
-       
-    }
+        public IEnumerable<Artist> GetAllArtists() => _artists;
 
+        public IEnumerable<Album> GetAlbumsByArtist(int artistId) {
+            throw new NotImplementedException();
+        }
+    }
 }

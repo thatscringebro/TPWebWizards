@@ -2,8 +2,8 @@
 
 namespace WizardRecords.Repositories {
     public interface IAlbumRepository {
-        IEnumerable<Album> GetAlbums();
         Album GetAlbumById(int albumId);
         Album GetAlbumByTitle(string title);
+        IEnumerable<Album> GetAllAlbums();
     }
 }

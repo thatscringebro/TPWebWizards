@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
-namespace WizardRecords.Controllers {
+namespace WizardRecords.Controllers
+{
     [ApiController]
     [Route("[controller]")]
     public class ArtistController : ControllerBase {

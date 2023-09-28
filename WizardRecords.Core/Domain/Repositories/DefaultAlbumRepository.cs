@@ -193,7 +193,7 @@ namespace WizardRecords.Repositories {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Album> GetAlbums() {
+        public IEnumerable<Album> GetAllAlbums() {
             throw new NotImplementedException();
         }
     }
