@@ -9,7 +9,8 @@ namespace WizardRecords.Core.Data {
         // Détermine le format du nom de l'artiste à utiliser et afficher en conséquence
         public enum ArtistType {
             BAND_NAME,
-            PERSON_NAME
+            PERSON_NAME,
+            COMPILATION
         }
 
         // Représente les section de la boutique, c'est à dire les genres principaux

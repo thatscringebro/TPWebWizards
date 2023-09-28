@@ -105,6 +105,10 @@ namespace WizardRecords.Repositories {
             new Artist(98, "Beyonce", ArtistType.PERSON_NAME, ArtistGenre.POP),
             new Artist(99, "Lana Del Rey", ArtistType.PERSON_NAME, ArtistGenre.POP),
             new Artist(100, "L\'Amour, Normand", ArtistType.PERSON_NAME, ArtistGenre.FRANCOPHONE),
+            new Artist(101, "Various", ArtistType.COMPILATION, ArtistGenre.ELECTRONICA),
+            new Artist(102, "Various", ArtistType.COMPILATION, ArtistGenre.ALTERNATIVE),
+            new Artist(103, "Various", ArtistType.COMPILATION, ArtistGenre.WORLD),
+
         };
 
         public IEnumerable<Album> GetAlbumsByArtist(int artistId) {
