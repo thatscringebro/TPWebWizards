@@ -15,10 +15,10 @@ namespace WizardRecords.Core.Domain.Entities {
         public ArtistGenre? Section { get; set; }
         public string ArtistName {
             get {
-                if (ArtistType == ArtistType.FULL_NAME) {
+                if (ArtistType == ArtistType.PERSON_NAME) {
                     return $"{LastName}, {FirstName}";
                 }
-                else if (ArtistType == ArtistType.SINGLE_NAME) {
+                else if (ArtistType == ArtistType.BAND_NAME) {
                     return $"{BandName}";
                 }
                 else {
@@ -33,12 +33,12 @@ namespace WizardRecords.Core.Domain.Entities {
             ArtistId = artistId;
             ArtistType = artistType;
             Section = section;
-            if (artistType == ArtistType.FULL_NAME) {
+            if (artistType == ArtistType.PERSON_NAME) {
                 var names = artistName.Split(',');
                 LastName = names[0].Trim();
                 FirstName = names[1].Trim();
             }
-            else if (artistType == ArtistType.SINGLE_NAME) {
+            else if (artistType == ArtistType.BAND_NAME) {
                 BandName = artistName;
             }
             else {

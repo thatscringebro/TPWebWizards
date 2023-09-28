@@ -2,8 +2,8 @@
 
 namespace WizardRecords.Repositories {
     public interface IArtistRepository {
-        Artist GetArtistById(int albumId);
-        Artist GetArtistByName(string title);
+        Artist GetArtistById(int artistId);
+        Artist GetArtistByName(string artistName);
         IEnumerable<Album> GetAlbumsByArtist(int artistId);
     }
 }

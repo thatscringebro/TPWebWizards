@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Carousel from "../components/Carousel";
-import ProductTemplate from "./ProductTemplate";
+import FeaturedProducts from "./ProductTemplate";
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import '../styles/Home.css';
 import '../styles/Fonts.css'
@@ -19,49 +19,7 @@ export class Home extends Component {
 
                 <hr className="my-divider" />
 
-                <section className="featured-products">
-                    <Container>
-                        <h1>Featured Products</h1>
-                        <Row>
-                            <Col md={4} className="d-flex">
-                                <a href="/product/1" className="cardHREF h-100 card-width">
-                                    <Card className="h-100 card-width" >
-                                        <CardImg top className="card-img-top" src={require("./Images/CoverTemplate/CDBase.png")} alt="Product 1" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                        <CardBody className="flex-grow-1">
-                                            <CardTitle className="card-title">Essenger - After Dark</CardTitle>
-                                            <CardSubtitle className="card-subtitle"><b>$19.99</b></CardSubtitle>
-                                            <CardText></CardText>
-                                        </CardBody>
-                                    </Card>
-                                </a>
-                            </Col>
-                            <Col md={4} className="d-flex">
-                                <a href="/product/2" className="cardHREF h-100 card-width">
-                                    <Card className="h-100 card-width">
-                                        <CardImg top className="card-img-top" src={require("./Images/CoverTemplate/VinylBase.png")} alt="Product 2" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                        <CardBody className="flex-grow-1">
-                                            <CardTitle className="card-title">Aversions Crown - Tyrant</CardTitle>
-                                            <CardSubtitle className="card-subtitle"><b>$24.99</b></CardSubtitle>
-                                            <CardText></CardText>
-                                        </CardBody>
-                                    </Card>
-                                </a>
-                            </Col>
-                            <Col md={4}>
-                                <a href="/product/3" className="cardHREF h-100 card-width">
-                                    <Card className="h-100 card-width">
-                                        <CardImg top className="card-img-top" src={require("./Images/CoverTemplate/VinylBase.png")} alt="Product 3" style={{ maxHeight: '200px', width: 'auto', objectFit: 'contain' }} />
-                                        <CardBody className="flex-grow-1">
-                                            <CardTitle className="card-title">Make Them Suffer - How To Survive A Funeral</CardTitle>
-                                            <CardSubtitle className="card-subtitle"><b>$29.99</b></CardSubtitle>
-                                            <CardText></CardText>
-                                        </CardBody>
-                                    </Card>
-                                </a>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
+                <FeaturedProducts />
 
                 <hr className="my-divider" />
 
