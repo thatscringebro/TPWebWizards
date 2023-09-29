@@ -1,10 +1,11 @@
 ﻿using WizardRecords.Core.Domain.Entities;
+using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Repositories {
     public interface IArtistRepository {
-        Artist GetArtistById(int artistId);
-        Artist GetArtistByName(string artistName);
         IEnumerable<Artist> GetAllArtists();
-        IEnumerable<Album> GetAlbumsByArtist(int artistId);
+        IEnumerable<Artist> GetArtistsByGenre(ArtistGenre artistGenre);
+        string GetArtistNameByAlbumId(int albumId);
+        string GetArtistNameById(int artistId);
     }
 }

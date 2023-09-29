@@ -38,8 +38,8 @@ namespace WizardRecords.Repositories {
             new Album(29, 22, 1, 2.99f, "Saturday Night Fever", MediaType.VINYL),
             new Album(30, 23, 1, 19.99f, "Arrival", MediaType.CD),
             new Album(31, 23, 1, 19.99f, "ABBA", MediaType.VINYL),
-            new Album(32, 24, 1, 34.99f, "Thriller", MediaType.VINYL),
-            new Album(33, 24, 1, 34.99f, "Bad", MediaType.VINYL),
+            new Album(32, 24, 2, 34.99f, "Thriller", MediaType.VINYL),
+            new Album(33, 24, 2, 34.99f, "Bad", MediaType.VINYL),
             new Album(34, 25, 1, 19.99f, "The Pleasure Principle", MediaType.CD),
             new Album(35, 26, 1, 39.99f, "Bitches Brew", MediaType.VINYL),
             new Album(36, 26, 1, 39.99f, "Filles De Kilimanjaro", MediaType.VINYL),
@@ -53,11 +53,11 @@ namespace WizardRecords.Repositories {
             new Album(42, 29, 1, 29.99f, "Mingus Mingus Mingus Mingus Mingus", MediaType.VINYL),
             new Album(43, 30, 1, 149.99f, "Les Stances A Sophie", MediaType.VINYL),
             new Album(44, 31, 1, 29.99f, "Naked City", MediaType.VINYL),
-            new Album(45, 32, 1, 29.99f, "Abbey Road", MediaType.VINYL),
+            new Album(45, 32, 2, 29.99f, "Abbey Road", MediaType.VINYL),
             new Album(46, 32, 1, 199.99f, "Magical Mystery Tour", MediaType.VINYL),
             new Album(47, 32, 1, 29.99f, "Revolver", MediaType.CD),
-            new Album(48, 32, 1, 29.99f, "Rubber Soul", MediaType.CD),
-            new Album(49, 32, 1, 49.99f, "Sgt. Pepper\'s Lonely Hearts Club Band", MediaType.VINYL),
+            new Album(48, 32, 2, 29.99f, "Rubber Soul", MediaType.CD),
+            new Album(49, 32, 3, 49.99f, "Sgt. Pepper\'s Lonely Hearts Club Band", MediaType.VINYL),
             new Album(50, 32, 1, 29.99f, "The Beatles (White Album)", MediaType.VINYL),
             new Album(51, 33, 1, 29.99f, "Behind The Music", MediaType.VINYL),
             new Album(52, 34, 1, 1499.99f, "The Well-Tuned Piano", MediaType.VINYL),
@@ -95,12 +95,12 @@ namespace WizardRecords.Repositories {
             new Album(83, 57, 1, 29.99f, "The Head On The Door", MediaType.VINYL),
             new Album(84, 57, 1, 39.99f, "Disintegration", MediaType.VINYL),
             new Album(85, 57, 1, 29.99f, "Kiss Me, Kiss Me, Kiss Me", MediaType.VINYL),
-            new Album(86, 58, 1, 24.99f, "Curtis", MediaType.VINYL),
+            new Album(86, 58, 2, 24.99f, "Curtis", MediaType.VINYL),
             new Album(87, 58, 1, 24.99f, "Roots", MediaType.CD),
             new Album(88, 59, 1, 29.99f, "Night Beat", MediaType.CD),
             new Album(89, 60, 1, 24.99f, "Lady Soul", MediaType.CD),
             new Album(90, 61, 1, 24.99f, "Where Did Our Love Go", MediaType.VINYL),
-            new Album(91, 62, 1, 24.99f, "Joy As An Act Of Resistance", MediaType.VINYL),
+            new Album(91, 62, 2, 24.99f, "Joy As An Act Of Resistance", MediaType.VINYL),
             new Album(92, 63, 1, 24.99f, "Ramones", MediaType.VINYL),
             new Album(93, 63, 1, 24.99f, "Rocket To Russia", MediaType.VINYL),
             new Album(94, 63, 1, 24.99f, "It\'s Alive", MediaType.CD),
@@ -185,16 +185,56 @@ namespace WizardRecords.Repositories {
             new Album(171, 98, 3, 29.99f, "Lemonade", MediaType.CD),
         };
 
+        public IEnumerable<Album> GetAllAlbums() => _albums;
+
+        public IEnumerable<Album> GetAlbumsByArtistId(int artistId) {
+            var albumsByArtist = _albums.Where(a => a.ArtistId == artistId);
+            if (albumsByArtist.Count() == 0) {
+                throw new ArgumentException($"No albums found for artist {artistId}");
+            }
+            return _albums.Where(a => a.ArtistId == artistId);
+        }
+
+        public IEnumerable<Album> GetAlbumsByGenre(AlbumGenre albumGenre) {
+            var albumsByGenre = _albums.Where(a => a.AlbumGenre == albumGenre);
+            if (albumsByGenre.Count() == 0) {
+                throw new ArgumentException($"No albums found for genre {albumGenre}");
+            }
+            return albumsByGenre;
+        }
+
+        public IEnumerable<Album> GetAlbumsByCategory(Category albumCategory) {
+            var albumsByCategory = _albums.Where(a => a.Category == albumCategory);
+            if (albumsByCategory.Count() == 0) {
+                throw new ArgumentException($"No albums found for category {albumCategory}");
+            }
+            return albumsByCategory;
+        }
+
+        public IEnumerable<Album> GetAlbumsByMediaType(MediaType albumMediaType) {
+            var albumsByMediaType = _albums.Where(a => a.Media == albumMediaType);
+            if (albumsByMediaType.Count() == 0) {
+                throw new ArgumentException($"No albums found for media type {albumMediaType}");
+            }
+            return albumsByMediaType;
+        }
+
         public Album GetAlbumById(int albumId) {
-            throw new NotImplementedException();
+            var album = _albums.Find(a => a.AlbumId == albumId);
+            if (album == null) {
+                throw new ArgumentException($"Album with id {albumId} not found");
+            }
+            return album;
         }
 
         public Album GetAlbumByTitle(string title) {
-            throw new NotImplementedException();
+            var album = _albums.Find(a => a.Title== title);
+            if (album == null) {
+                throw new ArgumentException($"Album with id {title} not found");
+            }
+            return album;
         }
 
-        public IEnumerable<Album> GetAllAlbums() {
-            throw new NotImplementedException();
-        }
+        // TODO: Sort by price, sort alphabetically, etc.
     }
 }

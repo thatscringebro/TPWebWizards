@@ -16,9 +16,9 @@ namespace WizardRecords.Core.Domain.Entities {
         public string? Title { get; set; } // TODO: Remove nullability
         public string? CatalogNumber { get; set; } // TODO: Remove nullability
         public Category? Category { get; set; }
-        public MediaType? Media { get; set; }
+        public MediaType? Media { get; set; } // 
         public FormatType? Format { get; set; }
-        public AlbumGenre? Genre { get; set; }
+        public AlbumGenre? AlbumGenre { get; set; }
         public Grade? MediaGrade { get; set; } // Category == USED only!
         public Grade? SleeveGrade { get; set; } // Category == USED only!
         public string? Comments { get; set; }

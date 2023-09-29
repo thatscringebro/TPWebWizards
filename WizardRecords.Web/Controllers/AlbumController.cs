@@ -5,17 +5,17 @@ using WizardRecords.Repositories;
 namespace WizardRecords.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/album")]
     public class AlbumController : ControllerBase {
-        private readonly IAlbumRepository _repository;
+        private readonly IAlbumRepository _albumRepository;
 
-        public AlbumController(IAlbumRepository repository) {
-            _repository = repository;
+        public AlbumController(IAlbumRepository albumRepository) {
+            _albumRepository = albumRepository;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public IEnumerable<Album> GetAlbums() {
-            return _repository.GetAllAlbums();
+            return _albumRepository.GetAllAlbums();
         }
     }
 }

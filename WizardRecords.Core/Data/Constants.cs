@@ -10,7 +10,8 @@ namespace WizardRecords.Core.Data {
         public enum ArtistType {
             BAND_NAME,
             PERSON_NAME,
-            COMPILATION
+            COMPILATION,
+            SOUNDTRACK
         }
 
         // Représente les section de la boutique, c'est à dire les genres principaux
