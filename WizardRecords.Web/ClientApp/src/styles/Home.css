@@ -3,11 +3,15 @@
     margin-bottom: 20px;
 }
 
-.my-divider {
-    border: none; 
+.divider {
+    border: none;
     height: 2px;
-    background-color: #333; 
+    background-color: #333;
     margin: 20px 0;
+}
+
+.h-100 {
+    margin-bottom: 20px;
 }
 
 .partners img {
@@ -42,52 +46,96 @@
 }
 
 .card-width {
-  width: stretch;
-  display: flex;
-  flex-direction: column; /* Affiche les éléments de haut en bas */
-  justify-content: flex-end; /* Aligne les éléments au bas */
+    width: 100%;
 }
 
 .cardHREF {
-  border-radius: 8px;
-  text-decoration: none;
-  color: inherit;
-  transition: background-color 0.3s ease, color 0.3s ease, border 0.1s ease; /* Add transition properties */
+    border-radius: 8px;
+    text-decoration: none;
+    color: #24262b;
 }
 
-    .cardHREF .card-img-top {
-        transition: transform 0.3s ease;
-    }
-
-    .cardHREF .card-title,
-    .cardHREF .card-subtitle {
-        transition: color 0.3s ease;
-    }
-
-    .cardHREF:hover {
-        background-color: #f0f0f0; /* Change the background color on hover */
-        box-shadow: 0 0 0 3px darkred;
-    }
-
-        .cardHREF:hover .card-img-top {
-            transform: scale(1.05);
-        }
-
-        .cardHREF:hover .card-title,
-        .cardHREF:hover .card-subtitle {
-            transform: scale(1.01);
-            color: darkred;
-        }
-
-.cardHREF .flex-grow-1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
 
-.cardHREF .card-body {
-  padding: 20px; /* Adjust the padding as needed */
+.card-divider {
+    width: 2px; /* Adjust the width as needed */
+    color: red; /* Adjust the color as needed */
+    margin: 0 10px;
 }
 
+.card-info, .card-purchase {
+    flex: 1;
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.card-artist, .card-album {
+    transition: color 0.3s ease;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-artist {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.card-album {
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+.card-purchase {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.card-price {
+    font-size: 1.25rem;
+}
+
+.card-price, .card-basket {
+    text-align: right;
+}
+
+.card-basket {
+    border: solid 2px #24262b;
+    border-radius: 8px;
+    background-color: lightgreen;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.card-info {
+    flex-grow: 2;
+}
+
+.cardHREF:hover {
+    box-shadow: 0 0 0 3px darkred;
+}
+
+    .cardHREF:hover .card-img-top {
+        transform: scale(1.05);
+        color: darkred;
+    }
+
+    .cardHREF:hover .card-artist,
+    .cardHREF:hover .card-subtitle,
+    .cardHREF:hover .card-price {
+        color: darkred;
+    }

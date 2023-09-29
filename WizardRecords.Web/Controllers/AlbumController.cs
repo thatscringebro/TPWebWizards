@@ -5,7 +5,7 @@ using WizardRecords.Repositories;
 namespace WizardRecords.Controllers
 {
     [ApiController]
-    [Route("api/album")]
+    [Route("api/[controller]")]
     public class AlbumController : ControllerBase {
         private readonly IAlbumRepository _albumRepository;
 

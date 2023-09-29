@@ -180,7 +180,7 @@ namespace WizardRecords.Repositories {
             new Album(166, 100, 1, 39.99f, "C\'est Pas Possible!", MediaType.CD),
             new Album(167, 101, 1, 34.99f, "Total 7", MediaType.CD),
             new Album(168, 102, 1, 29.99f, "No Alternative", MediaType.CD),
-            new Album(169, 103, 1, 19.99f, "THe Music Of Islam", MediaType.CD),
+            new Album(169, 103, 1, 19.99f, "The Music Of Islam", MediaType.CD),
             new Album(170, 74, 1, 19.99f, "Untitled", MediaType.VINYL),
             new Album(171, 98, 3, 29.99f, "Lemonade", MediaType.CD),
         };

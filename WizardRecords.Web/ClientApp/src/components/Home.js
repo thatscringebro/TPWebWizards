@@ -17,11 +17,11 @@ export class Home extends Component {
                     </Carousel>
                 </div>
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <FeaturedProducts />
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <section className="new-vinyl">
                     <Container>
@@ -67,7 +67,7 @@ export class Home extends Component {
                     </Container>
                 </section>
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <section className="new-compact-disc">
                     <Container>
@@ -113,7 +113,7 @@ export class Home extends Component {
                     </Container>
                 </section>
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <section className="used-vinyl">
                     <Container>
@@ -159,7 +159,7 @@ export class Home extends Component {
                     </Container>
                 </section>
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <section className="used-compact-disc">
                     <Container>
@@ -205,7 +205,7 @@ export class Home extends Component {
                     </Container>
                 </section>
 
-                <hr className="my-divider" />
+                <hr className="divider" />
 
                 <section className="partners">
                     <Container>

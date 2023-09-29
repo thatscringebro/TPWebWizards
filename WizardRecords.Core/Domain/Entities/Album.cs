@@ -15,10 +15,10 @@ namespace WizardRecords.Core.Domain.Entities {
         public float Price { get; set; }
         public string? Title { get; set; } // TODO: Remove nullability
         public string? CatalogNumber { get; set; } // TODO: Remove nullability
-        public Category? Category { get; set; }
-        public MediaType? Media { get; set; } // 
-        public FormatType? Format { get; set; }
-        public AlbumGenre? AlbumGenre { get; set; }
+        public Category? Category { get; set; } // NEW ? USED
+        public MediaType? Media { get; set; } // CD ? LP 
+        public FormatType? Format { get; set; } // Precisions on the media (Single, EP, 7", 10", 12", etc.)
+        public AlbumGenre? AlbumGenre { get; set; } // Precision on the genre of the album
         public Grade? MediaGrade { get; set; } // Category == USED only!
         public Grade? SleeveGrade { get; set; } // Category == USED only!
         public string? Comments { get; set; }
