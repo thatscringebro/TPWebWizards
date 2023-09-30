@@ -3,11 +3,29 @@
     margin-bottom: 20px;
 }
 
+h3 {
+    font-family: 'PatrenaRolane';
+    margin-bottom: 20px;
+}
+
+.section-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .section-category a {
+        text-decoration: none;
+        color: #24262b;
+    }
+
+.section-category h3:hover {
+    font-weight: bold;
+}
+
 .divider {
-    border: none;
     height: 2px;
     background-color: #333;
-    margin: 20px 0;
 }
 
 .partners img {
@@ -47,11 +65,25 @@
     flex: 1;
 }
 
-.card-img-top {
+.card-img-format {
+    position: relative;
     margin-top: 20px;
+    margin-left: 20px;
     transition: transform 0.3s ease;
-    max-height: 200px;
+    min-height: 200px;
     object-fit: contain;
+    width: 100%;
+}
+
+.card-img-cover {
+    position: absolute;
+    transition: transform 0.3s ease;
+    top: 0px;
+    left: 0px;
+    transform: translate(31.1%, 10%);
+    width: 100%;
+    max-width: 54.5%; /* or the maximum width you want */
+    height: contain; /* it will automatically maintain the aspect ratio */
 }
 
 .card-artist, .card-album {
@@ -89,7 +121,7 @@
 .card-basket {
     border: solid 2px #24262b;
     border-radius: 8px;
-    background-color: lightgreen;
+    background-color: forestgreen;
     padding-left: 5px;
     padding-right: 5px;
     font-size: 0.75rem;
@@ -98,7 +130,7 @@
 }
 
 .card-basket:hover {
-    background-color: #00cc00; /* or any greener shade you prefer */
+    background-color: #00cc00;
     color: white !important;
 }
 
@@ -110,8 +142,11 @@
     box-shadow: 0 0 0 3px darkred;
 }
 
-    .cardHREF:hover .card-img-top {
+    .cardHREF:hover .card-img-format {
         transform: scale(1.05);
+    }
+    .cardHREF:hover .card-img-cover {
+        transform: translate(31.1%, 10%) scale(1.05);
     }
 
     .cardHREF:hover .card-artist,
