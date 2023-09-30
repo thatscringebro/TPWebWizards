@@ -10,34 +10,10 @@
     margin: 20px 0;
 }
 
-.h-100 {
-    margin-bottom: 20px;
-}
-
 .partners img {
     width: 300px;
     max-width: 150px;
     margin-bottom: 20px;
-}
-
-.featured-products img {
-    margin-top: 20px;
-}
-
-.new-vinyl img {
-    margin-top: 20px;
-}
-
-.used-vinyl img {
-    margin-top: 20px;
-}
-
-.new-compact-disc img {
-    margin-top: 20px;
-}
-
-.used-compact-disc img {
-    margin-top: 20px;
 }
 
 .slogan {
@@ -64,9 +40,7 @@
 }
 
 .card-divider {
-    width: 2px; /* Adjust the width as needed */
-    color: red; /* Adjust the color as needed */
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 .card-info, .card-purchase {
@@ -74,6 +48,7 @@
 }
 
 .card-img-top {
+    margin-top: 20px;
     transition: transform 0.3s ease;
     max-height: 200px;
     object-fit: contain;
@@ -87,12 +62,12 @@
 }
 
 .card-artist {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
 }
 
 .card-album {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-style: italic;
 }
 
@@ -118,7 +93,13 @@
     padding-left: 5px;
     padding-right: 5px;
     font-size: 0.75rem;
+    color: white !important;
     white-space: nowrap;
+}
+
+.card-basket:hover {
+    background-color: #00cc00; /* or any greener shade you prefer */
+    color: white !important;
 }
 
 .card-info {
@@ -131,7 +112,6 @@
 
     .cardHREF:hover .card-img-top {
         transform: scale(1.05);
-        color: darkred;
     }
 
     .cardHREF:hover .card-artist,
