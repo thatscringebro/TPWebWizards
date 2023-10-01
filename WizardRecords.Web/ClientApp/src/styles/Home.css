@@ -67,10 +67,9 @@ h3 {
 
 .card-img-format {
     position: relative;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 25px;
+    margin-left: 25px;
     transition: transform 0.3s ease;
-    min-height: 200px;
     object-fit: contain;
     width: 100%;
 }
@@ -80,9 +79,9 @@ h3 {
     transition: transform 0.3s ease;
     top: 0px;
     left: 0px;
-    transform: translate(31.1%, 10%);
+    transform: translate(33.33%, 15%);
     width: 100%;
-    max-width: 54.5%; /* or the maximum width you want */
+    max-width: 53.8%; /* or the maximum width you want */
     height: contain; /* it will automatically maintain the aspect ratio */
 }
 
@@ -146,7 +145,7 @@ h3 {
         transform: scale(1.05);
     }
     .cardHREF:hover .card-img-cover {
-        transform: translate(31.1%, 10%) scale(1.05);
+        transform: translate(33.33%, 15%) scale(1.05);
     }
 
     .cardHREF:hover .card-artist,

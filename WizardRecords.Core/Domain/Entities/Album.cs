@@ -22,6 +22,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public Grade? MediaGrade { get; set; } // Category == USED only!
         public Grade? SleeveGrade { get; set; } // Category == USED only!
         public string? Comments { get; set; }
+        public string ImageFilePath { get; set; }
 
         internal Album() { }
 
