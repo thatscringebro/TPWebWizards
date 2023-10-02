@@ -17,8 +17,8 @@ namespace WizardRecords.Core.Domain.Entities {
         public string? CatalogNumber { get; set; } // TODO: Remove nullability
         public Category? Category { get; set; } // NEW ? USED
         public MediaType? Media { get; set; } // CD ? LP 
-        public FormatType? Format { get; set; } // Precisions on the media (Single, EP, 7", 10", 12", etc.)
-        public AlbumGenre? AlbumGenre { get; set; } // Precision on the genre of the album
+        public FormatType? Format { get; set; } // Media type precisions (Single, EP, 7", 10", 12", etc.)
+        public AlbumGenre? AlbumGenre { get; set; } // Album genre precisions (Fusion, Ambient, Reggae, etc.)
         public Grade? MediaGrade { get; set; } // Category == USED only!
         public Grade? SleeveGrade { get; set; } // Category == USED only!
         public string? Comments { get; set; }
@@ -26,13 +26,14 @@ namespace WizardRecords.Core.Domain.Entities {
 
         internal Album() { }
 
-        public Album(int albumId, int artistId, int qty, float price, string title, MediaType mediaType) {
+        public Album(int albumId, int artistId, int qty, float price, string title, MediaType mediaType, string imgPath) {
             AlbumId = albumId;
             ArtistId = artistId;
             StockQuantity = qty;
             Price = price;
             Title = title;
             Media = mediaType;
+            ImageFilePath = imgPath;
         }
 
     }

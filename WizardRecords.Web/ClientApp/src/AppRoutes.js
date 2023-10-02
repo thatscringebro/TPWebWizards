@@ -1,11 +1,17 @@
 import AboutUs from "./components/Aboutus";
-import ContactForm from "./components/ContactUs";
-import { Home } from "./components/Home";
+import ContactForm  from "./components/ContactUs";
+import Detail from "./components/Detail";
+import Home from "./components/Home";
 
 const AppRoutes = [
     {
-        index: true,
-        element: <Home />
+        path: '/',
+        element: <Home />,
+        exact: true
+    },
+    {
+        path: '/detail/:id',
+        element: <Detail />
     },
     {
         path: '/aboutus',

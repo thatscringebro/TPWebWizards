@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import Carousel from "../components/Carousel";
-import { FeaturedProducts, NewVinyl, NewCDs, UsedVinyl, UsedCDs } from './ProductTemplate';
-import { Container, Row, Col } from 'reactstrap';
-import '../styles/Home.css';
+import React, { Component } from 'react'
+import Carousel from "../components/Carousel"
+import { FeaturedProducts, NewVinyl, NewCDs, UsedVinyl, UsedCDs } from './ProductTemplate'
+import { Container, Row, Col } from 'reactstrap'
+import '../styles/Home.css'
 import '../styles/Fonts.css'
 
-export class Home extends Component {
+class Home extends Component {
     render() {
         return (
             <div>
@@ -60,3 +60,4 @@ export class Home extends Component {
     }
 }
 
+export default Home;

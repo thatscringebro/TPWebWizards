@@ -17,9 +17,6 @@ class ContactForm extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Asynchronous validation logic here
-        // For the sake of this example, let's assume we need the name and email to be filled in.
         const errors = {};
 
         if (!this.state.formData.name.trim()) {
@@ -35,7 +32,7 @@ class ContactForm extends Component {
         this.setState({ errors });
 
         if (!Object.keys(errors).length) {
-            console.log('Form is valid!'); // Or do whatever you need on valid submission
+            console.log('Form is valid!');
         }
     }
 

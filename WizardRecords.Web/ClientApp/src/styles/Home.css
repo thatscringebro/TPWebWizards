@@ -81,8 +81,8 @@ h3 {
     left: 0px;
     transform: translate(33.33%, 15%);
     width: 100%;
-    max-width: 53.8%; /* or the maximum width you want */
-    height: contain; /* it will automatically maintain the aspect ratio */
+    max-width: 53.8%; 
+    height: contain; 
 }
 
 .card-artist, .card-album {

@@ -37,10 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\components\Images\AlbumCovers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WizardRecords.Core\WizardRecords.Core.csproj" />
   </ItemGroup>
 

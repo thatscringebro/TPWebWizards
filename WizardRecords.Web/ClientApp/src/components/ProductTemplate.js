@@ -1,9 +1,10 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 
 const Product = ({ product }) => (
     <Col md={4} className="d-flex mb-4">
-        <a href={`/product/${product.id}`} className="cardHREF card-width">
+        <Link to={`/detail/${product.id}`} className="cardHREF card-width">
             <Card className="h-100">
                 <CardImg top className="card-img-format" src={require(`./Images/CoverTemplate/${product.format}`)} alt={product.format} />
                 <CardImg top className="card-img-cover" src={require(`./Images/AlbumCovers/${product.cover}`)} alt={product.cover} />
@@ -19,7 +20,7 @@ const Product = ({ product }) => (
                     </div>
                 </CardBody>
             </Card>
-        </a>
+        </Link>
     </Col>
 );
 
@@ -84,7 +85,7 @@ const UsedVinyl = () => {
 const UsedCDs = () => {
     const products = [
         { id: 1, artistName: 'Fushitsusha', albumTitle: '1st', price: '99.99', format: 'CDBase.png', cover: 'fushitsusha_1st.jpg' },
-        { id: 2, artistName: 'Three Days Grace', albumTitle: 'One-X', price: '19.99', format: 'CDBase.png', cover: 'tree_days_grace_one_x.jpg' },
+        { id: 2, artistName: 'Three Days Grace', albumTitle: 'One-X', price: '19.99', format: 'CDBase.png', cover: 'three_days_grace_one_x.jpg' },
         { id: 3, artistName: 'Fall Out Boy', albumTitle: 'From Under The Cork Tree', price: '14.99', format: 'CDBase.png', cover: 'fall_out_boy_from_under_the_cork_tree.jpg' }
 
     ];
