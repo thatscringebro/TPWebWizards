@@ -195,14 +195,6 @@ namespace WizardRecords.Repositories {
             return albumsByArtist.AsEnumerable();
         }
 
-        public Album GetAlbumById(int albumId) {
-            var albumById = _albums.Find(a => a.AlbumId == albumId);
-            if (albumById == null) {
-                throw new ArgumentException($"Album with id {albumId} not found");
-            }
-            return albumById;
-        }
-
         public IEnumerable<Album> GetAlbumsByGenre(AlbumGenre albumGenre) {
             var albumsByGenre = _albums.Where(a => a.AlbumGenre == albumGenre);
             if (albumsByGenre.Count() == 0) {
@@ -227,12 +219,26 @@ namespace WizardRecords.Repositories {
             return albumsByCategory.AsEnumerable();
         }
 
+        public Album GetAlbumById(int albumId) {
+            var albumById = _albums.Find(a => a.AlbumId == albumId);
+            if (albumById == null) {
+                throw new ArgumentException($"Album with id {albumId} not found");
+            }
+            return albumById;
+        }
+
         public Album GetAlbumByTitle(string title) {
             var albumByTitle = _albums.Find(a => a.Title == title);
             if (albumByTitle == null) {
                 throw new ArgumentException($"Album with title {title} not found");
             }
             return albumByTitle;
+        }
+
+        public Album GetRandomAlbum() {
+            Random rdm = new Random();
+            int rdmAlbumId = rdm.Next(1, _albums.Count());
+            return GetAlbumById(rdmAlbumId);
         }
 
         // TODO: Sort by price, sort alphabetically, etc.

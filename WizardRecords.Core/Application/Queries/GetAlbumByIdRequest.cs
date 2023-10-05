@@ -6,14 +6,14 @@ namespace WizardRecords.Core.Application.Queries {
     public record GetAlbumByIdRequest(int albumId) : IRequest<Album>;
 
     public class GetAlbumByIdHandler : IRequestHandler<GetAlbumByIdRequest, Album> {
-        private readonly IAlbumRepository _repository;
+        private readonly IAlbumRepository _albumRepository;
 
-        public GetAlbumByIdHandler(IAlbumRepository repository) {
-            _repository = repository;
+        public GetAlbumByIdHandler(IAlbumRepository albumRepository) {
+            _albumRepository = albumRepository;
         }
 
         public Task<Album> Handle(GetAlbumByIdRequest request, CancellationToken cancellationToken) {
-            var album = _repository.GetAlbumById(request.albumId);
+            var album = _albumRepository.GetAlbumById(request.albumId);
             return Task.FromResult(album);
         }
     }

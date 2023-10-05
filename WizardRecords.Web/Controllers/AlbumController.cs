@@ -22,10 +22,32 @@ namespace WizardRecords.Controllers {
         public ActionResult<AlbumDetails> GetAlbumById(int id) {
             try {
                 var album = _albumRepository.GetAlbumById(id);
-                return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
+
+                if (album != null) {
+                    return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
+                }
+                else {
+                    return NotFound($"Album with ID {id} not found.");
+                }
             }
-            catch (Exception) {
-                return Problem();
+            catch (Exception ex) {
+                return Problem($"An error occurred while fetching the album: {ex.Message}");
+            }
+        }
+
+        [HttpGet("random")]
+        public ActionResult<AlbumDetails> GetRandomAlbum() {
+            try {
+                var album = _albumRepository.GetRandomAlbum();
+                if (album != null) {
+                    return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
+                }
+                else {
+                    return NotFound("No albums found.");
+                }
+            }
+            catch (Exception ex) {
+                return Problem($"An error occurred while fetching a random album: {ex.Message}");
             }
         }
     }

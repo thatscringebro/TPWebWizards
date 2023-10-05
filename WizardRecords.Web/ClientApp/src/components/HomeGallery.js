@@ -13,14 +13,13 @@ const Product = ({ product }) => {
         formatImageSrc = require(`./Images/CoverTemplate/${product.format}`);
     } catch (err) {
         console.error(`Error requiring format image for ${product.format}`, err);
-        formatImageSrc = './Images/SkullOops.png'; // default image or some placeholder
     }
 
     try {
         coverImageSrc = require(`./Images/AlbumCovers/${product.cover}`);
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
-        coverImageSrc = './Images/SkullOops.png'; // default image or some placeholder
+        coverImageSrc = './Images/CoverTemplate/SkullOops.png';
     }
 
     return (
@@ -46,28 +45,6 @@ const Product = ({ product }) => {
     );
 };
 
-//const Product = ({ product }) => 
-//    <Col md={4} className="d-flex mb-4">
-//        <Link to={`/detail/${product.id}`} className="cardHREF card-width">
-//            <Card className="h-100">
-//                <CardImg top className="card-img-format" src={require(`./Images/CoverTemplate/${product.format}`)} alt={product.format} />
-//                <CardImg top className="card-img-cover" src={require(`./Images/AlbumCovers/${product.cover}`)} alt={product.cover} />
-//                <CardBody className="card-body">
-//                    <div className="card-info">
-//                        <CardTitle className="card-artist">{product.artistName}</CardTitle>
-//                        <CardSubtitle className="card-album">{product.albumTitle}</CardSubtitle>
-//                    </div>
-//                    <div className="card-divider"></div>
-//                    <div className="card-purchase">
-//                        <CardTitle className="card-price"><b>${product.price}</b></CardTitle>
-//                        <CardSubtitle className="card-basket">Add to basket</CardSubtitle>
-//                    </div>
-//                </CardBody>
-//            </Card>
-//        </Link>
-//    </Col>
-//);
-
 const ProductList = ({ title, products = [] }) => (
     <section className={`product-list section-${title.replace(/\s+/g, '-').toLowerCase()}`}>
         <Container>
@@ -91,7 +68,7 @@ function HomeGallery() {
     const [usedVinyl, setUsedVinyl] = useState([]);
     const [usedCDs, setUsedCDs] = useState([]);
 
-    const fetchDataForCategory = (category, albumIds) => {
+    const fetchDataForCategory = (category, count) => {
         const apiUrl = `${API_BASE_URL}/album`;
 
         const getArtistNameById = (artistId) => {
@@ -104,10 +81,9 @@ function HomeGallery() {
                 });
         };
 
-        const albumPromises = albumIds.map((albumId) =>
-            axios.get(`${apiUrl}/${albumId}`)
+        const albumPromises = Array.from({ length: count }).map(() =>
+            axios.get(`${apiUrl}/random`)
                 .then(async (response) => {
-                    console.log(`Response for album ${albumId}:`, response.data);
                     if (response.status === 200) {
                         const album = response.data;
                         const artistName = await getArtistNameById(album.artistId);
@@ -120,12 +96,8 @@ function HomeGallery() {
                             price: album.price.toFixed(2)
                         };
                     } else {
-                        throw new Error(`Request for album ${albumId} failed with status: ${response.status}`);
+                        throw new Error(`Failed to fetch random album with status: ${response.status}`);
                     }
-                })
-                .catch((error) => {
-                    console.error(`Error fetching album ${albumId}:`, error);
-                    return null;
                 })
         );
 
@@ -133,20 +105,20 @@ function HomeGallery() {
     };
 
     useEffect(() => {
-        fetchDataForCategory('featuredProducts', [1, 2, 3])
-            .then((data) => setFeaturedProducts(data.filter(Boolean)));
+        fetchDataForCategory('featuredProducts', 3)
+            .then((data) => setFeaturedProducts(data));
 
-        fetchDataForCategory('newVinyl', [4, 5, 6])
-            .then((data) => setNewVinyl(data.filter(Boolean)));
+        fetchDataForCategory('newVinyl', 3)
+            .then((data) => setNewVinyl(data));
 
-        fetchDataForCategory('newCDs', [7, 8, 9])
-            .then((data) => setNewCDs(data.filter(Boolean)));
+        fetchDataForCategory('newCDs', 3)
+            .then((data) => setNewCDs(data));
 
-        fetchDataForCategory('usedVinyl', [10, 11, 12])
-            .then((data) => setUsedVinyl(data.filter(Boolean)));
+        fetchDataForCategory('usedVinyl', 3)
+            .then((data) => setUsedVinyl(data));
 
-        fetchDataForCategory('usedCDs', [13, 14, 15])
-            .then((data) => setUsedCDs(data.filter(Boolean)));
+        fetchDataForCategory('usedCDs', 3)
+            .then((data) => setUsedCDs(data));
     }, []);
 
     return (

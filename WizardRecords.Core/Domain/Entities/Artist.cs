@@ -7,7 +7,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public string? FirstName { get; set; } // Serviront plus pour l'entré de données
         public ArtistGenre? ArtistGenre { get; set; } // The "section" of the artist in the store
         public bool IsBandOrSingleName { get; set; } // Serviront plus pour l'entré de données
-        public string ArtistName { get; set; }
+        public string? ArtistName { get; set; }
 
         internal Artist() { }
 
