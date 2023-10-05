@@ -1,20 +1,32 @@
-﻿import React from 'react';
+﻿import React, {  useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FeaturedProducts, NewVinyl, NewCDs, UsedVinyl, UsedCDs } from './ProductTemplate'
+import axios from 'axios';
 import '../styles/Detail.css';
 
 const Detail = () => {
     const { id } = useParams();
-    const product = products.find(p => p.id === parseInt(id, 10));
+    const [product, setProduct] = useState(null);
 
-    if (!product) return <div>Product not found</div>;
+    useEffect(() => {
+        axios.get(`/album/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    setProduct(response.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, [id]);
+
+    if (!product) return <div>Loading...</div>;
 
     return (
         <div className="detail-main">
             <p>Product : {product.id}</p>
             <p>Artist : {product.artistName}</p>
             <p>Album : {product.albumTitle}</p>
-            <p>Price : {product.price}</p>
+            <p>Price : ${product.price}</p>
             <img src={require(`./Images/AlbumCovers/${product.cover}`)} alt={`${product.albumTitle} cover`} />
         </div>
     );

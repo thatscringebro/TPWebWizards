@@ -114,7 +114,7 @@ namespace WizardRecords.Repositories {
             new Album(102, 66, 1, 24.99f, "Nonagon Infinity", MediaType.VINYL, "king_gizzard_and_the_lizard_wizard_nonagon_infinity.jpg"),
             new Album(103, 66, 1, 24.99f, "I\'m In Your Mind Fuzz", MediaType.VINYL, "king_gizzard_and_the_lizard_wizard_im_in_your_mind_fuzz.jpg"),
             new Album(104, 66, 1, 24.99f, "Infest The Rats\' Nest", MediaType.VINYL, "king_gizzard_and_the_lizard_wizard_infest_the_rats_nest.jpg"),
-            new Album(105, 66, 1, 24.99f, "Petrodragonic Apocalypse; Or, Dawn Of Eternal Night: An Annihilation Of Planet Earth And The Beginning Of Merciless Damnation", MediaType.VINYL, ""),
+            new Album(105, 66, 1, 24.99f, "Petrodragonic Apocalypse; Or, Dawn Of Eternal Night: An Annihilation Of Planet Earth And The Beginning Of Merciless Damnation", MediaType.VINYL, "king_gizzard_and_the_lizard_wizard_petradragonic.jpg"),
             new Album(106, 66, 1, 29.99f, "Float Along - Fill Your Lungs", MediaType.VINYL, "king_gizzard_and_the_lizard_wizard_float_along_fill_your_lungs.jpg"),
             new Album(107, 67, 1, 44.99f, "Face Stabber", MediaType.VINYL, "thee_oh_sees_face_stabber.jpg"),
             new Album(108, 68, 2, 29.99f, "Elephant", MediaType.VINYL, "white_stripes_elephant.jpg"),
@@ -185,14 +185,22 @@ namespace WizardRecords.Repositories {
             new Album(171, 98, 3, 29.99f, "Lemonade", MediaType.CD, "beyonce_lemonade.jpg"),
         };
 
-        public IEnumerable<Album> GetAllAlbums() => _albums;
+        public IEnumerable<Album> GetAllAlbums() => _albums.AsEnumerable();
 
         public IEnumerable<Album> GetAlbumsByArtistId(int artistId) {
-            var albumsByArtist = _albums.Where(a => a.ArtistId == artistId);
-            if (albumsByArtist.Count() == 0) {
+            var albumsByArtist = _albums.Where(a => a.ArtistId == artistId).ToList();
+            if (!albumsByArtist.Any()) {
                 throw new ArgumentException($"No albums found for artist {artistId}");
             }
-            return _albums.Where(a => a.ArtistId == artistId);
+            return albumsByArtist.AsEnumerable();
+        }
+
+        public Album GetAlbumById(int albumId) {
+            var albumById = _albums.Find(a => a.AlbumId == albumId);
+            if (albumById == null) {
+                throw new ArgumentException($"Album with id {albumId} not found");
+            }
+            return albumById;
         }
 
         public IEnumerable<Album> GetAlbumsByGenre(AlbumGenre albumGenre) {
@@ -200,15 +208,7 @@ namespace WizardRecords.Repositories {
             if (albumsByGenre.Count() == 0) {
                 throw new ArgumentException($"No albums found for genre {albumGenre}");
             }
-            return albumsByGenre;
-        }
-
-        public IEnumerable<Album> GetAlbumsByCategory(Category albumCategory) {
-            var albumsByCategory = _albums.Where(a => a.Category == albumCategory);
-            if (albumsByCategory.Count() == 0) {
-                throw new ArgumentException($"No albums found for category {albumCategory}");
-            }
-            return albumsByCategory;
+            return albumsByGenre.AsEnumerable();
         }
 
         public IEnumerable<Album> GetAlbumsByMediaType(MediaType albumMediaType) {
@@ -216,23 +216,23 @@ namespace WizardRecords.Repositories {
             if (albumsByMediaType.Count() == 0) {
                 throw new ArgumentException($"No albums found for media type {albumMediaType}");
             }
-            return albumsByMediaType;
+            return albumsByMediaType.AsEnumerable();
         }
 
-        public Album GetAlbumById(int albumId) {
-            var album = _albums.Find(a => a.AlbumId == albumId);
-            if (album == null) {
-                throw new ArgumentException($"Album with id {albumId} not found");
+        public IEnumerable<Album> GetAlbumsByCategory(Category albumCategory) {
+            var albumsByCategory = _albums.Where(a => a.Category == albumCategory);
+            if (albumsByCategory.Count() == 0) {
+                throw new ArgumentException($"No albums found for category {albumCategory}");
             }
-            return album;
+            return albumsByCategory.AsEnumerable();
         }
 
         public Album GetAlbumByTitle(string title) {
-            var album = _albums.Find(a => a.Title== title);
-            if (album == null) {
-                throw new ArgumentException($"Album with id {title} not found");
+            var albumByTitle = _albums.Find(a => a.Title == title);
+            if (albumByTitle == null) {
+                throw new ArgumentException($"Album with title {title} not found");
             }
-            return album;
+            return albumByTitle;
         }
 
         // TODO: Sort by price, sort alphabetically, etc.

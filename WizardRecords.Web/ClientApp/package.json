@@ -1,9 +1,11 @@
 {
-  "name": "my_new_app",
+  "name": "wizard_records",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
+    "axios": "^1.5.1",
+    "react-icons": "^4.11.0",
     "bootstrap": "^5.2.3",
     "http-proxy-middleware": "^2.0.6",
     "jquery": "^3.6.4",

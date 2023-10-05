@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WizardRecords.Core.Data {
+﻿namespace WizardRecords.Core.Data {
     public class Constants {
         // Détermine le format du nom de l'artiste à utiliser et afficher en conséquence
         public enum ArtistType {

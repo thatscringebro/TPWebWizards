@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static WizardRecords.Core.Data.Constants;
+﻿using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Core.Domain.Entities {
     public class Artist {

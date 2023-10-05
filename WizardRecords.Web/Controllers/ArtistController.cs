@@ -2,8 +2,7 @@
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
-namespace WizardRecords.Controllers
-{
+namespace WizardRecords.Controllers {
     [ApiController]
     [Route("api/artist")]
     public class ArtistController : ControllerBase {

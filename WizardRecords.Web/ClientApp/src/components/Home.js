@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import Carousel from "../components/Carousel"
-import { FeaturedProducts, NewVinyl, NewCDs, UsedVinyl, UsedCDs } from './ProductTemplate'
-import { Container, Row, Col } from 'reactstrap'
-import '../styles/Home.css'
-import '../styles/Fonts.css'
+import React, { Component } from 'react';
+import Carousel from "../components/Carousel";
+import HomeGallery from './HomeGallery';
+import { Container, Row, Col } from 'reactstrap';
+import '../styles/Home.css';
+import '../styles/Fonts.css';
 
 class Home extends Component {
     render() {
@@ -17,32 +17,14 @@ class Home extends Component {
                     </Carousel>
                 </div>
 
-                <hr className="divider" />
-
-                <FeaturedProducts />
-
-                <hr className="divider" />
-
-                <NewVinyl />
-
-                <hr className="divider" />
-
-                <NewCDs />
-
-                <hr className="divider" />
-
-                <UsedVinyl />
-
-                <hr className="divider" />
-
-                <UsedCDs />
+                <HomeGallery />
 
                 <hr className="divider" />
 
                 <section className="partners">
                     <Container>
                         <h4>Our Partners</h4>
-                    <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Row style={{ display: 'flex', justifyContent: 'center' }}>
                             <Col md={2}>
                                 <img src="../../../Images/Partners/adisq.png" alt="Partner 1" />
                             </Col>

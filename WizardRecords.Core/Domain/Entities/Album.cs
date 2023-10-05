@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using static WizardRecords.Core.Data.Constants;
+﻿using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Core.Domain.Entities {
     public class Album {
@@ -22,7 +16,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public Grade? MediaGrade { get; set; } // Category == USED only!
         public Grade? SleeveGrade { get; set; } // Category == USED only!
         public string? Comments { get; set; }
-        public string ImageFilePath { get; set; }
+        public string? ImageFilePath { get; set; }
 
         internal Album() { }
 

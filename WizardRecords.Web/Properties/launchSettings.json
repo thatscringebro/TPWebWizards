@@ -3,15 +3,15 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:43893",
+      "applicationUrl": "https://localhost:43893",
       "sslPort": 44353
     }
   },
   "profiles": {
-    "WizardRecords.Web": {
+    "WizardRecords": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7239;http://localhost:5113",
+      "applicationUrl": "https://localhost:44415;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
