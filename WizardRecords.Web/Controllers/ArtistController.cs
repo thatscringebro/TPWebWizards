@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Dtos;
 using WizardRecords.Repositories;
 
 namespace WizardRecords.Controllers {
     [ApiController]
-    [Route("api/artist")]
+    [Route("[controller]")]
     public class ArtistController : ControllerBase {
         private readonly IArtistRepository _artistRepository;
 
@@ -12,9 +12,21 @@ namespace WizardRecords.Controllers {
             _artistRepository = artistRepository;
         }
 
-        [HttpGet("all")]
-        public IEnumerable<Artist> GetArtists() {
-            return _artistRepository.GetAllArtists();
+        [HttpGet]
+        public ActionResult<IEnumerable<ArtistDetails>> GetAllArtists() {
+            var artists = _artistRepository.GetAllArtists().Select(a => new ArtistDetails(a.ArtistId, a.ArtistName, a.IsBandOrSingleName, (Core.Data.Constants.ArtistGenre)a.ArtistGenre!));
+            return Ok(artists);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<ArtistDetails> GetAlbumById(int id) {
+            try {
+                var artist = _artistRepository.GetArtistById(id);
+                return Ok(new ArtistDetails(artist.ArtistId, artist.ArtistName, artist.IsBandOrSingleName, (Core.Data.Constants.ArtistGenre)artist.ArtistGenre!));
+            }
+            catch (Exception) {
+                return Problem();
+            }
         }
     }
 }

@@ -94,21 +94,30 @@ function HomeGallery() {
     const fetchDataForCategory = (category, albumIds) => {
         const apiUrl = `${API_BASE_URL}/album`;
 
-        console.log('API URL:', apiUrl);
+        const getArtistNameById = (artistId) => {
+            return axios.get(`${API_BASE_URL}/artist/${artistId}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.data.artistName;
+                    }
+                    throw new Error(`Failed to fetch artist name for id ${artistId}`);
+                });
+        };
 
         const albumPromises = albumIds.map((albumId) =>
             axios.get(`${apiUrl}/${albumId}`)
-                .then((response) => {
+                .then(async (response) => {
                     console.log(`Response for album ${albumId}:`, response.data);
                     if (response.status === 200) {
                         const album = response.data;
+                        const artistName = await getArtistNameById(album.artistId);
                         return {
                             id: album.albumId,
                             cover: album.imgPath,
-                            format: album.mediaType === 0 ? "VinylBase.png" : "CDBase.png",  // Assuming mediaType 1 is for vinyl
-                            artistName: album.artistId.toString(), // Just using the ArtistId as a string for now
+                            format: album.mediaType === 0 ? "VinylBase.png" : "CDBase.png",
+                            artistName: artistName,
                             albumTitle: album.title,
-                            price: album.price.toFixed(2)  // Format price to 2 decimal places
+                            price: album.price.toFixed(2)
                         };
                     } else {
                         throw new Error(`Request for album ${albumId} failed with status: ${response.status}`);

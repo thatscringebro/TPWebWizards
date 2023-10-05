@@ -189,7 +189,7 @@ namespace WizardRecords.Repositories {
 
         public IEnumerable<Album> GetAlbumsByArtistId(int artistId) {
             var albumsByArtist = _albums.Where(a => a.ArtistId == artistId).ToList();
-            if (!albumsByArtist.Any()) {
+            if (albumsByArtist.Count() == 0) {
                 throw new ArgumentException($"No albums found for artist {artistId}");
             }
             return albumsByArtist.AsEnumerable();
