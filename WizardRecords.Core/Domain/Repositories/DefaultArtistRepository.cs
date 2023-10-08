@@ -107,7 +107,9 @@ namespace WizardRecords.Repositories {
             new Artist(100, "Normand L\'Amour", false, ArtistGenre.FRANCOPHONE),
             new Artist(101, "Various", true, ArtistGenre.ELECTRONICA), // TODO: Determine how to deal with artist name for compilations
             new Artist(102, "Various", true, ArtistGenre.ALTERNATIVE),
-            new Artist(103, "Various", true, ArtistGenre.WORLD)
+            new Artist(103, "Various", true, ArtistGenre.WORLD),
+            new Artist(104, "Amon Düül II", true, ArtistGenre.ROCK),
+            new Artist(105, "b e g o t t e n 自杀", true, ArtistGenre.ELECTRONICA)
         };
 
         public IEnumerable<Artist> GetAllArtists() => _artists;

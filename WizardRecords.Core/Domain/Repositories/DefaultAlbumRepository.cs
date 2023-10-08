@@ -183,6 +183,8 @@ namespace WizardRecords.Repositories {
             new Album(169, 103, 1, 19.99f, "The Music Of Islam", MediaType.CD, "various_the_music_of_islam.jpg"),
             new Album(170, 74, 1, 19.99f, "Untitled", MediaType.VINYL, "led_zeppelin_untitled.jpg"),
             new Album(171, 98, 3, 29.99f, "Lemonade", MediaType.CD, "beyonce_lemonade.jpg"),
+            new Album(172, 104, 1, 49.99f, "Yeti", MediaType.VINYL, "amon_dull_ii_yeti.jpg"),
+            new Album(173, 105, 1, 34.99f, "(death cycle) - 死​亡​循​環", MediaType.VINYL, "begotten_death_cycle.jpg")
         };
 
         public IEnumerable<Album> GetAllAlbums() => _albums.AsEnumerable();

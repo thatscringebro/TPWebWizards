@@ -2,11 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 import '../styles/Carousel.css';
 
-const Carousel = (props) => {
-    const { children } = props
-
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [length, setLength] = useState(children.length)
+const Carousel = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const images = [
+        { src: require("./Images/Carousel/CarouselImage1.jpg"), alt: "placeholder1" },
+        { src: require("./Images/Carousel/CarouselImage2.jpg"), alt: "placeholder2" },
+        { src: require("./Images/Carousel/CarouselImage3.jpg"), alt: "placeholder3" },
+    ];
+    const length = images.length;
 
     const next = useCallback(() => {
         if (currentIndex < (length - 1)) {
@@ -25,19 +28,13 @@ const Carousel = (props) => {
     };
 
     useEffect(() => {
-        setLength(children.length)
-    }, [children])
-
-    useEffect(() => {
-        // Démarrez un intervalle pour changer automatiquement d'image toutes les 10 secondes (10000 ms)
         const interval = setInterval(() => {
-            next(); // Appelez la fonction next pour passer à l'image suivante
-        }, 7000); // Intervalle de 10 secondes
+            next();
+        }, 7000);
 
-        // Nettoyez l'intervalle lorsque le composant est démonté
         return () => {
             clearInterval(interval);
-        }
+        };
     }, [next]);
 
     return (
@@ -48,7 +45,9 @@ const Carousel = (props) => {
                 </button>
                 <div className="carousel-content-wrapper">
                     <div className="carousel-content" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                        {children}
+                        {images.map((image, index) => (
+                            <img key={index} src={image.src} alt={image.alt || 'carousel-image'} />
+                        ))}
                     </div>
                 </div>
                 <button onClick={next} className="right-arrow">
@@ -56,8 +55,9 @@ const Carousel = (props) => {
                 </button>
             </div>
         </div>
-    )
+    );
 }
+
 
 
 export default Carousel
