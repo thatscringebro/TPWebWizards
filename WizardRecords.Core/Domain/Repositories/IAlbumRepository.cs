@@ -10,6 +10,6 @@ namespace WizardRecords.Repositories {
         IEnumerable<Album> GetAlbumsByCategory(Category albumCategory);
         Album GetAlbumById(int albumId);
         Album GetAlbumByTitle(string title);
-        Album GetRandomAlbum();
+        Album GetRandomAlbum(MediaType? mediaType = null);
     }
 }

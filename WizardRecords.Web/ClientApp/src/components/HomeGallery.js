@@ -50,7 +50,7 @@ const ProductList = ({ title, products = [] }) => (
         <Container>
             <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>{title}</h1>
-                <h3><Link href={`/product/all`}>Click for more {'->'}</Link></h3>
+                <h3><Link to={`/product/all`}>Click for more {'->'}</Link></h3>
             </div>
             <Row>
                 {products.map(product => <Product key={product.id} product={product} />)}
@@ -68,7 +68,7 @@ function HomeGallery() {
     const [usedVinyl, setUsedVinyl] = useState([]);
     const [usedCDs, setUsedCDs] = useState([]);
 
-    const fetchDataForCategory = (category, count) => {
+    const fetchDataForCategory = (category, count, mediaType = null) => {
         const apiUrl = `${API_BASE_URL}/album`;
 
         const getArtistNameById = (artistId) => {
@@ -82,11 +82,12 @@ function HomeGallery() {
         };
 
         const albumPromises = Array.from({ length: count }).map(() =>
-            axios.get(`${apiUrl}/random`)
+            axios.get(`${apiUrl}/random`, { params: mediaType !== null ? { mediaType } : {} })
                 .then(async (response) => {
                     if (response.status === 200) {
                         const album = response.data;
                         const artistName = await getArtistNameById(album.artistId);
+
                         return {
                             id: album.albumId,
                             cover: album.imgPath,
@@ -95,7 +96,8 @@ function HomeGallery() {
                             albumTitle: album.title,
                             price: album.price.toFixed(2)
                         };
-                    } else {
+                    }
+                    else {
                         throw new Error(`Failed to fetch random album with status: ${response.status}`);
                     }
                 })
@@ -108,16 +110,16 @@ function HomeGallery() {
         fetchDataForCategory('featuredProducts', 3)
             .then((data) => setFeaturedProducts(data));
 
-        fetchDataForCategory('newVinyl', 3)
+        fetchDataForCategory('newVinyl', 3, 0)
             .then((data) => setNewVinyl(data));
 
-        fetchDataForCategory('newCDs', 3)
+        fetchDataForCategory('newCDs', 3, 1)
             .then((data) => setNewCDs(data));
 
-        fetchDataForCategory('usedVinyl', 3)
+        fetchDataForCategory('usedVinyl', 3, 0)
             .then((data) => setUsedVinyl(data));
 
-        fetchDataForCategory('usedCDs', 3)
+        fetchDataForCategory('usedCDs', 3, 1)
             .then((data) => setUsedCDs(data));
     }, []);
 

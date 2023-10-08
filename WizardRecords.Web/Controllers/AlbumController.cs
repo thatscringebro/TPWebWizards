@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WizardRecords.Dtos;
 using WizardRecords.Repositories;
+using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Controllers {
     [ApiController]
@@ -36,9 +37,9 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet("random")]
-        public ActionResult<AlbumDetails> GetRandomAlbum() {
+        public ActionResult<AlbumDetails> GetRandomAlbum([FromQuery] MediaType? mediaType) {
             try {
-                var album = _albumRepository.GetRandomAlbum();
+                var album = _albumRepository.GetRandomAlbum(mediaType);
                 if (album != null) {
                     return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
                 }

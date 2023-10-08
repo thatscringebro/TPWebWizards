@@ -237,10 +237,17 @@ namespace WizardRecords.Repositories {
             return albumByTitle;
         }
 
-        public Album GetRandomAlbum() {
+        public Album GetRandomAlbum(MediaType? mediaType = null) {
+            IEnumerable<Album> albumsByMediaType = _albums;
+
+            if (mediaType.HasValue) {
+                albumsByMediaType = _albums.Where(a => a.Media == mediaType.Value);
+            }
+
             Random rdm = new Random();
-            int rdmAlbumId = rdm.Next(1, _albums.Count());
-            return GetAlbumById(rdmAlbumId);
+            int rdmAlbumId = rdm.Next(1, albumsByMediaType.Count());
+
+            return albumsByMediaType.ElementAt(rdmAlbumId - 1);
         }
 
         // TODO: Sort by price, sort alphabetically, etc.
