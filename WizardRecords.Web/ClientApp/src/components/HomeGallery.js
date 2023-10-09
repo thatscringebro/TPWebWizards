@@ -2,6 +2,7 @@
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
 
@@ -10,21 +11,21 @@ const Product = ({ product }) => {
     console.log("Product cover:", product.cover); console.log("Product format:", product.format);
 
     try {
-        formatImageSrc = require(`./Images/CoverTemplate/${product.format}`);
+        formatImageSrc = require(`../../public/Images/CoverTemplate/${product.format}`);
     } catch (err) {
         console.error(`Error requiring format image for ${product.format}`, err);
     }
 
     try {
-        coverImageSrc = require(`./Images/AlbumCovers/${product.cover}`);
+        coverImageSrc = require(`../../public/Images/AlbumCovers/${product.cover}`);
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
-        coverImageSrc = './Images/CoverTemplate/SkullOops.png';
+        coverImageSrc = '../../public/Images/CoverTemplate/SkullOops.png';
     }
 
     return (
         <Col md={4} className="d-flex mb-4">
-            <Link to={`/detail/${product.id}`} className="cardHREF card-width">
+            <Link to={`/album/${product.id}`} className="cardHREF card-width">
                 <Card className="h-100">
                     <CardImg top className="card-img-format" src={formatImageSrc} alt={product.format} />
                     <CardImg top className="card-img-cover" src={coverImageSrc} alt={product.cover} />
@@ -50,7 +51,7 @@ const ProductList = ({ title, products = [] }) => (
         <Container>
             <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>{title}</h1>
-                <h3><Link to={`/product/all`}>Click for more {'->'}</Link></h3>
+                <h3><Link to={`/request/all`}>Click for more {'->'}</Link></h3>
             </div>
             <Row>
                 {products.map(product => <Product key={product.id} product={product} />)}
@@ -58,8 +59,6 @@ const ProductList = ({ title, products = [] }) => (
         </Container>
     </section>
 );
-
-const API_BASE_URL = 'https://localhost:44415';
 
 function HomeGallery() {
     const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -69,7 +68,6 @@ function HomeGallery() {
     const [usedCDs, setUsedCDs] = useState([]);
 
     const fetchDataForCategory = (category, count, mediaType = null) => {
-        const apiUrl = `${API_BASE_URL}/album`;
 
         const getArtistNameById = (artistId) => {
             return axios.get(`${API_BASE_URL}/artist/${artistId}`)
@@ -82,7 +80,7 @@ function HomeGallery() {
         };
 
         const albumPromises = Array.from({ length: count }).map(() =>
-            axios.get(`${apiUrl}/random`, { params: mediaType !== null ? { mediaType } : {} })
+            axios.get(`${API_BASE_URL}/album/random`, { params: mediaType !== null ? { mediaType } : {} })
                 .then(async (response) => {
                     if (response.status === 200) {
                         const album = response.data;

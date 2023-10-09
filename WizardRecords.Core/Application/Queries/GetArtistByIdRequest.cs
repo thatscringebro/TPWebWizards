@@ -8,7 +8,7 @@ using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
 namespace WizardRecords.Core.Application.Queries {
-    public record GetArtistByIdRequest(int artistId) : IRequest<Artist>;
+    public record GetArtistByIdRequest(Guid artistId) : IRequest<Artist>;
     
     public class GetArtistByIdHandler : IRequestHandler<GetArtistByIdRequest, Artist> {
         private readonly IArtistRepository _repository;

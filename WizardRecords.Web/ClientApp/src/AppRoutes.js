@@ -1,5 +1,6 @@
 import AboutUs from "./components/Aboutus";
-import ContactForm  from "./components/ContactUs";
+import ContactForm from "./components/ContactUs";
+import Login from "./components/Login";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
 
@@ -10,7 +11,7 @@ const AppRoutes = [
         exact: true
     },
     {
-        path: '/detail/:id',
+        path: '/album/:id',
         element: <Detail />
     },
     {
@@ -20,6 +21,10 @@ const AppRoutes = [
     {
         path: '/contactus',
         element: <ContactForm />
+    },
+    {
+        path: '/login',
+        element: <Login />
     }
 ];
 

@@ -3,7 +3,7 @@ using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
 namespace WizardRecords.Core.Application.Queries {
-    public record GetAlbumByIdRequest(int albumId) : IRequest<Album>;
+    public record GetAlbumByIdRequest(Guid albumId) : IRequest<Album>;
 
     public class GetAlbumByIdHandler : IRequestHandler<GetAlbumByIdRequest, Album> {
         private readonly IAlbumRepository _albumRepository;

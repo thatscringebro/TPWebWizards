@@ -2,10 +2,8 @@
     public class Constants {
         // Détermine le format du nom de l'artiste à utiliser et afficher en conséquence
         public enum ArtistType {
-            BAND_NAME,
-            PERSON_NAME,
-            COMPILATION,
-            SOUNDTRACK
+            INDIVIDUAL,
+            BAND
         }
 
         // Représente les section de la boutique, c'est à dire les genres principaux
@@ -58,23 +56,47 @@
             HARD,
             FUSION,
             PROG,
+            MODAL,
+            FREEJAZZ,
+            INDIE,
+            POSTBOP,
             ALTERNATIVE,
+            MINIMALIST,
             PSYCH,
+            HARDROCK,
+            FOLK,
+            RAP,
             GARAGE,
+            VAPORWAVE,
             ROCKABILLY,
             EXPERIMENTAL,
             INSTRUMENTAL,
             INDUSTRIAL,
+            SYNTHWAVE,
             KITSCH,
             REGGAE,
             NEWWAVE,
+            DOWNTEMPO,
+            ACOUSTIC,
             NEWAGE,
             OPERA,
+            STONER,
+            DOOM,
+            IDM,
+            TRIPHOP,
+            DEATHCORE,
+            DEATHMETAL,
+            METALCORE,
             HARDCORE,
+            MODERN,
             HOUSE,
+            BAROQUE,
+            ROMANTIC,
+            AFROBEAT,
             DANCE,
             AMBIENT,
             VARIETY,
+            GRUNGE,
             FRANCOPHONE,
             HISTORICAL,
             MUSICAL,
@@ -92,6 +114,7 @@
             RPM_78,
             LP,
             EP,
+            ALBUM,
             SINGLE,
             DOUBLE,
             FLEXIDISC,
@@ -102,7 +125,8 @@
             INCH_10,
             INCH_7,
             INCH_5,
-            INCH_3
+            INCH_3,
+            UNKNOWN // Avoid using this, for seeding purposes only
         }
 
         // Sert à donner une note à l'état de l'album et de la pochette (USAGÉ SEULEMENT)
@@ -114,7 +138,16 @@
             G_PLUS,
             G,
             F,
-            P
+            P,
+            UNKNOWN // Avoid using this, for seeding purposes only
+        }
+
+        public enum UserRole {
+            ADMIN,
+            MANAGER,
+            CLERK,
+            CLIENT,
+            GUEST
         }
     }
 }
