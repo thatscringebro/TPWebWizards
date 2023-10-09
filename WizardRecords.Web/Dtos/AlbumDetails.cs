@@ -4,7 +4,7 @@ namespace WizardRecords.Dtos {
     public record AlbumDetails (
         Guid AlbumId, 
         Guid ArtistId, 
-        Guid? LabelId,
+        Guid LabelId,
         string Title,
         int StockQuantity, 
         float Price,

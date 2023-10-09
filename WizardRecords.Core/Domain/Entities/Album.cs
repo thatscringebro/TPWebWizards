@@ -5,7 +5,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public Guid Id { get; set; }
         public Guid AlbumId { get; set; }
         public Guid ArtistId { get; set; }
-        public Guid? LabelId { get; set; }
+        public Guid LabelId { get; set; }
         public string Title { get; set; } = "";
         public int StockQuantity { get; set; }
         public float Price { get; set; }
@@ -24,7 +24,7 @@ namespace WizardRecords.Core.Domain.Entities {
 
         public Album(Guid albumId, 
                      Guid artistId, 
-                     Guid? labelId, 
+                     Guid labelId, 
                      string title, 
                      int stockQty, 
                      float price, 
@@ -38,6 +38,7 @@ namespace WizardRecords.Core.Domain.Entities {
                      string? matrixNumber, 
                      string? comments, 
                      string imgFilePath) {
+
             AlbumId = albumId;
             ArtistId = artistId;
             LabelId = labelId;
