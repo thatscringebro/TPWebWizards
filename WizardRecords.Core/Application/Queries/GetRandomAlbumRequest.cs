@@ -12,9 +12,12 @@ namespace WizardRecords.Core.Application.Queries {
             _albumRepository = albumRepository;
         }
 
-        public Task<Album> Handle(GetRandomAlbumRequest request, CancellationToken cancellationToken) {
-            var album = _albumRepository.GetRandomAlbum();
-            return Task.FromResult(album);
+        public async Task<Album> Handle(GetRandomAlbumRequest request, CancellationToken cancellationToken) {
+            var randomAlbum = await _albumRepository.GetRandomAlbumAsync();
+            if (randomAlbum == null) {
+                throw new InvalidOperationException("Album not found.");
+            }
+            return randomAlbum;
         }
     }
 }

@@ -6,8 +6,8 @@ using WizardRecords.Core.Data;
 
 namespace WizardRecords.Core {
     public class WizRecDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid> {
-        public new DbSet<User> Users { get; set; }
         public DbSet<Artist> Artists { get; set; }
+        public DbSet<Label> Labels { get; set; }
         public DbSet<Album> Albums { get; set; }
         public WizRecDbContext(DbContextOptions<WizRecDbContext> options) :
             base(options) {}

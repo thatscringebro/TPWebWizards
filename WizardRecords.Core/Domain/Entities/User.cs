@@ -16,6 +16,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public new string? UserName { get; set; }
         public new string? PhoneNumber { get; set; }
         public new string? Email { get; set; }
+        public bool IsInitialPwd { get; set; } = true;
         public new string? PasswordHash { get; set; }
         public string? PasswordSalt { get; set; }
         public UserRole UserRole { get; set; }

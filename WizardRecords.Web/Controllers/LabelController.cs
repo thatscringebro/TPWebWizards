@@ -13,15 +13,15 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<LabelDetails>> GetAllLabels() {
-            var labels = _labelRepository.GetAllLabels().Select(l => new LabelDetails(l.LabelId, l.Name, l.Country));
+        public async Task<ActionResult<IEnumerable<LabelDetails>>> GetAllLabels() {
+            var labels = (await _labelRepository.GetAllLabelsAsync()).Select(l => new LabelDetails(l.LabelId, l.Name, l.Country));
             return Ok(labels);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LabelDetails> GetLabelById(Guid id) {
+        public async Task<ActionResult<LabelDetails>> GetLabelById(Guid id) {
             try {
-                var label = _labelRepository.GetLabelById(id);
+                var label = await _labelRepository.GetLabelByIdAsync(id);
 
                 if (label != null) {
                     return Ok(new LabelDetails(label.LabelId, label.Name, label.Country));

@@ -3,13 +3,13 @@ using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Repositories {
     public interface IAlbumRepository {
-        IEnumerable<Album> GetAllAlbums();
-        IEnumerable<Album> GetAlbumsByArtistId(Guid artistId);
-        IEnumerable<Album> GetAlbumsByGenre(AlbumGenre albumGenre);
-        IEnumerable<Album> GetAlbumsByMediaType(MediaType albumMediaType);
-        IEnumerable<Album> GetAlbumsByCategory(Category albumCategory);
-        Album GetAlbumById(Guid albumId);
-        Album GetAlbumByTitle(string title);
-        Album GetRandomAlbum(MediaType? mediaType = null);
+        Task<IEnumerable<Album>> GetAllAlbumsAsync();
+        Task<IEnumerable<Album>> GetAlbumsByArtistIdAsync(Guid artistId);
+        Task<IEnumerable<Album>> GetAlbumsByGenreAsync(AlbumGenre albumGenre);
+        Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType albumMediaType);
+        Task<IEnumerable<Album>> GetAlbumsByCategoryAsync(Category albumCategory);
+        Task<Album> GetAlbumByIdAsync(Guid albumId);
+        Task<Album> GetAlbumByTitleAsync(string title);
+        Task<Album> GetRandomAlbumAsync(MediaType? mediaType = null, Category? category = null);
     }
 }

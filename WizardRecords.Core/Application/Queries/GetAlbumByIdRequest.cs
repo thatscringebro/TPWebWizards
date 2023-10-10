@@ -13,8 +13,11 @@ namespace WizardRecords.Core.Application.Queries {
         }
 
         public Task<Album> Handle(GetAlbumByIdRequest request, CancellationToken cancellationToken) {
-            var album = _albumRepository.GetAlbumById(request.albumId);
-            return Task.FromResult(album);
+            var albumById = _albumRepository.GetAlbumByIdAsync(request.albumId);
+            if (albumById == null) {
+                throw new InvalidOperationException($"No album found for id {request.albumId}");
+            }
+            return albumById;
         }
     }
 }

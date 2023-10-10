@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WizardRecords.Core.Domain.Entities;
 using static WizardRecords.Core.Data.Constants;
 
@@ -254,12 +249,7 @@ namespace WizardRecords.Core.Data {
                 new Label(Guid.NewGuid(), "Celestial Harmonies", "USA"), // 90
                 new Label(Guid.NewGuid(), "Purple Pyramid", "USA"),
                 new Label(Guid.NewGuid(), "Geometric Lullaby", "USA"),
-
-
-
-
             };
-
 
             var albums = new List<Album> {
                 new Album(Guid.NewGuid(), artists[0].Id, labels[0].Id, "After Dark", 2, 24.99f, Category.NEW, MediaType.CD, FormatType.ALBUM, AlbumGenre.SYNTHWAVE, null, null, null, null, null, "essenger_after_dark.jpg"),
@@ -438,11 +428,12 @@ namespace WizardRecords.Core.Data {
                 new Album(Guid.NewGuid(), artists[97].Id, labels[88].Id, "Total 7", 1, 34.99f, Category.USED, MediaType.CD, FormatType.ALBUM, AlbumGenre.IDM, null, null, null, null, null, "various_total_7.jpg"),
                 new Album(Guid.NewGuid(), artists[97].Id, labels[89].Id, "No Alternative", 1, 29.99f, Category.USED, MediaType.CD, FormatType.ALBUM, AlbumGenre.ALTERNATIVE, null, null, null, null, null, "various_no_alternative.jpg"),
                 new Album(Guid.NewGuid(), artists[97].Id, labels[90].Id, "The Music Of Islam", 1, 19.99f, Category.USED, MediaType.CD, FormatType.ALBUM, AlbumGenre.FOLK, null, null, null, null, null, "various_the_music_of_islam.jpg"),
-                new Album(Guid.NewGuid(), artists[98].Id, labels[91].Id, "Yeti", 1, 49.99f, Category.NEW, MediaType.VINYL, FormatType.LP, AlbumGenre.PSYCH, null, null, null, null, null, "amon_dull_ii_yeti.jpg"),
+                new Album(Guid.NewGuid(), artists[98].Id, labels[91].Id, "Yeti", 1, 49.99f, Category.NEW, MediaType.VINYL, FormatType.LP, AlbumGenre.PSYCH, null, null, null, null, null, "amon_duul_ii_yeti.jpg"),
                 new Album(Guid.NewGuid(), artists[99].Id, labels[92].Id, "(death cycle) - 死​亡​循​環", 1, 34.99f, Category.NEW, MediaType.VINYL, FormatType.LP, AlbumGenre.VAPORWAVE,  null, null, null, null, null, "begotten_death_cycle.jpg")
             };
 
             builder.Entity<Artist>().HasData(artists);
+            builder.Entity<Label>().HasData(labels);
             builder.Entity<Album>().HasData(albums);
         }
     }

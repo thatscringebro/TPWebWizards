@@ -1,15 +1,24 @@
-﻿using WizardRecords.Core.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WizardRecords.Core;
+using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
 namespace WizardRecords.Repositories {
     public class DefaultLabelRepository : ILabelRepository {
-        private readonly List<Label> _labels = new List<Label>();
+        private readonly WizRecDbContext _context;
 
-        public IEnumerable<Label> GetAllLabels() => _labels;
+        public DefaultLabelRepository(WizRecDbContext context) {
+            _context = context;
+        }
 
-        public Label? GetLabelById(Guid labelId) {
-            var label = _labels?.Find(l => l.LabelId == labelId);
-            return label;
+        public async Task<IEnumerable<Label>> GetAllLabelsAsync() => await _context.Labels.ToListAsync();
+
+        public async Task<Label> GetLabelByIdAsync(Guid labelId) {
+            var labelById = await _context.Labels.FirstOrDefaultAsync(l => l.LabelId == labelId);
+            if (labelById == null) {
+                throw new ArgumentException($"No artist found for id {labelId}");
+            }
+            return labelById;
         }
     }
 }

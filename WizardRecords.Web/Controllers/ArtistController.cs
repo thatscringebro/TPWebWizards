@@ -13,15 +13,15 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ArtistDetails>> GetAllArtists() {
-            var artists = _artistRepository.GetAllArtists().Select(a => new ArtistDetails(a.ArtistId, a.FirstName!, a.LastName!, a.DisplayName, (Core.Data.Constants.ArtistType)a.ArtistType!, (Core.Data.Constants.ArtistGenre)a.ArtistGenre!));
+        public async Task<ActionResult<IEnumerable<ArtistDetails>>> GetAllArtists() {
+            var artists = (await _artistRepository.GetAllArtistsAsync()).Select(a => new ArtistDetails(a.ArtistId, a.FirstName!, a.LastName!, a.DisplayName, (Core.Data.Constants.ArtistType)a.ArtistType!, (Core.Data.Constants.ArtistGenre)a.ArtistGenre!));
             return Ok(artists);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ArtistDetails> GetAlbumById(Guid id) {
+        public async Task<ActionResult<ArtistDetails>> GetAlbumById(Guid id) {
             try {
-                var artist = _artistRepository.GetArtistById(id);
+                var artist = await _artistRepository.GetArtistByIdAsync(id);
                 return Ok(new ArtistDetails(artist.ArtistId, artist.FirstName!, artist.LastName!, artist.DisplayName, (Core.Data.Constants.ArtistType)artist.ArtistType!, (Core.Data.Constants.ArtistGenre)artist.ArtistGenre!));
             }
             catch (Exception) {

@@ -12,9 +12,12 @@ namespace WizardRecords.Core.Application.Queries {
             _labelRepository = labelRepository;
         }
 
-        public Task<IEnumerable<Label>> Handle(GetAllLabelsRequest request, CancellationToken cancellationToken) {
-            var labels = _labelRepository.GetAllLabels();
-            return Task.FromResult(labels);
+        public async Task<IEnumerable<Label>> Handle(GetAllLabelsRequest request, CancellationToken cancellationToken) {
+            var allLabels = await _labelRepository.GetAllLabelsAsync();
+            if (!allLabels.Any()) {
+                throw new InvalidOperationException("No labels found.");
+            }
+            return allLabels;
         }
     }
 }

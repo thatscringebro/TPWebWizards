@@ -2,7 +2,7 @@
 
 namespace WizardRecords.Repositories {
     public interface ILabelRepository {
-        IEnumerable<Label> GetAllLabels();
-        Label? GetLabelById(Guid labelId);
+        Task<IEnumerable<Label>> GetAllLabelsAsync();
+        Task<Label> GetLabelByIdAsync(Guid labelId);
     }
 }

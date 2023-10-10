@@ -17,9 +17,12 @@ namespace WizardRecords.Core.Application.Queries {
             _repository = repository;
         }
 
-        public Task<Artist> Handle(GetArtistByIdRequest request, CancellationToken cancellationToken) {
-            var artist = _repository.GetArtistById(request.artistId);
-            return Task.FromResult(artist);
+        public async Task<Artist> Handle(GetArtistByIdRequest request, CancellationToken cancellationToken) {
+            var artistById = await _repository.GetArtistByIdAsync(request.artistId);
+            if (artistById == null) {
+                throw new InvalidOperationException("Artist not found.");
+            }
+            return artistById;
         }
     }
 }
