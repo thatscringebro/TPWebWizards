@@ -20,7 +20,6 @@ const Product = ({ product }) => {
         coverImageSrc = require(`../../public/Images/AlbumCovers/${product.cover}`);
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
-        coverImageSrc = '../../public/Images/CoverTemplate/SkullOops.png';
     }
 
     return (
@@ -68,7 +67,6 @@ function HomeGallery() {
     const [usedCDs, setUsedCDs] = useState([]);
 
     const fetchDataForCategory = (category, count, mediaType = null) => {
-
         const getArtistNameById = (artistId) => {
             return axios.get(`${API_BASE_URL}/artist/${artistId}`)
                 .then(response => {
@@ -86,16 +84,19 @@ function HomeGallery() {
                         const album = response.data;
                         const artistName = await getArtistNameById(album.artistId);
 
-                        return {
+                        const albumData = {
                             id: album.albumId,
-                            cover: album.imgPath,
+                            cover: album.imageFilePath,
                             format: album.mediaType === 0 ? "VinylBase.png" : "CDBase.png",
                             artistName: artistName,
                             albumTitle: album.title,
                             price: album.price.toFixed(2)
                         };
-                    }
-                    else {
+
+                        console.log(`Received album data:`, albumData); // Log the received data
+
+                        return albumData;
+                    } else {
                         throw new Error(`Failed to fetch random album with status: ${response.status}`);
                     }
                 })
