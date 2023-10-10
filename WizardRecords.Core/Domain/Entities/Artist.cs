@@ -3,17 +3,16 @@
 namespace WizardRecords.Core.Domain.Entities {
     public class Artist {
         public Guid Id { get; set; }
-        public Guid ArtistId { get; set; }
-        public string? LastName { get; set; } = string.Empty;
-        public string? FirstName { get; set; } 
-        public string? DisplayName { get; set; }
-        public ArtistType? ArtistType { get; set; }
-        public ArtistGenre? ArtistGenre { get; set; } 
+        public string LastName { get; set; } = "";
+        public string FirstName { get; set; } = "";
+        public string DisplayName { get; set; } = "";
+        public ArtistType ArtistType { get; set; } = ArtistType.UNDETERMINED;
+        public ArtistGenre ArtistGenre { get; set; } = ArtistGenre.UNDETERMINED;
 
         internal Artist() { }
 
-        public Artist(Guid artistId, string? firstName, string? lastName, string? displayName, ArtistType artistType, ArtistGenre artistGenre) {
-            ArtistId = artistId;
+        public Artist(Guid artistId, string firstName, string lastName, string displayName, ArtistType artistType, ArtistGenre artistGenre) {
+            Id = artistId;
             FirstName = firstName;
             LastName = lastName;
             DisplayName = displayName;

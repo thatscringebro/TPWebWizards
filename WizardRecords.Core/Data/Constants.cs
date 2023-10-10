@@ -3,7 +3,8 @@
         // Détermine le format du nom de l'artiste à utiliser et afficher en conséquence
         public enum ArtistType {
             INDIVIDUAL,
-            BAND
+            BAND,
+            UNDETERMINED
         }
 
         // Représente les section de la boutique, c'est à dire les genres principaux
@@ -24,7 +25,8 @@
             SOUL,
             FUNK,
             ELECTRONICA,
-            SOUNDTRACK
+            SOUNDTRACK,
+            UNDETERMINED
         }
 
         public enum MediaType {
@@ -139,7 +141,7 @@
             G,
             F,
             P,
-            UNKNOWN // Avoid using this, for seeding purposes only
+            NONE
         }
 
         public enum UserRole {

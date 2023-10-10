@@ -23,7 +23,7 @@ namespace WizardRecords.Repositories {
         }
 
         public async Task<Artist> GetArtistByIdAsync(Guid artistId) {
-            var artistById = await _context.Artists.FirstOrDefaultAsync(a => a.ArtistId == artistId);
+            var artistById = await _context.Artists.FirstOrDefaultAsync(a => a.Id == artistId);
             if (artistById == null) {
                 throw new ArgumentException($"No artist found for id {artistId}");
             }

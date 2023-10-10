@@ -45,7 +45,7 @@ namespace WizardRecords.Repositories {
         }
 
         public async Task<Album> GetAlbumByIdAsync(Guid albumId) {
-            var albumById = await _context.Albums.FirstOrDefaultAsync(a => a.AlbumId == albumId);
+            var albumById = await _context.Albums.FirstOrDefaultAsync(a => a.Id == albumId);
             if (albumById == null) {
                 throw new ArgumentException($"Album with id {albumId} not found");
             }
@@ -60,24 +60,16 @@ namespace WizardRecords.Repositories {
             return albumByTitle;
         }
 
-        public async Task<Album> GetRandomAlbumAsync(MediaType? mediaType, Category? category) {
-            var query = _context.Albums.AsQueryable();
-
-            if (mediaType.HasValue) {
-                query = query.Where(a => a.Media == mediaType.Value);
-            }
-
-            if (category.HasValue) {
-                query = query.Where(a => a.Category == category.Value);
-            }
+        public async Task<Album> GetRandomAlbumAsync(MediaType mediaType, Category category) {
+            var query = _context.Albums
+                .Where(a => a.Media == mediaType && a.Category == category);
 
             int count = await query.CountAsync();
             if (count == 0) {
-                throw new ArgumentException("No albums found");
+                throw new InvalidOperationException("Album not found.");
             }
 
             Random rdm = new Random();
-
             return await query.Skip(rdm.Next(0, count)).Take(1).FirstAsync();
         }
 

@@ -38,7 +38,9 @@ export class NavMenu extends Component {
                     <div class="container">
                         <div class="row justify-content-md-center">
                             <div class="col-md-auto">
-                                <NavbarBrand tag={Link} to="/"><img src={require("./Images/WizardRecords.png")} alt="logo" style={{ maxHeight: '50px', maxWidth: '250px' }} /></NavbarBrand>
+                                <NavbarBrand tag={Link} to="/">
+                                    <img src="/Images/WizardRecords.png" alt="logo" style={{ maxHeight: '50px', maxWidth: '250px' }} />
+                                </NavbarBrand>
                             </div>
                             <div class="col col-lg">
                                 <div className="input-group">
@@ -87,7 +89,7 @@ export class NavMenu extends Component {
                     <div class="container">
                         <div class="row justify-content-md-center">
                             <div class="col-md-auto">
-                                <NavbarBrand tag={Link} to="/"><img src={require("./Images/WizardRecords.png")} alt="logo" style={{ maxHeight: '50px', maxWidth: '250px' }} /></NavbarBrand>
+                                <NavbarBrand tag={Link} to="/"><img src="/Images/WizardRecords.png" alt="logo" style={{ maxHeight: '50px', maxWidth: '250px' }} /></NavbarBrand>
                             </div>
                             <section className="hero-banner">
                                 <Container>
