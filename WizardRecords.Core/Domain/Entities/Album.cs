@@ -5,19 +5,19 @@ namespace WizardRecords.Core.Domain.Entities {
         public Guid Id { get; set; }
         public Guid ArtistId { get; set; }
         public Guid LabelId { get; set; }
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = "-";
         public int StockQuantity { get; set; }
         public float Price { get; set; }
         public Category Category { get; set; } // NEW ? USED
         public MediaType Media { get; set; } // CD ? LP 
-        public FormatType Format { get; set; } // Media type precisions (Single, EP, 7", 10", 12", etc.)
-        public AlbumGenre AlbumGenre { get; set; } // Album genre precisions (Fusion, Ambient, Reggae, etc.)
+        public FormatType Format { get; set; } // Précision sur le format de base de l'album (LP 12", LP 10", LP 7", CD, etc.)
+        public AlbumGenre AlbumGenre { get; set; } // Précise le genre particulier de l'album
         public Grade MediaGrade { get; set; } = Grade.NONE; // Category == USED only!
         public Grade SleeveGrade { get; set; } = Grade.NONE; // Category == USED only!
-        public string CatalogNumber { get; set; } = "Unavailable"; // Category == USED only!
-        public string MatrixNumber { get; set; } = "Unavailable"; // Category == USED only!
-        public string Comments { get; set; } = "";
-        public string ImageFilePath { get; set; } = "";
+        public string CatalogNumber { get; set; } = "-"; // Category == USED only!
+        public string MatrixNumber { get; set; } = "-"; // Category == USED only!
+        public string Comments { get; set; } = "-";
+        public string ImageFilePath { get; set; } = "-";
 
         internal Album() {}
 

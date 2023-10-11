@@ -14,7 +14,7 @@ namespace WizardRecords.Core.Application.Queries {
         }
 
         public async Task<Album> Handle(GetRandomAlbumRequest request, CancellationToken cancellationToken) {
-            var randomAlbum = await _albumRepository.GetRandomAlbumAsync(request.MediaType, request.Category);
+            var randomAlbum = await _albumRepository.GetRandomAlbumAsync(request.MediaType);
             if (randomAlbum == null) {
                 throw new InvalidOperationException("Album not found.");
             }

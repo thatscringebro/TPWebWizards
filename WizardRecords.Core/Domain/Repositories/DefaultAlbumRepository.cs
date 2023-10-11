@@ -60,9 +60,9 @@ namespace WizardRecords.Repositories {
             return albumByTitle;
         }
 
-        public async Task<Album> GetRandomAlbumAsync(MediaType mediaType, Category category) {
+        public async Task<Album> GetRandomAlbumAsync(MediaType mediaType) {
             var query = _context.Albums
-                .Where(a => a.Media == mediaType && a.Category == category);
+                .Where(a => a.Media == mediaType);
 
             int count = await query.CountAsync();
             if (count == 0) {
@@ -72,7 +72,5 @@ namespace WizardRecords.Repositories {
             Random rdm = new Random();
             return await query.Skip(rdm.Next(0, count)).Take(1).FirstAsync();
         }
-
-        // TODO: Sort by price, sort alphabetically, etc.
     }
 }

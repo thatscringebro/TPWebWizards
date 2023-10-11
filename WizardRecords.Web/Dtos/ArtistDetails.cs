@@ -3,10 +3,7 @@
 namespace WizardRecords.Dtos {
     public record ArtistDetails (
         Guid ArtistId,
-        string FirstName,
-        string LastName,
-        string DisplayName,
-        ArtistType ArtistType,
+        string ArtistName,
         ArtistGenre ArtistGenre
     );
 }

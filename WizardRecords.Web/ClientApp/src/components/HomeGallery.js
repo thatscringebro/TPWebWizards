@@ -8,12 +8,10 @@ import '../styles/Fonts.css';
 
 const Product = ({ product }) => {
     let coverImageSrc, formatImageSrc;
-    console.log("Product cover:", product.cover); console.log("Product format:", product.format);
-
     try {
-        formatImageSrc = require(`../../public/Images/CoverTemplate/${product.format}`);
+        formatImageSrc = require(`../../public/Images/CoverTemplate/${product.mediaType}`);
     } catch (err) {
-        console.error(`Error requiring format image for ${product.format}`, err);
+        console.error(`Error requiring format image for ${product.mediaType}`, err);
     }
 
     try {
@@ -26,7 +24,7 @@ const Product = ({ product }) => {
         <Col md={4} className="d-flex mb-4">
             <Link to={`/album/${product.id}`} className="cardHREF card-width">
                 <Card className="h-100">
-                    <CardImg top className="card-img-format" src={formatImageSrc} alt={product.format} />
+                    <CardImg top className="card-img-format" src={formatImageSrc} alt={product.mediaType} />
                     <CardImg top className="card-img-cover" src={coverImageSrc} alt={product.cover} />
                     <CardBody className="card-body">
                         <div className="card-info">
@@ -77,30 +75,33 @@ function HomeGallery() {
                 });
         };
 
-        const albumPromises = Array.from({ length: count }).map(() =>
-            axios.get(`${API_BASE_URL}/album/random`, { params: mediaType !== null ? { mediaType } : {} })
-                .then(async (response) => {
-                    if (response.status === 200) {
-                        const album = response.data;
-                        const artistName = await getArtistNameById(album.artistId);
+        const albumPromises = Array.from({ length: count }).map(async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/album/random`, {
+                    params: mediaType !== null ? { mediaType } : {},
+                });
 
-                        const albumData = {
-                            id: album.albumId,
-                            cover: album.imageFilePath,
-                            format: album.mediaType === 0 ? "VinylBase.png" : "CDBase.png",
-                            artistName: artistName,
-                            albumTitle: album.title,
-                            price: album.price.toFixed(2)
-                        };
+                if (response.status === 200) {
+                    const album = response.data;
+                    const artistName = await getArtistNameById(album.artistId);
 
-                        console.log(`Received album data:`, albumData); // Log the received data
-
-                        return albumData;
-                    } else {
-                        throw new Error(`Failed to fetch random album with status: ${response.status}`);
-                    }
-                })
-        );
+                    const albumData = {
+                        id: album.albumId,
+                        cover: album.imageFilePath,
+                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                        artistName: artistName,
+                        albumTitle: album.title,
+                        price: album.price.toFixed(2),
+                    };
+                    return albumData;
+                } else {
+                    throw new Error(`Failed to fetch a random album with status: ${response.status}`);
+                }
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        });
 
         return Promise.all(albumPromises);
     };
@@ -108,16 +109,12 @@ function HomeGallery() {
     useEffect(() => {
         fetchDataForCategory('featuredProducts', 3)
             .then((data) => setFeaturedProducts(data));
-
         fetchDataForCategory('newVinyl', 3, 0)
             .then((data) => setNewVinyl(data));
-
         fetchDataForCategory('newCDs', 3, 1)
             .then((data) => setNewCDs(data));
-
         fetchDataForCategory('usedVinyl', 3, 0)
             .then((data) => setUsedVinyl(data));
-
         fetchDataForCategory('usedCDs', 3, 1)
             .then((data) => setUsedCDs(data));
     }, []);

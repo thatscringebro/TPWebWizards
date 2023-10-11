@@ -14,7 +14,7 @@ namespace WizardRecords.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtistDetails>>> GetAllArtists() {
-            var artists = (await _artistRepository.GetAllArtistsAsync()).Select(a => new ArtistDetails(a.Id, a.FirstName!, a.LastName!, a.DisplayName, (Core.Data.Constants.ArtistType)a.ArtistType!, (Core.Data.Constants.ArtistGenre)a.ArtistGenre!));
+            var artists = (await _artistRepository.GetAllArtistsAsync()).Select(a => new ArtistDetails(a.Id, a.ArtistName, (Core.Data.Constants.ArtistGenre)a.ArtistGenre));
             return Ok(artists);
         }
 
@@ -22,7 +22,7 @@ namespace WizardRecords.Controllers {
         public async Task<ActionResult<ArtistDetails>> GetAlbumById(Guid id) {
             try {
                 var artist = await _artistRepository.GetArtistByIdAsync(id);
-                return Ok(new ArtistDetails(artist.Id, artist.FirstName!, artist.LastName!, artist.DisplayName, (Core.Data.Constants.ArtistType)artist.ArtistType!, (Core.Data.Constants.ArtistGenre)artist.ArtistGenre!));
+                return Ok(new ArtistDetails(artist.Id, artist.ArtistName, (Core.Data.Constants.ArtistGenre)artist.ArtistGenre));
             }
             catch (Exception) {
                 return Problem();

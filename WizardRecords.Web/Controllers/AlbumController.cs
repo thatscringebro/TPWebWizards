@@ -28,10 +28,10 @@ namespace WizardRecords.Controllers {
                 (Core.Data.Constants.AlbumGenre)a.AlbumGenre,
                 (Core.Data.Constants.Grade)a.MediaGrade,
                 (Core.Data.Constants.Grade)a.SleeveGrade,
-                a.CatalogNumber ?? "",
-                a.MatrixNumber ?? "",
-                a.Comments ?? "",
-                a.ImageFilePath ?? ""
+                a.CatalogNumber,
+                a.MatrixNumber,
+                a.Comments,
+                a.ImageFilePath
             ));
 
             return Ok(albums);
@@ -56,11 +56,11 @@ namespace WizardRecords.Controllers {
                         (Core.Data.Constants.AlbumGenre)album.AlbumGenre,
                         (Core.Data.Constants.Grade)album.MediaGrade,
                         (Core.Data.Constants.Grade)album.SleeveGrade,
-                        album.CatalogNumber ?? "",
-                        album.MatrixNumber ?? "",
-                        album.Comments ?? "",
-                        album.ImageFilePath ?? "")
-                    );
+                        album.CatalogNumber,
+                        album.MatrixNumber,
+                        album.Comments,
+                        album.ImageFilePath
+                    ));
                 }
                 else {
                     return NotFound($"Album with ID {id} not found.");
@@ -72,9 +72,9 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet("random")]
-        public async Task<ActionResult<AlbumDetails>> GetRandomAlbum([FromQuery] MediaType mediaType, Category category) {
+        public async Task<ActionResult<AlbumDetails>> GetRandomAlbum([FromQuery] MediaType mediaType) {
             try {
-                var album = await _albumRepository.GetRandomAlbumAsync(mediaType, category);
+                var album = await _albumRepository.GetRandomAlbumAsync(mediaType);
 
                 if (album != null) {
                     return Ok(new AlbumDetails(
@@ -90,11 +90,11 @@ namespace WizardRecords.Controllers {
                         (Core.Data.Constants.AlbumGenre)album.AlbumGenre,
                         (Core.Data.Constants.Grade)album.MediaGrade,
                         (Core.Data.Constants.Grade)album.SleeveGrade,
-                        album.CatalogNumber ?? "",
-                        album.MatrixNumber ?? "",
-                        album.Comments ?? "",
-                        album.ImageFilePath ?? "")
-                    );
+                        album.CatalogNumber,
+                        album.MatrixNumber,
+                        album.Comments,
+                        album.ImageFilePath
+                    ));
                 }
                 else {
                     return NotFound("No albums found.");

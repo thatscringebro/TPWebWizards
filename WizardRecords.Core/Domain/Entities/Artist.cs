@@ -3,20 +3,14 @@
 namespace WizardRecords.Core.Domain.Entities {
     public class Artist {
         public Guid Id { get; set; }
-        public string LastName { get; set; } = "";
-        public string FirstName { get; set; } = "";
-        public string DisplayName { get; set; } = "";
-        public ArtistType ArtistType { get; set; } = ArtistType.UNDETERMINED;
+        public string ArtistName { get; set; } = "-";
         public ArtistGenre ArtistGenre { get; set; } = ArtistGenre.UNDETERMINED;
 
-        internal Artist() { }
+        internal Artist() {}
 
-        public Artist(Guid artistId, string firstName, string lastName, string displayName, ArtistType artistType, ArtistGenre artistGenre) {
+        public Artist(Guid artistId, string artistName, ArtistGenre artistGenre) {
             Id = artistId;
-            FirstName = firstName;
-            LastName = lastName;
-            DisplayName = displayName;
-            ArtistType = artistType;
+            ArtistName = artistName;
             ArtistGenre = artistGenre;
         }
     }
