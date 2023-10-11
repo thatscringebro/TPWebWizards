@@ -22,7 +22,7 @@ const Product = ({ product }) => {
 
     return (
         <Col md={4} className="d-flex mb-4">
-            <Link to={`/album/${product.id}`} className="cardHREF card-width">
+            <Link to={`/album/${product.id}`} className="card-href card-width">
                 <Card className="h-100">
                     <CardImg top className="card-img-format" src={formatImageSrc} alt={product.mediaType} />
                     <CardImg top className="card-img-cover" src={coverImageSrc} alt={product.cover} />
