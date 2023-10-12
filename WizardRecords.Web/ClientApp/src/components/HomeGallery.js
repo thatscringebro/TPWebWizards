@@ -9,13 +9,13 @@ import '../styles/Fonts.css';
 const Product = ({ product }) => {
     let coverImageSrc, formatImageSrc;
     try {
-        formatImageSrc = require(`../../public/Images/CoverTemplate/${product.mediaType}`);
+        formatImageSrc = require(`./Images/CoverTemplate/${product.mediaType}`);
     } catch (err) {
         console.error(`Error requiring format image for ${product.mediaType}`, err);
     }
 
     try {
-        coverImageSrc = require(`../../public/Images/AlbumCovers/${product.cover}`);
+        coverImageSrc = require(`./Images/AlbumCovers/${product.cover}`);
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
     }

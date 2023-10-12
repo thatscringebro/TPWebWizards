@@ -10,7 +10,6 @@ function Detail(props) {
     const { id: productId } = useParams();
 
     useEffect(() => {
-        // Fetch the product details from your API based on the productId.
         axios.get(`${API_BASE_URL}/album/${productId}`)
             .then(response => {
                 if (response.status === 200) {
@@ -33,7 +32,7 @@ function Detail(props) {
             <p>Artist : {product.artistName}</p>
             <p>Album : {product.albumTitle}</p>
             <p>Price : ${product.price}</p>
-            <img src={require(`../../public/Images/AlbumCovers/${product.cover}`)} alt={`${product.albumTitle} cover`} />
+            <img src={require(`./Images/AlbumCovers/${product.cover}`)} alt={`${product.albumTitle} cover`} />
         </div>
     );
 };

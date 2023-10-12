@@ -5,6 +5,7 @@ namespace WizardRecords.Repositories {
     public interface IAlbumRepository {
         Task<IEnumerable<Album>> GetAllAlbumsAsync();
         Task<IEnumerable<Album>> GetAlbumsByArtistIdAsync(Guid artistId);
+        Task<IEnumerable<Album>> GetAlbumsByLabelIdAsync(Guid labelId);
         Task<IEnumerable<Album>> GetAlbumsByGenreAsync(AlbumGenre albumGenre);
         Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType albumMediaType);
         Task<IEnumerable<Album>> GetAlbumsByCategoryAsync(Category albumCategory);

@@ -20,6 +20,14 @@ namespace WizardRecords.Repositories {
             return albumsByArtist.AsEnumerable();
         }
 
+        public async Task<IEnumerable<Album>> GetAlbumsByLabelIdAsync(Guid labelId) {
+            var albumsByArtist = await _context.Albums.Where(a => a.ArtistId == labelId).ToListAsync();
+            if (albumsByArtist.Count() == 0) {
+                throw new ArgumentException($"No albums found for artist {labelId}");
+            }
+            return albumsByArtist.AsEnumerable();
+        }
+
         public async Task<IEnumerable<Album>> GetAlbumsByGenreAsync(AlbumGenre albumGenre) {
             var albumsByGenre = await _context.Albums.Where(a => a.AlbumGenre == albumGenre).ToListAsync();
             if (albumsByGenre.Count() == 0) {
