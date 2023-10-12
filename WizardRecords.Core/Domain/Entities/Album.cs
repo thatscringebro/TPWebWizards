@@ -3,8 +3,16 @@
 namespace WizardRecords.Core.Domain.Entities {
     public class Album {
         public Guid Id { get; set; }
+
+        // Foreign Keys
         public Guid ArtistId { get; set; }
         public Guid LabelId { get; set; }
+
+        // Navigation Properties
+        public Artist Artist { get; set; } = null!;
+        public Label Label { get; set; } = null!;
+
+        // Properties
         public string Title { get; set; } = "-";
         public int StockQuantity { get; set; }
         public float Price { get; set; }
@@ -19,6 +27,7 @@ namespace WizardRecords.Core.Domain.Entities {
         public string Comments { get; set; } = "-";
         public string ImageFilePath { get; set; } = "-";
 
+        // Constructors
         internal Album() {}
 
         public Album(Guid albumId, 

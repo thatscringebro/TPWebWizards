@@ -13,12 +13,8 @@ namespace WizardRecords.Repositories {
 
         public async Task<IEnumerable<Label>> GetAllLabelsAsync() => await _context.Labels.ToListAsync();
 
-        public async Task<Label> GetLabelByIdAsync(Guid labelId) {
-            var labelById = await _context.Labels.FirstOrDefaultAsync(l => l.Id == labelId);
-            if (labelById == null) {
-                throw new ArgumentException($"No artist found for id {labelId}");
-            }
-            return labelById;
+        public async Task<Label?> GetLabelByIdAsync(Guid labelId) {
+            return await _context.Labels.FirstOrDefaultAsync(l => l.Id == labelId);
         }
     }
 }

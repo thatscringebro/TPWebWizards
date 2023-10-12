@@ -13,11 +13,7 @@ namespace WizardRecords.Core.Application.Queries {
         }
 
         public async Task<IEnumerable<Label>> Handle(GetAllLabelsRequest request, CancellationToken cancellationToken) {
-            var allLabels = await _labelRepository.GetAllLabelsAsync();
-            if (!allLabels.Any()) {
-                throw new InvalidOperationException("No labels found.");
-            }
-            return allLabels;
+            return await _labelRepository.GetAllLabelsAsync();
         }
     }
 }

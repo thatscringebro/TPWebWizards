@@ -15,19 +15,11 @@ namespace WizardRecords.Repositories {
         public async Task<IEnumerable<Artist>> GetAllArtistsAsync() => await _context.Artists.ToListAsync();
 
         public async Task<IEnumerable<Artist>> GetArtistsByGenreAsync(ArtistGenre artistGenre) {
-            var artistsByGenre = await _context.Artists.Where(a => a.ArtistGenre == artistGenre).ToListAsync();
-            if (artistsByGenre.Count == 0) {
-                throw new ArgumentException("No artists found for the specified genre");
-            }
-            return artistsByGenre;
+            return await _context.Artists.Where(a => a.ArtistGenre == artistGenre).ToListAsync();
         }
 
-        public async Task<Artist> GetArtistByIdAsync(Guid artistId) {
-            var artistById = await _context.Artists.FirstOrDefaultAsync(a => a.Id == artistId);
-            if (artistById == null) {
-                throw new ArgumentException($"No artist found for id {artistId}");
-            }
-            return artistById;
+        public async Task<Artist?> GetArtistByIdAsync(Guid artistId) {
+            return await _context.Artists.FirstOrDefaultAsync(a => a.Id == artistId);
         }
     }
 }

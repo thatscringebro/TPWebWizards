@@ -14,11 +14,7 @@ namespace WizardRecords.Core.Application.Queries {
         }
 
         public async Task<IEnumerable<Artist>> Handle(GetAllArtistsRequest request, CancellationToken cancellationToken) {
-            var allArtists = await _artistRepository.GetAllArtistsAsync();
-            if (!allArtists.Any()) {
-                throw new InvalidOperationException("No artists found.");
-            }
-            return allArtists;
+            return await _artistRepository.GetAllArtistsAsync();
         }
     }
 }

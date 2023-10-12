@@ -3,6 +3,6 @@
 namespace WizardRecords.Repositories {
     public interface ILabelRepository {
         Task<IEnumerable<Label>> GetAllLabelsAsync();
-        Task<Label> GetLabelByIdAsync(Guid labelId);
+        Task<Label?> GetLabelByIdAsync(Guid labelId);
     }
 }

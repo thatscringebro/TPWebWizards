@@ -5,6 +5,6 @@ namespace WizardRecords.Repositories {
     public interface IArtistRepository {
         Task<IEnumerable<Artist>> GetAllArtistsAsync();
         Task<IEnumerable<Artist>> GetArtistsByGenreAsync(ArtistGenre artistGenre);
-        Task<Artist> GetArtistByIdAsync(Guid artistId);
+        Task<Artist?> GetArtistByIdAsync(Guid artistId);
     }
 }

@@ -13,11 +13,7 @@ namespace WizardRecords.Core.Application.Queries {
         }
 
         public async Task<IEnumerable<Album>> Handle(GetAllAlbumsRequest request, CancellationToken cancellationToken) {
-            var allAlbums = await _albumRepository.GetAllAlbumsAsync();
-            if (!allAlbums.Any()) {
-                throw new InvalidOperationException("No albums found.");
-            }
-            return allAlbums;
+            return await _albumRepository.GetAllAlbumsAsync();
         }
     }
 }

@@ -15,24 +15,25 @@ namespace WizardRecords.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AlbumDetails>>> GetAllAlbums() {
-            var albums = (await _albumRepository.GetAllAlbumsAsync()).Select(a => new AlbumDetails(
+            var albums = (await _albumRepository.GetAllAlbumsAsync())
+                .Select(a => new AlbumDetails(
                 a.Id,
                 a.ArtistId,
                 a.LabelId,
                 a.Title,
                 a.StockQuantity,
                 a.Price,
-                (Core.Data.Constants.Category)a.Category,
-                (Core.Data.Constants.MediaType)a.Media,
-                (Core.Data.Constants.FormatType)a.Format,
-                (Core.Data.Constants.AlbumGenre)a.AlbumGenre,
-                (Core.Data.Constants.Grade)a.MediaGrade,
-                (Core.Data.Constants.Grade)a.SleeveGrade,
+                a.Category,
+                a.Media,
+                a.Format,
+                a.AlbumGenre,
+                a.MediaGrade,
+                a.SleeveGrade,
                 a.CatalogNumber,
                 a.MatrixNumber,
                 a.Comments,
                 a.ImageFilePath
-            ));
+            )).ToList();
 
             return Ok(albums);
         }
@@ -50,12 +51,12 @@ namespace WizardRecords.Controllers {
                         album.Title,
                         album.StockQuantity,
                         album.Price,
-                        (Core.Data.Constants.Category)album.Category,
-                        (Core.Data.Constants.MediaType)album.Media,
-                        (Core.Data.Constants.FormatType)album.Format,
-                        (Core.Data.Constants.AlbumGenre)album.AlbumGenre,
-                        (Core.Data.Constants.Grade)album.MediaGrade,
-                        (Core.Data.Constants.Grade)album.SleeveGrade,
+                        album.Category,
+                        album.Media,
+                        album.Format,
+                        album.AlbumGenre,
+                        album.MediaGrade,
+                        album.SleeveGrade,
                         album.CatalogNumber,
                         album.MatrixNumber,
                         album.Comments,
@@ -84,12 +85,12 @@ namespace WizardRecords.Controllers {
                         album.Title,
                         album.StockQuantity,
                         album.Price,
-                        (Core.Data.Constants.Category)album.Category,
-                        (Core.Data.Constants.MediaType)album.Media,
-                        (Core.Data.Constants.FormatType)album.Format,
-                        (Core.Data.Constants.AlbumGenre)album.AlbumGenre,
-                        (Core.Data.Constants.Grade)album.MediaGrade,
-                        (Core.Data.Constants.Grade)album.SleeveGrade,
+                        album.Category,
+                        album.Media,
+                        album.Format,
+                        album.AlbumGenre,
+                        album.MediaGrade,
+                        album.SleeveGrade,
                         album.CatalogNumber,
                         album.MatrixNumber,
                         album.Comments,

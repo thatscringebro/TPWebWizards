@@ -14,7 +14,13 @@ namespace WizardRecords.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LabelDetails>>> GetAllLabels() {
-            var labels = (await _labelRepository.GetAllLabelsAsync()).Select(l => new LabelDetails(l.Id, l.LabelName, l.Country));
+            var labels = (await _labelRepository
+                .GetAllLabelsAsync())
+                .Select(l => new LabelDetails(
+                    l.Id, 
+                    l.LabelName, 
+                    l.Country
+                ));
             return Ok(labels);
         }
 
