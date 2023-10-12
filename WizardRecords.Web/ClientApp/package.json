@@ -2,7 +2,6 @@
   "name": "wizard_records",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:43893",
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
     "axios": "^1.5.1",

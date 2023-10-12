@@ -33,7 +33,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowReactApp",
         builder => {
-            builder.WithOrigins("http://localhost:3000");
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyMethod()   
+                   .AllowAnyHeader();
         });
 });
 
@@ -41,17 +43,18 @@ var app = builder.Build();
 
 // Middleware
 if (app.Environment.IsDevelopment()) {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowReactApp");
 app.UseStaticFiles();
 
+app.UseCors("AllowReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+//app.MapFallbackToFile("index.html");
 
 app.Run();

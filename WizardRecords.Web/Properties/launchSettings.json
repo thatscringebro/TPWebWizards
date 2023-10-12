@@ -12,9 +12,8 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:43893;",
-      "sslPort": 44353,
+      //"launchUrl": "swagger", // Empeche le navigateur client de se lancer
+      "applicationUrl": "https://localhost:43893",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
