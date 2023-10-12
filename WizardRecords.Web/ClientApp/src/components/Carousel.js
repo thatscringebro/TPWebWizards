@@ -5,9 +5,9 @@ import '../styles/Carousel.css';
 const Carousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const images = [
-        { src: require("./Images/Carousel/CarouselImage1.webp"), alt: "placeholder1" },
-        { src: require("./Images/Carousel/CarouselImage2.webp"), alt: "placeholder2" },
-        { src: require("./Images/Carousel/CarouselImage3.webp"), alt: "placeholder3" },
+        { src: require("./Images/Carousel/CarouselImage1.jpg"), alt: "placeholder1" },
+        { src: require("./Images/Carousel/CarouselImage2.jpg"), alt: "placeholder2" },
+        { src: require("./Images/Carousel/CarouselImage3.jpg"), alt: "placeholder3" },
     ];
     const length = images.length;
 
