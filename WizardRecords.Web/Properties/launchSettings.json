@@ -10,8 +10,10 @@
   "profiles": {
     "WizardRecords": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44415;",
+      "applicationUrl": "https://localhost:43893;",
+      "sslPort": 44353,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
