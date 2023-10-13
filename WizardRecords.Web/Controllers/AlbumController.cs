@@ -51,5 +51,28 @@ namespace WizardRecords.Controllers {
                 return Problem($"An error occurred while fetching a random album: {ex.Message}");
             }
         }
+
+        [HttpGet("allAlbums/{mediaType}")]
+        public ActionResult<IEnumerable<AlbumDetails>> GetAllAlbumByMediaType(MediaType mediaType)
+        {
+            try
+            {
+                var albums = _albumRepository.GetAlbumsByMediaType(mediaType);
+                if (albums != null)
+                {
+                    return Ok(albums);
+                }
+                else
+                {
+                    return NotFound("No albums found.");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return Problem($"An error occurred while fetching all albums of media type {mediaType}: {ex.Message}");
+            }
+        }
     }
 }
