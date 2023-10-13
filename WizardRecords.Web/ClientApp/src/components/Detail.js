@@ -38,7 +38,7 @@ const Detail = () => {
                 const productData = {
                     albumId: album.albumId,
                     imageFilePath: imagePath,
-                    category: album.category,
+                    category: album.category === 0 ? 'New' : 'Used',
                     quantity: album.stockQuantity,
                     format: album.MediaType === 0 ? 'Vinyl' : 'CD',
                     artistName: artistName,
