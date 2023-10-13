@@ -234,3 +234,4 @@ ClientApp/.env
 ClientApp/.env.development
 ClientApp/.env
 /WizardRecords.Web/node_modules
+/WizardRecords.Core/Migrations
