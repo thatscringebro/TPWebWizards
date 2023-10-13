@@ -14,18 +14,54 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<AlbumDetails>> GetAllAlbums() {
-            var albums = _albumRepository.GetAllAlbums().Select(a => new AlbumDetails(a.AlbumId, a.ArtistId, a.StockQuantity, a.Price, a.Title!, (Core.Data.Constants.MediaType)a.Media!, a.ImageFilePath!));
+        public async Task<ActionResult<IEnumerable<AlbumDetails>>> GetAllAlbums() {
+            var albums = (await _albumRepository.GetAllAlbumsAsync())
+                .Select(a => new AlbumDetails(
+                a.Id,
+                a.ArtistId,
+                a.LabelId,
+                a.Title,
+                a.StockQuantity,
+                a.Price,
+                a.Category,
+                a.Media,
+                a.Format,
+                a.AlbumGenre,
+                a.MediaGrade,
+                a.SleeveGrade,
+                a.CatalogNumber,
+                a.MatrixNumber,
+                a.Comments,
+                a.ImageFilePath
+            )).ToList();
+
             return Ok(albums);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AlbumDetails> GetAlbumById(int id) {
+        public async Task<ActionResult<AlbumDetails>> GetAlbumById(Guid id) {
             try {
-                var album = _albumRepository.GetAlbumById(id);
+                var album = await _albumRepository.GetAlbumByIdAsync(id);
 
                 if (album != null) {
-                    return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
+                    return Ok(new AlbumDetails(
+                        album.Id,
+                        album.ArtistId,
+                        album.LabelId,
+                        album.Title,
+                        album.StockQuantity,
+                        album.Price,
+                        album.Category,
+                        album.Media,
+                        album.Format,
+                        album.AlbumGenre,
+                        album.MediaGrade,
+                        album.SleeveGrade,
+                        album.CatalogNumber,
+                        album.MatrixNumber,
+                        album.Comments,
+                        album.ImageFilePath
+                    ));
                 }
                 else {
                     return NotFound($"Album with ID {id} not found.");
@@ -37,11 +73,29 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet("random")]
-        public ActionResult<AlbumDetails> GetRandomAlbum([FromQuery] MediaType? mediaType) {
+        public async Task<ActionResult<AlbumDetails>> GetRandomAlbum([FromQuery] MediaType mediaType) {
             try {
-                var album = _albumRepository.GetRandomAlbum(mediaType);
+                var album = await _albumRepository.GetRandomAlbumAsync(mediaType);
+
                 if (album != null) {
-                    return Ok(new AlbumDetails(album.AlbumId, album.ArtistId, album.StockQuantity, album.Price, album.Title!, (Core.Data.Constants.MediaType)album.Media!, album.ImageFilePath!));
+                    return Ok(new AlbumDetails(
+                        album.Id,
+                        album.ArtistId,
+                        album.LabelId,
+                        album.Title,
+                        album.StockQuantity,
+                        album.Price,
+                        album.Category,
+                        album.Media,
+                        album.Format,
+                        album.AlbumGenre,
+                        album.MediaGrade,
+                        album.SleeveGrade,
+                        album.CatalogNumber,
+                        album.MatrixNumber,
+                        album.Comments,
+                        album.ImageFilePath
+                    ));
                 }
                 else {
                     return NotFound("No albums found.");

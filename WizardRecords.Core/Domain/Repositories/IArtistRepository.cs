@@ -3,8 +3,8 @@ using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Repositories {
     public interface IArtistRepository {
-        IEnumerable<Artist> GetAllArtists();
-        IEnumerable<Artist> GetArtistsByGenre(ArtistGenre artistGenre);
-        Artist GetArtistById(int artistId);
+        Task<IEnumerable<Artist>> GetAllArtistsAsync();
+        Task<IEnumerable<Artist>> GetArtistsByGenreAsync(ArtistGenre artistGenre);
+        Task<Artist?> GetArtistByIdAsync(Guid artistId);
     }
 }

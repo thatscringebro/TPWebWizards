@@ -1,44 +1,49 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import '../styles/Detail.css';
-
-const API_BASE_URL = 'https://localhost:44415';
-
+import '../styles/Home.css';
 const Detail = () => {
     const { id } = useParams();
+    console.log('Retrieved id in Params:', id);
     const [product, setProduct] = useState(null);
 
-    const fetchDataForDetail = async (id) => {
-
-        const getArtistNameById = (artistId) => {
-            return axios.get(`${API_BASE_URL}/artist/${artistId}`)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.data.artistName;
-                    }
-                    throw new Error(`Failed to fetch artist name for id ${artistId}`);
-                });
+    const fetchDataForDetail = async  (id) => {
+        const getArtistNameById = async (artistId) => {
+            const response = await axios.get(`${API_BASE_URL}/artist/${artistId}`);
+            if (response.status === 200) {
+                return response.data.artistName;
+            } else {
+                throw new Error(`Failed to fetch artist name for id ${artistId}`);
+            }
         };
 
         try {
             const response = await axios.get(`${API_BASE_URL}/album/${id}`);
+            console.log("Full album response:", response.data);
             if (response.status === 200) {
                 const album = response.data;
 
-                const imagePath = require(`./Images/AlbumCovers/${album.imgPath}`);
+                console.log('Retrieved Id in Detail:', album.albumId);
+                console.log('Retrieved ArtistId in Detail:', album.artistId);
+                console.log('Retrieved Quantity in Detail:', album.stockQuantity);
+                console.log('Retrieved Title in Detail:', album.title);
+                console.log('Retrieved ImageFilePath in Detail:', album.imageFilePath);
+                console.log('Retrieved Price in Detail:', album.price);
+
+                const imagePath = require(`./Images/AlbumCovers/${album.imageFilePath}`);
                 const artistName = await getArtistNameById(album.artistId);
-             
 
                 const productData = {
-                    id: album.albumId,
-                    ImageFilePath: imagePath,
+                    albumId: album.albumId,
+                    imageFilePath: imagePath,
                     category: album.category,
-                    quantity: album.qty,
-                    format: album.mediaType === 0 ? 'Vinyl' : 'CD',
+                    quantity: album.stockQuantity,
+                    format: album.MediaType === 0 ? 'Vinyl' : 'CD',
                     artistName: artistName,
                     albumTitle: album.title,
-                    price: album.price.toFixed(2),
+                    price: parseFloat(album.price).toFixed(2)
                 };
                 setProduct(productData);
             } else {
@@ -54,7 +59,7 @@ const Detail = () => {
     }, [id]);
 
     if (!product) {
-        return <div>Error loading product details.</div>;
+        return <div>Loading product details...</div>;
     }
 
     return (
@@ -62,7 +67,7 @@ const Detail = () => {
         <div className="detail-container">
             <div className="detail-content">
                 <div className="detail-image">
-                    <img src={product.ImageFilePath} alt={`${product.albumTitle} cover`} />
+                    <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
                 </div>
                 <div className="detail-text">
                     <p className="price">${product.price}</p>
@@ -72,8 +77,8 @@ const Detail = () => {
                     <p>Format: {product.format}</p>
                     <p>Quantity: {product.quantity}</p>
                     <button className="add-to-cart-button">Add to Cart</button>
-                   
-                   
+
+
                 </div>
             </div>
         </div>

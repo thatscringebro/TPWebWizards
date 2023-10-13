@@ -1,5 +1,9 @@
 ﻿using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Dtos {
-    public record ArtistDetails(int ArtistId, string ArtistName, bool IsBandOrSingleName, ArtistGenre ArtistGenre);
+    public record ArtistDetails(
+        Guid ArtistId,
+        string ArtistName,
+        ArtistGenre ArtistGenre
+    );
 }

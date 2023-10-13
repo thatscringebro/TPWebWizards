@@ -1,10 +1,23 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WizardRecords.Core;
+using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IAlbumRepository, DefaultAlbumRepository>();
-builder.Services.AddSingleton<IArtistRepository, DefaultArtistRepository>();
+
+builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<WizRecDbContext>()
+    .AddSignInManager();
+
+builder.Services.AddDbContext<WizRecDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IAlbumRepository, DefaultAlbumRepository>();
+builder.Services.AddScoped<IArtistRepository, DefaultArtistRepository>();
+builder.Services.AddScoped<ILabelRepository, DefaultLabelRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -12,10 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowReactApp",
         builder => {
-            builder.WithOrigins("http://localhost:3000")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials();
+            builder.WithOrigins("http://localhost:3000");
         });
 });
 
@@ -27,8 +37,12 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseStaticFiles();
+
 app.UseCors("AllowReactApp");
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 

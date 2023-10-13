@@ -2,32 +2,67 @@
 
 namespace WizardRecords.Core.Domain.Entities {
     public class Album {
-        public int AlbumId { get; set; }
-        public int ArtistId { get; set; }
-        public int? LabelId { get; set; }
+        public Guid Id { get; set; }
+
+        // Foreign Keys
+        public Guid ArtistId { get; set; }
+        public Guid LabelId { get; set; }
+
+        // Navigation Properties
+        public Artist Artist { get; set; } = null!;
+        public Label Label { get; set; } = null!;
+
+        // Properties
+        public string Title { get; set; } = "-";
         public int StockQuantity { get; set; }
         public float Price { get; set; }
-        public string? Title { get; set; } // TODO: Remove nullability
-        public string? CatalogNumber { get; set; } // TODO: Remove nullability
-        public Category? Category { get; set; } // NEW ? USED
-        public MediaType? Media { get; set; } // CD ? LP 
-        public FormatType? Format { get; set; } // Media type precisions (Single, EP, 7", 10", 12", etc.)
-        public AlbumGenre? AlbumGenre { get; set; } // Album genre precisions (Fusion, Ambient, Reggae, etc.)
-        public Grade? MediaGrade { get; set; } // Category == USED only!
-        public Grade? SleeveGrade { get; set; } // Category == USED only!
-        public string? Comments { get; set; }
-        public string? ImageFilePath { get; set; }
+        public Category Category { get; set; } // NEW ? USED
+        public MediaType Media { get; set; } // CD ? LP 
+        public FormatType Format { get; set; } // Précision sur le format de base de l'album (LP 12", LP 10", LP 7", CD, etc.)
+        public AlbumGenre AlbumGenre { get; set; } // Précise le genre particulier de l'album
+        public Grade MediaGrade { get; set; } = Grade.NONE; // Category == USED only!
+        public Grade SleeveGrade { get; set; } = Grade.NONE; // Category == USED only!
+        public string CatalogNumber { get; set; } = "-"; // Category == USED only!
+        public string MatrixNumber { get; set; } = "-"; // Category == USED only!
+        public string Comments { get; set; } = "-";
+        public string ImageFilePath { get; set; } = "-";
 
+        // Constructors
         internal Album() { }
 
-        public Album(int albumId, int artistId, int qty, float price, string title, MediaType mediaType, string imgPath) {
-            AlbumId = albumId;
+        public Album(Guid albumId,
+                     Guid artistId,
+                     Guid labelId,
+                     string title,
+                     int stockQty,
+                     float price,
+                     Category category,
+                     MediaType mediaType,
+                     FormatType formatType,
+                     AlbumGenre albumGenre,
+                     Grade mediaGrade,
+                     Grade sleeveGrade,
+                     string catalogNumber,
+                     string matrixNumber,
+                     string comments,
+                     string imgFilePath) {
+
+            Id = albumId;
             ArtistId = artistId;
-            StockQuantity = qty;
-            Price = price;
+            LabelId = labelId;
             Title = title;
+            StockQuantity = stockQty;
+            Price = price;
+            Category = category;
             Media = mediaType;
-            ImageFilePath = imgPath;
+            Format = formatType;
+            AlbumGenre = albumGenre;
+            MediaGrade = mediaGrade;
+            SleeveGrade = sleeveGrade;
+            CatalogNumber = catalogNumber;
+            MatrixNumber = matrixNumber;
+            Comments = comments;
+            ImageFilePath = imgFilePath;
         }
 
     }

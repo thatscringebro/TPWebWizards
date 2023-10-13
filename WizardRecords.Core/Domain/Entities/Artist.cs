@@ -2,19 +2,21 @@
 
 namespace WizardRecords.Core.Domain.Entities {
     public class Artist {
-        public int ArtistId { get; set; }
-        public string Name { get; set; } = string.Empty; // Serviront plus pour l'entré de données
-        public string? FirstName { get; set; } // Serviront plus pour l'entré de données
-        public ArtistGenre? ArtistGenre { get; set; } // The "section" of the artist in the store
-        public bool IsBandOrSingleName { get; set; } // Serviront plus pour l'entré de données
-        public string? ArtistName { get; set; }
+        public Guid Id { get; set; }
 
+        // Navigation properties
+        public ICollection<Album> Albums { get; set; } = new List<Album>();
+
+        // Properties
+        public string ArtistName { get; set; } = "-";
+        public ArtistGenre ArtistGenre { get; set; } = ArtistGenre.UNDETERMINED;
+
+        // Constructors
         internal Artist() { }
 
-        public Artist(int artistId, string artistName, bool isBandOrSingleName, ArtistGenre artistGenre) {
-            ArtistId = artistId;
+        public Artist(Guid artistId, string artistName, ArtistGenre artistGenre) {
+            Id = artistId;
             ArtistName = artistName;
-            IsBandOrSingleName = isBandOrSingleName;
             ArtistGenre = artistGenre;
         }
     }
