@@ -8,18 +8,17 @@ using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 
 namespace WizardRecords.Core.Application.Queries {
-    public record GetArtistByIdRequest(int artistId) : IRequest<Artist>;
-    
-    public class GetArtistByIdHandler : IRequestHandler<GetArtistByIdRequest, Artist> {
+    public record GetArtistByIdRequest(Guid artistId) : IRequest<Artist?>;
+
+    public class GetArtistByIdHandler : IRequestHandler<GetArtistByIdRequest, Artist?> {
         private readonly IArtistRepository _repository;
 
         public GetArtistByIdHandler(IArtistRepository repository) {
             _repository = repository;
         }
 
-        public Task<Artist> Handle(GetArtistByIdRequest request, CancellationToken cancellationToken) {
-            var artist = _repository.GetArtistById(request.artistId);
-            return Task.FromResult(artist);
+        public async Task<Artist?> Handle(GetArtistByIdRequest request, CancellationToken cancellationToken) {
+            return await _repository.GetArtistByIdAsync(request.artistId);
         }
     }
 }

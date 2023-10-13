@@ -12,9 +12,8 @@ namespace WizardRecords.Core.Application.Queries {
             _albumRepository = albumRepository;
         }
 
-        public Task<IEnumerable<Album>> Handle(GetAllAlbumsRequest request, CancellationToken cancellationToken) {
-            var albums = _albumRepository.GetAllAlbums();
-            return Task.FromResult(albums);
+        public async Task<IEnumerable<Album>> Handle(GetAllAlbumsRequest request, CancellationToken cancellationToken) {
+            return await _albumRepository.GetAllAlbumsAsync();
         }
     }
 }
