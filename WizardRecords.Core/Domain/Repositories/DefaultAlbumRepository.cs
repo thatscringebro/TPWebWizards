@@ -26,8 +26,11 @@ namespace WizardRecords.Repositories {
             return await _context.Albums.Where(a => a.AlbumGenre == albumGenre).ToListAsync();
         }
 
-        public async Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType albumMediaType) {
-            return await _context.Albums.Where(a => a.Media == albumMediaType).ToListAsync();
+        public async Task<Album> GetAlbumsByMediaTypeAsync(MediaType albumMediaType) {
+           
+            var albums = await _context.Albums.Where(a => a.Media == albumMediaType).Select(a => a.Id).ToListAsync();
+
+            return await _context.Albums.FindAsync(albums);
         }
 
         public async Task<IEnumerable<Album>> GetAlbumsByCategoryAsync(Category albumCategory) {

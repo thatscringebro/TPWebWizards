@@ -105,5 +105,47 @@ namespace WizardRecords.Controllers {
                 return Problem($"An error occurred while fetching a random album: {ex.Message}");
             }
         }
+
+
+        [HttpGet("mediatype")]
+        public async Task<ActionResult<AlbumDetails>> GetAlbumsByMediaTypeAsync([FromQuery] MediaType mediaType)
+        {
+            try
+            {
+                var album = await _albumRepository.GetAlbumsByMediaTypeAsync(mediaType);
+
+                if (album != null)
+                {
+                    return Ok(new AlbumDetails(
+                        album.Id,
+                        album.ArtistId,
+                        album.LabelId,
+                        album.Title,
+                        album.StockQuantity,
+                        album.Price,
+                        album.Category,
+                        album.Media,
+                        album.Format,
+                        album.AlbumGenre,
+                        album.MediaGrade,
+                        album.SleeveGrade,
+                        album.CatalogNumber,
+                        album.MatrixNumber,
+                        album.Comments,
+                        album.ImageFilePath
+                    ));
+                }
+                else
+                {
+                    return NotFound("No albums found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Problem($"An error occurred while fetching a random album: {ex.Message}");
+            }
+        }
+
+        
     }
 }
