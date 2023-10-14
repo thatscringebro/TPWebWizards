@@ -16,7 +16,7 @@ namespace WizardRecords.Controllers
             _albumRepository = albumRepository;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<AlbumDetails>>> GetAllAlbums()
         {
             var albums = (await _albumRepository.GetAllAlbumsAsync())

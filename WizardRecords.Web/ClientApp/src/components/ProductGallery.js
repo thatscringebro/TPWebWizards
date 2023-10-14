@@ -62,7 +62,7 @@ const ProductList = ({ title, products = [] }) => (
     </section>
 );
 
-const fetchDataForCategory = (count, mediaType = null) => {
+const fetchDataForCategory = (count) => {
 
     const getArtistNameById = (artistId) => {
         return axios.get(`${API_BASE_URL}/artist/${artistId}`)
@@ -74,7 +74,7 @@ const fetchDataForCategory = (count, mediaType = null) => {
             });
     };
 
-    return axios.get(`${API_BASE_URL}/album/mediaType`, { params: mediaType !== null ? { mediaType } : {} })
+    return axios.get(`${API_BASE_URL}/album/all`)
         .then(async (response) => {
             if (response.status === 200) {
                 const albums = response.data;
@@ -112,7 +112,7 @@ function ProductsGallery() {
     return (
         <div>
             <hr className="divider" />
-            <ProductList title="All CDs" products={products} />
+            <ProductList title="All products" products={products} />
             <hr className="divider" />
         </div>
     );
