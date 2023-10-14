@@ -62,74 +62,62 @@ const ProductList = ({ title, products = [] }) => (
     </section>
 );
 
-function ProductsGallery() {
+const fetchDataForCategory = (count, mediaType = null) => {
 
-    const [product, setProducts] = useState([]);
-    const fetchDataForCategory = (_category, count, mediaType = null) => {
-
-        const getArtistNameById = (artistId) => {
-            console.log('Artist data:', artistId);
-            return axios.get(`${API_BASE_URL}/artist/${artistId}`)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.data.artistName;
-                    }
-                    throw new Error(`Failed to fetch artist name for id ${artistId}`);
-                });
-        };
-
-        const albumPromises = Array.from({ length: count }).map(() =>
-            axios.get(`${API_BASE_URL}/album/mediaType`, { params: mediaType !== null ? { mediaType } : {} })
-                .then(async (response) => {
-                   
-                    if (response.status === 200) {
-                        const album = response.data;
-                        console.log('Hallo:', response.data);
-
-                        for (var i = 0; i < count; i++) {
-
-
-                            const artistName = await getArtistNameById(album[i].artistId);
-                            console.log('Album data:', artistName);
-                            return {
-                                id: album[i].albumId,
-                                cover: album[i].imageFilePath,
-                                mediaType: album[i].media === 0 ? "VinylBase.png" : "CDBase.png",
-                                artistName: artistName,
-                                albumTitle: album[i].title,
-                                price: album[i].price.toFixed(2),
-                            };
-
-
-                        }
-                      
-                    }
-                    else {
-                        throw new Error(`Failed to fetch random album with status: ${response.status}`);
-                    }
-                })
-        );
-        return Promise.all(albumPromises);
-
+    const getArtistNameById = (artistId) => {
+        return axios.get(`${API_BASE_URL}/artist/${artistId}`)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.data.artistName;
+                }
+                throw new Error(`Failed to fetch artist name for id ${artistId}`);
+            });
     };
 
+    return axios.get(`${API_BASE_URL}/album/mediaType`, { params: mediaType !== null ? { mediaType } : {} })
+        .then(async (response) => {
+            if (response.status === 200) {
+                const albums = response.data;
+                const albumPromises = albums.map(async (album) => {
+                    const artistName = await getArtistNameById(album.artistId);
+                    return {
+                        id: album.albumId,
+                        cover: album.imageFilePath,
+                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                        artistName: artistName,
+                        albumTitle: album.title,
+                        price: album.price.toFixed(2),
+                    };
+                });
+
+                return Promise.all(albumPromises);
+            } else {
+                throw new Error(`Failed to fetch albums with status: ${response.status}`);
+            }
+        });
+};
+
+function ProductsGallery() {
+    const [products, setProducts] = useState([]);
+
     useEffect(() => {
-        fetchDataForCategory('product', 1, 1)
-            .then((data) => setProducts(data));
+        fetchDataForCategory(24, 1)
+            .then((data) => setProducts(data))
+            .catch((error) => {
+                console.error('Error fetching albums:', error);
+                // Handle the error gracefully
+            });
     }, []);
-        
 
-    for (var i = 0; i < 24; i++) {
-        return (
-            <div>
-                <hr className="divider" />
-                <ProductList title="All CDs" products={product[i]} />
-                <hr className="divider" />
-            </div>
-        );
-    }
-
-   
+    return (
+        <div>
+            <hr className="divider" />
+            <ProductList title="All CDs" products={products} />
+            <hr className="divider" />
+        </div>
+    );
 }
+   
+
 
 export default ProductsGallery;
