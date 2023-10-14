@@ -13,9 +13,20 @@ const Detail = () => {
         const getArtistNameById = async (artistId) => {
             const response = await axios.get(`${API_BASE_URL}/artist/${artistId}`);
             if (response.status === 200) {
+                console.log("Artist name response:", response.data.artistName);
                 return response.data.artistName;
             } else {
                 throw new Error(`Failed to fetch artist name for id ${artistId}`);
+            }
+        };
+
+        const getLabelNameById = async (labelId) => {
+            const response = await axios.get(`${API_BASE_URL}/label/${labelId}`);
+            if (response.status === 200) {
+                console.log("Label name response:", response.data.labelName);
+                return response.data.labelName;
+            } else {
+                throw new Error(`Failed to fetch artist name for id ${labelId}`);
             }
         };
 
@@ -29,18 +40,21 @@ const Detail = () => {
                 console.log('Retrieved ArtistId in Detail:', album.artistId);
                 console.log('Retrieved Quantity in Detail:', album.stockQuantity);
                 console.log('Retrieved Title in Detail:', album.title);
+                console.log('Retrieved Label in Detail:', album.albumLabel);
                 console.log('Retrieved ImageFilePath in Detail:', album.imageFilePath);
                 console.log('Retrieved Price in Detail:', album.price);
 
                 const imagePath = require(`./Images/AlbumCovers/${album.imageFilePath}`);
                 const artistName = await getArtistNameById(album.artistId);
+                const labelName = await getLabelNameById(album.labelId);
 
                 const productData = {
                     albumId: album.albumId,
                     imageFilePath: imagePath,
-                    category: album.category === 0 ? 'New' : 'Used',
+                    category: album.category === 0 ? 'Used' : 'New',
                     quantity: album.stockQuantity,
-                    format: album.MediaType === 0 ? 'Vinyl' : 'CD',
+                    albumLabel: labelName,
+                    format: album.media === 0 ? 'Vinyl' : 'CD',
                     artistName: artistName,
                     albumTitle: album.title,
                     price: parseFloat(album.price).toFixed(2)
@@ -63,19 +77,18 @@ const Detail = () => {
     }
 
     return (
-
         <div className="detail-container">
             <div className="detail-content">
                 <div className="detail-image">
                     <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
                 </div>
                 <div className="detail-text">
+                    <p className="artist-name">{product.artistName}</p>
+                    <p className="album-title">"{product.albumTitle}"</p>
+                    <p><i>Category</i> : {product.category} {product.format}</p>
+                    <p className="album-label"><i>Label</i> : {product.albumLabel}</p>
+                    <p><i>In stock</i> : {product.quantity}</p>
                     <p className="price">${product.price}</p>
-                    <p>Album title: {product.albumTitle}</p>
-                    <p>Artist : {product.artistName}</p>
-                    <p>Category: {product.category}</p>
-                    <p>Format: {product.format}</p>
-                    <p>Quantity: {product.quantity}</p>
                     <button className="add-to-cart-button">Add to Cart</button>
 
 
