@@ -78,7 +78,7 @@ function ProductsGallery() {
                 });
         };
 
-        const albumPromises = Array.from({ length: count }).
+        const albumPromises = Array.from({ length: count }).map(() =>
             axios.get(`${API_BASE_URL}/album/mediaType`, { params: mediaType !== null ? { mediaType } : {} })
                 .then(async (response) => {
                    
@@ -108,7 +108,7 @@ function ProductsGallery() {
                         throw new Error(`Failed to fetch random album with status: ${response.status}`);
                     }
                 })
-        
+        );
         return Promise.all(albumPromises);
 
     };
