@@ -2,6 +2,7 @@ import AboutUs from "./components/Aboutus";
 import ContactForm  from "./components/ContactUs";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
+import SearchResults from "./components/SearchResults";
 
 const AppRoutes = [
     {
@@ -20,7 +21,11 @@ const AppRoutes = [
     {
         path: '/contactus',
         element: <ContactForm />
-    }
+    },
+    {
+        path: '/search',
+        element: <SearchResults />
+    },
 ];
 
 export default AppRoutes;
