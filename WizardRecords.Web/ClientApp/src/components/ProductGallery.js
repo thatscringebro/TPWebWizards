@@ -6,6 +6,7 @@ import axios from 'axios';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
 
+
 const API_BASE_URL = 'https://localhost:44415';
 
 const Product = ({ product }) => {
@@ -64,9 +65,10 @@ const ProductList = ({ title, products = [] }) => (
 function ProductsGallery() {
 
     const [product, setProducts] = useState([]);
-    const fetchDataForCategory = (category, count, mediaType = null) => {
+    const fetchDataForCategory = (_category, count, mediaType = null) => {
 
         const getArtistNameById = (artistId) => {
+            console.log('Artist data:', artistId);
             return axios.get(`${API_BASE_URL}/artist/${artistId}`)
                 .then(response => {
                     if (response.status === 200) {
@@ -76,44 +78,58 @@ function ProductsGallery() {
                 });
         };
 
-        const albumPromises = Array.from({ length: count }).map(() =>
-            axios.get(`${API_BASE_URL}/album/mediatype`, { params: mediaType !== null ? { mediaType } : {} })
+        const albumPromises = Array.from({ length: count }).
+            axios.get(`${API_BASE_URL}/album/mediaType`, { params: mediaType !== null ? { mediaType } : {} })
                 .then(async (response) => {
-
+                   
                     if (response.status === 200) {
                         const album = response.data;
-                        const artistName = await getArtistNameById(album.artistId);
-                        console.log('Album data:', album);
-                        return {
-                            id: album.albumId,
-                            cover: album.imageFilePath,
-                            mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                            artistName: artistName,
-                            albumTitle: album.title,
-                            price: album.price.toFixed(2),
-                        };
+                        console.log('Hallo:', response.data);
+
+                        for (var i = 0; i < count; i++) {
+
+
+                            const artistName = await getArtistNameById(album[i].artistId);
+                            console.log('Album data:', artistName);
+                            return {
+                                id: album[i].albumId,
+                                cover: album[i].imageFilePath,
+                                mediaType: album[i].media === 0 ? "VinylBase.png" : "CDBase.png",
+                                artistName: artistName,
+                                albumTitle: album[i].title,
+                                price: album[i].price.toFixed(2),
+                            };
+
+
+                        }
+                      
                     }
                     else {
                         throw new Error(`Failed to fetch random album with status: ${response.status}`);
                     }
                 })
-        );
+        
         return Promise.all(albumPromises);
 
     };
 
     useEffect(() => {
-        fetchDataForCategory('product', 24)
+        fetchDataForCategory('product', 1, 1)
             .then((data) => setProducts(data));
     }, []);
+        
 
-    return (
-        <div>
-            <hr className="divider" />
-            <ProductList title="All CDs" products={product} />
-            <hr className="divider" />
-        </div>
-    );
+    for (var i = 0; i < 24; i++) {
+        return (
+            <div>
+                <hr className="divider" />
+                <ProductList title="All CDs" products={product[i]} />
+                <hr className="divider" />
+            </div>
+        );
+    }
+
+   
 }
 
 export default ProductsGallery;
