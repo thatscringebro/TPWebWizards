@@ -24,17 +24,14 @@ const AppRoutes = [
         path: '/contactus',
         element: <ContactForm />
     },
-<<<<<<< HEAD
     {
         path: '/search',
         element: <SearchResults />
     },
-=======
      {
          path: '/products',
          element: <Products />
     }
->>>>>>> origin/main
 ];
 
 export default AppRoutes;

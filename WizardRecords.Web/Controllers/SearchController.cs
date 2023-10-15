@@ -14,14 +14,32 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Search(string query)
+        public async Task<ActionResult<IEnumerable<AlbumDetails>>> Search(string query)
         {
             try
             {
                 // Simulate a search by filtering products based on the query parameter
-                var searchResults = _albumRepository.GetAllAlbums()
-                .Select(a => new AlbumDetails(a.AlbumId, a.ArtistId, a.StockQuantity, a.Price, a.Title!, (Core.Data.Constants.MediaType)a.Media!, a.ImageFilePath!))
-                .Where(x => x.Title.Contains(query));
+                var searchResults = (await _albumRepository.GetAllAlbumsAsync())
+                .Select(a => new AlbumDetails(
+                a.Id,
+                a.ArtistId,
+                a.LabelId,
+                a.Title,
+                a.StockQuantity,
+                a.Price,
+                a.Category,
+                a.Media,
+                a.Format,
+                a.AlbumGenre,
+                a.MediaGrade,
+                a.SleeveGrade,
+                a.CatalogNumber,
+                a.MatrixNumber,
+                a.Comments,
+                a.ImageFilePath
+            ))
+                .Where(x => x.Title.Contains(query))
+                .ToList();
 
                 foreach(AlbumDetails ad in searchResults) {
                     Console.WriteLine($"{ad.AlbumId}, {ad.Title}");
