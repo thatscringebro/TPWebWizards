@@ -2,6 +2,7 @@
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import '../styles/Account.css';
+import { API_BASE_URL } from '../config';
 
 function Account() {
     const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function Account() {
         const { username, password } = formData;
 
         try {
-            const response = await axios.post('/account/login', { Username: username, Password: password });
+            const response = await axios.post(`${API_BASE_URL}/account/login/`, { Username: username, Password: password });
             // Gérer la réussite de la connexion (par exemple, rediriger l'utilisateur).
             console.log('Connexion réussie', response.data);
         } catch (error) {
