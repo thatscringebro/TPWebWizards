@@ -3,6 +3,7 @@ import ContactForm  from "./components/ContactUs";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
 import Products from "./components/Product";
+import Account from "./components/Account";
 
 const AppRoutes = [
     {
@@ -25,6 +26,10 @@ const AppRoutes = [
      {
          path: '/products',
          element: <Products />
+    },
+    {
+        path: '/account',
+        element: <Account />
     }
 ];
 

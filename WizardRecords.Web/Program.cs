@@ -8,13 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Database context
+builder.Services.AddDbContext<WizRecDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Identity services
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<WizRecDbContext>()
     .AddSignInManager();
 
-builder.Services.AddDbContext<WizRecDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+// Repositories
 builder.Services.AddScoped<IAlbumRepository, DefaultAlbumRepository>();
 builder.Services.AddScoped<IArtistRepository, DefaultArtistRepository>();
 builder.Services.AddScoped<ILabelRepository, DefaultLabelRepository>();
@@ -22,6 +25,7 @@ builder.Services.AddScoped<ILabelRepository, DefaultLabelRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// CORS
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowReactApp",
         builder => {
@@ -36,10 +40,12 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("AllowReactApp");
 
+// Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
