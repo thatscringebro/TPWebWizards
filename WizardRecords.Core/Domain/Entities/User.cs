@@ -9,5 +9,9 @@ using static WizardRecords.Core.Data.Constants;
 namespace WizardRecords.Core.Domain.Entities {
     public class User : IdentityUser<Guid> {
         public User(string userName) : base(userName) { }
+        internal User()
+        {
+            
+        }
     }
 }

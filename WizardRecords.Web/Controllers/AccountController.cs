@@ -29,29 +29,11 @@ namespace WizardRecords.Controllers
         //TODO : POST /ACCOUT/LOGIN (LogInVM)
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LogIn(Account vm)
+        public async Task<ActionResult> LogIn(string Username, string Password)
         {
-            if (!ModelState.IsValid)
-            {
-                return Redirect("/");
-            }
 
-            try
-            {
-                var result = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, false, false);
-
-                if (!result.Succeeded)
-                {
-                    ModelState.AddModelError(string.Empty, "check your email/password");
-                    return Redirect("/");
-                }
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
-            return RedirectToAction("Manage");
+            var result = await _signInManager.PasswordSignInAsync(Username, Password, false, false);
+            return Ok(result);
         }
     }
 }
