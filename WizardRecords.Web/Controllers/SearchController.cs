@@ -19,31 +19,28 @@ namespace WizardRecords.Controllers {
             try
             {
                 // Simulate a search by filtering products based on the query parameter
-                var searchResults = (await _albumRepository.GetAllAlbumsAsync())
-                .Select(a => new AlbumDetails(
-                a.Id,
-                a.ArtistId,
-                a.LabelId,
-                a.Title,
-                a.StockQuantity,
-                a.Price,
-                a.Category,
-                a.Media,
-                a.Format,
-                a.AlbumGenre,
-                a.MediaGrade,
-                a.SleeveGrade,
-                a.CatalogNumber,
-                a.MatrixNumber,
-                a.Comments,
-                a.ImageFilePath
-            ))
-                .Where(x => x.Title.Contains(query))
-                .ToList();
+                var searchResults = (await _albumRepository.GetSearchAlbumsAsync(query))
+                                    .Select(a => new AlbumDetails(
+                                        a.Id,
+                                        a.ArtistId,
+                                        a.LabelId,
+                                        a.Title,
+                                        a.StockQuantity,
+                                        a.Price,
+                                        a.Category,
+                                        a.Media,
+                                        a.Format,
+                                        a.AlbumGenre,
+                                        a.MediaGrade,
+                                        a.SleeveGrade,
+                                        a.CatalogNumber,
+                                        a.MatrixNumber,
+                                        a.Comments,
+                                        a.ImageFilePath
+                                    ))
+                                    .ToList();
 
-                foreach(AlbumDetails ad in searchResults) {
-                    Console.WriteLine($"{ad.AlbumId}, {ad.Title}");
-                }
+                
 
                 return Ok(searchResults);
             }
