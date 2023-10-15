@@ -46,7 +46,7 @@ namespace WizardRecords.Repositories {
         public async Task<IEnumerable<Album>> GetSearchAlbumsAsync(string query) {
             return await _context.Albums.Include(x => x.Artist)
                                         .Include(x => x.Label)
-                                        .Where(x => x.Title.Contains(query) || x.Artist.ArtistName.Contains(query) || x.Label.LabelName.Contains(query))
+                                        .Where(x => x.Title.ToLower().Contains(query.ToLower()) || x.Artist.ArtistName.ToLower().Contains(query.ToLower()) || x.Label.LabelName.ToLower().Contains(query.ToLower()))
                                         .ToListAsync();
         }
 
