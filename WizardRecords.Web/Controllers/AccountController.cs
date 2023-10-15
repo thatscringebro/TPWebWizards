@@ -29,7 +29,7 @@ namespace WizardRecords.Controllers
         //TODO : POST /ACCOUT/LOGIN (LogInVM)
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult> LogIn(string Username, string Password)
+        public async Task<IActionResult> LogIn(string Username, string Password)
         {
 
             var result = await _signInManager.PasswordSignInAsync(Username, Password, false, false);
