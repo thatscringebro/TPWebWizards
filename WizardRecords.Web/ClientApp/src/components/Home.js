@@ -11,9 +11,6 @@ class Home extends Component {
             <div>
                 <Carousel />
                 <HomeGallery />
-
-                <hr className="divider" />
-
                 <Partners />
             </div>
         );

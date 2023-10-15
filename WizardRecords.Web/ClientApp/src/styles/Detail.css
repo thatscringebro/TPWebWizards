@@ -1,62 +1,79 @@
 ﻿.detail-container {
-    display: flex;
-   margin-bottom: 15px;
+    position: relative;
 }
 
 .detail-content {
+    position: relative;
     border: 2px solid #333;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     background-color: #fff;
-    overflow: hidden;
     max-width: 90%;
+    min-width: 750px;
+    max-height: 500px;
     width: 100%;
+    margin: 20px auto;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .detail-image {
     flex: 1;
     padding: 20px;
+    max-width: 100%;
+    max-height: 100%;
     text-align: center;
 }
 
     .detail-image img {
-        max-width: 100%;
-        height: auto;
-        border: 1px solid #ccc;
+        border-radius: 10px;
+        border: 2px solid black;
     }
 
 .detail-text {
     flex: 2;
     padding: 20px;
-    font-size: 18px;
-    display: flex;
+    font-size: 15px;
     flex-direction: column;
-    align-items: flex-start;
 }
-
-    .detail-text p {
-        margin-bottom: 10px;
+    .detail-text .artist-name {
+        font-family: Centaur;
+        font-weight: bold;
+        font-size: 50px;
+        margin: 0px;
     }
 
+    .detail-text .album-title {
+        font-style: italic;
+        font-family: Centaur;
+        font-weight: bold;
+        font-size: 25px;
+    }
+
+
     .detail-text .price {
+        position: absolute;
+        font-family: Centaur;
         font-size: 250%;
-        font-weight: bold; 
+        font-weight: bold;
+        bottom: 0px;
     }
 
 
 .add-to-cart-button {
-    background-color: #888;
+    position: absolute;
+    background-color: forestgreen;
     color: #fff;
     padding: 10px 20px;
     font-size: 16px;
-    border: none;
+    border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
-    margin-left:80%;
+    bottom: 20px;
+    right: 20px;
 }
 
     .add-to-cart-button:hover {
-        background-color: #666;
-        
+        background-color: #00cc00;
     }
+

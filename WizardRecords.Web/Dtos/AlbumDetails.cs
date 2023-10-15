@@ -1,5 +1,22 @@
 ﻿using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Dtos {
-    public record AlbumDetails(int AlbumId, int ArtistId, int Qty, float Price, string Title, MediaType MediaType, string ImgPath);
+    public record AlbumDetails(
+        Guid AlbumId,
+        Guid ArtistId,
+        Guid LabelId,
+        string Title,
+        int StockQuantity,
+        float Price,
+        Category Category,
+        MediaType Media,
+        FormatType Format,
+        AlbumGenre AlbumGenre,
+        Grade MediaGrade,
+        Grade SleeveGrade,
+        string CatalogNumber,
+        string MatrixNumber,
+        string Comments,
+        string ImageFilePath
+    );
 }

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import GoogleMapComponent from './GoogleMap';
 import AddressInfo from './AddressInfo';
 import '../styles/AboutUs.css';
