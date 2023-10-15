@@ -13,7 +13,7 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddSignInManager();
 
 builder.Services.AddDbContext<WizRecDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAlbumRepository, DefaultAlbumRepository>();
 builder.Services.AddScoped<IArtistRepository, DefaultArtistRepository>();
