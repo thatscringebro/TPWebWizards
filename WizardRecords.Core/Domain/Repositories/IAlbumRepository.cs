@@ -9,6 +9,7 @@ namespace WizardRecords.Repositories {
         Task<IEnumerable<Album>> GetAlbumsByGenreAsync(AlbumGenre albumGenre);
         Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType mediaType);
         Task<IEnumerable<Album>> GetAlbumsByCategoryAsync(Category albumCategory);
+        Task<IEnumerable<Album>> GetSearchAlbumsAsync(string query);
         Task<Album?> GetAlbumByIdAsync(Guid albumId);
         Task<Album?> GetAlbumByTitleAsync(string title);
         Task<Album?> GetRandomAlbumAsync(MediaType mediaType);
