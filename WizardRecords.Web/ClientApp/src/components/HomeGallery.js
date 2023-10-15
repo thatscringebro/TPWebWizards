@@ -48,7 +48,7 @@ const ProductList = ({ title, products = [] }) => (
         <Container>
             <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>{title}</h1>
-                <h3><Link to={`/request/all`}>Click for more {'->'}</Link></h3>
+                <h3><Link to={`/request/all?category=${products.category}&mediaType=${products.mediaType}`}>Click for more {'->'}</Link></h3>
             </div>
             <Row>
                 {products.map(product => <Product key={product.id} product={product} />)}
