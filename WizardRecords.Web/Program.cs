@@ -8,12 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddIdentity<User, IdentityRole<Guid>>()
-    .AddEntityFrameworkStores<WizRecDbContext>()
-    .AddSignInManager();
-
 builder.Services.AddDbContext<WizRecDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<WizRecDbContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
+
 
 builder.Services.AddScoped<IAlbumRepository, DefaultAlbumRepository>();
 builder.Services.AddScoped<IArtistRepository, DefaultArtistRepository>();
@@ -36,12 +38,17 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");

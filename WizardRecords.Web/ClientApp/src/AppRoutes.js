@@ -2,6 +2,7 @@ import AboutUs from "./components/Aboutus";
 import ContactForm  from "./components/ContactUs";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
+import Account from "./components/Account"
 
 const AppRoutes = [
     {
@@ -20,6 +21,10 @@ const AppRoutes = [
     {
         path: '/contactus',
         element: <ContactForm />
+    },
+    {
+        path: '/account',
+        element: <Account />
     }
 ];
 
