@@ -1,7 +1,7 @@
 ﻿using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Dtos {
-    public record AlbumDetails(
+    public record AlbumDto(
         Guid AlbumId,
         Guid ArtistId,
         Guid LabelId,

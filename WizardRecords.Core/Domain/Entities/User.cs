@@ -8,18 +8,13 @@ using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Core.Domain.Entities {
     public class User : IdentityUser<Guid> {
-        public User(string userName) : base(userName) { }
+        public User(string userName) : base(userName) {}
 
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? FullName => $"{FirstName} {LastName}";
-        public new string? UserName { get; set; }
-        public new string? PhoneNumber { get; set; }
-        public new string? Email { get; set; }
+        // Properties
+        public string FirstName { get; set; } = "-";
+        public string LastName { get; set; } = "-";
+        public string FullName => $"{FirstName} {LastName}";
         public bool IsInitialPwd { get; set; } = true;
-        public new string? PasswordHash { get; set; }
-        public string? PasswordSalt { get; set; }
-        public UserRole UserRole { get; set; }
-
+        public string? ProfileImagePath { get; set; }
     }
 }

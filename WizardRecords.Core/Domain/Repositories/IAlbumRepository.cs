@@ -13,5 +13,13 @@ namespace WizardRecords.Repositories {
         Task<Album?> GetAlbumByIdAsync(Guid albumId);
         Task<Album?> GetAlbumByTitleAsync(string title);
         Task<Album?> GetRandomAlbumAsync(MediaType mediaType);
+
+        // TODO: CreateAlbumAsync
+        // TODO: UpdateAlbumAsync
+        // TODO: DeleteAlbumAsync
+        // TODO: UpdateArtistNameAsync
+        // TODO: UpdateArtistGenreAsync
+        // TODO: UpdateLabelNameAsync
+        // TODO: UpdateLabelCountryAsync
     }
 }

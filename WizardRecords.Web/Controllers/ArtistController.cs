@@ -13,10 +13,10 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArtistDetails>>> GetAllArtists() {
+        public async Task<ActionResult<IEnumerable<ArtistDto>>> GetAllArtists() {
             var artists = (await _artistRepository
                 .GetAllArtistsAsync())
-                .Select(a => new ArtistDetails(
+                .Select(a => new ArtistDto(
                     a.Id,
                     a.ArtistName,
                     a.ArtistGenre
@@ -25,10 +25,10 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArtistDetails>> GetAlbumById(Guid id) {
+        public async Task<ActionResult<ArtistDto>> GetAlbumById(Guid id) {
             try {
                 var artist = await _artistRepository.GetArtistByIdAsync(id);
-                return Ok(new ArtistDetails(
+                return Ok(new ArtistDto(
                     artist!.Id,
                     artist.ArtistName,
                     artist.ArtistGenre

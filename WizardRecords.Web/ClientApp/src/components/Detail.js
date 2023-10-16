@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Detail.css';
 import '../styles/Home.css';
+
 const Detail = () => {
     const { id } = useParams();
     console.log('Retrieved id in Params:', id);
@@ -40,7 +41,7 @@ const Detail = () => {
                 console.log('Retrieved ArtistId in Detail:', album.artistId);
                 console.log('Retrieved Quantity in Detail:', album.stockQuantity);
                 console.log('Retrieved Title in Detail:', album.title);
-                console.log('Retrieved Label in Detail:', album.albumLabel);
+                console.log('Retrieved Label in Detail:', album.labelId);
                 console.log('Retrieved ImageFilePath in Detail:', album.imageFilePath);
                 console.log('Retrieved Price in Detail:', album.price);
 
@@ -90,8 +91,6 @@ const Detail = () => {
                     <p><i>In stock</i> : {product.quantity}</p>
                     <p className="price">${product.price}</p>
                     <button className="add-to-cart-button">Add to Cart</button>
-
-
                 </div>
             </div>
         </div>

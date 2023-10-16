@@ -3,11 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
-
-
-const API_BASE_URL = 'https://localhost:44415';
 
 const Product = ({ product }) => {
 
@@ -77,24 +75,24 @@ const fetchDataForCategory = (count) => {
 
     return axios.get(`${API_BASE_URL}/album/all`)
         .then(async (response) => {
-            if (response.status === 200) {
-                const albums = response.data;
-                const albumPromises = albums.map(async (album) => {
-                    const artistName = await getArtistNameById(album.artistId);
-                    return {
-                        id: album.albumId,
-                        cover: album.imageFilePath,
-                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                        artistName: artistName,
-                        albumTitle: album.title,
-                        price: album.price.toFixed(2),
-                        stockQuantity: album.stockQuantity
-                    };
-                });
+                if (response.status === 200) {
+                    const albums = response.data;
+                    const albumPromises = albums.map(async (album) => {
+                        const artistName = await getArtistNameById(album.artistId);
+                        return {
+                            id: album.albumId,
+                            cover: album.imageFilePath,
+                            mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                            artistName: artistName,
+                            albumTitle: album.title,
+                            price: album.price.toFixed(2),
+                            stockQuantity: album.stockQuantity
+                        };
+                    });
 
-                return Promise.all(albumPromises);
-            } else {
-                throw new Error(`Failed to fetch albums with status: ${response.status}`);
+                    return Promise.all(albumPromises);
+                } else {
+                    throw new Error(`Failed to fetch albums with status: ${response.status}`);
             }
         });
 };
@@ -107,19 +105,14 @@ function ProductsGallery() {
             .then((data) => setProducts(data))
             .catch((error) => {
                 console.error('Error fetching albums:', error);
-                // Handle the error gracefully
             });
     }, []);
 
     return (
         <div>
-            <hr className="divider" />
             <ProductList title="All products" products={products} />
-            <hr className="divider" />
         </div>
     );
 }
-   
-
 
 export default ProductsGallery;

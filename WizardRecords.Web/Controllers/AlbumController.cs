@@ -17,10 +17,10 @@ namespace WizardRecords.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<AlbumDetails>>> GetAllAlbums()
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAllAlbums()
         {
             var albums = (await _albumRepository.GetAllAlbumsAsync())
-                .Select(a => new AlbumDetails(
+                .Select(a => new AlbumDto(
                 a.Id,
                 a.ArtistId,
                 a.LabelId,
@@ -43,7 +43,7 @@ namespace WizardRecords.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AlbumDetails>> GetAlbumById(Guid id)
+        public async Task<ActionResult<AlbumDto>> GetAlbumById(Guid id)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace WizardRecords.Controllers
 
                 if (album != null)
                 {
-                    return Ok(new AlbumDetails(
+                    return Ok(new AlbumDto(
                         album.Id,
                         album.ArtistId,
                         album.LabelId,
@@ -82,7 +82,7 @@ namespace WizardRecords.Controllers
         }
 
         [HttpGet("random")]
-        public async Task<ActionResult<AlbumDetails>> GetRandomAlbum([FromQuery] MediaType mediaType)
+        public async Task<ActionResult<AlbumDto>> GetRandomAlbum([FromQuery] MediaType mediaType)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace WizardRecords.Controllers
 
                 if (album != null)
                 {
-                    return Ok(new AlbumDetails(
+                    return Ok(new AlbumDto(
                         album.Id,
                         album.ArtistId,
                         album.LabelId,
@@ -122,7 +122,7 @@ namespace WizardRecords.Controllers
 
 
         [HttpGet("mediaType")]
-        public async Task<ActionResult<IEnumerable<AlbumDetails>>> GetAlbumsByMediaTypeAsync([FromQuery] MediaType mediaType)
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByMediaTypeAsync([FromQuery] MediaType mediaType)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace WizardRecords.Controllers
                 {
                     var albumDetails = albums.Select(album =>
                     {
-                        return new AlbumDetails(AlbumId: album.Id,
+                        return new AlbumDto(AlbumId: album.Id,
                                                        ArtistId: album.ArtistId,
                                                                                   LabelId: album.LabelId,
                                                                                                              Title: album.Title,
