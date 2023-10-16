@@ -22,6 +22,7 @@ function Account() {
     };
 
     const handleSubmit = async (e) => {
+        console.log("handleSubmit triggered!");
         e.preventDefault();
 
         try {
@@ -35,9 +36,9 @@ function Account() {
             } else {
                 response = await axios.post(`${API_BASE_URL}/account/register`, formData);
             }
-
-            if (response.data.Token) {
-                localStorage.setItem('token', response.data.Token);
+            console.log("Response data:", response.data);
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token); // LOWER FUCKING CASE!!!!
                 alert('Authentication successful!');
                 setLoggedIn(true);
             }
