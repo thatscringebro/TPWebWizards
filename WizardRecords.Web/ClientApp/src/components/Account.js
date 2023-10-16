@@ -1,71 +1,68 @@
 ﻿import React, { useState } from 'react';
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import '../styles/Account.css';
 
 function Account() {
+    const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
-        username: '',
-        password: '',
+        UserName: '',
+        Password: '',
+        Email: '',
+        FirstName: '',
+        LastName: ''
     });
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
     };
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
-
-        const { username, password } = formData;
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         try {
-            const response = await axios.post('/account/login', { Username: username, Password: password });
-            // Gérer la réussite de la connexion (par exemple, rediriger l'utilisateur).
-            console.log('Connexion réussie', response.data);
+            let response;
+
+            if (isLogin) {
+                response = await axios.post(`${API_BASE_URL}/account/login`, {
+                    UserName: formData.UserName,
+                    Password: formData.Password
+                });
+            } else {
+                response = await axios.post(`${API_BASE_URL}/account/register`, formData);
+            }
+
+            if (response.data.Token) {
+                localStorage.setItem('token', response.data.Token);
+                alert('Authentication successful!');
+            }
+
         } catch (error) {
-            // Gérer l'échec de la connexion (par exemple, afficher un message d'erreur).
-            console.error('Erreur de connexion', error);
+            console.error("Authentication error:", error);
+            alert('Authentication failed.');
         }
     };
 
-    const { username, password } = formData;
-
     return (
-        <section className="login-form">
-            <Container>
-                <h2>Login</h2>
-                <br />
-                <Form onSubmit={handleLogin}>
-                    <FormGroup>
-                        <Label for="username">Username</Label>
-                        <Input
-                            type="text"
-                            name="username"
-                            id="username"
-                            placeholder="Enter your username"
-                            value={username}
-                            onChange={handleInputChange}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={handleInputChange}
-                        />
-                    </FormGroup>
-                    <Button type="submit">Login</Button>
-                </Form>
-            </Container>
-        </section>
+        <div>
+            <h2>{isLogin ? 'Login' : 'Register'}</h2>
+            <form onSubmit={handleSubmit}>
+                {!isLogin && (
+                    <>
+                        <input type="text" name="FirstName" placeholder="First Name" onChange={handleInputChange} />
+                        <input type="text" name="LastName" placeholder="Last Name" onChange={handleInputChange} />
+                        <input type="email" name="Email" placeholder="Email" onChange={handleInputChange} />
+                    </>
+                )}
+                <input type="text" name="UserName" placeholder="Username" onChange={handleInputChange} />
+                <input type="password" name="Password" placeholder="Password" onChange={handleInputChange} />
+                <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+            </form>
+            <button onClick={() => setIsLogin(!isLogin)}>
+                Switch to {isLogin ? 'Register' : 'Login'}
+            </button>
+        </div>
     );
 }
 
