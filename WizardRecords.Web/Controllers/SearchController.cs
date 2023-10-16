@@ -14,10 +14,8 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> Search(string query)
-        {
-            try
-            {
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> Search(string query) {
+            try {
                 var searchResults = (await _albumRepository.GetSearchAlbumsAsync(query))
                                     .Select(a => new AlbumDto(
                                         a.Id,
@@ -41,8 +39,7 @@ namespace WizardRecords.Controllers {
 
                 return Ok(searchResults);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
