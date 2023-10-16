@@ -1,4 +1,5 @@
 import AboutUs from "./components/Aboutus";
+import ArtistAlbums from "./components/ArtistAlbums";
 import ContactForm from "./components/ContactUs";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
@@ -32,6 +33,10 @@ const AppRoutes = [
     {
         path: '/products',
         element: <Products />
+    },
+    {
+        path: '/artist/:artistId/albums',
+        element: <ArtistAlbums /> 
     },
     {
         path: '/account',
