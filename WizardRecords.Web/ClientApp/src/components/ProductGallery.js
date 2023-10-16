@@ -97,20 +97,76 @@ const fetchDataForCategory = (count) => {
         });
 };
 
+
 function ProductsGallery() {
+    const [allProducts, setAllProducts] = useState([]); // Liste complète des produits
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedSortOption, setSelectedSortOption] = useState('default');
+    const productsPerPage = 24;
 
     useEffect(() => {
-        fetchDataForCategory(24, 1)
-            .then((data) => setProducts(data))
-            .catch((error) => {
-                console.error('Error fetching albums:', error);
-            });
+        fetchDataForCategory().then((data) => {
+            setAllProducts(data); // Stockez la liste complète
+            setProducts(data); // Initialisez également les produits affichés
+        });
     }, []);
+
+    const handleSortChange = (event) => {
+        setSelectedSortOption(event.target.value);
+        let filteredProducts = [...allProducts]; // Copiez la liste complète pour appliquer les filtres
+
+        if (event.target.value === 'cdOnly') {
+            // Filtrer uniquement les CD
+            filteredProducts = filteredProducts.filter((product) => product.mediaType === 'CDBase.png');
+        } else if (event.target.value === 'vinylOnly') {
+            // Filtrer uniquement les vinyles
+            filteredProducts = filteredProducts.filter((product) => product.mediaType === 'VinylBase.png');
+        }
+
+        setProducts(filteredProducts);
+    };
+
+    const nextPage = () => {
+        if (currentPage < Math.ceil(products.length / productsPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const sortedProducts = [...products];
+    if (selectedSortOption === 'priceLowToHigh') {
+        sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (selectedSortOption === 'priceHighToLow') {
+        sortedProducts.sort((a, b) => b.price - a.price);
+    }
+
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
     return (
         <div>
-            <ProductList title="All products" products={products} />
+            <div className="sort-bar">
+                <label htmlFor="sortDropdown">Sort by: </label>
+                <select id="sortDropdown" value={selectedSortOption} onChange={handleSortChange}>
+                    <option value="default">Default</option>
+                    <option value="priceLowToHigh">Price: Low to High</option>
+                    <option value="priceHighToLow">Price: High to Low</option>
+                    <option value="cdOnly">CD Only</option>
+                    <option value="vinylOnly">Vinyl Only</option>
+                </select>
+            </div>
+            <ProductList title="All products" products={currentProducts} />
+            <div className="pagination">
+                <button onClick={prevPage}>Previous</button>
+                <button onClick={nextPage}>Next</button>
+            </div>
         </div>
     );
 }
