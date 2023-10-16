@@ -72,6 +72,9 @@ const NavMenu = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="text-light" to="/add-product">Add Product</NavLink>
+                            </NavItem>
                         </ul>
                     </Collapse>
                 </Navbar>
@@ -118,6 +121,9 @@ const NavMenu = () => {
                                             </NavItem>
                                             <NavItem>
                                                 <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink tag={Link} className="text-light" to="/add-product">Add Product</NavLink>
                                             </NavItem>
                                         </ul>
                                     </Collapse>

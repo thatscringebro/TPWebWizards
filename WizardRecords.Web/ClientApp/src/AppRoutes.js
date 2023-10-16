@@ -4,6 +4,7 @@ import Detail from "./components/Detail";
 import Home from "./components/Home";
 import SearchResults from "./components/SearchResults";
 import Products from "./components/Product";
+import AddProductForm from "./components/AddProductForm";
 
 
 const AppRoutes = [
@@ -31,7 +32,12 @@ const AppRoutes = [
      {
          path: '/products',
          element: <Products />
+    },
+    {
+        path: '/add-product',
+        element: <AddProductForm />
     }
+
 ];
 
 export default AppRoutes;
