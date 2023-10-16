@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Account.css';
-import { API_BASE_URL } from '../config';
 
 function Account() {
     const [isLogin, setIsLogin] = useState(true);
