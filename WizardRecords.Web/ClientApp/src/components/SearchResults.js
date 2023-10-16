@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link, useLocation } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 import axios from 'axios';
 import '../styles/Home.css';
-import '../styles/Fonts.css';
-
-const API_BASE_URL = 'https://localhost:44415';
 
 const Product = ({ product }) => {
   const isAvailable = product.stockQuantity > 0;
@@ -105,7 +103,6 @@ function SearchResults() {
       .then((data) => setProducts(data))
       .catch((error) => {
         console.error('Error fetching albums:', error);
-        // Handle the error gracefully
       });
   }, [searchQuery]);
 

@@ -1,6 +1,13 @@
-﻿﻿.login-form {
+﻿h2 {
+    font-family: 'PatrenaRolane';
+}﻿
+
+.login-form {
     margin: 50px;
 }
+ .account-container {
+     padding: 0 0 20px;
+ }
 
 #username {
     background-color: #24262b;
@@ -11,5 +18,5 @@
 #password {
     background-color: #24262b;
     color: #E4E6Eb;
-    max-width: 500px
+    max-width: 50%
 }

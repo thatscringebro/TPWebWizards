@@ -31,7 +31,6 @@ export class Footer extends Component {
                             <ul>
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">Vinyls</a></li>
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">Compact discs</a></li>
-                                <li><a href="https://github.com/thatscringebro/TPWebWizards">Tape</a></li>
                             </ul>
                         </div>
                         <div class="footer-col">

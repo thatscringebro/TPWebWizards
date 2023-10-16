@@ -35,7 +35,8 @@
     }
 }
 .form-control {
-    background-color: #121212;
+    background-color: #24262b;
+    color: #E4E6Eb;
 }
 
 /* Navbar styles */
@@ -76,9 +77,9 @@ header .input-group-append button {
     display: inline-block
 }
 
-header .input-group-append button:hover {
-  background-color: #a10000;
-}
+    header .input-group-append button:hover {
+        background-color: #24262b;
+    }
 /* Mobile responsive styles */
 @media (max-width: 576px) {
   header .navbar-toggler {
