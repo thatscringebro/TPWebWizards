@@ -62,7 +62,6 @@ const ProductList = ({ title, products = [] }) => (
 );
 
 const fetchDataForCategory = (count) => {
-
     const getArtistNameById = (artistId) => {
         return axios.get(`${API_BASE_URL}/artist/${artistId}`)
             .then(response => {
@@ -85,6 +84,7 @@ const fetchDataForCategory = (count) => {
                             mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                             artistName: artistName,
                             albumTitle: album.title,
+                            category: album.category === 0 ? "used" : "new",
                             price: album.price.toFixed(2),
                             stockQuantity: album.stockQuantity
                         };
@@ -97,13 +97,13 @@ const fetchDataForCategory = (count) => {
         });
 };
 
-
 function ProductsGallery() {
     const [allProducts, setAllProducts] = useState([]); // Liste complète des produits
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSortOption, setSelectedSortOption] = useState('default');
-    const productsPerPage = 24;
+    const [selectedFilterOption, setSelectedFilterOption] = useState('default');
+    const productsPerPage = 12;
 
     useEffect(() => {
         fetchDataForCategory().then((data) => {
@@ -114,14 +114,20 @@ function ProductsGallery() {
 
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
+    }
+
+    const handleFilterChange = (event) => {
+        setSelectedFilterOption(event.target.value);
         let filteredProducts = [...allProducts]; // Copiez la liste complète pour appliquer les filtres
 
         if (event.target.value === 'cdOnly') {
-            // Filtrer uniquement les CD
             filteredProducts = filteredProducts.filter((product) => product.mediaType === 'CDBase.png');
         } else if (event.target.value === 'vinylOnly') {
-            // Filtrer uniquement les vinyles
             filteredProducts = filteredProducts.filter((product) => product.mediaType === 'VinylBase.png');
+        } else if (event.target.value === 'newOnly') {
+            filteredProducts = filteredProducts.filter((product) => product.category === 'new');
+        } else if (event.target.value === 'usedOnly') {
+            filteredProducts = filteredProducts.filter((product) => product.category === 'used');
         }
 
         setProducts(filteredProducts);
@@ -132,11 +138,8 @@ function ProductsGallery() {
             setCurrentPage(currentPage + 1);
         }
     };
-
     const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
+        if (currentPage > 1) { setCurrentPage(currentPage - 1); }
     };
 
     const sortedProducts = [...products];
@@ -144,6 +147,10 @@ function ProductsGallery() {
         sortedProducts.sort((a, b) => a.price - b.price);
     } else if (selectedSortOption === 'priceHighToLow') {
         sortedProducts.sort((a, b) => b.price - a.price);
+    } else if (selectedSortOption === 'AlbumNameAsc') {
+        sortedProducts.sort((a, b) => a.albumTitle.localeCompare(b.albumTitle));
+    } else if (selectedSortOption === 'AlbumNameDesc') {
+        sortedProducts.sort((a, b) => -1 * a.albumTitle.localeCompare(b.albumTitle));
     }
 
     const indexOfLastProduct = currentPage * productsPerPage;
@@ -158,15 +165,25 @@ function ProductsGallery() {
                     <option value="default">Default</option>
                     <option value="priceLowToHigh">Price: Low to High</option>
                     <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="cdOnly">CD Only</option>
-                    <option value="vinylOnly">Vinyl Only</option>
+                    <option value="AlbumNameAsc">Name: A..Z</option>
+                    <option value="AlbumNameDesc">Name: Z..A</option>
                 </select>
             </div>
-            <ProductList title="All products" products={currentProducts} />
+            <div>
+                <label htmlFor="filterDropdown">Filter by: </label>
+                <select id="filterDropdown" value={selectedFilterOption} onChange={handleFilterChange}>
+                    <option value="default">Default</option>
+                    <option value="cdOnly">CD Only</option>
+                    <option value="vinylOnly">Vinyl Only</option>
+                    <option value="newOnly">New Only</option>
+                    <option value="usedOnly">Used Only</option>
+                </select>
+            </div>
             <div className="pagination">
                 <button onClick={prevPage}>Previous</button>
                 <button onClick={nextPage}>Next</button>
             </div>
+            <ProductList title="All products" products={currentProducts} />
         </div>
     );
 }
