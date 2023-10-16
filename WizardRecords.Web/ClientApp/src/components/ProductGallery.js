@@ -1,13 +1,12 @@
-﻿
+
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
 
-
-const API_BASE_URL = 'https://localhost:44415';
 
 const Product = ({ product }) => {
 

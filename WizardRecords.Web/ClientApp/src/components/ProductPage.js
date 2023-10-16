@@ -1,4 +1,4 @@
-﻿// ProductPage.js
+// ProductPage.js
 
 import React from 'react';
 import AddProductForm from './AddProductForm';
