@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Detail.css';
-import '../styles/Home.css';
 
 const Detail = () => {
     const { id } = useParams();
-    console.log('Retrieved id in Params:', id);
+    console.log('Retrieved albumId in Params:', id);
     const [product, setProduct] = useState(null);
 
     const fetchDataForDetail = async  (id) => {
@@ -34,23 +34,18 @@ const Detail = () => {
         try {
             const response = await axios.get(`${API_BASE_URL}/album/${id}`);
             console.log("Full album response:", response.data);
+            console.log("Fetching artist details for artistId:", response.data.artistId);
             if (response.status === 200) {
                 const album = response.data;
 
-                console.log('Retrieved Id in Detail:', album.albumId);
-                console.log('Retrieved ArtistId in Detail:', album.artistId);
-                console.log('Retrieved Quantity in Detail:', album.stockQuantity);
-                console.log('Retrieved Title in Detail:', album.title);
-                console.log('Retrieved Label in Detail:', album.labelId);
-                console.log('Retrieved ImageFilePath in Detail:', album.imageFilePath);
-                console.log('Retrieved Price in Detail:', album.price);
-
                 const imagePath = require(`./Images/AlbumCovers/${album.imageFilePath}`);
                 const artistName = await getArtistNameById(album.artistId);
+                console.log("Fetching album's artistId:", album.artistId);
                 const labelName = await getLabelNameById(album.labelId);
 
                 const productData = {
                     albumId: album.albumId,
+                    artistId: album.artistId,
                     imageFilePath: imagePath,
                     category: album.category === 0 ? 'Used' : 'New',
                     quantity: album.stockQuantity,
@@ -84,13 +79,16 @@ const Detail = () => {
                     <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
                 </div>
                 <div className="detail-text">
-                    <p className="artist-name">{product.artistName}</p>
-                    <p className="album-title">"{product.albumTitle}"</p>
+                    {console.log("Full Product data in Detail : ", product)}
+                    <Link className="detail-artist-name" to={`/artist/${product.artistId}/albums`}>
+                        <p>{product.artistName}</p>
+                    </Link>
+                    <p className="detail-album-title">"{product.albumTitle}"</p>
                     <p><i>Category</i> : {product.category} {product.format}</p>
-                    <p className="album-label"><i>Label</i> : {product.albumLabel}</p>
+                    <p className="detail-album-label"><i>Label</i> : {product.albumLabel}</p>
                     <p><i>In stock</i> : {product.quantity}</p>
-                    <p className="price">${product.price}</p>
-                    <button className="add-to-cart-button">Add to Cart</button>
+                    <p className="detail-price">${product.price}</p>
+                    <button className="detail-cart-button">Add to Cart</button>
                 </div>
             </div>
         </div>
