@@ -43,6 +43,13 @@ namespace WizardRecords.Repositories {
             return await _context.Albums.FirstOrDefaultAsync(a => a.Title == title);
         }
 
+        public async Task<IEnumerable<Album>> GetSearchAlbumsAsync(string query) {
+            return await _context.Albums.Include(x => x.Artist)
+                                        .Include(x => x.Label)
+                                        .Where(x => x.Title.ToLower().Contains(query.ToLower()) || x.Artist.ArtistName.ToLower().Contains(query.ToLower()) || x.Label.LabelName.ToLower().Contains(query.ToLower()))
+                                        .ToListAsync();
+        }
+
         public async Task<Album?> GetRandomAlbumAsync(MediaType mediaType) {
             var albumIds = await _context.Albums
                 .Where(a => a.Media == mediaType)
