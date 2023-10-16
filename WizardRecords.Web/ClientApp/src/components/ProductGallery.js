@@ -97,7 +97,6 @@ const fetchDataForCategory = (count) => {
         });
 };
 
-
 function ProductsGallery() {
     const [allProducts, setAllProducts] = useState([]); // Liste complète des produits
     const [products, setProducts] = useState([]);
@@ -122,6 +121,12 @@ function ProductsGallery() {
         } else if (event.target.value === 'vinylOnly') {
             // Filtrer uniquement les vinyles
             filteredProducts = filteredProducts.filter((product) => product.mediaType === 'VinylBase.png');
+        } else if (event.target.value === 'newOnly') {
+            // Filtrer uniquement les produits "New"
+            filteredProducts = filteredProducts.filter((product) => product.category === 'New');
+        } else if (event.target.value === 'usedOnly') {
+            // Filtrer uniquement les produits "Used"
+            filteredProducts = filteredProducts.filter((product) => product.category === 'Used');
         }
 
         setProducts(filteredProducts);
@@ -160,6 +165,8 @@ function ProductsGallery() {
                     <option value="priceHighToLow">Price: High to Low</option>
                     <option value="cdOnly">CD Only</option>
                     <option value="vinylOnly">Vinyl Only</option>
+                    <option value="newOnly">New Only</option>
+                    <option value="usedOnly">Used Only</option>
                 </select>
             </div>
             <ProductList title="All products" products={currentProducts} />
