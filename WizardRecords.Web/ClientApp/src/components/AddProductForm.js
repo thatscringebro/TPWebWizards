@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+
 import "../styles/ProductManager.css"
+import { API_BASE_URL } from '../config';
+import axios from 'axios';
 
 function AddProductForm() {
     const [product, setProduct] = useState({
@@ -33,21 +36,25 @@ function AddProductForm() {
         });
 
         try {
-            const response = await fetch('/api/products', {
+            const response = await axios.post(`${API_BASE_URL}/crud/create`, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(product),
             });
 
             if (response.ok) {
-                alert('Added successfully!');
+                const createdAlbum = await response.json();
+               
+                console.log('Album created:', createdAlbum);
             } else {
-                alert('Error durirng process');
+                console.error('Error creating the album.');
             }
         } catch (error) {
-            console.error("Error during process", error);
+            console.error('Error sending the product', error);
         }
     };
-
     return (
         <Container className="add-product-form">
             <h2>Add new product</h2>

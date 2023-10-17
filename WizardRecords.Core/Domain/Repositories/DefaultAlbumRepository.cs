@@ -60,5 +60,64 @@ namespace WizardRecords.Repositories {
 
             return await _context.Albums.FindAsync(randomAlbumId);
         }
+
+        public async Task<Album?> DeleteAlbumAsync(string title)
+        {
+            var album = await _context.Albums.Where(a => a.Title == title).FirstOrDefaultAsync();
+            if (album != null)
+            {
+                _context.Albums.Remove(album);
+                await _context.SaveChangesAsync(); 
+                return album;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public void CreateAlbumAsync(Album album)
+        {
+            try
+            {
+                
+                _context.Albums.Add(album);
+                _context.SaveChangesAsync();
+
+            }
+            catch (Exception)
+            {
+            
+            }
+
+        }
+        public async Task<Album?> UpdateAlbumAsync(Guid albumId, Album updateData)
+        {
+            try
+            {
+                var album = await _context.Albums.FirstOrDefaultAsync(a => a.Id == albumId);
+
+                if (album != null)
+                {
+                    // Update the album properties with the new values from the AlbumUpdate record.
+                    album.Title = updateData.Title;
+                    album.StockQuantity = updateData.StockQuantity;
+                    album.Price = updateData.Price;
+                    album.ImageFilePath = updateData.ImageFilePath;
+                    album.Comments = updateData.Comments;
+
+                    // Save the changes to the database.
+                    await _context.SaveChangesAsync();
+
+                    return album; // Return the updated album.
+                }
+
+                return null; // Return null if the album with the specified ID was not found.
+            }
+            catch (Exception)
+            {
+                // Handle any exceptions that may occur during the database operation.
+                return null;
+            }
+        }
     }
 }
