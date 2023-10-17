@@ -37,6 +37,7 @@ const NavMenu = () => {
                         <div className="col col-lg">
                             <div className="input-group">
                                 <Input
+                                    className="search-input"
                                     type="text"
                                     placeholder="search products"
                                     value={searchQuery}

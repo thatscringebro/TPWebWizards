@@ -29,14 +29,17 @@ builder.Services.AddScoped<ILabelRepository, DefaultLabelRepository>();
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"]);
 
-builder.Services.AddAuthentication(x => {
+builder.Services.AddAuthentication(x =>
+{
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(x => {
+.AddJwtBearer(x =>
+{
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters {
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
@@ -48,9 +51,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // CORS
-builder.Services.AddCors(options => {
+builder.Services.AddCors(options =>
+{
     options.AddPolicy("AllowReactApp",
-        builder => {
+        builder =>
+        {
             builder.WithOrigins("http://localhost:3000")
                    .AllowAnyMethod()
                    .AllowAnyHeader()
@@ -60,7 +65,8 @@ builder.Services.AddCors(options => {
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 }

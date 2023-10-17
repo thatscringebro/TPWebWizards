@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import '../styles/Home.css';
+import "../styles/ProductManager.css"
 
 function AddProductForm() {
     const [product, setProduct] = useState({
