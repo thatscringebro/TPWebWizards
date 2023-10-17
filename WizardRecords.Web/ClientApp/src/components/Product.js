@@ -8,8 +8,6 @@ class Products extends Component {
         return (
             <div>
                 <ProductsGallery />
-                <hr className="divider" />
-
             </div>
         );
     }
