@@ -13,6 +13,7 @@ function AddProductForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Envoie du produit à l'API
         try {
             const response = await fetch('/api/products', { //À modifier?
                 method: 'POST',

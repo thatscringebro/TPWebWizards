@@ -5,6 +5,7 @@ import Detail from "./components/Detail";
 import Home from "./components/Home";
 import SearchResults from "./components/SearchResults";
 import Products from "./components/Product";
+import AddProductForm from "./components/AddProductForm";
 import Account from "./components/Account";
 
 
@@ -31,6 +32,9 @@ const AppRoutes = [
         element: <SearchResults />
     },
     {
+        path: '/add-product',
+        element: <AddProductForm />
+    {
         path: '/products',
         element: <Products />
     },
@@ -42,6 +46,7 @@ const AppRoutes = [
         path: '/account',
         element: <Account />
     }
+
 ];
 
 export default AppRoutes;

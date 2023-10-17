@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle }
 import { Link, useLocation } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import axios from 'axios';
+import '../styles/Home.css';
+import '../styles/Fonts.css';
 
 const Product = ({ product }) => {
     const isAvailable = product.stockQuantity > 0;
