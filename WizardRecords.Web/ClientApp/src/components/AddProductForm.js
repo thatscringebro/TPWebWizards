@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import "../styles/ProductManager.css"
 
 function AddProductForm() {
     const [product, setProduct] = useState({
@@ -44,7 +45,7 @@ function AddProductForm() {
                         type="text"
                         name="name"
                         id="name"
-                        placeholder="Nom du produit"
+                        placeholder="Product name"
                         value={product.name}
                         onChange={e => setProduct({ ...product, name: e.target.value })}
                     />
@@ -55,7 +56,7 @@ function AddProductForm() {
                         type="text"
                         name="category"
                         id="category"
-                        placeholder="Catégorie"
+                        placeholder="Category"
                         value={product.category}
                         onChange={e => setProduct({ ...product, category: e.target.value })}
                     />
