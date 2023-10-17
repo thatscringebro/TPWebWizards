@@ -1,7 +1,7 @@
 ﻿
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
@@ -98,6 +98,9 @@ const fetchDataForCategory = (count) => {
 };
 
 function ProductsGallery() {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+
     const [allProducts, setAllProducts] = useState([]); // Liste complète des produits
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -109,8 +112,28 @@ function ProductsGallery() {
         fetchDataForCategory().then((data) => {
             setAllProducts(data); // Stockez la liste complète
             setProducts(data); // Initialisez également les produits affichés
+
+            // Check for URL parameters and apply filters
+            const category = searchParams.get('category').toLowerCase();
+            const mediatype = searchParams.get('mediatype').toLowerCase() == "vinyl" ? 'VinylBase.png' : 'CDBase.png';
+
+            console.log(category, mediatype);
+
+            if (category || mediatype) {
+                let filteredProducts = [...data];
+
+                if (category && category !== 'default') {
+                    filteredProducts = filteredProducts.filter((product) => product.category === category);
+                }
+
+                if (mediatype && mediatype !== 'default') {
+                    filteredProducts = filteredProducts.filter((product) => product.mediaType === mediatype);
+                }
+
+                setProducts(filteredProducts);
+            }
         });
-    }, []);
+    }, [location.search]);
 
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
