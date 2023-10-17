@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
@@ -42,20 +42,26 @@ const Product = ({ product }) => {
         </Col>
     );
 };
-
-const ProductList = ({ title, products = [] }) => (
-    <section className={`product-list section-${title.replace(/\s+/g, '-').toLowerCase()}`}>
-        <Container>
-            <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1>{title}</h1>
-                <h3><Link to={`/request/all?category=${products.category}&mediaType=${products.mediaType}`}>Click for more {'->'}</Link></h3>
-            </div>
-            <Row>
-                {products.map(product => <Product key={product.id} product={product} />)}
-            </Row>
-        </Container>
-    </section>
-);
+//Chercher avec product mediatype et category pour retourner celui de la liste.. 
+const ProductList = ({ title, products = [] }) => {
+    const SplitSearch = title.split(' ');
+    return (
+        <section className={`product-list section-${SplitSearch[0]}`}>
+            <Container>
+                <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h1>{title}</h1>
+                    <h3>
+                        <Link
+                            to={`/products?category=${SplitSearch[0]}&mediatype=${SplitSearch[1]}`} > Click for more {'->'} </Link>
+                    </h3>
+                </div>
+                <Row>
+                    {products.map(product => <Product key={product.id} product={product} />)}
+                </Row>
+            </Container>
+        </section>
+    );
+};
 
 function HomeGallery() {
     const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -90,6 +96,7 @@ function HomeGallery() {
                                 artistName: artistName,
                                 albumTitle: album.title,
                                 price: album.price.toFixed(2),
+                                category : album.category,
                             };
                         }
                         else {
