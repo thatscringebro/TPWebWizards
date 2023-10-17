@@ -1,4 +1,4 @@
-﻿h1 {
+﻿﻿h1 {
     font-family: 'PatrenaRolane';
     margin-bottom: 20px;
 }
@@ -62,6 +62,7 @@ h3 {
     text-decoration: none;
     color: #24262b;
 }
+
     .card-href:hover {
         box-shadow: 0 0 0 3px darkred;
     }
@@ -148,13 +149,11 @@ h3 {
         color: #24262b;
     }
 
-.section-category h3:hover {
-    font-weight: bold;
-}
+    .section-category h3:hover {
+        font-weight: bold;
+    }
 
 .slogan {
     font-family: 'PatrenaRolane';
     font-size: calc(20px + (95 - 20) * ((100vw - 320px) / (1920 - 320)));
 }
-
-

@@ -1,10 +1,12 @@
 import AboutUs from "./components/Aboutus";
-import ContactForm  from "./components/ContactUs";
+import ArtistAlbums from "./components/ArtistAlbums";
+import ContactForm from "./components/ContactUs";
 import Detail from "./components/Detail";
 import Home from "./components/Home";
 import SearchResults from "./components/SearchResults";
 import Products from "./components/Product";
 import AddProductForm from "./components/AddProductForm";
+import Account from "./components/Account";
 
 
 const AppRoutes = [
@@ -29,13 +31,20 @@ const AppRoutes = [
         path: '/search',
         element: <SearchResults />
     },
-     {
-         path: '/products',
-         element: <Products />
-    },
     {
         path: '/add-product',
         element: <AddProductForm />
+    {
+        path: '/products',
+        element: <Products />
+    },
+    {
+        path: '/artist/:artistId/albums',
+        element: <ArtistAlbums /> 
+    },
+    {
+        path: '/account',
+        element: <Account />
     }
 
 ];

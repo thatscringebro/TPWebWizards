@@ -1,5 +1,5 @@
 ﻿namespace WizardRecords.Dtos {
-    public record LabelDetails (
+    public record LabelDto (
         Guid LabelId,
         string LabelName,
         string Country

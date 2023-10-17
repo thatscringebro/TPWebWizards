@@ -30,18 +30,21 @@
         align-items: center;
         justify-content: center;
     }
+
     .container-fluid {
         justify-content: center !important;
     }
 }
+
 .form-control {
     background-color: #121212;
 }
 
 /* Navbar styles */
 header {
-  background-color: darkred;
+    background-color: darkred;
 }
+
 .hero-banner {
     background-color: darkred;
 }
@@ -52,12 +55,12 @@ header .navbar-brand {
 
 /* NavItem styles */
 header .nav-item {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 header .nav-link {
-  text-decoration: none;
-  font-size: 18px;
+    text-decoration: none;
+    font-size: 18px;
 }
 
 header .form-control {
@@ -76,29 +79,29 @@ header .input-group-append button {
     display: inline-block
 }
 
-header .input-group-append button:hover {
-  background-color: #a10000;
-}
+    header .input-group-append button:hover {
+        background-color: #a10000;
+    }
 /* Mobile responsive styles */
 @media (max-width: 576px) {
-  header .navbar-toggler {
-    margin-right: 0;
-  }
+    header .navbar-toggler {
+        margin-right: 0;
+    }
 
-  header .navbar-collapse {
-    background-color: darkred;
-    padding: 10px;
-  }
+    header .navbar-collapse {
+        background-color: darkred;
+        padding: 10px;
+    }
 
-  header .navbar-nav {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+    header .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-  header .navbar-nav .nav-item {
-    margin: 10px 0;
-  }
+        header .navbar-nav .nav-item {
+            margin: 10px 0;
+        }
 }
 
 /*footer*/

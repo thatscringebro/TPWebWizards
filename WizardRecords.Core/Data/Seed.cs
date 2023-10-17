@@ -9,7 +9,12 @@ namespace WizardRecords.Core.Data {
 
         public static void LoadSeed(this ModelBuilder builder) {
             var adminRole = AddRole(builder, "Administrator");
-            var adminUser = AddUser(builder, "admin", "admin");
+
+            var validUserName = "Admin123";
+            var validEmail = "Admin123@wizardrecords.com";
+            var validPassword = "Admin123!";
+
+            var adminUser = AddUser(builder, "Ti-Coq", "Tremblay", validUserName, validEmail, validPassword);
             AddUserToRole(builder, adminUser, adminRole);
             SeedAll(builder);
         }
@@ -25,14 +30,23 @@ namespace WizardRecords.Core.Data {
             return newRole;
         }
 
-        private static User AddUser(ModelBuilder builder,
-            string userName, string password) {
-            var newUser = new User(userName) {
+        private static User AddUser(ModelBuilder builder, string firstName, string lastName, string username, string email, string password) {
+            var hasher = new PasswordHasher<User>();
+            var newUser = new User(username)
+            {
                 Id = Guid.NewGuid(),
-                NormalizedUserName = userName.ToUpper(),
-                SecurityStamp = Guid.NewGuid().ToString()
+                UserName = username,
+                NormalizedUserName = username.ToUpper(),
+                Email = email,
+                NormalizedEmail = email.ToUpper(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                FirstName = firstName,
+                LastName = lastName,
+                IsInitialPwd = true,
+                ProfileImagePath = null
             };
-            newUser.PasswordHash = PASSWORD_HASHER.HashPassword(newUser, password);
+            newUser.PasswordHash = hasher.HashPassword(newUser, password);
             builder.Entity<User>().HasData(newUser);
 
             return newUser;

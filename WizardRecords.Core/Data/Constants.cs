@@ -1,13 +1,5 @@
 ﻿namespace WizardRecords.Core.Data {
     public class Constants {
-        public enum UserRole {
-            ADMIN,
-            MANAGER,
-            CLERK,
-            CLIENT,
-            GUEST
-        }
-
         public enum MediaType {
             VINYL,
             CD

@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import axios from 'axios';
-import '../styles/Home.css';
-import '../styles/Fonts.css';
+
+const mapAlbumToProduct = (album, artistName) => ({
+    id: album.albumId,
+    cover: album.imageFilePath,
+    mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+    artistName: artistName,
+    albumTitle: album.title,
+    price: album.price.toFixed(2),
+    stockQuantity: album.stockQuantity
+});
 
 const Product = ({ product }) => {
     const isAvailable = product.stockQuantity > 0;
@@ -59,61 +68,39 @@ const ProductList = ({ title, products = [] }) => (
     </section>
 );
 
-const fetchDataForCategory = (searchQuery, count) => {
-    const getArtistNameById = (artistId) => {
-        return axios.get(`${API_BASE_URL}/artist/${artistId}`)
-            .then(response => {
-                if (response.status === 200) {
-                    return response.data.artistName;
-                }
-                throw new Error(`Failed to fetch artist name for id ${artistId}`);
-            });
-    };
-
-    return axios.get(`${API_BASE_URL}/search?query=${searchQuery}`)
-        .then(async (response) => {
-            if (response.status === 200) {
-                const albums = response.data;
-                const albumPromises = albums.map(async (album) => {
-                    const artistName = await getArtistNameById(album.artistId);
-                    return {
-                        id: album.albumId,
-                        cover: album.imageFilePath,
-                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                        artistName: artistName,
-                        albumTitle: album.title,
-                        price: album.price.toFixed(2),
-                        stockQuantity: album.stockQuantity
-                    };
-                });
-
-                return Promise.all(albumPromises);
-            } else {
-                throw new Error(`Failed to fetch albums with status: ${response.status}`);
-            }
-        });
-};
-
-function SearchResults() {
-    const searchQuery = new URLSearchParams(useLocation().search).get('query');
-
-    const [products, setProducts] = useState([]);
+const ArtistAlbums = () => {
+    const { artistId } = useParams();
+    const [ products, setProducts ] = useState([]);
+    const [ artistName, setArtistName ] = useState("");
 
     useEffect(() => {
-        fetchDataForCategory(searchQuery, 24)
-            .then((data) => setProducts(data))
-            .catch((error) => {
-                console.error('Error fetching albums:', error);
-                // Handle the error gracefully
-            });
-    }, [searchQuery]);
+        const fetchAlbumsForArtist = async () => {
+            try {
+                const artistResponse = await axios.get(`${API_BASE_URL}/artist/${artistId}`);
+                setArtistName(artistResponse.data.artistName);
+
+                const albumsResponse = await axios.get(`${API_BASE_URL}/artist/${artistId}/albums`);
+
+                if (albumsResponse.status === 200) {
+                    const transformedAlbums = albumsResponse.data.map(album => mapAlbumToProduct(album, artistName));
+                    setProducts(transformedAlbums);
+                } else {
+                    console.error(`Failed to fetch albums for artistId: ${artistId}`);
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
+        fetchAlbumsForArtist();
+    }, [artistId, artistName]);
 
     return (
         <div>
-            <h3>Search results for "{searchQuery}"</h3>
-            <ProductList title="Search for " products={products} />
+            <h2>Albums by {artistName}</h2>
+            <ProductList title="Artist's Albums" products={products} />
         </div>
     );
-}
+};
 
-export default SearchResults;
+export default ArtistAlbums;

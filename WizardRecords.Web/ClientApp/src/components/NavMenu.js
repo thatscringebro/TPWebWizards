@@ -20,7 +20,7 @@ const NavMenu = () => {
     const handleSearchSubmit = () => {
         // Get the search query from the state
         const query = searchQuery;
-        
+
         // Navigate to the search results page with the query as a parameter
         navigate(`/search?query=${query}`);
     };
