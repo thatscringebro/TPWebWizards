@@ -151,8 +151,8 @@ const Detail = () => {
                                 value={editedProduct.price}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                             />
-                            <button onClick={updateProduct}>Save</button>
-                            <button onClick={() => setIsEditing(false)}>Cancel</button>
+                            <button className="edit-button" onClick={updateProduct}>Save</button>
+                            <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                     ) : (
                         <div>
@@ -163,8 +163,8 @@ const Detail = () => {
                             <p><i>In stock</i> : {product.quantity}</p>
                             <p className="detail-price">${product.price}</p>
                             <button className="detail-cart-button">Add to Cart</button>
-                            <button onClick={deleteProduct}>Delete</button>
-                            <button onClick={editProduct}>Edit</button>
+                            <button className="delete-button" onClick={deleteProduct}>Delete</button>
+                            <button className="edit-button" onClick={editProduct}>Edit</button>
                         </div>
                     )}
                 </div>
