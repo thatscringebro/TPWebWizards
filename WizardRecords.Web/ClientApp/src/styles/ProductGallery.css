@@ -50,3 +50,9 @@
         height: 48px;
     }
 }
+
+.pagination {
+    justify-content: center;
+    margin: 0 auto;
+    display: flex;
+}
