@@ -1,77 +1,203 @@
 import React, { useState } from 'react';
+import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import "../styles/ProductManager.css"
 
 function AddProductForm() {
     const [product, setProduct] = useState({
-        name: '',
+        artistName: '',
+        albumTItle: '',
+        labelName: '',
         category: '',
-        description: '',
+        media: '',
         price: '',
-        image: '',
-        quantity: ''
+        image: null,
+        mediaGrade: '',
+        sleeveGrade: '',
+        catalogNumber: '',
+        matrixNumber: '',
+        quantity: '',
+        genre: '',
+        comments: ''
     });
+
+    const handleFileChange = (e) => {
+        setProduct({ ...product, image: e.target.files[0] });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Envoie du produit à l'API
+        const formData = new FormData();
+        Object.keys(product).forEach(key => {
+            formData.append(key, product[key]);
+        });
+
         try {
-            const response = await fetch('/api/products', { //À modifier?
+            const response = await fetch('/api/products', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(product)
+                body: formData
             });
 
             if (response.ok) {
-                alert('Produit ajouté avec succès !');
+                alert('Added successfully!');
             } else {
-                alert('Erreur lors de l\'ajout du produit.');
+                alert('Error durirng process');
             }
         } catch (error) {
-            console.error("Erreur de l'envoi du produit", error);
+            console.error("Error during process", error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Nom du produit"
-                value={product.name}
-                onChange={e => setProduct({ ...product, name: e.target.value })}
-            />
-            <input
-                type="text"
-                placeholder="Catégorie"
-                value={product.category}
-                onChange={e => setProduct({ ...product, category: e.target.value })}
-            />
-            <textarea
-                placeholder="Description"
-                value={product.description}
-                onChange={e => setProduct({ ...product, description: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Prix"
-                value={product.price}
-                onChange={e => setProduct({ ...product, price: e.target.value })}
-            />
-            <input
-                type="text"
-                placeholder="URL de l'image"
-                value={product.image}
-                onChange={e => setProduct({ ...product, image: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Quantité"
-                value={product.quantity}
-                onChange={e => setProduct({ ...product, quantity: e.target.value })}
-            />
-            <button type="submit">Ajouter</button>
-        </form>
+        <Container className="add-product-form">
+            <h2>Add new product</h2>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label for="name">Artist name</Label>
+                    <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Artist name"
+                        value={product.artistName}
+                        onChange={e => setProduct({ ...product, artistName: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="name">Album title</Label>
+                    <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Album title"
+                        value={product.albumTitle}
+                        onChange={e => setProduct({ ...product, albumTItle: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="name">Label name</Label>
+                    <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Label name"
+                        value={product.labelName}
+                        onChange={e => setProduct({ ...product, labelName: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="category">Category</Label>
+                    <Input
+                        type="text"
+                        name="category"
+                        id="category"
+                        placeholder="Used or New"
+                        value={product.category}
+                        onChange={e => setProduct({ ...product, category: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="category">Media</Label>
+                    <Input
+                        type="text"
+                        name="category"
+                        id="category"
+                        placeholder="Vinyl, CD, Cassette, etc"
+                        value={product.media}
+                        onChange={e => setProduct({ ...product, media: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="price">Price</Label>
+                    <Input
+                        type="number"
+                        name="price"
+                        id="price"
+                        placeholder="Price"
+                        value={product.price}
+                        onChange={e => setProduct({ ...product, price: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="quantity">Quantity</Label>
+                    <Input
+                        type="number"
+                        name="quantity"
+                        id="quantity"
+                        placeholder="Quantity"
+                        value={product.quantity}
+                        onChange={e => setProduct({ ...product, quantity: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="image">Image file name</Label>
+                    <Input
+                        type="file"
+                        name="image"
+                        id="image"
+                        placeholder="File name only"
+                        value={product.image}
+                        onChange={handleFileChange}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="mediaGRade">Media grade</Label>
+                    <Input
+                        type="text"
+                        name="mediaGrade"
+                        id="mediaGrade"
+                        placeholder="For used products ONLY!"
+                        value={product.mediaGrade}
+                        onChange={e => setProduct({ ...product, mediaGrade: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="sleeveGrade">Sleeve grade</Label>
+                    <Input
+                        type="text"
+                        name="sleeveGrade"
+                        id="sleeveGrade"
+                        placeholder="For used products ONLY!"
+                        value={product.sleeveGrade}
+                        onChange={e => setProduct({ ...product, sleeveGrade: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="catalogNumber">Catalog number</Label>
+                    <Input
+                        type="text"
+                        name="catalogNumber"
+                        id="catalogNumber"
+                        placeholder="For used products ONLY!"
+                        value={product.catalogNumber}
+                        onChange={e => setProduct({ ...product, catalogNumber: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="matrixNumber">Matrix number</Label>
+                    <Input
+                        type="text"
+                        name="matrixNumber"
+                        id="matrixNumber"
+                        placeholder="For used products ONLY!"
+                        value={product.matrixNumber}
+                        onChange={e => setProduct({ ...product, matrixNumber: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="description">Comments</Label>
+                    <Input
+                        type="textarea"
+                        name="description"
+                        id="description"
+                        placeholder="Comments"
+                        value={product.comments}
+                        onChange={e => setProduct({ ...product, comments: e.target.value })}
+                    />
+                </FormGroup>
+                <Button type="submit">Add product</Button>
+            </Form>
+        </Container>
     );
 }
 

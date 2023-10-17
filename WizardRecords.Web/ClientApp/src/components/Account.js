@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { API_BASE_URL } from '../config';
-import Home from './Home';
+import AddProductForm from './AddProductForm';
 import '../styles/Account.css';
 
 function Account() {
@@ -50,7 +50,7 @@ function Account() {
     };
 
     if (isLoggedIn) {
-        return <Home />
+        return <AddProductForm />
     }
 
     return (
