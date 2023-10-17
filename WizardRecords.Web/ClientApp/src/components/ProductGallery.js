@@ -151,6 +151,10 @@ function ProductsGallery() {
         sortedProducts.sort((a, b) => a.albumTitle.localeCompare(b.albumTitle));
     } else if (selectedSortOption === 'AlbumNameDesc') {
         sortedProducts.sort((a, b) => -1 * a.albumTitle.localeCompare(b.albumTitle));
+    } else if (selectedSortOption === 'ArtistNameAsc') {
+        sortedProducts.sort((a, b) => a.artistName.localeCompare(b.artistName));
+    } else if (selectedSortOption === 'ArtistNameDesc') {
+        sortedProducts.sort((a, b) => -1 * a.artistName.localeCompare(b.artistName));
     }
 
     const indexOfLastProduct = currentPage * productsPerPage;
@@ -165,8 +169,10 @@ function ProductsGallery() {
                     <option value="default">Default</option>
                     <option value="priceLowToHigh">Price: Low to High</option>
                     <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="AlbumNameAsc">Name: A..Z</option>
-                    <option value="AlbumNameDesc">Name: Z..A</option>
+                    <option value="AlbumNameAsc">Album Name: A..Z</option>
+                    <option value="AlbumNameDesc">Album Name: Z..A</option>
+                    <option value="ArtistNameAsc">Artist Name: A..Z</option>
+                    <option value="ArtistNameDesc">Artis Name: Z..A</option>
                 </select>
             </div>
             <div>
