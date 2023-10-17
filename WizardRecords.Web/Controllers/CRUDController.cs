@@ -27,7 +27,7 @@ namespace WizardRecords.Controllers
                     album.Title = updatedAlbum.Title;
                     album.StockQuantity = updatedAlbum.StockQuantity;
                     album.Price = updatedAlbum.Price;
-                    album.ImageFilePath = updatedAlbum.ImageFilePath;
+                    //album.ImageFilePath = updatedAlbum.ImageFilePath;
                     album.Comments = updatedAlbum.Comments;
         
                     await _albumRepository.UpdateAlbumAsync(id, album);
