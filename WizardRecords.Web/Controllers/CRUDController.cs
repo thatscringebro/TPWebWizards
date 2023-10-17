@@ -16,16 +16,20 @@ namespace WizardRecords.Controllers
             _albumRepository = albumRepository;
         }
 
-        [HttpGet("update")]
-        public async Task<ActionResult<AlbumUpdate>> GetAlbumById(Guid id)
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult<AlbumUpdate>> UpdateAlbum(Guid id, [FromBody] AlbumUpdate updatedAlbum)
         {
             try
             {
                 var album = await _albumRepository.GetAlbumByIdAsync(id);
-
-               
                 if (album != null)
                 {
+                    album.Title = updatedAlbum.Title;
+                    album.StockQuantity = updatedAlbum.StockQuantity;
+                    album.Price = updatedAlbum.Price;
+                    album.ImageFilePath = updatedAlbum.ImageFilePath;
+                    album.Comments = updatedAlbum.Comments;
+        
                     await _albumRepository.UpdateAlbumAsync(id, album);
                     return Ok();
                 }
@@ -39,6 +43,7 @@ namespace WizardRecords.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
+
         [HttpGet("delete")]
         public async Task<ActionResult<AlbumDelete>> GetAlbumByTitle(string title)
         {

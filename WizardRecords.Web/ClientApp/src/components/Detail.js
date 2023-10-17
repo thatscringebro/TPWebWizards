@@ -90,8 +90,21 @@ const Detail = () => {
 
     const updateProduct = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/crud/update`, {
-                params: { title: product.Id },
+            console.log(editedProduct);
+            const albumUpdate = {
+                Title: editedProduct.albumTitle,
+                StockQuantity: editedProduct.quantity,
+                Price: editedProduct.price,
+                ImageFilePath: editedProduct.imageFilePath,
+                Comments: "yo bitch"
+            };
+
+            console.log(albumUpdate);
+
+            const response = await axios.put(`${API_BASE_URL}/crud/update/${product.albumId}`, albumUpdate, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
             if (response.status === 200) {
                 console.log('Album updated successfully');
@@ -104,6 +117,7 @@ const Detail = () => {
             console.error('Error updating album:', error);
         }
     };
+
 
     useEffect(() => {
         fetchDataForDetail(id);
@@ -120,7 +134,6 @@ const Detail = () => {
                     <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
                 </div>
                 <div className="detail-text">
-                    {/* Display product details */}
                     {isEditing ? (
                         <div>
                             <input
@@ -128,7 +141,16 @@ const Detail = () => {
                                 value={editedProduct.albumTitle}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
                             />
-                            {/* Add input fields for other product details */}
+                            <input
+                                type="number"
+                                value={editedProduct.quantity}
+                                onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
+                            />
+                            <input
+                                type="number"
+                                value={editedProduct.price}
+                                onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
+                            />
                             <button onClick={updateProduct}>Save</button>
                             <button onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
