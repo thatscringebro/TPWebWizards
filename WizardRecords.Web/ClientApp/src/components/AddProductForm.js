@@ -10,7 +10,7 @@ function AddProductForm() {
         category: '',
         media: '',
         price: '',
-        image: '',
+        image: null,
         mediaGrade: '',
         sleeveGrade: '',
         catalogNumber: '',
@@ -20,17 +20,22 @@ function AddProductForm() {
         comments: ''
     });
 
+    const handleFileChange = (e) => {
+        setProduct({ ...product, image: e.target.files[0] });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Sending product to the API
+        const formData = new FormData();
+        Object.keys(product).forEach(key => {
+            formData.append(key, product[key]);
+        });
+
         try {
             const response = await fetch('/api/products', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(product)
+                body: formData
             });
 
             if (response.ok) {
@@ -127,12 +132,12 @@ function AddProductForm() {
                 <FormGroup>
                     <Label for="image">Image file name</Label>
                     <Input
-                        type="text"
+                        type="file"
                         name="image"
                         id="image"
                         placeholder="File name only"
                         value={product.image}
-                        onChange={e => setProduct({ ...product, image: e.target.value })}
+                        onChange={handleFileChange}
                     />
                 </FormGroup>
                 <FormGroup>
