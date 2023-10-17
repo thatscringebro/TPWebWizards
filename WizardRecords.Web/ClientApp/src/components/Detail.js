@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Detail.css';
 
 const Detail = () => {
     const { id } = useParams();
-    console.log('Retrieved albumId in Params:', id);
+    //const history = useHistory();
+
     const [product, setProduct] = useState(null);
+    const [editedProduct, setEditedProduct] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
 
     const fetchDataForDetail = async  (id) => {
         const getArtistNameById = async (artistId) => {
@@ -64,6 +66,45 @@ const Detail = () => {
         }
     };
 
+    const deleteProduct = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/crud/delete`, {
+                params: { title: product.albumTitle },
+            });
+            if (response.status === 200) {
+                console.log('Album deleted successfully');
+                // Redirect to a different page or perform any other action after deletion
+                //history.push('/'); // Redirect to the homepage, for example
+            } else {
+                console.error('Failed to delete album with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error deleting album:', error);
+        }
+    };
+
+    const editProduct = () => {
+        setEditedProduct(product);
+        setIsEditing(true);
+    };
+
+    const updateProduct = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/crud/update`, {
+                params: { title: product.Id },
+            });
+            if (response.status === 200) {
+                console.log('Album updated successfully');
+                setIsEditing(false);
+                fetchDataForDetail(id); // Refresh product details after editing
+            } else {
+                console.error('Failed to update album with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error updating album:', error);
+        }
+    };
+
     useEffect(() => {
         fetchDataForDetail(id);
     }, [id]);
@@ -79,16 +120,31 @@ const Detail = () => {
                     <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
                 </div>
                 <div className="detail-text">
-                    {console.log("Full Product data in Detail : ", product)}
-                    <Link className="detail-artist-name" to={`/artist/${product.artistId}/albums`}>
-                        <p>{product.artistName}</p>
-                    </Link>
-                    <p className="detail-album-title">"{product.albumTitle}"</p>
-                    <p><i>Category</i> : {product.category} {product.format}</p>
-                    <p className="detail-album-label"><i>Label</i> : {product.albumLabel}</p>
-                    <p><i>In stock</i> : {product.quantity}</p>
-                    <p className="detail-price">${product.price}</p>
-                    <button className="detail-cart-button">Add to Cart</button>
+                    {/* Display product details */}
+                    {isEditing ? (
+                        <div>
+                            <input
+                                type="text"
+                                value={editedProduct.albumTitle}
+                                onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
+                            />
+                            {/* Add input fields for other product details */}
+                            <button onClick={updateProduct}>Save</button>
+                            <button onClick={() => setIsEditing(false)}>Cancel</button>
+                        </div>
+                    ) : (
+                        <div>
+                            <p>{product.artistName}</p>
+                            <p className="detail-album-title">"{product.albumTitle}"</p>
+                            <p><i>Category</i> : {product.category} {product.format}</p>
+                            <p className="detail-album-label"><i>Label</i> : {product.albumLabel}</p>
+                            <p><i>In stock</i> : {product.quantity}</p>
+                            <p className="detail-price">${product.price}</p>
+                            <button className="detail-cart-button">Add to Cart</button>
+                            <button onClick={deleteProduct}>Delete</button>
+                            <button onClick={editProduct}>Edit</button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -96,3 +152,4 @@ const Detail = () => {
 };
 
 export default Detail;
+
