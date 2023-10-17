@@ -10,6 +10,7 @@ function AddProductForm() {
         category: '',
         media: '',
         price: '',
+        imageFileName: '',
         image: null,
         mediaGrade: '',
         sleeveGrade: '',
@@ -141,7 +142,7 @@ function AddProductForm() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="mediaGRade">Media grade</Label>
+                    <Label for="mediaGrade">Media grade</Label>
                     <Input
                         type="text"
                         name="mediaGrade"

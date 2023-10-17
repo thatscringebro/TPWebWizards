@@ -6,6 +6,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
+import '../styles/ProductGallery.css';
 
 const Product = ({ product }) => {
 
@@ -25,7 +26,7 @@ const Product = ({ product }) => {
     }
 
     return (
-        <Col md={4} className="d-flex mb-4">
+        <Col md={4} className=" d-flex mb-4">
             <Link to={`/detail/${product.id}`} className="card-href card-width">
                 <Card className="h-100">
                     <CardImg top className="card-img-format" src={formatImageSrc} alt={product.mediaType} />
@@ -208,11 +209,13 @@ function ProductsGallery() {
                     <option value="usedOnly">Used Only</option>
                 </select>
             </div>
-            <div className="pagination">
-                <button onClick={prevPage}>Previous</button>
-                <button onClick={nextPage}>Next</button>
+            <div>
+                <ProductList title="All products" products={currentProducts} />
+                <div className="pagination">
+                    <button className="button" onClick={prevPage}>Previous</button>
+                    <button className="button" onClick={nextPage}>Next</button>
+                </div>
             </div>
-            <ProductList title="All products" products={currentProducts} />
         </div>
     );
 }
