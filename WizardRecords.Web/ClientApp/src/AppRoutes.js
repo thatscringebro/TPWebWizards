@@ -34,6 +34,7 @@ const AppRoutes = [
     {
         path: '/add-product',
         element: <AddProductForm />
+    },
     {
         path: '/products',
         element: <Products />
