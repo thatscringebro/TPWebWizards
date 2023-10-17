@@ -37,6 +37,7 @@ const NavMenu = () => {
                         <div className="col col-lg">
                             <div className="input-group">
                                 <Input
+                                    className="search-input"
                                     type="text"
                                     placeholder="search products"
                                     value={searchQuery}
@@ -71,9 +72,6 @@ const NavMenu = () => {
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="text-light" to="/add-product">Add Product</NavLink>
                             </NavItem>
                         </ul>
                     </Collapse>
