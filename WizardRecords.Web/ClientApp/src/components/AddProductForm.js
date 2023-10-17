@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 function AddProductForm() {
     const [product, setProduct] = useState({
@@ -13,9 +14,9 @@ function AddProductForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Envoie du produit à l'API
+        // Sending product to the API
         try {
-            const response = await fetch('/api/products', { //À modifier?
+            const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -34,44 +35,78 @@ function AddProductForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Nom du produit"
-                value={product.name}
-                onChange={e => setProduct({ ...product, name: e.target.value })}
-            />
-            <input
-                type="text"
-                placeholder="Catégorie"
-                value={product.category}
-                onChange={e => setProduct({ ...product, category: e.target.value })}
-            />
-            <textarea
-                placeholder="Description"
-                value={product.description}
-                onChange={e => setProduct({ ...product, description: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Prix"
-                value={product.price}
-                onChange={e => setProduct({ ...product, price: e.target.value })}
-            />
-            <input
-                type="text"
-                placeholder="URL de l'image"
-                value={product.image}
-                onChange={e => setProduct({ ...product, image: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Quantité"
-                value={product.quantity}
-                onChange={e => setProduct({ ...product, quantity: e.target.value })}
-            />
-            <button type="submit">Ajouter</button>
-        </form>
+        <Container className="add-product-form">
+            <h2>Add new product</h2>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label for="name">Nom du produit</Label>
+                    <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Nom du produit"
+                        value={product.name}
+                        onChange={e => setProduct({ ...product, name: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="category">Catégorie</Label>
+                    <Input
+                        type="text"
+                        name="category"
+                        id="category"
+                        placeholder="Catégorie"
+                        value={product.category}
+                        onChange={e => setProduct({ ...product, category: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="description">Description</Label>
+                    <Input
+                        type="textarea"
+                        name="description"
+                        id="description"
+                        placeholder="Description"
+                        value={product.description}
+                        onChange={e => setProduct({ ...product, description: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="price">Prix</Label>
+                    <Input
+                        type="number"
+                        name="price"
+                        id="price"
+                        placeholder="Prix"
+                        value={product.price}
+                        onChange={e => setProduct({ ...product, price: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="image">URL de l'image</Label>
+                    <Input
+                        type="text"
+                        name="image"
+                        id="image"
+                        placeholder="URL de l'image"
+                        value={product.image}
+                        onChange={e => setProduct({ ...product, image: e.target.value })}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="quantity">Quantité</Label>
+                    <Input
+                        type="number"
+                        name="quantity"
+                        id="quantity"
+                        placeholder="Quantité"
+                        value={product.quantity}
+                        onChange={e => setProduct({ ...product, quantity: e.target.value })}
+                    />
+                </FormGroup>
+                <Button type="submit">Ajouter</Button>
+            </Form>
+        </Container>
     );
 }
 
