@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import '../styles/Home.css';
 
 function AddProductForm() {
     const [product, setProduct] = useState({
@@ -25,12 +26,12 @@ function AddProductForm() {
             });
 
             if (response.ok) {
-                alert('Produit ajouté avec succès !');
+                alert('Added successfully!');
             } else {
-                alert('Erreur lors de l\'ajout du produit.');
+                alert('Error durirng process');
             }
         } catch (error) {
-            console.error("Erreur de l'envoi du produit", error);
+            console.error("Error during process", error);
         }
     };
 
@@ -39,7 +40,7 @@ function AddProductForm() {
             <h2>Add new product</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Label for="name">Nom du produit</Label>
+                    <Label for="name">Album</Label>
                     <Input
                         type="text"
                         name="name"
@@ -72,7 +73,7 @@ function AddProductForm() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="price">Prix</Label>
+                    <Label for="price">Price</Label>
                     <Input
                         type="number"
                         name="price"
@@ -83,7 +84,7 @@ function AddProductForm() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="image">URL de l'image</Label>
+                    <Label for="image">Image file name</Label>
                     <Input
                         type="text"
                         name="image"
@@ -94,7 +95,7 @@ function AddProductForm() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="quantity">Quantité</Label>
+                    <Label for="quantity">Quantity</Label>
                     <Input
                         type="number"
                         name="quantity"
@@ -104,7 +105,7 @@ function AddProductForm() {
                         onChange={e => setProduct({ ...product, quantity: e.target.value })}
                     />
                 </FormGroup>
-                <Button type="submit">Ajouter</Button>
+                <Button type="submit">Add product</Button>
             </Form>
         </Container>
     );
