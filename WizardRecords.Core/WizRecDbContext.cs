@@ -13,6 +13,14 @@ namespace WizardRecords.Core {
             base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder) {
+
+
+            builder.Entity<Album>().HasIndex(x => x.ArtistId);
+            builder.Entity<Album>().HasIndex(x => x.LabelId);
+            builder.Entity<Album>().HasIndex(x => x.AlbumGenre);
+            builder.Entity<Album>().HasIndex(x => x.Media);
+            builder.Entity<Album>().HasIndex(x => x.Category);
+            builder.Entity<Album>().HasIndex(x => x.Title);
             base.OnModelCreating(builder);
             builder.LoadSeed();
         }
