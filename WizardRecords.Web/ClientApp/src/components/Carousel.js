@@ -5,9 +5,9 @@ import '../styles/Carousel.css';
 const Carousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const images = [
-        { src: require("./Images/Carousel/CarouselImage1.jpg"), alt: "placeholder1" },
-        { src: require("./Images/Carousel/CarouselImage2.jpg"), alt: "placeholder2" },
-        { src: require("./Images/Carousel/CarouselImage3.jpg"), alt: "placeholder3" },
+        { src: require("./Images/Carousel/PubImage1.jpg"), alt: "placeholder1" },
+        { src: require("./Images/Carousel/PubImage2.jpg"), alt: "placeholder2" },
+        { src: require("./Images/Carousel/PubImage3.jpg"), alt: "placeholder3" },
     ];
     const length = images.length;
 
@@ -58,6 +58,4 @@ const Carousel = () => {
     );
 }
 
-
-
-export default Carousel
+export default Carousel;
