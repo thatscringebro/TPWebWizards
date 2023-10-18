@@ -12,11 +12,11 @@ namespace WizardRecords.Dtos {
         MediaType Media,
         FormatType Format,
         AlbumGenre AlbumGenre,
-        Grade MediaGrade,
-        Grade SleeveGrade,
-        string CatalogNumber,
-        string MatrixNumber,
-        string Comments,
+        Grade? MediaGrade,
+        Grade? SleeveGrade,
+        string? CatalogNumber,
+        string? MatrixNumber,
+        string? Comments,
         string ImageFilePath
     );
 }

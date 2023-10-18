@@ -26,8 +26,7 @@ namespace WizardRecords.Repositories {
             return await _context.Albums.Where(a => a.AlbumGenre == albumGenre).ToListAsync();
         }
 
-        public async Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType mediaType)
-        {
+        public async Task<IEnumerable<Album>> GetAlbumsByMediaTypeAsync(MediaType mediaType) {
             return await _context.Albums.Where(a => a.Media == mediaType).ToListAsync();
         }
 
@@ -61,44 +60,32 @@ namespace WizardRecords.Repositories {
             return await _context.Albums.FindAsync(randomAlbumId);
         }
 
-        public async Task<Album?> DeleteAlbumAsync(string title)
-        {
+        public async Task<Album?> DeleteAlbumAsync(string title) {
             var album = await _context.Albums.Where(a => a.Title == title).FirstOrDefaultAsync();
-            if (album != null)
-            {
+            if (album != null) {
                 _context.Albums.Remove(album);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
                 return album;
             }
-            else
-            {
+            else {
                 return null;
             }
         }
-        public void CreateAlbumAsync(Album album)
-        {
-            try
-            {
-                
-                _context.Albums.Add(album);
-                _context.SaveChangesAsync();
 
-            }
-            catch (Exception)
-            {
-            
+        public async Task CreateAlbumAsync(Album album) {
+            if (album == null) {
+                throw new ArgumentNullException(nameof(album), "Provided album cannot be null.");
             }
 
+            _context.Albums.Add(album);
+            await _context.SaveChangesAsync();
         }
-        public async Task<Album?> UpdateAlbumAsync(Guid albumId, Album updateData)
-        {
-            try
-            {
+
+        public async Task<Album?> UpdateAlbumAsync(Guid albumId, Album updateData) {
+            try {
                 var album = await _context.Albums.FirstOrDefaultAsync(a => a.Id == albumId);
 
-                if (album != null)
-                {
-                    // Update the album properties with the new values from the AlbumUpdate record.
+                if (album != null) {
                     album.Title = updateData.Title;
                     album.StockQuantity = updateData.StockQuantity;
                     album.Price = updateData.Price;
@@ -113,8 +100,7 @@ namespace WizardRecords.Repositories {
 
                 return null; // Return null if the album with the specified ID was not found.
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 // Handle any exceptions that may occur during the database operation.
                 return null;
             }

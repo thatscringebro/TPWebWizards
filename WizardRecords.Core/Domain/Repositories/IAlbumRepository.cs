@@ -14,7 +14,7 @@ namespace WizardRecords.Repositories {
         Task<Album?> GetAlbumByTitleAsync(string title);
         Task<Album?> GetRandomAlbumAsync(MediaType mediaType);
         Task<Album?> DeleteAlbumAsync(string title);
-        void CreateAlbumAsync(Album album);
+        Task CreateAlbumAsync(Album album);
         Task<Album?> UpdateAlbumAsync(Guid albumId, Album updateData);
 
         // TODO: CreateAlbumAsync

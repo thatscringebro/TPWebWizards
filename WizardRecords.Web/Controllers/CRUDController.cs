@@ -2,6 +2,7 @@
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Dtos;
 using WizardRecords.Repositories;
+using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Controllers
 {
@@ -66,15 +67,17 @@ namespace WizardRecords.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
+
         [HttpPost("create")]
-        public ActionResult<AlbumCreate> CreateAlbum([FromBody] Album album)
-        {
-            try
-            {
+        public async Task<ActionResult<AlbumCreate>> CreateAlbum([FromBody] Album album) {
+            try {
+                var artistIdPost = Guid.NewGuid();
+                var labelIdPost = Guid.NewGuid();
+
                 var createdAlbum = new Album(
                     albumId: Guid.NewGuid(),
-                    artistId: album.ArtistId,
-                    labelId: album.LabelId,
+                    artistId: artistIdPost,
+                    labelId: labelIdPost,
                     title: album.Title,
                     stockQty: album.StockQuantity,
                     price: album.Price,
@@ -82,20 +85,21 @@ namespace WizardRecords.Controllers
                     mediaType: album.Media,
                     formatType: album.Format,
                     albumGenre: album.AlbumGenre,
-                    mediaGrade: album.MediaGrade,
-                    sleeveGrade: album.SleeveGrade,
-                    catalogNumber: album.CatalogNumber,
-                    matrixNumber: album.MatrixNumber,
-                    comments: album.Comments,
-                    imgFilePath: album.ImageFilePath
-                    );
-                    _albumRepository.CreateAlbumAsync(album);
+                    mediaGrade: album.MediaGrade ?? Grade.NONE,  
+                    sleeveGrade: album.SleeveGrade ?? Grade.NONE,
+                    catalogNumber: album.CatalogNumber ?? "-",
+                    matrixNumber: album.MatrixNumber ?? "-",
+                    comments: album.Comments ?? "-",
+                    imageFilePath: album.ImageFilePath ?? "-"
+                );
 
-                return Ok();
-         
+                await _albumRepository.CreateAlbumAsync(createdAlbum);
+
+                return Ok(new { Id = createdAlbum.Id });
             }
-            catch (Exception)
-            {
+            catch (Exception ex) {
+                Console.WriteLine(ex);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }

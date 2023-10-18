@@ -20,10 +20,10 @@ namespace WizardRecords.Core.Domain.Entities {
         public MediaType Media { get; set; } // CD ? LP 
         public FormatType Format { get; set; } // Précision sur le format de base de l'album (LP 12", LP 10", LP 7", CD, etc.)
         public AlbumGenre AlbumGenre { get; set; } // Précise le genre particulier de l'album
-        public Grade MediaGrade { get; set; } = Grade.NONE; // Category == USED only!
-        public Grade SleeveGrade { get; set; } = Grade.NONE; // Category == USED only!
-        public string CatalogNumber { get; set; } = "-"; // Category == USED only!
-        public string MatrixNumber { get; set; } = "-"; // Category == USED only!
+        public Grade? MediaGrade { get; set; } = Grade.NONE; // Category == USED only!
+        public Grade? SleeveGrade { get; set; } = Grade.NONE; // Category == USED only!
+        public string? CatalogNumber { get; set; } = "-"; // Category == USED only!
+        public string? MatrixNumber { get; set; } = "-"; // Category == USED only!
         public string Comments { get; set; } = "-";
         public string ImageFilePath { get; set; } = "-";
 
@@ -31,22 +31,21 @@ namespace WizardRecords.Core.Domain.Entities {
         internal Album() { }
 
         public Album(Guid albumId,
-                     Guid artistId,
-                     Guid labelId,
-                     string title,
-                     int stockQty,
-                     float price,
-                     Category category,
-                     MediaType mediaType,
-                     FormatType formatType,
-                     AlbumGenre albumGenre,
-                     Grade mediaGrade,
-                     Grade sleeveGrade,
-                     string catalogNumber,
-                     string matrixNumber,
-                     string comments,
-                     string imgFilePath) {
-
+             Guid artistId,
+             Guid labelId,
+             string title,
+             int stockQty,
+             float price,
+             Category category,
+             MediaType mediaType,
+             FormatType formatType,
+             AlbumGenre albumGenre,
+             Grade? mediaGrade,
+             Grade? sleeveGrade,
+             string? catalogNumber,
+             string? matrixNumber,
+             string? comments,
+             string imageFilePath) {
             Id = albumId;
             ArtistId = artistId;
             LabelId = labelId;
@@ -62,8 +61,7 @@ namespace WizardRecords.Core.Domain.Entities {
             CatalogNumber = catalogNumber;
             MatrixNumber = matrixNumber;
             Comments = comments;
-            ImageFilePath = imgFilePath;
+            ImageFilePath = imageFilePath;
         }
-
     }
 }
