@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import '../styles/Detail.css';
 
+
 const Detail = () => {
     const { id } = useParams();
-    //const history = useHistory();
+    const navigate = useNavigate();
 
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
@@ -73,8 +74,7 @@ const Detail = () => {
             });
             if (response.status === 200) {
                 console.log('Album deleted successfully');
-                // Redirect to a different page or perform any other action after deletion
-                //history.push('/'); // Redirect to the homepage, for example
+                navigate('/products');
             } else {
                 console.error('Failed to delete album with status:', response.status);
             }
@@ -138,16 +138,19 @@ const Detail = () => {
                         <div>
                             <input
                                 type="text"
+                                className="detail-input"
                                 value={editedProduct.albumTitle}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
                             />
                             <input
                                 type="number"
+                                className="detail-input"
                                 value={editedProduct.quantity}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
                             />
                             <input
                                 type="number"
+                                className="detail-input"
                                 value={editedProduct.price}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                             />
