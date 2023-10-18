@@ -5,9 +5,9 @@ export class Footer extends Component {
     render() {
         return (
             <footer className="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="footer-col">
+                <div className="container">
+                    <div className="row">
+                        <div className="footer-col">
                             <h4>company</h4>
                             <ul>
                                 <li><a href="/aboutus">about us</a></li>
@@ -16,7 +16,7 @@ export class Footer extends Component {
                                 <li><a href="/contactus">Contact us</a></li>
                             </ul>
                         </div>
-                        <div class="footer-col">
+                        <div className="footer-col">
                             <h4>get help</h4>
                             <ul>
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">FAQ</a></li>
@@ -26,16 +26,16 @@ export class Footer extends Component {
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">payment options</a></li>
                             </ul>
                         </div>
-                        <div class="footer-col">
+                        <div className="footer-col">
                             <h4>online shop</h4>
                             <ul>
-                                <li><a href="https://github.com/thatscringebro/TPWebWizards">Vinyls</a></li>
-                                <li><a href="https://github.com/thatscringebro/TPWebWizards">Compact discs</a></li>
+                                <li><a href="/products?category=&mediatype=Vinyl">Vinyls</a></li>
+                                <li><a href="/products?category=&mediatype=Cds">Compact discs</a></li>
                             </ul>
                         </div>
-                        <div class="footer-col">
+                        <div className="footer-col">
                             <h4>follow us</h4>
-                            <div class="social-links">
+                            <div className="social-links">
                                 <a href="https://facebook.com"><img src="../../../Images/Social/facebook.png" alt="Facebook" /></a>
                                 <a href="https://twitter.com"><img src="../../../Images/Social/twitterX.png" alt="Twitter" /></a>
                                 <a href="https://instagram.com"><img src="../../../Images/Social/instagram.png" alt="Instagram" /></a>
