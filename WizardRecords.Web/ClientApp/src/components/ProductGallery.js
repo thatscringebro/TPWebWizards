@@ -52,9 +52,7 @@ const Product = ({ product }) => {
 const ProductList = ({ title, products = [] }) => (
     <section className={`product-list section-${title.replace(/\s+/g, '-').toLowerCase()}`}>
         <Container>
-            <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1>{title}</h1>
-            </div>
+            <hr className="divider" />
             <Row>
                 {products.map(product => <Product key={product.id} product={product} />)}
             </Row>
@@ -75,25 +73,25 @@ const fetchDataForCategory = (count) => {
 
     return axios.get(`${API_BASE_URL}/album/all`)
         .then(async (response) => {
-                if (response.status === 200) {
-                    const albums = response.data;
-                    const albumPromises = albums.map(async (album) => {
-                        const artistName = await getArtistNameById(album.artistId);
-                        return {
-                            id: album.albumId,
-                            cover: album.imageFilePath,
-                            mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                            artistName: artistName,
-                            albumTitle: album.title,
-                            category: album.category === 0 ? "used" : "new",
-                            price: album.price.toFixed(2),
-                            stockQuantity: album.stockQuantity
-                        };
-                    });
+            if (response.status === 200) {
+                const albums = response.data;
+                const albumPromises = albums.map(async (album) => {
+                    const artistName = await getArtistNameById(album.artistId);
+                    return {
+                        id: album.albumId,
+                        cover: album.imageFilePath,
+                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                        artistName: artistName,
+                        albumTitle: album.title,
+                        category: album.category === 0 ? "used" : "new",
+                        price: album.price.toFixed(2),
+                        stockQuantity: album.stockQuantity
+                    };
+                });
 
-                    return Promise.all(albumPromises);
-                } else {
-                    throw new Error(`Failed to fetch albums with status: ${response.status}`);
+                return Promise.all(albumPromises);
+            } else {
+                throw new Error(`Failed to fetch albums with status: ${response.status}`);
             }
         });
 };
@@ -164,6 +162,7 @@ function ProductsGallery() {
     };
     const prevPage = () => {
         if (currentPage > 1) { setCurrentPage(currentPage - 1); }
+        else { }
     };
 
     const sortedProducts = [...products];
@@ -187,33 +186,38 @@ function ProductsGallery() {
 
     return (
         <div>
-            <div className="sort-bar">
-                <label htmlFor="sortDropdown">Sort by: </label>
-                <select id="sortDropdown" value={selectedSortOption} onChange={handleSortChange}>
-                    <option value="default">Default</option>
-                    <option value="priceLowToHigh">Price: Low to High</option>
-                    <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="AlbumNameAsc">Album Name: A..Z</option>
-                    <option value="AlbumNameDesc">Album Name: Z..A</option>
-                    <option value="ArtistNameAsc">Artist Name: A..Z</option>
-                    <option value="ArtistNameDesc">Artis Name: Z..A</option>
-                </select>
+            <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '50px' }}>
+                <h1>All products</h1>
             </div>
-            <div>
-                <label htmlFor="filterDropdown">Filter by: </label>
-                <select id="filterDropdown" value={selectedFilterOption} onChange={handleFilterChange}>
-                    <option value="default">Default</option>
-                    <option value="cdOnly">CD Only</option>
-                    <option value="vinylOnly">Vinyl Only</option>
-                    <option value="newOnly">New Only</option>
-                    <option value="usedOnly">Used Only</option>
-                </select>
+            <div id="filters">
+                <div className="sort-bar">
+                    <label htmlFor="sortDropdown">Sort by: </label>
+                    <select id="sortDropdown" value={selectedSortOption} onChange={handleSortChange}>
+                        <option value="default">Default</option>
+                        <option value="priceLowToHigh">Price: Low to High</option>
+                        <option value="priceHighToLow">Price: High to Low</option>
+                        <option value="AlbumNameAsc">Album Name: A..Z</option>
+                        <option value="AlbumNameDesc">Album Name: Z..A</option>
+                        <option value="ArtistNameAsc">Artist Name: A..Z</option>
+                        <option value="ArtistNameDesc">Artis Name: Z..A</option>
+                    </select>
+                </div>
+                <div className="filter-bar">
+                    <label htmlFor="filterDropdown">Filter by: </label>
+                    <select id="filterDropdown" value={selectedFilterOption} onChange={handleFilterChange}>
+                        <option value="default">Default</option>
+                        <option value="cdOnly">CD Only</option>
+                        <option value="vinylOnly">Vinyl Only</option>
+                        <option value="newOnly">New Only</option>
+                        <option value="usedOnly">Used Only</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <ProductList title="All products" products={currentProducts} />
                 <div className="pagination">
-                    <button className="button" onClick={prevPage}>Previous</button>
-                    <button className="button" onClick={nextPage}>Next</button>
+                    <button className="page-button" onClick={prevPage}>Previous</button>
+                    <button className="page-button" onClick={nextPage}>Next</button>
                 </div>
             </div>
         </div>

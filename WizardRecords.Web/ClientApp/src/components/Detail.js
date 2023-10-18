@@ -138,16 +138,19 @@ const Detail = () => {
                         <div>
                             <input
                                 type="text"
+                                className="detail-input"
                                 value={editedProduct.albumTitle}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
                             />
                             <input
                                 type="number"
+                                className="detail-input"
                                 value={editedProduct.quantity}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
                             />
                             <input
                                 type="number"
+                                className="detail-input"
                                 value={editedProduct.price}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                             />

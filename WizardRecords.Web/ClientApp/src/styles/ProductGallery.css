@@ -1,7 +1,8 @@
 ﻿
 
-.button {
+.page-button {
     margin: 4px;
+    width: 150px;
     align-items: center !important;
     background-color: initial;
     background-image: linear-gradient(#464d55, #25292e);
@@ -32,12 +33,12 @@
     touch-action: manipulation;
 }
 
-    .button:hover {
+    .page-button:hover {
         box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
         opacity: .85;
     }
 
-    .button:active {
+    .page-button:active {
         outline: 0;
     }
 
@@ -46,13 +47,30 @@
     } 
 
 @media (max-width: 420px) {
-    .button {
+    .page-button {
         height: 48px;
     }
 }
 
 .pagination {
     justify-content: center;
-    margin: 0 auto;
+    margin-bottom: 20px;
     display: flex;
+}
+#filters {
+    display: flex;
+    margin: 20px;
+}
+.sort-bar {
+    float: left;
+}
+.filter-bar {
+    margin-left: auto;
+}
+#sortDropdown, #filterDropdown {
+    margin-left: 10px;
+    border: none;
+    background-color: #24262b;
+    color: #E4E6Eb;
+    border-radius: 2px
 }

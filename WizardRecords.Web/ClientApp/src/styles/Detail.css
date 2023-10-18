@@ -77,7 +77,7 @@
     .detail-cart-button:hover {
         background-color: #00cc00;
     }
-input {
+.detail-input {
     padding: 5px;
     margin: 5px;
     border: 1px solid #ccc;
