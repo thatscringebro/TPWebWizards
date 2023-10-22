@@ -1,0 +1,116 @@
+﻿namespace WizardRecords.Core.Data {
+    public class Constants {
+        public enum Media {
+            VINYL,
+            CD,
+            UNSPECIFIED
+        }
+
+        // Represents the in-store section of the artist
+        public enum ArtistGenre {
+            ROCK,
+            POP,
+            JAZZ,
+            HIPHOP,
+            ALTERNATIVE,
+            CLASSICAL,
+            FRANCOPHONE,
+            METAL,
+            PUNK,
+            BLUES,
+            WORLD,
+            FOLK,
+            COUNTRY,
+            SOUL,
+            FUNK,
+            ELECTRONICA,
+            SOUNDTRACK,
+            UNSPECIFIED
+        }
+
+        // Represents a specific genre for a single album
+        public enum AlbumGenre {
+            ROCK,
+            POP,
+            JAZZ,
+            HIPHOP,
+            CLASSICAL,
+            METAL,
+            PUNK,
+            BLUES,
+            WORLD,
+            COUNTRY,
+            SOUL,
+            FUNK,
+            ELECTRONICA,
+            SOUNDTRACK,
+            HARD,
+            FUSION,
+            PROG,
+            MODAL,
+            FREEJAZZ,
+            INDIE,
+            POSTBOP,
+            ALTERNATIVE,
+            MINIMALIST,
+            PSYCH,
+            HARDROCK,
+            FOLK,
+            RAP,
+            GARAGE,
+            VAPORWAVE,
+            ROCKABILLY,
+            EXPERIMENTAL,
+            INSTRUMENTAL,
+            INDUSTRIAL,
+            SYNTHWAVE,
+            KITSCH,
+            REGGAE,
+            NEWWAVE,
+            DOWNTEMPO,
+            ACOUSTIC,
+            NEWAGE,
+            OPERA,
+            STONER,
+            DOOM,
+            IDM,
+            TRIPHOP,
+            DEATHCORE,
+            DEATHMETAL,
+            METALCORE,
+            HARDCORE,
+            MODERN,
+            HOUSE,
+            BAROQUE,
+            ROMANTIC,
+            AFROBEAT,
+            DANCE,
+            NOISE,
+            AMBIENT,
+            VARIETY,
+            GRUNGE,
+            FRANCOPHONE,
+            HISTORICAL,
+            MUSICAL,
+            DISCO,
+            COMEDY,
+            SOUNDEFFECTS,
+            KIDS,
+            CHRISTMAS,
+            UNSPECIFIED
+        }
+
+        // For USED items only
+        public enum Grade {
+            M,
+            NM,
+            VG_PLUS,
+            VG,
+            G_PLUS,
+            G,
+            F,
+            P,
+            NONE
+        }
+    }
+}
