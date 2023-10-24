@@ -36,10 +36,10 @@ export class Footer extends Component {
                         <div className="footer-col">
                             <h4>follow us</h4>
                             <div className="social-links">
-                                <a href="https://facebook.com"><img src="../../../Images/Social/facebook.png" alt="Facebook" /></a>
-                                <a href="https://twitter.com"><img src="../../../Images/Social/twitterX.png" alt="Twitter" /></a>
-                                <a href="https://instagram.com"><img src="../../../Images/Social/instagram.png" alt="Instagram" /></a>
-                                <a href="https://pinterest.com"><img src="../../../Images/Social/pinterest.png" alt="Pinterest" /></a>
+                                <a href="https://facebook.com"><img src={require("../assets/images/social/facebook.png")} alt="Facebook" /></a>
+                                <a href="https://twitter.com"><img src={require("../assets/images/social/twitterX.png")} alt="Twitter" /></a>
+                                <a href="https://instagram.com"><img src={require("../assets/images/social/instagram.png")} alt="Instagram" /></a>
+                                <a href="https://pinterest.com"><img src={require("../assets/images/social/pinterest.png")} alt="Pinterest" /></a>
                             </div>
                         </div>
                     </div>

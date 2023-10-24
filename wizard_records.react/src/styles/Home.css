@@ -1,4 +1,14 @@
-﻿﻿.add-product-form {
+﻿﻿h1 {
+    font-family: 'PatrenaRolane';
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'PatrenaRolane';
+    margin-bottom: 20px;
+}
+
+.add-product-form {
     padding: 0 0 20px;
 }
 
@@ -148,5 +158,6 @@
     }
 
 .slogan {
+    font-family: 'PatrenaRolane';
     font-size: calc(20px + (95 - 20) * ((100vw - 320px) / (1920 - 320)));
 }

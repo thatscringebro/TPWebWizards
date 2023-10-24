@@ -1,10 +1,10 @@
-import Home from "../Home";
 import AboutUs from "../Aboutus";
 import ArtistAlbums from "../ArtistAlbums";
 import ContactForm from "../ContactUs";
 import Detail from "../Detail";
+import Home from "../Home";
 import SearchResults from "../SearchResults";
-import Product from "../Product";
+import Products from "../Product";
 import AddProductForm from "../AddProductForm";
 import Account from "../Account";
 
@@ -36,8 +36,8 @@ const AppRoutes = [
         element: <AddProductForm />
     },
     {
-        path: '/album',
-        element: <Product />
+        path: '/products',
+        element: <Products />
     },
     {
         path: '/artist/:artistId/albums',

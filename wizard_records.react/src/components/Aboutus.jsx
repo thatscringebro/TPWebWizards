@@ -8,37 +8,37 @@ function AboutUs() {
         {
             name: 'Merlin Gélinas',
             role: 'OpenSource Master',
-            imageSrc: '../Images/AboutUs/184.png',
+            imageSrc: '../assets/images/aboutus/184.png',
             UniqueText: 'Bringing technical expertise to our projects.'
         },
         {
             name: 'Mathieu Duval',
             role: 'Speaker Crasher',
-            imageSrc: '../Images/AboutUs/300.png',
+            imageSrc: '../assets/images/aboutus/300.png',
             UniqueText: 'Committed to teamwork and collaboration.'
         },
         {
             name: 'Gabriel Bruneau',
             role: 'PhotoShop Doctor',
-            imageSrc: '../Images/AboutUs/312.png',
+            imageSrc: '../assets/images/aboutus/312.png',
             UniqueText: 'A creative thinker and problem solver.'
         },
         {
             name: 'Kyle Lussier',
             role: 'Gym Leader',
-            imageSrc: '../Images/AboutUs/431.png',
+            imageSrc: '../assets/images/aboutus/431.png',
             UniqueText: 'Passionate about innovation and leadership.'
         },
         {
             name: 'Thomas-Alexandre Barrette',
             role: 'Master Crafter',
-            imageSrc: '../Images/AboutUs/494.png',
+            imageSrc: '../assets/images/aboutus/494.png',
             UniqueText: 'Dedicated to excellence in every endeavor.'
         },
         {
             name: 'Claudel D. Roy',
             role: 'Woman',
-            imageSrc: '../Images/AboutUs/573.png',
+            imageSrc: '../assets/images/aboutus/573.png',
             UniqueText: 'Bringing fresh ideas to the table.'
         },
     ];
@@ -58,7 +58,6 @@ function AboutUs() {
                 ))}
             </div>
             <div className="Display" >
-
                 <GoogleMapComponent />
                 <AddressInfo />
             </div>

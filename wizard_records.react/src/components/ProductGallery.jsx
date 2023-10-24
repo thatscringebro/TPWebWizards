@@ -4,6 +4,9 @@ import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle }
 import { useLocation, Link } from 'react-router-dom';
 import { API_BASE_URL } from './utils/config';
 import axios from 'axios';
+import '../styles/Home.css';
+import '../styles/Fonts.css';
+import '../styles/ProductGallery.css';
 
 const ProductList = ({ title, products = [] }) => (
     <section className={`product-list section-${title.replace(/\s+/g, '-').toLowerCase()}`}>

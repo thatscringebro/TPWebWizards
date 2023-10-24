@@ -3,8 +3,6 @@ import { Container } from 'reactstrap';
 import { Footer } from './Footer';
 import NavMenu from './NavMenu';
 import '../styles/Layout.css'
-import '../styles/NavMenu.css'
-import '../styles/Footer.css'
 
 export class Layout extends Component {
     static displayName = Layout.name;

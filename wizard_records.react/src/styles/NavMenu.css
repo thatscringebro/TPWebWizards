@@ -1,120 +1,21 @@
-.container-fluid {
-    margin: auto;
+/* NavMenu.css */
+#header_container {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
 }
-
-.header {
-    background-color: darkred;
-    padding: 10px;
-}
-
-.navigation {
-    display: flex;
-}
-
-    .navigation .link {
-        margin: 10px;
-    }
-
-.search {
-    color: #E4E6Eb;
-    display: flex;
-    width: 40%;
-}
-
-    .search .bar {
-        background-color: #24262b;
-        border-radius: 20px 0 0 20px;
-        color: #E4E6Eb;
-        flex: 2;
-        margin: 0 20px;
-        padding: 10px 20px;
-    }
-
-    .search .button {
-        background-color: darkred;
-        border-radius: 0 20px 20px 0;
-        color: white;
-        font-size: 15px;
-        padding: 10px 20px;
-    }
-
-        .search .button:hover {
-            color: yellow;
-        }
 
 .slogan {
-    color: white;
     font-family: 'PatrenaRolane';
     font-size: calc(20px + (30) * ((100vw - 320px) / (1920 - 320)));
-    padding: 10px;
+    color: white;
 }
 
-/* .form-control {
-    background-color: #121212;
-} */
-
-/* Navbar styles */
-/* header {
-    background-color: darkred;
-}
-
-     .navbar-brand {
-        font-size: 24px;
-    }
-
-    header .nav-item {
-        margin-right: 10px;
-    }
-
-    header .nav-link {
-        text-decoration: none;
-        font-size: 18px;
-    }
-
-    header .form-control {
-        border-color: white;
-        border-radius: 20px;
-    }
-
-    header .input-group-append button {
-        background-color: darkred;
-        border-color: white;
-        border-radius: 0 20px 20px 0;
-        padding: 8px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    header .input-group-append button:hover {
-        background-color: #a10000;
-    } */
-
-/* NavbarBrand styles */
-/* .hero-banner {
-    background-color: darkred;
-} */
-
-/* Search Input Styles */
-/* .search-input {
-    background-color: #24262b;
-    color: #E4E6Eb;
-} */
-
-/* .search-input:focus {
-    outline: none;
-    box-shadow: none;
-} */
-
-/* Mobile & Desktop Views */
-/* .mobile {
+.mobile {
     display: none;
-} */
+}
 
-/* .desktop {
-    display: block;
-} */
-/* 
+/* if mobile device max width 576px */
 @media only screen and (max-device-width: 576px) {
     .mobile {
         display: block;
@@ -133,10 +34,56 @@
     .container-fluid {
         justify-content: center !important;
     }
-} */
+}
 
-/* Mobile Responsive Styles */
-/* @media (max-width: 576px) {
+.form-control {
+    background-color: #121212;
+}
+
+/* Navbar styles */
+header {
+    background-color: darkred;
+}
+
+.hero-banner {
+    background-color: darkred;
+}
+/* NavbarBrand styles */
+header .navbar-brand {
+    font-size: 24px;
+}
+
+/* NavItem styles */
+header .nav-item {
+    margin-right: 10px;
+}
+
+header .nav-link {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header .form-control {
+    border-color: white;
+    border-radius: 20px;
+}
+
+header .input-group-append button {
+    background-color: darkred;
+    border-color: white;
+    border-radius: 0 20px 20px 0; /* Rounded on the right side, flat on the left */
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-block
+}
+
+    header .input-group-append button:hover {
+        background-color: #a10000;
+    }
+/* Mobile responsive styles */
+@media (max-width: 576px) {
     header .navbar-toggler {
         margin-right: 0;
     }
@@ -152,15 +99,27 @@
         text-align: center;
     }
 
-    header .navbar-nav .nav-item {
-        margin: 10px 0;
-    }
-} */
+        header .navbar-nav .nav-item {
+            margin: 10px 0;
+        }
+}
 
-/* Footer */
-/* .bg-light {
+/*footer*/
+.bg-light {
     position: relative;
     margin-bottom: 0;
     bottom: 0;
     width: 100%;
-} */
+}
+
+.search-input {
+    background-color: #24262b;
+    color: #E4E6Eb; /* Pour que le texte soit visible sur un arrière-plan noir */
+}
+
+    .search-input:focus {
+        background-color: #24262b;
+        color: #E4E6Eb;
+        outline: none; /* Pour supprimer le contour bleu/autre couleur par défaut du navigateur */
+        box-shadow: none; /* Pour supprimer tout effet d'ombre que le navigateur pourrait ajouter */
+    }
