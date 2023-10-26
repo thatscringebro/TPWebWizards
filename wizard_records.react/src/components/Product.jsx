@@ -25,6 +25,7 @@ const Product = ({ product }) => {
                         <div className="card-info">
                             <CardTitle className="card-artist">{product.artistName}</CardTitle>
                             <CardSubtitle className="card-album">{product.albumTitle}</CardSubtitle>
+                            {/* <CardSubtitle className="card-album"> {isAvailable ? 'Available' : 'Not Available'} </CardSubtitle> */}
                         </div>
                         <div className="card-divider"></div>
                         <div className="card-purchase">

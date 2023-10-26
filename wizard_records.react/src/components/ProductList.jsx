@@ -12,15 +12,13 @@ const ProductList = ({ title, products = [], isHomeGallery = false }) => {
                     <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h1>{title}</h1>
                         <h3>
-                            <Link
-                                to={`/products?category=${title.split(' ')[0]}&media=${title.split(' ')[1]}`}
-                            >
+                            <Link to={`/products?category=${title.split(' ')[0]}&media=${title.split(' ')[1]}`}>
                                 Click for more {'->'}
                             </Link>
                         </h3>
                     </div>
                 )}
-                {!isHomeGallery && <hr className="divider" />}
+                {!isHomeGallery}
                 <Row>
                     {products.map(product => <Product key={product.id} product={product} />)}
                 </Row>

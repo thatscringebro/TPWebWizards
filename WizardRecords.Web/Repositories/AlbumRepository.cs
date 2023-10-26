@@ -38,10 +38,10 @@ namespace WizardRecords.Web.Repositories {
             return await _context.Albums.Where(a => a.ArtistGenre == artistGenre).ToListAsync();
         }
 
-        public async Task<IEnumerable<Album>> GetSearchAlbumsAsync(string keyword) {
-            return await _context.Albums.Where(a => a.Title.ToLower().Contains(keyword.ToLower()) ||
-                                               a.ArtistName.ToLower().Contains(keyword.ToLower()) ||
-                                               a.LabelName.ToLower().Contains(keyword.ToLower()))
+        public async Task<IEnumerable<Album>> GetSearchAlbumsAsync(string query) {
+            return await _context.Albums.Where(a => a.Title.ToLower().Contains(query.ToLower()) ||
+                                               a.ArtistName.ToLower().Contains(query.ToLower()) ||
+                                               a.LabelName.ToLower().Contains(query.ToLower()))
                                                .ToListAsync(); ;
         }
 

@@ -86,8 +86,8 @@ namespace WizardRecords.Web.Controllers {
             }
         }
 
-        [HttpGet("search/{query}")]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetSearchAlbums(string query) {
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetSearchAlbums([FromQuery] string query) {
             var albums = await _albumRepository.GetSearchAlbumsAsync(query);
 
             if (albums != null && albums.Any()) {
@@ -96,6 +96,19 @@ namespace WizardRecords.Web.Controllers {
             }
             else {
                 return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("random")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetRandomAlbums([FromQuery] int count = 3, [FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
+            var albums = await _albumRepository.GetRandomAlbumsAsync(count, media, isUsed);
+
+            if (albums != null && albums.Count() > 0) {
+                var albumDtos = albums.Select(a => AssignPropertiesToAlbum(a)).ToList();
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("Albums not found.");
             }
         }
 
@@ -137,20 +150,6 @@ namespace WizardRecords.Web.Controllers {
                 return NotFound("Album not found.");
             }
         }
-
-        [HttpGet("random")]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetRandomAlbums([FromQuery] int count = 3, [FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
-            var albums = await _albumRepository.GetRandomAlbumsAsync(count, media, isUsed);
-
-            if (albums != null && albums.Count() > 0) {
-                var albumDtos = albums.Select(a => AssignPropertiesToAlbum(a)).ToList();
-                return Ok(albumDtos);
-            }
-            else {
-                return NotFound("Albums not found.");
-            }
-        }
-
         // For CRUD operations, see WizardRecords.Web/Controllers/CRUDController.cs
 
         // Helper methods

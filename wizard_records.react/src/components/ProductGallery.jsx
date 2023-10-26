@@ -1,26 +1,22 @@
-
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import { API_BASE_URL } from './utils/config';
 import ProductList from './ProductList';
 import axios from 'axios';
-import '../styles/Home.css';
-import '../styles/Fonts.css';
 import '../styles/ProductGallery.css';
 
 const fetchDataForCategory = () => {
     return axios.get(`${API_BASE_URL}/album/all`)
-        .then(async (response) => {
+        .then((response) => {
             if (response.status === 200) {
                 const albums = response.data;
-                const albumPromises = albums.map(async (album) => {
+                const albumPromises = albums.map((album) => {
                     return {
                         id: album.albumId,
                         cover: album.imageFilePath,
                         media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                         artistName: album.artistName,
                         albumTitle: album.title,
-                        category: album.category === 0 ? "used" : "new",
+                        isUsed: album.isUsed,
                         price: album.price.toFixed(2),
                         stockQuantity: album.stockQuantity
                     };
@@ -34,16 +30,14 @@ const fetchDataForCategory = () => {
 };
 
 function ProductGallery() {
-    const location = useLocation();
-    //const searchParams = new URLSearchParams(location.search);
 
-    const [allProducts, setAllProducts] = useState([]); // Liste complète des produits
+    const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSortOption, setSelectedSortOption] = useState('default');
     const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
     const [selectedTypeFilterOption, setSelectedTypeFilterOption] = useState('default');
-
+    
     const productsPerPage = 12;
 
     const handleSortChange = (event) => {
@@ -52,33 +46,13 @@ function ProductGallery() {
 
     useEffect(() => {
         fetchDataForCategory().then((data) => {
-            setAllProducts(data); // Stockez la liste complète
-            setProducts(data); // Initialisez également les produits affichés
-
-            // Check for URL parameters and apply filters
-            //const category = searchParams.get('category').toLowerCase();
-            //const mediatype = searchParams.get('mediatype').toLowerCase() === "vinyl" ? 'CDBase.png' : 'VinylBase.png';
-
-            //console.log(category, mediatype);
-
-            //if (category || mediatype) {
-            //    let filteredProducts = [...data];
-
-            //    if (category && category !== 'default') {
-            //        filteredProducts = filteredProducts.filter((product) => product.category === category);
-            //    }
-
-            //    if (mediatype && mediatype !== 'default') {
-            //        filteredProducts = filteredProducts.filter((product) => product.mediaType === mediatype);
-            //    }
-
-            //    setProducts(filteredProducts);
-            //}
+            setAllProducts(data); 
+            setProducts(data);
         });
-    }, [location.search]);
+    }, []);
 
-    //filtering
-    let filteredProducts = [...allProducts]; // Copiez la liste complète pour appliquer les filtres
+    // Filters
+    let filteredProducts = [...allProducts];
 
     if (selectedCategoryFilterOption === 'newOnly') {
         filteredProducts = filteredProducts.filter((product) => product.category === 'new');
@@ -87,12 +61,12 @@ function ProductGallery() {
     }
 
     if (selectedTypeFilterOption === 'cdOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.mediaType === 'CDBase.png');
+        filteredProducts = filteredProducts.filter((product) => product.media === 'CDBase.png');
     } else if (selectedTypeFilterOption === 'vinylOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.mediaType === 'VinylBase.png');
+        filteredProducts = filteredProducts.filter((product) => product.media === 'VinylBase.png');
     }
 
-    //sorting
+    // Sorts
     const sortedProducts = [...filteredProducts];
     if (selectedSortOption === 'priceLowToHigh') {
         sortedProducts.sort((a, b) => a.price - b.price);
@@ -113,16 +87,19 @@ function ProductGallery() {
         setSelectedTypeFilterOption(event.target.value);
         setProducts(filteredProducts);
     };
+
     const handleCategoryFilterChange = (event) => {
         console.log("handle_cat: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
         setProducts(filteredProducts);
     };
+
     const nextPage = () => {
         if (currentPage < Math.ceil(products.length / productsPerPage)) {
             setCurrentPage(currentPage + 1);
         }
     };
+
     const prevPage = () => {
         if (currentPage > 1) { setCurrentPage(currentPage - 1); }
     };
@@ -175,7 +152,7 @@ function ProductGallery() {
                 </div>
             </div>
             <div>
-                <ProductList title="All products" products={currentProducts} />
+                <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
                 <div className="pagination">
                     <button className="page-button" onClick={prevPage}>Previous</button>
                     <button className="page-button" onClick={nextPage}>Next</button>
