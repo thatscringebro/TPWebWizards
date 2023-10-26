@@ -10,11 +10,11 @@ namespace WizardRecords.Repositories {
         Task<IEnumerable<Album>> GetAlbumsByUsedOrNewAsync(bool isUsed);
         Task<IEnumerable<Album>> GetAlbumsByGenreAsync(ArtistGenre artistGenre);
         Task<IEnumerable<Album>> GetSearchAlbumsAsync(string query);
+        Task<IEnumerable<Album>> GetRandomAlbumsAsync(int count, Media? media = null, bool? isUsed = null);
 
         Task<Album?> GetAlbumByIdAsync(Guid albumId);
         Task<Album?> GetAlbumByArtistNameAndTitleAsync(string artistName, string title);
         Task<Album?> GetAlbumByTitleAsync(string title);
-        Task<Album?> GetRandomAlbumAsync(Media? media = null, bool? isUsed = null);
 
         // CRUD
         Task<Album?> UpdateAlbumAsync(Guid albumId, Album updateData);

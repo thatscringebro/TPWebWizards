@@ -139,17 +139,15 @@ namespace WizardRecords.Web.Controllers {
         }
 
         [HttpGet("random")]
-        // "random" can now be used with or without parameters for media and isUsed.
-        // NO parameters will return a random album from the entire collection.
-        public async Task<ActionResult<AlbumDto>> GetRandomAlbum([FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
-            var album = await _albumRepository.GetRandomAlbumAsync(media, isUsed);
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetRandomAlbums([FromQuery] int count = 3, [FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
+            var albums = await _albumRepository.GetRandomAlbumsAsync(count, media, isUsed);
 
-            if (album != null) {
-                var albumDto = AssignPropertiesToAlbum(album);
-                return Ok(albumDto);
+            if (albums != null && albums.Count() > 0) {
+                var albumDtos = albums.Select(a => AssignPropertiesToAlbum(a)).ToList();
+                return Ok(albumDtos);
             }
             else {
-                return NotFound("Album not found.");
+                return NotFound("Albums not found.");
             }
         }
 

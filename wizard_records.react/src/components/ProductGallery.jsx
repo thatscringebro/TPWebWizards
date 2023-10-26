@@ -1,46 +1,24 @@
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { useLocation, Link } from 'react-router-dom';
 import { API_BASE_URL } from './utils/config';
+import ProductList from './ProductList';
 import axios from 'axios';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
 import '../styles/ProductGallery.css';
 
-const ProductList = ({ title, products = [] }) => (
-    <section className={`product-list section-${title.replace(/\s+/g, '-').toLowerCase()}`}>
-        <Container>
-            <hr className="divider" />
-            <Row>
-                {products.map(product => <Product key={product.id} product={product} />)}
-            </Row>
-        </Container>
-    </section>
-);
-
-const fetchDataForCategory = (count) => {
-    const getArtistNameById = (artistId) => {
-        return axios.get(`${API_BASE_URL}/artist/${artistId}`)
-            .then(response => {
-                if (response.status === 200) {
-                    return response.data.artistName;
-                }
-                throw new Error(`Failed to fetch artist name for id ${artistId}`);
-            });
-    };
-
+const fetchDataForCategory = () => {
     return axios.get(`${API_BASE_URL}/album/all`)
         .then(async (response) => {
             if (response.status === 200) {
                 const albums = response.data;
                 const albumPromises = albums.map(async (album) => {
-                    const artistName = await getArtistNameById(album.artistId);
                     return {
                         id: album.albumId,
                         cover: album.imageFilePath,
-                        mediaType: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                        artistName: artistName,
+                        media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                        artistName: album.artistName,
                         albumTitle: album.title,
                         category: album.category === 0 ? "used" : "new",
                         price: album.price.toFixed(2),
@@ -55,7 +33,7 @@ const fetchDataForCategory = (count) => {
         });
 };
 
-function ProductsGallery() {
+function ProductGallery() {
     const location = useLocation();
     //const searchParams = new URLSearchParams(location.search);
 
@@ -207,4 +185,4 @@ function ProductsGallery() {
     );
 }
 
-export default ProductsGallery;
+export default ProductGallery;

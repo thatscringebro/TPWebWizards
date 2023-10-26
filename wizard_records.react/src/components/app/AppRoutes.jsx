@@ -4,7 +4,7 @@ import ContactForm from "../ContactUs";
 import Detail from "../Detail";
 import Home from "../Home";
 import SearchResults from "../SearchResults";
-import Products from "../Product";
+import ProductGallery from "../ProductGallery";
 import AddProductForm from "../AddProductForm";
 import Account from "../Account";
 
@@ -37,7 +37,7 @@ const AppRoutes = [
     },
     {
         path: '/products',
-        element: <Products />
+        element: <ProductGallery />
     },
     {
         path: '/artist/:artistId/albums',

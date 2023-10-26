@@ -40,9 +40,25 @@ namespace WizardRecords.Web.Repositories {
 
         public async Task<IEnumerable<Album>> GetSearchAlbumsAsync(string keyword) {
             return await _context.Albums.Where(a => a.Title.ToLower().Contains(keyword.ToLower()) ||
-                                               a.ArtistName.ToLower().Contains(keyword.ToLower()) || 
+                                               a.ArtistName.ToLower().Contains(keyword.ToLower()) ||
                                                a.LabelName.ToLower().Contains(keyword.ToLower()))
                                                .ToListAsync(); ;
+        }
+
+        public async Task<IEnumerable<Album>> GetRandomAlbumsAsync(int count, Constants.Media? media = null, bool? isUsed = null) {
+            IQueryable<Album> query = _context.Albums;
+
+            if (media.HasValue) {
+                query = query.Where(a => a.Media == media);
+            }
+
+            if (isUsed.HasValue) {
+                query = query.Where(a => a.IsUsed == isUsed.Value);
+            }
+
+            query = query.OrderBy(a => Guid.NewGuid()).Take(count);
+
+            return await query.ToListAsync();
         }
 
         public async Task<Album?> GetAlbumByIdAsync(Guid albumId) {
@@ -55,22 +71,6 @@ namespace WizardRecords.Web.Repositories {
 
         public async Task<Album?> GetAlbumByTitleAsync(string title) {
             return await _context.Albums.Where(a => a.Title.ToLower() == title).FirstOrDefaultAsync();
-        }
-
-        public async Task<Album?> GetRandomAlbumAsync(Constants.Media? media, bool? isUsed = null) {
-            IQueryable<Album> query = _context.Albums;
-
-            if (media.HasValue) {
-                query = query.Where(a => a.Media == media);
-            }
-
-            if (isUsed.HasValue) {
-                query = query.Where(a => a.IsUsed == isUsed.Value);
-            }
-
-            query = query.OrderBy(a => Guid.NewGuid());
-
-            return await query.FirstOrDefaultAsync();
         }
 
         // CRUD
@@ -90,7 +90,7 @@ namespace WizardRecords.Web.Repositories {
 
                     return album;
                 }
-                return null; 
+                return null;
             }
             catch (Exception) {
                 return null;
