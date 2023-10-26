@@ -2,34 +2,42 @@
     text-decoration: none !important;
 }
 
-.btn-edit-delete-container {
+h1 {
+    padding: 20px 0 5px;
+}
+
+.edit-delete {
     display: flex;
 }
 
-.detail-container {
-    position: relative;
+.title-label {
+    font-style: italic;
+    font-family: Centaur;
+    font-weight: bold;
+    font-size: 25px;
 }
 
-.detail-content {
+.detail-container {
     position: relative;
     border: 2px solid #333;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     background-color: #fff;
-    max-width: 90%;
-    min-width: 750px;
-    max-height: 500px;
-    width: 100%;
-    margin: 20px auto;
+    padding: 20px;
+    margin: 20px;
     display: flex;
     flex-wrap: wrap;
 }
 
+.detail-content {
+    flex: 2;
+    padding: 0 0 0 20px;
+    font-size: 15px;
+    flex-direction: column;
+}
+
 .detail-image {
     flex: 1;
-    padding: 20px;
-    max-width: 100%;
-    max-height: 100%;
     text-align: center;
 }
 
@@ -38,51 +46,25 @@
         border: 2px solid black;
     }
 
-.detail-text {
-    flex: 2;
-    padding: 20px 0px 20px 0px;
-    font-size: 15px;
-    flex-direction: column;
+.detail-price {
+    position: absolute;
+    font-family: Centaur;
+    font-size: 250%;
+    font-weight: bold;
+    bottom: 0px;
 }
-    .detail-text .detail-artist-name {
-        text-decoration: none;
-        font-family: Centaur;
-        font-weight: bold;
-        font-size: 50px;
-    }
 
-    .detail-text .detail-album-title {
-        text-decoration: none;
-        font-style: italic;
-        font-family: Centaur;
-        font-weight: bold;
-        font-size: 25px;
-    }
-
-
-    .detail-text .detail-price {
-        position: absolute;
-        font-family: Centaur;
-        font-size: 250%;
-        font-weight: bold;
-        bottom: 0px;
-    }
-
-    .input-container {
-        display: flex;
-        flex-direction: column;
-        margin: 10px;
-    }
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
 
 .detail-cart-button {
     background-color: #008CBA;
-    color: #fff;
-    padding: 10px 20px;
+    bottom: 20px;
     font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
     position: absolute;
-    bottom: 20px; /* Adjust to your preference */
     right: 20px; 
 }
 
@@ -104,12 +86,10 @@ button {
     cursor: pointer;
     border-radius: 5px;
     border: 1px solid black;
+    padding: 10px 20px;
 }
 
-.price-add-to-cart-container {
-    display: flex;
-    justify-content: space-between;
-}
+
 
 .edit-button {
     /* Styles for the "Save" button when in edit mode */

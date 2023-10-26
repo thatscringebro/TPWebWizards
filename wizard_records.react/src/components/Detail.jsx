@@ -17,8 +17,6 @@ const Detail = () => {
     const fetchDataForDetail = async  (id) => {
         try {
             const response = await axios.get(`${API_BASE_URL}/album/${id}`);
-            console.log("Full album response:", response.data);
-            console.log("Fetching artist details for artistId:", response.artistName);
             if (response.status === 200) {
                 const album = response.data;
 
@@ -27,15 +25,17 @@ const Detail = () => {
                 const productData = {
                     albumId: album.albumId,
                     imageFilePath: imagePath,
-                    category: album.category === 0 ? 'Used' : 'New',
-                    quantity: album.stockQuantity,
                     albumLabel: album.labelName,
-                    format: album.media === 0 ? 'Vinyl' : 'CD',
+                    media: album.media === 0 ? 'Vinyl' : 'CD',
                     artistName: album.artistName,
                     albumTitle: album.title,
-                    price: parseFloat(album.price).toFixed(2)
+                    isUsed: album.isUsed === false ? 'New' : 'Used',
+                    price: album.price.toFixed(2),
+                    quantity: album.quantity
                 };
+
                 setProduct(productData);
+
             } else {
                 throw new Error(`Failed to fetch album with status: ${response.status}`);
             }
@@ -95,7 +95,6 @@ const Detail = () => {
         }
     };
 
-
     useEffect(() => {
         fetchDataForDetail(id);
     }, [id]);
@@ -106,56 +105,55 @@ const Detail = () => {
 
     return (
         <div className="detail-container">
-            <div className="detail-content">
-                <div className="detail-image">
-                    <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
-                </div>
-                <div className="detail-text">
-                    {isEditing ? (
-                        <div className="input-container">
-                            <input
-                                type="text"
-                                className="detail-input"
-                                value={editedProduct.albumTitle}
-                                onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
-                            />
-                            <input
-                                type="number"
-                                className="detail-input"
-                                value={editedProduct.quantity}
-                                onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
-                            />
-                            <input
-                                type="number"
-                                className="detail-input"
-                                value={editedProduct.price}
-                                onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
-                            />
-                            <div className="btn-save-cancel-container">
-                                <button className="edit-button" onClick={updateProduct}>Save</button>
-                                <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div>
-                            <Link to={`/${product.artistName}/albums`}><h1>{product.artistName}</h1></Link>
-                            <p className="detail-album-title">"{product.albumTitle}"</p>
-                            <p><i>Category</i> : {product.category} {product.format}</p>
-                            <p className="detail-album-label"><i>Label</i> : {product.albumLabel}</p>
-                            <p><i>In stock</i> : {product.quantity}</p>
-                            <div className="btn-edit-delete-container">
-                                <button className="edit-button" onClick={editProduct}>Edit</button>
-                                <button className="delete-button" onClick={deleteProduct}>Delete</button>
-                            </div>
-                            <div className="price-add-to-cart-container">
-                                <p className="detail-price">${product.price}</p>
-                                <button className="detail-cart-button">Add to Cart</button>
-                            </div>
-                        </div>
-                    )}
-                </div>
+            <div className="detail-image">
+                <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
             </div>
-        </div>
+            <div className="detail-content">
+                {isEditing ? (
+                    <div className="input-container">
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.albumTitle}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
+                        />
+                        <input
+                            type="number"
+                            className="detail-input"
+                            value={editedProduct.quantity}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
+                        />
+                        <input
+                            type="number"
+                            className="detail-input"
+                            value={editedProduct.price}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
+                        />
+                        <div className="btn-save-cancel-container">
+                            <button className="edit-button" onClick={updateProduct}>Save</button>
+                            <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                        </div>
+                    </div>
+                ) : (
+                    <div>
+                        <Link to={`/artist/${product.artistName}`}><h1>{product.artistName}</h1></Link>
+                        <h2 className="title-label">"{product.albumTitle}" ({product.albumLabel})</h2>
+                        <div className="detail-information">
+                            <br />
+                            <p><i>Section</i> : {product.isUsed} {product.media}
+                            <br />
+                            <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently out of stock.'}</i></p>
+                        </div>
+                        <div className="edit-delete">
+                            <button className="edit-button" onClick={editProduct}>Edit</button>
+                            <button className="delete-button" onClick={deleteProduct}>Delete</button>
+                        </div>
+                        <p className="detail-price">${product.price}</p>
+                        <button className="detail-cart-button">Add to Cart</button>
+                    </div>
+                )}
+            </div>
+    </div>
     );
 };
 

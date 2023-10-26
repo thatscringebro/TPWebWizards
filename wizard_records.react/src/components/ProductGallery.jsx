@@ -18,7 +18,7 @@ const fetchDataForCategory = () => {
                         albumTitle: album.title,
                         isUsed: album.isUsed,
                         price: album.price.toFixed(2),
-                        stockQuantity: album.stockQuantity
+                        quantity: album.quantity
                     };
                 });
 
@@ -30,7 +30,6 @@ const fetchDataForCategory = () => {
 };
 
 function ProductGallery() {
-
     const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
