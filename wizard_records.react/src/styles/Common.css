@@ -16,11 +16,10 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
-  margin: 10px;
 }
 
 /* Valid for entire app */
 h1, h2, h3 {
   font-family: 'PatrenaRolane';
-  margin: 20px;
+  padding-bottom: 20px;
 }

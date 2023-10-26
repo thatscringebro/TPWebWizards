@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { API_BASE_URL } from './utils/config';
 import AddProductForm from './AddProductForm';
-//import '../styles/Account.css';
+import axios from 'axios';
+import '../styles/Account.css';
 
 function Account() {
     const [isLogin, setIsLogin] = useState(true);
@@ -56,7 +56,7 @@ function Account() {
     return (
         <section className={isLogin ? "login-form" : "register-form"}>
             <Container className="account-container">
-                <h2>{isLogin ? 'Login' : 'Register'}</h2>
+                <h1>{isLogin ? 'Login' : 'Register'}</h1>
                 <Form onSubmit={handleSubmit}>
                     {!isLogin && (
                         <>
@@ -112,12 +112,13 @@ function Account() {
                             onChange={handleInputChange}
                         />
                     </FormGroup>
-                    <Button type="submit">{isLogin ? 'Login' : 'Register'}</Button>
+                    <Button className="btn-submit" type="submit">
+                        {isLogin ? 'Login' : 'Register'}
+                    </Button>
+                    <Button onClick={() => setIsLogin(!isLogin)}>
+                        Switch to {isLogin ? 'Register' : 'Login'}
+                    </Button>
                 </Form>
-                <br />
-                <Button onClick={() => setIsLogin(!isLogin)}>
-                    Switch to {isLogin ? 'Register' : 'Login'}
-                </Button>
             </Container>
         </section>
     );

@@ -9,6 +9,7 @@ import './styles/index.css';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
+// Remove StrictMode to avoid double rendering, keep it while in development!!!
 root.render(
   <React.StrictMode>
     <App />

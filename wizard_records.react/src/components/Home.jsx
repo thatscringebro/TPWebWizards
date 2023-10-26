@@ -4,6 +4,7 @@ import Partners from './Partners';
 import HomeGallery from './HomeGallery';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
+import '../styles/Common.css';
 
 class Home extends Component {
     render() {

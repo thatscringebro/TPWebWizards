@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from './utils/config';
 import ProductList from './ProductList';
 import axios from 'axios';
-import { API_BASE_URL } from './utils/config';
 import '../styles/Home.css';
 import '../styles/Fonts.css';
 
@@ -12,29 +12,27 @@ function HomeGallery() {
     const [usedVinyl, setUsedVinyl] = useState([]);
     const [usedCDs, setUsedCDs] = useState([]);
 
-    const fetchDataForCategory = (count = 3, media = null, isUsed = null) => {
+    const fetchDataForCategory = async (count = 3, media = null, isUsed = null) => {
         const params = {};
         if (media !== null) params.media = media;
         if (isUsed !== null) params.isUsed = isUsed;
         params.count = count;
     
-        return axios.get(`${API_BASE_URL}/album/random`, { params })
-            .then((response) => {
-                if (response.status === 200) {
-                    return response.data.map(album => ({
-                        id: album.albumId,
-                        cover: album.imageFilePath,
-                        media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-                        artistName: album.artistName,
-                        albumTitle: album.title,
-                        price: album.price.toFixed(2),
-                        category: album.category,
-                    }));
-                }
-                else {
-                    throw new Error(`Failed to fetch random album with status: ${response.status}`);
-                }
-            });
+        const response = await axios.get(`${API_BASE_URL}/album/random`, { params });
+        if (response.status === 200) {
+            return response.data.map(album => ({
+                id: album.albumId,
+                cover: album.imageFilePath,
+                media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
+                artistName: album.artistName,
+                albumTitle: album.title,
+                price: album.price.toFixed(2),
+                category: album.category,
+            }));
+        }
+        else {
+            throw new Error(`Failed to fetch random album with status: ${response.status}`);
+        }
     };
 
     useEffect(() => {

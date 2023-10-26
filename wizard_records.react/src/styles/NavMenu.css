@@ -82,6 +82,7 @@ header .input-group-append button {
     header .input-group-append button:hover {
         background-color: #a10000;
     }
+    
 /* Mobile responsive styles */
 @media (max-width: 576px) {
     header .navbar-toggler {

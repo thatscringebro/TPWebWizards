@@ -39,7 +39,7 @@ const NavMenu = () => {
                                 <Input
                                     className="search-input"
                                     type="text"
-                                    placeholder="search products"
+                                    placeholder="Search products"
                                     value={searchQuery}
                                     onChange={handleSearchChange}
                                 />

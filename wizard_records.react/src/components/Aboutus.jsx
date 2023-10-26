@@ -1,44 +1,44 @@
 import React from 'react';
 import GoogleMapComponent from './GoogleMap';
 import AddressInfo from './AddressInfo';
-//import '../styles/AboutUs.css';
+import '../styles/AboutUs.css';
 
 function AboutUs() {
     const Membres = [
         {
             name: 'Merlin Gélinas',
             role: 'OpenSource Master',
-            imageSrc: '../assets/images/aboutus/184.png',
+            imageSrc: require('../assets/images/aboutus/184.png'),
             UniqueText: 'Bringing technical expertise to our projects.'
         },
         {
             name: 'Mathieu Duval',
             role: 'Speaker Crasher',
-            imageSrc: '../assets/images/aboutus/300.png',
+            imageSrc: require('../assets/images/aboutus/300.png'),
             UniqueText: 'Committed to teamwork and collaboration.'
         },
         {
             name: 'Gabriel Bruneau',
             role: 'PhotoShop Doctor',
-            imageSrc: '../assets/images/aboutus/312.png',
+            imageSrc: require('../assets/images/aboutus/312.png'),
             UniqueText: 'A creative thinker and problem solver.'
         },
         {
             name: 'Kyle Lussier',
             role: 'Gym Leader',
-            imageSrc: '../assets/images/aboutus/431.png',
+            imageSrc: require('../assets/images/aboutus/431.png'),
             UniqueText: 'Passionate about innovation and leadership.'
         },
         {
             name: 'Thomas-Alexandre Barrette',
             role: 'Master Crafter',
-            imageSrc: '../assets/images/aboutus/494.png',
+            imageSrc: require('../assets/images/aboutus/494.png'),
             UniqueText: 'Dedicated to excellence in every endeavor.'
         },
         {
             name: 'Claudel D. Roy',
             role: 'Woman',
-            imageSrc: '../assets/images/aboutus/573.png',
+            imageSrc: require('../assets/images/aboutus/573.png'),
             UniqueText: 'Bringing fresh ideas to the table.'
         },
     ];
@@ -50,7 +50,7 @@ function AboutUs() {
             <div className="team">
                 {Membres.map((member, index) => (
                     <div key={index} className="team-member">
-                        <img src={process.env.PUBLIC_URL + member.imageSrc } alt={member.name} />
+                        <img src={member.imageSrc} alt={member.name} />
                         <h2>{member.name}</h2>
                         <p>{member.role}</p>
                         <p>{member.UniqueText}</p>
