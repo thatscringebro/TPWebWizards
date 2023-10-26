@@ -1,4 +1,12 @@
-﻿﻿.detail-container {
+﻿﻿a {
+    text-decoration: none !important;
+}
+
+.btn-edit-delete-container {
+    display: flex;
+}
+
+.detail-container {
     position: relative;
 }
 
@@ -60,23 +68,28 @@
         bottom: 0px;
     }
 
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
 
 .detail-cart-button {
-    position: absolute;
-    background-color: forestgreen;
+    background-color: #008CBA;
     color: #fff;
     padding: 10px 20px;
     font-size: 16px;
-    border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
-    bottom: 20px;
-    right: 20px;
+    position: absolute;
+    bottom: 20px; /* Adjust to your preference */
+    right: 20px; 
 }
 
     .detail-cart-button:hover {
-        background-color: #00cc00;
+        background-color: #20add8;
     }
+    
 .detail-input {
     padding: 5px;
     margin: 5px;
@@ -90,45 +103,51 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    //width: 5rem; /* Adjust the width as needed */
+    border: 1px solid black;
+}
+
+.price-add-to-cart-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .edit-button {
     /* Styles for the "Save" button when in edit mode */
     background-color: #4CAF50;
     color: white;
-    border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    margin-right: 10px;
+}
+
+.edit-button:hover {
+    background-color: #5ed162;
+}
+
+.btn-save-cancel-container {
+    display: flex;
+    margin:  10px 5px;
 }
 
 .cancel-button {
     /* Styles for the "Cancel" button when in edit mode */
     background-color: #f44336;
     color: white;
-    border: none;
+    border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
 }
 
 .delete-button {
     /* Styles for the "Delete" button */
     background-color: #f44336;
     color: white;
-    border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
 }
 
-.detail-cart-button {
-    /* Styles for the "Add to Cart" button */
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
+    .delete-button:hover {
+        background-color: #ff5b4f;
+    }

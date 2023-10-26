@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import ReactDOM from 'react-dom/client';
 import App from './components/app/App';
 import reportWebVitals from './components/utils/reportWebVitals';
 import * as serviceWorkerRegistration from './components/utils/serviceWorkerRegistration';

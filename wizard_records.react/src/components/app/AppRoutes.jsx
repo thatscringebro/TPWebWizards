@@ -40,7 +40,7 @@ const AppRoutes = [
         element: <ProductGallery />
     },
     {
-        path: '/artist/:artistId/albums',
+        path: '/:artistName/albums',
         element: <ArtistAlbums /> 
     },
     {

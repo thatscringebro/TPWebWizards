@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from './utils/config';
+import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API_BASE_URL } from './utils/config';
 import '../styles/Detail.css';
 
 
@@ -111,7 +112,7 @@ const Detail = () => {
                 </div>
                 <div className="detail-text">
                     {isEditing ? (
-                        <div>
+                        <div className="input-container">
                             <input
                                 type="text"
                                 className="detail-input"
@@ -130,20 +131,26 @@ const Detail = () => {
                                 value={editedProduct.price}
                                 onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                             />
-                            <button className="edit-button" onClick={updateProduct}>Save</button>
-                            <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                            <div className="btn-save-cancel-container">
+                                <button className="edit-button" onClick={updateProduct}>Save</button>
+                                <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                            </div>
                         </div>
                     ) : (
                         <div>
-                            <p>{product.artistName}</p>
+                            <Link to={`/${product.artistName}/albums`}><h1>{product.artistName}</h1></Link>
                             <p className="detail-album-title">"{product.albumTitle}"</p>
                             <p><i>Category</i> : {product.category} {product.format}</p>
                             <p className="detail-album-label"><i>Label</i> : {product.albumLabel}</p>
                             <p><i>In stock</i> : {product.quantity}</p>
-                            <p className="detail-price">${product.price}</p>
-                            <button className="detail-cart-button">Add to Cart</button>
-                            <button className="delete-button" onClick={deleteProduct}>Delete</button>
-                            <button className="edit-button" onClick={editProduct}>Edit</button>
+                            <div className="btn-edit-delete-container">
+                                <button className="edit-button" onClick={editProduct}>Edit</button>
+                                <button className="delete-button" onClick={deleteProduct}>Delete</button>
+                            </div>
+                            <div className="price-add-to-cart-container">
+                                <p className="detail-price">${product.price}</p>
+                                <button className="detail-cart-button">Add to Cart</button>
+                            </div>
                         </div>
                     )}
                 </div>
