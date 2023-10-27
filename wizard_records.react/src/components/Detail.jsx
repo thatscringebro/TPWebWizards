@@ -5,7 +5,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Detail.css';
 
-
 const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -70,10 +69,8 @@ const Detail = () => {
             console.log(editedProduct);
             const albumUpdate = {
                 Title: editedProduct.albumTitle,
-                StockQuantity: editedProduct.quantity,
-                Price: editedProduct.price,
-                ImageFilePath: editedProduct.imageFilePath,
-                Comments: "yo bitch"
+                Quantity: editedProduct.quantity,
+                Price: editedProduct.price
             };
 
             console.log(albumUpdate);
@@ -86,7 +83,7 @@ const Detail = () => {
             if (response.status === 200) {
                 console.log('Album updated successfully');
                 setIsEditing(false);
-                fetchDataForDetail(id); // Refresh product details after editing
+                fetchDataForDetail(id);
             } else {
                 console.error('Failed to update album with status:', response.status);
             }
@@ -129,27 +126,27 @@ const Detail = () => {
                             value={editedProduct.price}
                             onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                         />
-                        <div className="btn-save-cancel-container">
-                            <button className="edit-button" onClick={updateProduct}>Save</button>
-                            <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+                        <div className="save-cancel-container">
+                            <button className="button-save" onClick={updateProduct}>Save</button>
+                            <button className="button-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                     </div>
                 ) : (
                     <div>
                         <Link to={`/artist/${product.artistName}`}><h1>{product.artistName}</h1></Link>
-                        <h2 className="title-label">"{product.albumTitle}" ({product.albumLabel})</h2>
+                        <h2 className="title-label-container">"{product.albumTitle}" ({product.albumLabel})</h2>
                         <div className="detail-information">
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
                             <br />
                             <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently out of stock.'}</i></p>
                         </div>
-                        <div className="edit-delete">
-                            <button className="edit-button" onClick={editProduct}>Edit</button>
-                            <button className="delete-button" onClick={deleteProduct}>Delete</button>
+                        <div className="edit-delete-container">
+                            <button className="button-edit" onClick={editProduct}>Edit</button>
+                            <button className="button-delete" onClick={deleteProduct}>Delete</button>
                         </div>
                         <p className="detail-price">${product.price}</p>
-                        <button className="detail-cart-button">Add to Cart</button>
+                        <button className="button-cart">Add to Cart</button>
                     </div>
                 )}
             </div>

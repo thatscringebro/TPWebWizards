@@ -6,16 +6,33 @@ h1 {
     padding: 20px 0 5px;
 }
 
-.edit-delete {
-    display: flex;
+.button-cart {
+    background-color: #008CBA;
+    bottom: 20px;
+    position: absolute;
+    right: 20px; 
 }
 
-.title-label {
-    font-style: italic;
-    font-family: Centaur;
-    font-weight: bold;
-    font-size: 25px;
+    .button-cart:hover {
+        background-color: #20add8;
+    }
+
+.button-cancel, .button-delete {
+    background-color: #f44336;
 }
+
+    .button-cancel:hover, .button-delete:hover {
+        background-color: #ff5b4f;
+    }
+
+.button-edit, .button-save {
+    background-color: #4CAF50;
+    margin: 0 10px 0 0;
+}
+
+    .button-edit:hover, .button-save:hover {
+        background-color: #5ed162;
+    }
 
 .detail-container {
     position: relative;
@@ -36,22 +53,35 @@ h1 {
     flex-direction: column;
 }
 
-.detail-image {
-    flex: 1;
-    text-align: center;
-}
-
-    .detail-image img {
-        border-radius: 10px;
-        border: 2px solid black;
+    .detail-content button {
+        border: 1px solid black;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 10px 20px;
     }
 
+.detail-image img {
+    flex: 1;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+    
+.detail-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
 .detail-price {
-    position: absolute;
+    bottom: 0px;
     font-family: Centaur;
     font-size: 250%;
     font-weight: bold;
-    bottom: 0px;
+    position: absolute;
 }
 
 .input-container {
@@ -60,74 +90,14 @@ h1 {
     margin: 10px;
 }
 
-.detail-cart-button {
-    background-color: #008CBA;
-    bottom: 20px;
-    font-size: 16px;
-    position: absolute;
-    right: 20px; 
-}
-
-    .detail-cart-button:hover {
-        background-color: #20add8;
-    }
-    
-.detail-input {
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Common styles for buttons */
-button {
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 10px 20px;
-}
-
-
-
-.edit-button {
-    /* Styles for the "Save" button when in edit mode */
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.edit-button:hover {
-    background-color: #5ed162;
-}
-
-.btn-save-cancel-container {
+.edit-delete-container, .save-cancel-container {
     display: flex;
-    margin:  10px 5px;
+    margin: 20px 20px 0 0;
 }
 
-.cancel-button {
-    /* Styles for the "Cancel" button when in edit mode */
-    background-color: #f44336;
-    color: white;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
+.title-label-container {
+    font-style: italic;
+    font-family: Centaur;
+    font-weight: bold;
+    font-size: 25px;
 }
-
-.delete-button {
-    /* Styles for the "Delete" button */
-    background-color: #f44336;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-    .delete-button:hover {
-        background-color: #ff5b4f;
-    }

@@ -44,34 +44,45 @@
     box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
 }
 
-@media (max-width: 420px) {
-    .page-button {
-        height: 48px;
-    }
-}
-
 .pagination {
     justify-content: center;
     margin-bottom: 20px;
     display: flex;
 }
-#filters {
-    display: flex;
-    margin: 10px;
-}
+
 .sort-bar {
     float: left;
 }
+
 .filter-bar {
     margin-left: auto;
 }
+
 .right {
     text-align: right;
 }
+
+.section-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+
+.filters {
+    display: flex;
+}
+
 #sortDropdown, #filterDropdown {
     margin-left: 10px;
     border: none;
     background-color: #24262b;
     color: #E4E6Eb;
     border-radius: 2px
+}
+
+@media (max-width: 420px) {
+    .page-button {
+        height: 48px;
+    }
 }

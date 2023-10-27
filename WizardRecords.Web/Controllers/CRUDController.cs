@@ -20,8 +20,6 @@ namespace WizardRecords.Web.Controllers {
                     album.Title = updatedAlbum.Title;
                     album.Quantity = updatedAlbum.Quantity;
                     album.Price = updatedAlbum.Price;
-                    album.Comments = updatedAlbum.Comments;
-                    album.ImageFilePath = updatedAlbum.ImageFilePath; // Change outside of Detail.jsx
                   
                     await _albumRepository.UpdateAlbumAsync(id, album);
                     return Ok();

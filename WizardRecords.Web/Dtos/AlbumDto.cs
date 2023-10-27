@@ -24,9 +24,7 @@ namespace WizardRecords.Web.Dtos {
     public record AlbumUpdate(
         string Title, 
         int Quantity, 
-        float Price,
-        string Comments, 
-        string ImageFilePath
+        float Price
     );
 
     public record AlbumCreate(
