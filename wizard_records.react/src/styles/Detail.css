@@ -8,9 +8,9 @@ h1 {
 
 .button-cart {
     background-color: #008CBA;
-    bottom: 20px;
+    bottom: 30px;
     position: absolute;
-    right: 20px; 
+    right: 30px; 
 }
 
     .button-cart:hover {
@@ -35,22 +35,25 @@ h1 {
     }
 
 .detail-container {
-    position: relative;
+    background-color: #fff;
     border: 2px solid #333;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px;
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
+    margin: 20px;
+    min-width: 445px;
+    padding: 20px;
+    position: relative;
 }
 
 .detail-content {
-    flex: 2;
-    padding: 0 0 0 20px;
-    font-size: 15px;
+    display: flex;
     flex-direction: column;
+    font-size: 15px;
+    justify-content: space-between;
+    padding: 0 0 0 20px;
 }
 
     .detail-content button {
@@ -63,10 +66,11 @@ h1 {
     }
 
 .detail-image img {
-    flex: 1;
     text-align: center;
     border: 2px solid black;
     border-radius: 10px;
+    max-height: 400px;
+    max-width: 400px;
 }
     
 .detail-input {
@@ -77,11 +81,9 @@ h1 {
 }
 
 .detail-price {
-    bottom: 0px;
     font-family: Centaur;
     font-size: 250%;
     font-weight: bold;
-    position: absolute;
 }
 
 .input-container {
@@ -92,7 +94,13 @@ h1 {
 
 .edit-delete-container, .save-cancel-container {
     display: flex;
-    margin: 20px 20px 0 0;
+    margin: 20px 0;
+} 
+
+.price-cart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .title-label-container {

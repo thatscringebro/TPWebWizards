@@ -50,6 +50,7 @@ function HomeGallery() {
 
     return (
         <div>
+             <hr className="divider" />
             <ProductList title="Featured Products" products={featuredProducts} isHomeGallery={true} />
             <hr className="divider" />
             <ProductList title="New Vinyl" products={newVinyl} isHomeGallery={true} />

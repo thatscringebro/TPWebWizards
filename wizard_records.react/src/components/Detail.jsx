@@ -139,16 +139,18 @@ const Detail = () => {
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
                             <br />
-                            <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently out of stock.'}</i></p>
+                            <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</i></p>
                         </div>
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
                             <button className="button-delete" onClick={deleteProduct}>Delete</button>
                         </div>
-                        <p className="detail-price">${product.price}</p>
-                        <button className="button-cart">Add to Cart</button>
                     </div>
                 )}
+                <div className="price-cart-container">
+                    <p className="detail-price">${product.price}</p>
+                    <button className="button-cart">Add to Cart</button>
+                </div>
             </div>
     </div>
     );
