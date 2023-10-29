@@ -9,12 +9,10 @@ using static WizardRecords.Core.Data.Constants;
 namespace WizardRecords.Core.Domain.Entities {
     public class User : IdentityUser<Guid> {
         public User(string userName) : base(userName) {}
-
-        // Properties
         public string FirstName { get; set; } = "-";
         public string LastName { get; set; } = "-";
         public string FullName => $"{FirstName} {LastName}";
         public bool IsInitialPwd { get; set; } = true;
-        public string? ProfileImagePath { get; set; }
+        public string? ProfileImagePath { get; set; } = "default.webp"; // TODO: Find default image
     }
 }

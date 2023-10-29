@@ -2,68 +2,59 @@
 
 namespace WizardRecords.Core.Domain.Entities {
     public class Album {
-        public Guid Id { get; set; }
-
-        // Foreign Keys
-        public Guid ArtistId { get; set; }
-        public Guid LabelId { get; set; }
-
-        // Navigation Properties
-        public Artist Artist { get; set; } = null!;
-        public Label Label { get; set; } = null!;
-
-        // Properties
+        public Guid AlbumId { get; set; }
+        public string ArtistName { get; set; } = "-";
         public string Title { get; set; } = "-";
-        public int StockQuantity { get; set; }
-        public float Price { get; set; }
-        public Category Category { get; set; } // NEW ? USED
-        public MediaType Media { get; set; } // CD ? LP 
-        public FormatType Format { get; set; } // Précision sur le format de base de l'album (LP 12", LP 10", LP 7", CD, etc.)
-        public AlbumGenre AlbumGenre { get; set; } // Précise le genre particulier de l'album
-        public Grade MediaGrade { get; set; } = Grade.NONE; // Category == USED only!
-        public Grade SleeveGrade { get; set; } = Grade.NONE; // Category == USED only!
-        public string CatalogNumber { get; set; } = "-"; // Category == USED only!
-        public string MatrixNumber { get; set; } = "-"; // Category == USED only!
-        public string Comments { get; set; } = "-";
-        public string ImageFilePath { get; set; } = "-";
+        public string LabelName { get; set; } = "-";
+        public int Quantity { get; set; } = 0;
+        public float Price { get; set; } = 0.0f;
+        public bool IsUsed { get; set; } = false;
+        public Media Media { get; set; } = Media.UNSPECIFIED;
+        public ArtistGenre ArtistGenre { get; set; } = ArtistGenre.UNSPECIFIED;
+        public AlbumGenre AlbumGenre { get; set; } = AlbumGenre.UNSPECIFIED;
+        public Grade? MediaGrade { get; set; } = Grade.NONE; // USED only!
+        public Grade? SleeveGrade { get; set; } = Grade.NONE; // USED only!
+        public string? CatalogNumber { get; set; } = "-"; // USED only!
+        public string? MatrixNumber { get; set; } = "-"; // USED only!
+        public string? Comments { get; set; } = "-";
+        public string ImageFilePath { get; set; } = "-"; // TODO: Find default image 
 
         // Constructors
         internal Album() { }
 
-        public Album(Guid albumId,
-                     Guid artistId,
-                     Guid labelId,
-                     string title,
-                     int stockQty,
-                     float price,
-                     Category category,
-                     MediaType mediaType,
-                     FormatType formatType,
-                     AlbumGenre albumGenre,
-                     Grade mediaGrade,
-                     Grade sleeveGrade,
-                     string catalogNumber,
-                     string matrixNumber,
-                     string comments,
-                     string imgFilePath) {
-
-            Id = albumId;
-            ArtistId = artistId;
-            LabelId = labelId;
+        public Album(
+             Guid albumId,
+             string artistName,
+             string title,
+             string labelName,
+             int quantity,
+             float price,
+             bool isUsed,
+             Media media,
+             ArtistGenre artistGenre,
+             AlbumGenre albumGenre,
+             Grade? mediaCondition,
+             Grade? sleeveCondition,
+             string? catalogNumber,
+             string? matrixNumber,
+             string? comments,
+             string imageFilePath) {
+            AlbumId = albumId;
+            ArtistName = artistName;
             Title = title;
-            StockQuantity = stockQty;
+            LabelName = labelName;
+            Quantity = quantity;
             Price = price;
-            Category = category;
-            Media = mediaType;
-            Format = formatType;
+            IsUsed = isUsed;
+            Media = media;
+            ArtistGenre = artistGenre;
             AlbumGenre = albumGenre;
-            MediaGrade = mediaGrade;
-            SleeveGrade = sleeveGrade;
+            MediaGrade = mediaCondition;
+            SleeveGrade = sleeveCondition;
             CatalogNumber = catalogNumber;
             MatrixNumber = matrixNumber;
             Comments = comments;
-            ImageFilePath = imgFilePath;
+            ImageFilePath = imageFilePath;
         }
-
     }
 }

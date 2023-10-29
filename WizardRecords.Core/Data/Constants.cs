@@ -1,16 +1,12 @@
 ﻿namespace WizardRecords.Core.Data {
     public class Constants {
-        public enum MediaType {
+        public enum Media {
             VINYL,
-            CD
+            CD,
+            UNSPECIFIED
         }
 
-        public enum Category {
-            NEW,
-            USED
-        }
-
-        // Représente les section de la boutique, c'est à dire les genres principaux
+        // Represents the in-store section of the artist
         public enum ArtistGenre {
             ROCK,
             POP,
@@ -29,10 +25,10 @@
             FUNK,
             ELECTRONICA,
             SOUNDTRACK,
-            UNDETERMINED // Remplace "null"
+            UNSPECIFIED
         }
 
-        // Représente le genre de musique de l'album (un artiste peut avoir plusieurs genres selon l'album)
+        // Represents a specific genre for a single album
         public enum AlbumGenre {
             ROCK,
             POP,
@@ -100,33 +96,11 @@
             COMEDY,
             SOUNDEFFECTS,
             KIDS,
-            CHRISTMAS
-            // Ajouter des genres ici au besoin
+            CHRISTMAS,
+            UNSPECIFIED
         }
 
-        // Représente des précisions sur le format de l'album (vinyl 7", 12"?)
-        public enum FormatType {
-            RPM_33,
-            RPM_45,
-            RPM_78,
-            LP,
-            EP,
-            ALBUM,
-            SINGLE,
-            DOUBLE,
-            FLEXIDISC,
-            PICTUREDISC,
-            SHELLAC,
-            DIGIPAK,
-            INCH_12,
-            INCH_10,
-            INCH_7,
-            INCH_5,
-            INCH_3,
-            UNDETERMINED // Remplace "null"
-        }
-
-        // Sert à donner une note à l'état de l'album et de la pochette (USAGÉ SEULEMENT)
+        // For USED items only
         public enum Grade {
             M,
             NM,
@@ -136,7 +110,7 @@
             G,
             F,
             P,
-            NONE // Remplace "null"
+            NONE
         }
     }
 }

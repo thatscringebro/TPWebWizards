@@ -1,101 +1,68 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Core.Domain.Entities;
-using WizardRecords.Dtos;
 using WizardRecords.Repositories;
+using WizardRecords.Web.Dtos;
 
-namespace WizardRecords.Controllers
-{
+namespace WizardRecords.Web.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class CRUDController : ControllerBase
-    {
+    public class CRUDController : ControllerBase {
         private readonly IAlbumRepository _albumRepository;
 
-        public CRUDController(IAlbumRepository albumRepository)
-        {
+        public CRUDController(IAlbumRepository albumRepository) {
             _albumRepository = albumRepository;
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<AlbumUpdate>> UpdateAlbum(Guid id, [FromBody] AlbumUpdate updatedAlbum)
-        {
-            try
-            {
+        public async Task<ActionResult<AlbumUpdate>> UpdateAlbum(Guid id, [FromBody] AlbumUpdate updatedAlbum) {
+            try {
                 var album = await _albumRepository.GetAlbumByIdAsync(id);
-                if (album != null)
-                {
+                if (album != null) {
                     album.Title = updatedAlbum.Title;
-                    album.StockQuantity = updatedAlbum.StockQuantity;
+                    album.Quantity = updatedAlbum.Quantity;
                     album.Price = updatedAlbum.Price;
-                    //album.ImageFilePath = updatedAlbum.ImageFilePath;
-                    album.Comments = updatedAlbum.Comments;
-        
+                  
                     await _albumRepository.UpdateAlbumAsync(id, album);
                     return Ok();
                 }
-                else
-                {
+                else {
                     return NotFound();
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
-        [HttpGet("delete")]
-        public async Task<ActionResult<AlbumDelete>> GetAlbumByTitle(string title)
-        {
-            try
-            {
-                var deletedAlbum = await _albumRepository.GetAlbumByTitleAsync(title);
-
-                if (deletedAlbum != null)
-                {
-                    await _albumRepository.DeleteAlbumAsync(title);
-                    return Ok(); 
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult<AlbumDelete>> DeleteAlbum(Guid id) {
+            try {
+                var album = await _albumRepository.GetAlbumByIdAsync(id);
+                if (album != null) {
+                    await _albumRepository.DeleteAlbumAsync(id);
+                    return Ok();
                 }
-                else
-                {
-                    return NotFound(); 
+                else {
+                    return NotFound();
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
+
         [HttpPost("create")]
-        public ActionResult<AlbumCreate> CreateAlbum([FromBody] Album album)
-        {
-            try
-            {
-                var createdAlbum = new Album(
-                    albumId: Guid.NewGuid(),
-                    artistId: album.ArtistId,
-                    labelId: album.LabelId,
-                    title: album.Title,
-                    stockQty: album.StockQuantity,
-                    price: album.Price,
-                    category: album.Category,
-                    mediaType: album.Media,
-                    formatType: album.Format,
-                    albumGenre: album.AlbumGenre,
-                    mediaGrade: album.MediaGrade,
-                    sleeveGrade: album.SleeveGrade,
-                    catalogNumber: album.CatalogNumber,
-                    matrixNumber: album.MatrixNumber,
-                    comments: album.Comments,
-                    imgFilePath: album.ImageFilePath
-                    );
-                    _albumRepository.CreateAlbumAsync(album);
-
-                return Ok();
-         
+        public async Task<ActionResult<AlbumCreate>> CreateAlbum([FromBody] AlbumCreate newAlbum) {
+            try {
+                var album = await _albumRepository.GetAlbumByArtistNameAndTitleAsync(newAlbum.ArtistName, newAlbum.Title);
+                if (album == null || album.ArtistName != newAlbum.ArtistName) {
+                    await _albumRepository.CreateAlbumAsync(album);
+                    return Ok();
+                }
+                else {
+                    return BadRequest("Album already exists.");
+                }
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }

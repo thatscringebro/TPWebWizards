@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Dtos;
-using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 
 namespace WizardRecords.Controllers {
     [ApiController]
@@ -37,8 +37,8 @@ namespace WizardRecords.Controllers {
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            var token = GenerateJwtToken(user);
-            return Ok(new { Token = token });
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok();
         }
 
         [HttpPost("login")]

@@ -235,3 +235,6 @@ ClientApp/.env.development
 ClientApp/.env
 /WizardRecords.Web/node_modules
 /WizardRecords.Core/Migrations
+/wizard_records.react/node_modules
+/WizardRecords.Web/Migrations
+/WizardRecords.Web/WeatherForecast.cs

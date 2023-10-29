@@ -32,7 +32,7 @@ namespace WizardRecords.Controllers {
             return Ok(userDetails);
         }
 
-        [HttpPut("profile")]
+        [HttpPut("profile/update")]
         [Authorize]
         public async Task<IActionResult> UpdateUserProfile([FromBody] UserDto userDetails) {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);

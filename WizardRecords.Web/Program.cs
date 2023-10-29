@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,11 +7,14 @@ using System.Text;
 using WizardRecords.Core;
 using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
+using WizardRecords.Web.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// Add services to the container.
 
+builder.Services.AddControllers();
 // Database context
 builder.Services.AddDbContext<WizRecDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -21,25 +25,19 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-// Repositories
-builder.Services.AddScoped<IAlbumRepository, DefaultAlbumRepository>();
-builder.Services.AddScoped<IArtistRepository, DefaultArtistRepository>();
-builder.Services.AddScoped<ILabelRepository, DefaultLabelRepository>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"]);
 
-builder.Services.AddAuthentication(x =>
-{
+builder.Services.AddAuthentication(x => {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(x =>
-{
+.AddJwtBearer(x => {
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
+    x.TokenValidationParameters = new TokenValidationParameters {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
@@ -47,21 +45,20 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:3000")
-                   .AllowAnyMethod()
-                   .AllowAnyHeader()
-                   .AllowCredentials();
-        });
+builder.Services.AddCors(options => {
+	options.AddPolicy(name: "AllowReactApp",
+		builder => {
+			builder.WithOrigins("http://localhost:3000")
+				.AllowAnyHeader()
+				.AllowAnyMethod()
+                .AllowCredentials();
+	});
 });
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -75,8 +72,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("AllowReactApp");
-
-// Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

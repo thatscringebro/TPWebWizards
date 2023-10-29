@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Dtos;
+using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
+using WizardRecords.Web.Dtos;
 using static WizardRecords.Core.Data.Constants;
 
-namespace WizardRecords.Controllers {
+namespace WizardRecords.Web.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class AlbumController : ControllerBase {
@@ -15,171 +16,187 @@ namespace WizardRecords.Controllers {
 
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAllAlbums() {
-            var albums = (await _albumRepository.GetAllAlbumsAsync())
-                .Select(a => new AlbumDto(
-                a.Id,
-                a.ArtistId,
-                a.LabelId,
-                a.Title,
-                a.StockQuantity,
-                a.Price,
-                a.Category,
-                a.Media,
-                a.Format,
-                a.AlbumGenre,
-                a.MediaGrade,
-                a.SleeveGrade,
-                a.CatalogNumber,
-                a.MatrixNumber,
-                a.Comments,
-                a.ImageFilePath
-            )).ToList();
-
-            return Ok(albums);
+            var albums = await _albumRepository.GetAllAlbumsAsync();
+            var albumDtos = AssignPropertiesInCollection(albums);
+            return Ok(albumDtos);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AlbumDto>> GetAlbumById(Guid id) {
-            try {
-                var album = await _albumRepository.GetAlbumByIdAsync(id);
+        [HttpGet("artist/{artistName}")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByArtistName(string artistName) {
+            var albums = await _albumRepository.GetAlbumsByArtistNameAsync(artistName);
 
-                if (album != null) {
-                    return Ok(new AlbumDto(
-                        album.Id,
-                        album.ArtistId,
-                        album.LabelId,
-                        album.Title,
-                        album.StockQuantity,
-                        album.Price,
-                        album.Category,
-                        album.Media,
-                        album.Format,
-                        album.AlbumGenre,
-                        album.MediaGrade,
-                        album.SleeveGrade,
-                        album.CatalogNumber,
-                        album.MatrixNumber,
-                        album.Comments,
-                        album.ImageFilePath
-                    ));
-                }
-                else {
-                    return NotFound($"Album with ID {id} not found.");
-                }
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
             }
-            catch (Exception ex) {
-                return Problem($"An error occurred while fetching the album: {ex.Message}");
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("label/{labelName}")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByLabelName(string labelName) {
+            var albums = await _albumRepository.GetAlbumsByLabelNameAsync(labelName);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("media/{media}")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByMedia(Media media) {
+            var albums = await _albumRepository.GetAlbumsByMediaAsync(media);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("section/{isUsed}")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByUsedOrNew(bool isUsed) {
+            var albums = await _albumRepository.GetAlbumsByUsedOrNewAsync(isUsed);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("genre/{artistGenre}")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByGenre(ArtistGenre artistGenre) {
+            var albums = await _albumRepository.GetAlbumsByGenreAsync(artistGenre);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetSearchAlbums([FromQuery] string query) {
+            var albums = await _albumRepository.GetSearchAlbumsAsync(query);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
             }
         }
 
         [HttpGet("random")]
-        public async Task<ActionResult<AlbumDto>> GetRandomAlbum([FromQuery] MediaType mediaType) {
-            try {
-                var album = await _albumRepository.GetRandomAlbumAsync(mediaType);
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetRandomAlbums([FromQuery] int count = 3, [FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
+            var albums = await _albumRepository.GetRandomAlbumsAsync(count, media, isUsed);
 
-                if (album != null) {
-                    return Ok(new AlbumDto(
-                        album.Id,
-                        album.ArtistId,
-                        album.LabelId,
-                        album.Title,
-                        album.StockQuantity,
-                        album.Price,
-                        album.Category,
-                        album.Media,
-                        album.Format,
-                        album.AlbumGenre,
-                        album.MediaGrade,
-                        album.SleeveGrade,
-                        album.CatalogNumber,
-                        album.MatrixNumber,
-                        album.Comments,
-                        album.ImageFilePath
-                    ));
-                }
-                else {
-                    return NotFound("No albums found.");
-                }
+            if (albums != null && albums.Count() > 0) {
+                var albumDtos = albums.Select(a => AssignPropertiesToAlbum(a)).ToList();
+                return Ok(albumDtos);
             }
-            catch (Exception ex) {
-                return Problem($"An error occurred while fetching a random album: {ex.Message}");
+            else {
+                return NotFound("Albums not found.");
             }
         }
 
-        [HttpGet("mediaType")]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByMediaType([FromQuery] MediaType mediaType) {
-            try {
-                var albums = await _albumRepository.GetAlbumsByMediaTypeAsync(mediaType);
+        [HttpGet("{albumId}")]
+        public async Task<ActionResult<AlbumDto>> GetAlbumById(Guid albumId) {
+            var album = await _albumRepository.GetAlbumByIdAsync(albumId);
 
-                if (albums != null && albums.Any()) {
-                    var albumDetails = albums.Select(album => {
-                        return new AlbumDto(
-                            album.Id,
-                            album.ArtistId,
-                            album.LabelId,
-                            album.Title,
-                            album.StockQuantity,
-                            album.Price,
-                            album.Category,
-                            album.Media,
-                            album.Format,
-                            album.AlbumGenre,
-                            album.MediaGrade,
-                            album.SleeveGrade,
-                            album.CatalogNumber,
-                            album.MatrixNumber,
-                            album.Comments,
-                            album.ImageFilePath
-                        );
-                    });
-
-                    return Ok(albumDetails);
-                }
-                else {
-                    return NotFound("No albums found.");
-                }
+            if (album != null) {
+                var albumDto = AssignPropertiesToAlbum(album);
+                return Ok(albumDto);
             }
-            catch (Exception ex) {
-                return Problem($"An error occurred while fetching albums by media type: {ex.Message}");
+            else {
+                return NotFound("Album not found.");
             }
         }
 
-        [HttpGet("/artist/{artistId}/albums")]
-        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByArtistId(Guid artistId) {
-            try {
-                var albums = await _albumRepository.GetAlbumsByArtistIdAsync(artistId);
+        [HttpGet("title/{title}")]
+        public async Task<ActionResult<AlbumDto>> GetAlbumsByTitle(string title) {
+            var album = await _albumRepository.GetAlbumByTitleAsync(title);
 
-                if (albums != null && albums.Any()) {
-                    var albumDetails = albums.Select(album => {
-                        return new AlbumDto(
-                            album.Id,
-                            album.ArtistId,
-                            album.LabelId,
-                            album.Title,
-                            album.StockQuantity,
-                            album.Price,
-                            album.Category,
-                            album.Media,
-                            album.Format,
-                            album.AlbumGenre,
-                            album.MediaGrade,
-                            album.SleeveGrade,
-                            album.CatalogNumber,
-                            album.MatrixNumber,
-                            album.Comments,
-                            album.ImageFilePath
-                        );
-                    });
+            if (album != null) {
+                var albumDtos = AssignPropertiesToAlbum(album);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
 
-                    return Ok(albumDetails);
-                }
-                else {
-                    return NotFound("No albums found.");
-                }
+        [HttpGet("artist/{artistName}/title/{title}")]
+        public async Task<ActionResult<AlbumDto>> GetAlbumByArtistNameAndTitle(string artistName, string title) {
+            var album = await _albumRepository.GetAlbumByArtistNameAndTitleAsync(artistName, title);
+
+            if (album != null) {
+                var albumDto = AssignPropertiesToAlbum(album);
+                return Ok(albumDto);
             }
-            catch (Exception ex) {
-                return Problem($"An error occurred while fetching albums by artist id {artistId}: {ex.Message}");
+            else {
+                return NotFound("Album not found.");
             }
+        }
+        // For CRUD operations, see WizardRecords.Web/Controllers/CRUDController.cs
+
+        // Helper methods
+        private IEnumerable<AlbumDto> AssignPropertiesInCollection(IEnumerable<Album>? albums) {
+            var albumDtos = albums!.Select(album => new AlbumDto(
+                    album.AlbumId,
+                    album.ArtistName,
+                    album.Title,
+                    album.LabelName,
+                    album.Quantity,
+                    album.Price,
+                    album.IsUsed,
+                    album.Media,
+                    album.ArtistGenre,
+                    album.AlbumGenre,
+                    album.MediaGrade,
+                    album.SleeveGrade,
+                    album.CatalogNumber,
+                    album.MatrixNumber,
+                    album.Comments,
+                    album.ImageFilePath
+                )).ToList();
+
+            return albumDtos;
+        }
+
+        private AlbumDto AssignPropertiesToAlbum(Album? album) {
+            var albumDto = new AlbumDto(
+                    album!.AlbumId,
+                    album.ArtistName,
+                    album.Title,
+                    album.LabelName,
+                    album.Quantity,
+                    album.Price,
+                    album.IsUsed,
+                    album.Media,
+                    album.ArtistGenre,
+                    album.AlbumGenre,
+                    album.MediaGrade,
+                    album.SleeveGrade,
+                    album.CatalogNumber,
+                    album.MatrixNumber,
+                    album.Comments,
+                    album.ImageFilePath
+                );
+
+            return albumDto;
         }
     }
 }
