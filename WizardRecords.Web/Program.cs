@@ -12,6 +12,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Set a specific port
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(System.Net.IPAddress.Loopback, 5000); // Change 5000 to your desired port
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
