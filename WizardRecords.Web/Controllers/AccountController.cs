@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Web.Data.Entities;
 using WizardRecords.Dtos;
 
 namespace WizardRecords.Controllers {
