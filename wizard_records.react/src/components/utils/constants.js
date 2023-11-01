@@ -1,4 +1,4 @@
-export const MediaType = {
+export const Media = {
     VINYL: "VINYL",
     CD: "CD",
 };
@@ -7,6 +7,23 @@ export const Category = {
     NEW: "NEW",
     USED: "USED",
 };
+
+export const ArtistGenre = {
+    ROCK: "ROCK",
+    POP: "POP",
+    JAZZ: "JAZZ",
+    HIPHOP: "HIPHOP",
+    CLASSICAL: "CLASSICAL",
+    METAL: "METAL",
+    PUNK: "PUNK",
+    BLUES: "BLUES",
+    WORLD: "WORLD",
+    COUNTRY: "COUNTRY",
+    SOUL: "SOUL",
+    FUNK: "FUNK",
+    ELECTRONICA: "ELECTRONICA",
+    SOUNDTRACK: "SOUNDTRACK",
+}
 
 export const AlbumGenre = {
     ROCK: "ROCK",

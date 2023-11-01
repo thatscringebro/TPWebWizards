@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WizardRecords.Core.Domain.Entities;
 using WizardRecords.Repositories;
 using WizardRecords.Web.Dtos;
 
@@ -53,9 +54,29 @@ namespace WizardRecords.Web.Controllers {
         [HttpPost("create")]
         public async Task<ActionResult<AlbumCreate>> CreateAlbum([FromBody] AlbumCreate newAlbum) {
             try {
-                var album = await _albumRepository.GetAlbumByArtistNameAndTitleAsync(newAlbum.ArtistName, newAlbum.Title);
-                if (album == null || album.ArtistName != newAlbum.ArtistName) {
-                    await _albumRepository.CreateAlbumAsync(album);
+                var existingAlbum = await _albumRepository.GetAlbumByArtistNameAndTitleAsync(newAlbum.ArtistName, newAlbum.Title);
+                if (existingAlbum == null || existingAlbum.ArtistName != newAlbum.ArtistName) {
+                    // Map AlbumCreate DTO to Album entity
+                    var albumToCreate = new Album {
+                        AlbumId = Guid.NewGuid(),
+                        ArtistName = newAlbum.ArtistName,
+                        Title = newAlbum.Title,
+                        ArtistGenre = newAlbum.ArtistGenre,
+                        AlbumGenre = newAlbum.AlbumGenre,
+                        LabelName = newAlbum.LabelName,
+                        Price = newAlbum.Price,
+                        IsUsed = newAlbum.IsUsed,
+                        Media = newAlbum.Media,
+                        Quantity = newAlbum.Quantity,
+                        ImageFilePath = newAlbum.ImageFilePath,
+                        MediaGrade = newAlbum.MediaGrade,
+                        SleeveGrade = newAlbum.SleeveGrade,
+                        CatalogNumber = newAlbum.CatalogNumber,
+                        MatrixNumber = newAlbum.MatrixNumber,
+                        Comments = newAlbum.Comments
+                    };
+
+                    await _albumRepository.CreateAlbumAsync(albumToCreate);
                     return Ok();
                 }
                 else {

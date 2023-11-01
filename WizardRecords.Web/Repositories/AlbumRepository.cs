@@ -61,6 +61,20 @@ namespace WizardRecords.Web.Repositories {
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<Album>> GetAlbumsByMediaAndConditionAsync(Constants.Media? media = null, bool? isUsed = null) {
+            IQueryable<Album> query = _context.Albums;
+
+            if (media.HasValue) {
+                query = query.Where(a => a.Media == media);
+            }
+
+            if (isUsed.HasValue) {
+                query = query.Where(a => a.IsUsed == isUsed.Value);
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<Album?> GetAlbumByIdAsync(Guid albumId) {
             return await _context.Albums.Where(a => a.AlbumId == albumId).FirstOrDefaultAsync();
         }

@@ -5,19 +5,19 @@ namespace WizardRecords.Web.Dtos {
          Guid AlbumId,
          string ArtistName,
          string Title,
+         ArtistGenre ArtistGenre,
+         AlbumGenre AlbumGenre,
          string LabelName,
-         int Quantity,
          float Price,
          bool IsUsed,
          Media Media,
-         ArtistGenre ArtistGenre,
-         AlbumGenre AlbumGenre,
+         int Quantity,
+         string ImageFilePath,
          Grade? MediaGrade,
          Grade? SleeveGrade,
          string? CatalogNumber,
          string? MatrixNumber,
-         string? Comments,
-         string ImageFilePath
+         string? Comments
      );
 
     // CRUD
@@ -28,22 +28,22 @@ namespace WizardRecords.Web.Dtos {
     );
 
     public record AlbumCreate(
-        Guid AlbumId,
-        string ArtistName,
-        string Title,
-        string LabelName,
-        int Quantity,
-        float Price,
-        bool IsUsed,
-        Media Media,
-        ArtistGenre ArtistGenre,
-        AlbumGenre AlbumGenre,
-        Grade? MediaGrade,
-        Grade? SleeveGrade,
-        string? CatalogNumber,
-        string? MatrixNumber,
-        string? Comments,
-        string ImageFilePath
+         Guid AlbumId,
+         string ArtistName,
+         string Title,
+         ArtistGenre ArtistGenre,
+         AlbumGenre AlbumGenre,
+         string LabelName,
+         float Price,
+         bool IsUsed,
+         Media Media,
+         int Quantity,
+         string ImageFilePath,
+         Grade? MediaGrade,
+         Grade? SleeveGrade,
+         string? CatalogNumber,
+         string? MatrixNumber,
+         string? Comments
     );
 
     public record AlbumDelete(string Title);
