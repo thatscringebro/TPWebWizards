@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Web.Data.Entities;
 using WizardRecords.Repositories;
 using WizardRecords.Web.Dtos;
 using static WizardRecords.Core.Data.Constants;
+using WizardRecords.Core.Domain.Entities;
 
 namespace WizardRecords.Web.Controllers {
     [ApiController]
