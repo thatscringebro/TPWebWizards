@@ -7,8 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WizardRecords.Web.Data.Entities;
 using WizardRecords.Dtos;
+using WizardRecords.Core.Domain.Entities;
 
 namespace WizardRecords.Controllers {
     [ApiController]
