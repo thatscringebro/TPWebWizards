@@ -52,11 +52,10 @@ function ProductGallery() {
 
     // Filters
     let filteredProducts = [...allProducts];
-
     if (selectedCategoryFilterOption === 'newOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.category === 'new');
+        filteredProducts = filteredProducts.filter((product) => product.isUsed === false);
     } else if (selectedCategoryFilterOption === 'usedOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.category === 'used');
+        filteredProducts = filteredProducts.filter((product) => product.isUsed === true);
     }
 
     if (selectedTypeFilterOption === 'cdOnly') {
