@@ -4,6 +4,7 @@ import ContactForm from "../ContactUs";
 import Detail from "../Detail";
 import Home from "../Home";
 import SearchResults from "../SearchResults";
+import CategoryResults from "../CategoryResults";
 import ProductGallery from "../ProductGallery";
 import AddProductForm from "../AddProductForm";
 import Account from "../Account";
@@ -26,6 +27,10 @@ const AppRoutes = [
     {
         path: '/contactus',
         element: <ContactForm />
+    },
+    {
+        path: '/category',
+        element: <CategoryResults />
     },
     {
         path: '/search',

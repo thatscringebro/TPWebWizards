@@ -1,6 +1,7 @@
 export const Media = [
     { label: "VINYL", value: 0 },
-    { label: "CD", value: 1 }
+    { label: "CD", value: 1 },
+    { label: "UNSPECIFIED", value: 2 }
 ];
 
 export const Category = [
