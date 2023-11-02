@@ -1,39 +1,82 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Core;
-using WizardRecords.Core.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using WizardRecords.Dtos;
+using WizardRecords.Core.Domain.Entities;
 
-namespace WizardRecords.Controllers
-{
+namespace WizardRecords.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController : ControllerBase
-    {
-        private readonly SignInManager<User> _signInManager;
+    public class AccountController : ControllerBase {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
-        private readonly WizRecDbContext _context;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(SignInManager<User> signInManager,
-            UserManager<User> userManager, RoleManager<IdentityRole<Guid>>
-            roleManager, WizRecDbContext context)
-        {
-            _signInManager = signInManager;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration) {
             _userManager = userManager;
-            _roleManager = roleManager;
-            _context = context;
+            _signInManager = signInManager;
+            _configuration = configuration;
         }
 
-        //TODO : POST /ACCOUT/LOGIN (LogInVM)
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> LogIn(string Username, string Password)
-        {
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto model) {
+            var user = new User(model.UserName) {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email
+            };
 
-            var result = await _signInManager.PasswordSignInAsync(Username, Password, false, false);
-            return Ok(result);
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto model) {
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+                return BadRequest("Invalid login attempt.");
+
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+                return BadRequest("Invalid login attempt.");
+
+            var token = GenerateJwtToken(user);
+            return Ok(new { Token = token });
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout() {
+            await _signInManager.SignOutAsync();
+            return Ok();
+        }
+
+        private string GenerateJwtToken(User user) {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]);
+            var tokenDescriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(new[] {
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        }),
+                Expires = DateTime.UtcNow.AddHours(2),  // Token expiration, adjust as necessary.
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
