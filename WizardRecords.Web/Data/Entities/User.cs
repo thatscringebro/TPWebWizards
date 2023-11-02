@@ -8,7 +8,7 @@ using static WizardRecords.Core.Data.Constants;
 
 namespace WizardRecords.Core.Domain.Entities {
     public class User : IdentityUser<Guid> {
-        public User(string userName) : base(userName) {}
+        public User(string userName) : base(userName) { }
         public string FirstName { get; set; } = "-";
         public string LastName { get; set; } = "-";
         public string FullName => $"{FirstName} {LastName}";

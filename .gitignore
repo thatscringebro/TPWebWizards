@@ -241,3 +241,4 @@ ClientApp/.env
 /WizardRecords.Web/ClientApp/node_modules/.bin
 /WizardRecords.Web/ClientApp/node_modules
 /WizardRecords.Web/ClientApp
+/wizard_records.react/package-lock.json

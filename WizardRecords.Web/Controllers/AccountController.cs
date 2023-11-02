@@ -71,7 +71,7 @@ namespace WizardRecords.Controllers {
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         }),
-                Expires = DateTime.UtcNow.AddDays(7),  // Token expiration, adjust as necessary.
+                Expires = DateTime.UtcNow.AddHours(2),  // Token expiration, adjust as necessary.
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
