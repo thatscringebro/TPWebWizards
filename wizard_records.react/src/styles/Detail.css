@@ -2,19 +2,20 @@
     text-decoration: none !important;
 }
 
-h1 {
+.detail-container h1 {
     padding: 20px 0 5px;
+    color: #333;
 }
 
 .button-cart {
-    background-color: #008CBA;
+    background-color: #4CAF50;
     bottom: 30px;
     position: absolute;
     right: 30px; 
 }
 
     .button-cart:hover {
-        background-color: #20add8;
+        background-color: #5ed162;
     }
 
 .button-cancel, .button-delete {
@@ -26,12 +27,12 @@ h1 {
     }
 
 .button-edit, .button-save {
-    background-color: #4CAF50;
+    background-color: #008CBA;
     margin: 0 10px 0 0;
 }
 
     .button-edit:hover, .button-save:hover {
-        background-color: #5ed162;
+        background-color: #20add8;
     }
 
 .detail-container {
@@ -57,7 +58,7 @@ h1 {
 }
 
     .detail-content button {
-        border: 1px solid black;
+        border: none;
         border-radius: 5px;
         color: white;
         cursor: pointer;

@@ -2,8 +2,9 @@
     margin:25px;
  }
 
- .btn-submit {
-    margin: 1% 33% 0 0 ;
+ Form Button{
+    margin:20px;
+    margin-left: 0;
  }
 
 #FirstName, #LastName, #Email,#UserName, #Password {

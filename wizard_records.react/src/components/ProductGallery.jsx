@@ -54,9 +54,9 @@ function ProductGallery() {
     let filteredProducts = [...allProducts];
 
     if (selectedCategoryFilterOption === 'newOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.category === 'new');
+        filteredProducts = filteredProducts.filter((product) => product.isUsed === false);
     } else if (selectedCategoryFilterOption === 'usedOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.category === 'used');
+        filteredProducts = filteredProducts.filter((product) => product.isUsed === true);
     }
 
     if (selectedTypeFilterOption === 'cdOnly') {
@@ -127,9 +127,11 @@ function ProductGallery() {
                                 <option value="ArtistNameAsc">Artist Name: A..Z</option>
                                 <option value="ArtistNameDesc">Artis Name: Z..A</option>
                             </select>
+                        </div>
                     </div>
                 </div>
-                    <div className="filter-bar">
+                <div className="col-md right">
+                <div className="filter-bar">
                         <label htmlFor="filterDropdown">Filter by Format: </label>
                         <select id="filterDropdown" value={selectedTypeFilterOption} onChange={handleTypeFilterChange}>
                             <option value="default">Default</option>
@@ -145,9 +147,6 @@ function ProductGallery() {
                             <option value="usedOnly">Used Only</option>
                         </select>
                     </div>
-                </div>
-                <div className="col-md right">
-                    
                 </div>
             </div>
             <div>
