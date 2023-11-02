@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { Media, ArtistGenre, AlbumGenre, Grade } from './utils/constants'
+import { Media, Category, ArtistGenre, AlbumGenre, Grade } from './utils/constants'
 import { API_BASE_URL } from './utils/config'
 import axios from 'axios';
 //import "../styles/ProductManager.css"
@@ -17,8 +17,8 @@ function AddProductForm() {
         media: '',
         quantity: '',
         imageFilePath: '',
-        mediaGrade: '',
-        sleeveGrade: '',
+        mediaGrade: 8,
+        sleeveGrade: 8,
         catalogNumber: '',
         matrixNumber: '',
         comments: ''
@@ -81,34 +81,37 @@ function AddProductForm() {
 
     const handleInputChange = (e, fieldName) => {
         let value = e.target.value;
-    
-        if (fieldName === 'isUsed') {
-            value = value === 'true' ? true : false;
-        } else if (fieldName === 'price') {
-            value = parseFloat(value);  // Convert to floating point number
-    
-            // Handle NaN for price
-            if (isNaN(value)) {
-                value = 0; // or you can use e.target.value if you prefer to keep it as a string
-            }
-        } else if (fieldName === 'quantity') {
-            value = parseInt(value, 10);  // Convert to integer
-    
-            // Handle NaN for quantity
-            if (isNaN(value)) {
-                value = 0; // or you can use e.target.value if you prefer to keep it as a string
-            }
+      
+        switch (fieldName) {
+          case 'isUsed':
+            value = value === 'true';
+            break;
+          case 'artistGenre':
+          case 'albumGenre':
+          case 'media':
+          case 'mediaGrade':
+          case 'sleeveGrade':
+          case 'quantity':
+            value = parseInt(value, 10);
+            break;
+          case 'price':
+            value = parseFloat(value);
+            if (isNaN(value)) value = "";
+            break;
+          default:
+            break;
         }
-    
-        setProduct({ ...product, [fieldName]: value });
-    };
+      
+        console.log("Setting", fieldName, "to", value);  // For debugging
+        setProduct(prevProduct => ({ ...prevProduct, [fieldName]: value }));
+      };
 
     return (
         <Container className="add-product-form">
             <h2>Add new product</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Label for="artistId">Artist name</Label>
+                    <Label for="artistName">Artist name</Label>
                     <Input
                         type="text"
                         name="artistName"
@@ -135,13 +138,13 @@ function AddProductForm() {
                         type="select"
                         name="artistGenre"
                         id="artistGenre"
-                        value={product.albumGenre}
+                        value={product.artistGenre}
                         onChange={(e) => handleInputChange(e, 'artistGenre')}
                     >
                         <option value="">Select the Artist genre</option>
-                        {Object.values(ArtistGenre).map((value, index) => (
-                            <option key={index} value={value}>
-                                {value}
+                        {ArtistGenre.map((genre, index) => (
+                            <option key={index} value={genre.value}>
+                                {genre.label}
                             </option>
                         ))}
                     </Input>
@@ -156,9 +159,9 @@ function AddProductForm() {
                         onChange={(e) => handleInputChange(e, 'albumGenre')}
                     >
                         <option value="">Select the Album genre</option>
-                        {Object.values(AlbumGenre).map((value, index) => (
-                            <option key={index} value={value}>
-                                {value}
+                        {AlbumGenre.map((genre, index) => (
+                            <option key={index} value={genre.value}>
+                                {genre.label}
                             </option>
                         ))}
                     </Input>
@@ -186,31 +189,21 @@ function AddProductForm() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="isUsed">Is this a used item?</Label>
-                    <div>
-                        <label>
-                            <Input
-                                type="radio"
-                                name="isUsed"
-                                value="true"
-                                checked={product.isUsed === true}
-                                onChange={(e) => handleInputChange(e, 'isUsed')}
-                            />
-                            Yes
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            <Input
-                                type="radio"
-                                name="isUsed"
-                                value="false"
-                                checked={product.isUsed === false}
-                                onChange={(e) => handleInputChange(e, 'isUsed')}
-                            />
-                            No
-                        </label>
-                    </div>
+                    <Label for="isUsed">Category</Label>
+                    <Input
+                        type="select"
+                        name="isUsed"
+                        id="isUsed"
+                        value={product.isUsed.toString()} // Convert the boolean value to a string for the dropdown
+                        onChange={(e) => handleInputChange(e, 'isUsed')}
+                    >
+                        <option value="">Select a category</option>
+                        {Category.map((category, index) => (
+                            <option key={index} value={category.value}>
+                                {category.label}
+                            </option>
+                        ))}
+                    </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="media">Media</Label>
@@ -222,9 +215,9 @@ function AddProductForm() {
                         onChange={(e) => handleInputChange(e, 'media')}
                     >
                         <option value="">Select a media type</option>
-                        {Object.values(Media).map((value, index) => (
-                            <option key={index} value={value}>
-                                {value}
+                        {Media.map((media, index) => (
+                            <option key={index} value={media.value}>
+                                {media.label}
                             </option>
                         ))}
                     </Input>
@@ -260,10 +253,10 @@ function AddProductForm() {
                         value={product.mediaGrade}
                         onChange={(e) => handleInputChange(e, 'mediaGrade')}
                     >
-                        <option value="">Select grade for the album's condition</option>
-                        {Object.values(Grade).map((value, index) => (
-                            <option key={index} value={value}>
-                                {value}
+                        <option value={8}>Select grade for the album's condition</option> {/* Default to None */}
+                        {Grade.map((grade, index) => (
+                            <option key={index} value={grade.value}>
+                                {grade.label}
                             </option>
                         ))}
                     </Input>
@@ -277,10 +270,10 @@ function AddProductForm() {
                         value={product.sleeveGrade}
                         onChange={(e) => handleInputChange(e, 'sleeveGrade')}
                     >
-                        <option value="">Select grade for the sleeve's condition</option>
-                        {Object.values(Grade).map((value, index) => (
-                            <option key={index} value={value}>
-                                {value}
+                        <option value={8}>Select grade for the sleeve's condition</option> {/* Default to None */}
+                        {Grade.map((grade, index) => (
+                            <option key={index} value={grade.value}>
+                                {grade.label}
                             </option>
                         ))}
                     </Input>
