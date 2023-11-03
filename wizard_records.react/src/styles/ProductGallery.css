@@ -85,3 +85,30 @@
         height: 48px;
     }
 }
+
+
+
+.page-number {
+    color: black; 
+    cursor: pointer;
+    font-size: 18px; 
+    margin: 2px;
+    text-decoration: none;
+    transition: color 0.2s; 
+}
+
+
+.page-number.current-page {
+    color: darkred; /* Couleur du texte en rouge foncé pour la page actuelle */
+}
+
+.page-number:hover {
+    color: #0056b3; /* Couleur du texte au survol */
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+
+/* CSS pour les points de suspension */
+span:contains("...") {
+    font-weight: bold;
+}

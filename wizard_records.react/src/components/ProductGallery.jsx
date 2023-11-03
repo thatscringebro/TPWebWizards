@@ -24,10 +24,54 @@ const fetchDataForCategory = () => {
 
                 return Promise.all(albumPromises);
             } else {
-                throw new Error(`Failed to fetch albums with status: ${response.status}`);
+                throw Error(`Failed to fetch albums with status: ${response.status}`);
             }
         });
 };
+
+function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
+    const pageNumbers = [];
+
+    if (totalPages <= 5) {
+        for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(i);
+        }
+    } else if (currentPage <= 5) {
+        pageNumbers.push(1, 2, 3, 4, 5, '...', totalPages);
+    } else if (currentPage >= totalPages - 4) {
+        pageNumbers.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    } else {
+        pageNumbers.push(1, '...', currentPage - 2, currentPage - 1, currentPage, currentPage + 1,currentPage + 2, '...', totalPages);
+    }
+
+    const renderPageNumbers = () => {
+        return pageNumbers.map((pageNumber, index) => {
+            if (pageNumber === '...') {
+                return <span key={index}>...</span>;
+            } else {
+                return (
+                    <span
+                        key={index}
+                        className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
+                        onClick={() => {
+                            if (pageNumber !== '...') {
+                                setCurrentPage(pageNumber);
+                            }
+                        }}
+                    >
+                        {pageNumber}
+                    </span>
+                );
+            }
+        });
+    };
+
+    return (
+        <div className="page-numbers">
+            {renderPageNumbers()}
+        </div>
+    );
+}
 
 function ProductGallery() {
     const [allProducts, setAllProducts] = useState([]);
@@ -113,7 +157,6 @@ function ProductGallery() {
                 <h1>All products</h1>
             </div>
             <div className="filters">
-                
                 <div className="row">
                     <div className="col-md left">
                         <div className="sort-bar">
@@ -127,8 +170,8 @@ function ProductGallery() {
                                 <option value="ArtistNameAsc">Artist Name: A..Z</option>
                                 <option value="ArtistNameDesc">Artis Name: Z..A</option>
                             </select>
+                        </div>
                     </div>
-                </div>
                     <div className="filter-bar">
                         <label htmlFor="filterDropdown">Filter by Format: </label>
                         <select id="filterDropdown" value={selectedTypeFilterOption} onChange={handleTypeFilterChange}>
@@ -154,6 +197,7 @@ function ProductGallery() {
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
                 <div className="pagination">
                     <button className="page-button" onClick={prevPage}>Previous</button>
+                    {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
                     <button className="page-button" onClick={nextPage}>Next</button>
                 </div>
             </div>
