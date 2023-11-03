@@ -112,6 +112,19 @@ namespace WizardRecords.Web.Controllers {
             }
         }
 
+        [HttpGet("/filtered")]
+        public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByMediaAndCondition([FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
+            var albums = await _albumRepository.GetAlbumsByMediaAndConditionAsync(media, isUsed);
+
+            if (albums != null && albums.Any()) {
+                var albumDtos = AssignPropertiesInCollection(albums);
+                return Ok(albumDtos);
+            }
+            else {
+                return NotFound("No albums found.");
+            }
+        }
+
         [HttpGet("{albumId}")]
         public async Task<ActionResult<AlbumDto>> GetAlbumById(Guid albumId) {
             var album = await _albumRepository.GetAlbumByIdAsync(albumId);
@@ -155,22 +168,22 @@ namespace WizardRecords.Web.Controllers {
         // Helper methods
         private IEnumerable<AlbumDto> AssignPropertiesInCollection(IEnumerable<Album>? albums) {
             var albumDtos = albums!.Select(album => new AlbumDto(
-                    album.AlbumId,
+                    album!.AlbumId,
                     album.ArtistName,
                     album.Title,
+                    album.ArtistGenre,
+                    album.AlbumGenre,
                     album.LabelName,
-                    album.Quantity,
                     album.Price,
                     album.IsUsed,
                     album.Media,
-                    album.ArtistGenre,
-                    album.AlbumGenre,
+                    album.Quantity,
+                    album.ImageFilePath,
                     album.MediaGrade,
                     album.SleeveGrade,
                     album.CatalogNumber,
                     album.MatrixNumber,
-                    album.Comments,
-                    album.ImageFilePath
+                    album.Comments
                 )).ToList();
 
             return albumDtos;
@@ -181,19 +194,19 @@ namespace WizardRecords.Web.Controllers {
                     album!.AlbumId,
                     album.ArtistName,
                     album.Title,
+                    album.ArtistGenre,
+                    album.AlbumGenre,
                     album.LabelName,
-                    album.Quantity,
                     album.Price,
                     album.IsUsed,
                     album.Media,
-                    album.ArtistGenre,
-                    album.AlbumGenre,
+                    album.Quantity,
+                    album.ImageFilePath,
                     album.MediaGrade,
                     album.SleeveGrade,
                     album.CatalogNumber,
                     album.MatrixNumber,
-                    album.Comments,
-                    album.ImageFilePath
+                    album.Comments
                 );
 
             return albumDto;

@@ -9,10 +9,16 @@ const fetchDataForCategory = (searchQuery) => {
     .then((response) => {
         if (response.status === 200) {
             const albums = response.data;
+
+            // if(albums.imageFilePath === "") 
+            // {
+            //     albums.imageFilePath = 'default.webp';
+            // }
+
             const albumPromises = albums.map((album) => {
                 return {
                     id: album.albumId,
-                    cover: album.imageFilePath,
+                    cover: album.imageFilePath === "" ? "default.webp" : album.imageFilePath,
                     media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                     artistName: album.artistName,
                     albumTitle: album.title,

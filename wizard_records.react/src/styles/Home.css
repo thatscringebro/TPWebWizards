@@ -71,7 +71,7 @@
 
         .card-href:hover .card-img-cover {
             transition: transform 0.3s ease;
-            transform: translate(33.5%, 12.25%) scale(1.05);
+            transform: translate(32.4%, 10.6%) scale(1.05);
         }
 
         .card-href:hover .card-artist,
@@ -83,7 +83,7 @@
 .card-img-cover {
     position: absolute;
     transition: transform 0.3s ease;
-    transform: translate(34%, 12.25%);
+    transform: translate(32.4%, 10.6%);
     top: 0;
     left: 0;
     height: auto;
