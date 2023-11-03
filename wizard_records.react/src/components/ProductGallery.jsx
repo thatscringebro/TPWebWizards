@@ -108,53 +108,46 @@ function ProductGallery() {
 
     return (
         <div>
-            <div className="section-category">
-                <h1>All products</h1>
-            </div>
-            <div className="filters">
-                
-                <div className="row">
-                    <div className="col-md left">
-                        <div className="sort-bar">
-                            <label htmlFor="sortDropdown">Sort by: </label>
-                            <select id="sortDropdown" value={selectedSortOption} onChange={handleSortChange}>
-                                <option value="default">Default</option>
-                                <option value="priceLowToHigh">Price: Low to High</option>
-                                <option value="priceHighToLow">Price: High to Low</option>
-                                <option value="AlbumNameAsc">Album Name: A..Z</option>
-                                <option value="AlbumNameDesc">Album Name: Z..A</option>
-                                <option value="ArtistNameAsc">Artist Name: A..Z</option>
-                                <option value="ArtistNameDesc">Artis Name: Z..A</option>
-                            </select>
-                    </div>
+            <h1>All products</h1>
+    
+            <div className="dropdown-container">
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">SORTING OPTIONS: </label>
+                    <select id="dropdown-main" value={selectedSortOption} onChange={handleSortChange}>
+                        <option value="default">Default</option>
+                        <option value="priceLowToHigh">Price: Low to High</option>
+                        <option value="priceHighToLow">Price: High to Low</option>
+                        <option value="AlbumNameAsc">Album Name: A..Z</option>
+                        <option value="AlbumNameDesc">Album Name: Z..A</option>
+                        <option value="ArtistNameAsc">Artist Name: A..Z</option>
+                        <option value="ArtistNameDesc">Artis Name: Z..A</option>
+                    </select>
                 </div>
-                    <div className="filter-bar">
-                        <label htmlFor="filterDropdown">Filter by Format: </label>
-                        <select id="filterDropdown" value={selectedTypeFilterOption} onChange={handleTypeFilterChange}>
-                            <option value="default">Default</option>
-                            <option value="cdOnly">CD Only</option>
-                            <option value="vinylOnly">Vinyl Only</option>
-                        </select>
-                    </div>
-                    <div className="filter-bar">
-                        <label htmlFor="filterDropdown">Filter by Condition: </label>
-                        <select id="filterDropdown" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
-                            <option value="default">Default</option>
-                            <option value="newOnly">New Only</option>
-                            <option value="usedOnly">Used Only</option>
-                        </select>
-                    </div>
+    
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY FORMAT: </label>
+                    <select id="dropdown-media" value={selectedTypeFilterOption} onChange={handleTypeFilterChange}>
+                        <option value="default">All formats</option>
+                        <option value="cdOnly">CD Only</option>
+                        <option value="vinylOnly">Vinyl Only</option>
+                    </select>
                 </div>
-                <div className="col-md right">
-                    
+    
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY CATEGORY: </label>
+                    <select id="dropdown-condition" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
+                        <option value="default">Any category</option>
+                        <option value="newOnly">New Only</option>
+                        <option value="usedOnly">Used Only</option>
+                    </select>
                 </div>
             </div>
-            <div>
-                <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
-                <div className="pagination">
-                    <button className="page-button" onClick={prevPage}>Previous</button>
-                    <button className="page-button" onClick={nextPage}>Next</button>
-                </div>
+    
+            <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
+    
+            <div className="pagination">
+                <button className="page-button" onClick={prevPage}>Previous</button>
+                <button className="page-button" onClick={nextPage}>Next</button>
             </div>
         </div>
     );

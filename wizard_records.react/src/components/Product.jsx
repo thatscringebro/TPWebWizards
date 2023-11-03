@@ -17,7 +17,7 @@ const Product = ({ product }) => {
 
     return (
         <Col md={4} className="d-flex mb-4">
-            <Link to={`/detail/${product.id}`} className="card-href card-width">
+            <Link to={`/detail/${product.id}`} className="card-href">
                 <Card className="h-100">
                     <CardImg top className="card-img-format" src={formatImageSrc} alt={product.media} />
                     <CardImg top className="card-img-cover" src={coverImageSrc} alt={product.cover} />
@@ -25,7 +25,6 @@ const Product = ({ product }) => {
                         <div className="card-info">
                             <CardTitle className="card-artist">{product.artistName}</CardTitle>
                             <CardSubtitle className="card-album">{product.albumTitle}</CardSubtitle>
-                            {/* <CardSubtitle className="card-album"> {isAvailable ? 'Available' : 'Not Available'} </CardSubtitle> */}
                         </div>
                         <div className="card-divider"></div>
                         <div className="card-purchase">

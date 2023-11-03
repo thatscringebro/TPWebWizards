@@ -2,13 +2,14 @@
     padding-top: 10px;
 }
 
-.add-product-form {
-    padding: 0 0 20px;
-}
-
 .card-album {
     font-size: 0.85rem;
     font-style: italic;
+}
+
+.card-artist {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .card-album, .card-artist {
@@ -16,11 +17,6 @@
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.card-artist {
-    font-size: 1rem;
-    font-weight: bold;
 }
 
 .card-basket {
@@ -118,10 +114,6 @@
     align-items: flex-end;
 }
 
-.card-width {
-    width: 100%;
-}
-
 .divider {
     height: 2px;
     background-color: #333;
@@ -144,10 +136,6 @@
     .section-category a {
         text-decoration: none;
         color: #24262b;
-    }
-
-    .section-category h3:hover {
-        font-weight: bold;
     }
 
 .slogan {

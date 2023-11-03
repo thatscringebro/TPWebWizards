@@ -29,8 +29,8 @@ export class Footer extends Component {
                         <div className="footer-col">
                             <h4>online shop</h4>
                             <ul>
-                                <li><a href="/products?category=&mediatype=Vinyl">Vinyls</a></li>
-                                <li><a href="/products?category=&mediatype=Cds">Compact discs</a></li>
+                                <li><a href="/products?media=Vinyl">Vinyls</a></li>
+                                <li><a href="/products?media=CDs">Compact discs</a></li>
                             </ul>
                         </div>
                         <div className="footer-col">
