@@ -88,6 +88,7 @@ function ProductGallery() {
 
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
+        setCurrentPage(1);
     }
 
     useEffect(() => {
@@ -132,12 +133,14 @@ function ProductGallery() {
         console.log("handle_type: :" + event.target.value);
         setSelectedTypeFilterOption(event.target.value);
         setProducts(filteredProducts);
+        setCurrentPage(1);
     };
 
     const handleCategoryFilterChange = (event) => {
         console.log("handle_cat: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
         setProducts(filteredProducts);
+        setCurrentPage(1);
     };
 
     const nextPage = () => {
