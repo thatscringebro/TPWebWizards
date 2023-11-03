@@ -83,30 +83,23 @@ function AddProductForm() {
         let value = e.target.value;
       
         switch (fieldName) {
-            case 'isUsed':
-                value = value === 'true';
-                break;
-            case 'artistGenre':
-            case 'albumGenre':
-            case 'media':
-            case 'mediaGrade':
-            case 'sleeveGrade':
-            case 'quantity':
-                value = parseInt(value, 10);
-                break;
-            case 'price':
-                value = parseFloat(value);
-                if (isNaN(value)) value = "";
-                break;
-            case 'imageFilePath':  // Adjust this to the correct field name
-                const validatedFilename = validateImageFilePath(value);
-                if (validatedFilename !== value) {
-                    console.warn("Invalid image filename provided. Using default.");
-                }
-                value = validatedFilename;
-                break;
-            default:
-                break;
+          case 'isUsed':
+            value = value === 'true';
+            break;
+          case 'artistGenre':
+          case 'albumGenre':
+          case 'media':
+          case 'mediaGrade':
+          case 'sleeveGrade':
+          case 'quantity':
+            value = parseInt(value, 10);
+            break;
+          case 'price':
+            value = parseFloat(value);
+            if (isNaN(value)) value = "";
+            break;
+          default:
+            break;
         }
       
         console.log("Setting", fieldName, "to", value);  // For debugging
@@ -322,11 +315,6 @@ function AddProductForm() {
             </Form>
         </Container>
     );
-}
-
-function validateImageFilePath(filename) {
-    const regex = /\.[a-z]{3,4}$/;
-    return regex.test(filename) ? filename : 'default.webp';
 }
 
 export default AddProductForm;
