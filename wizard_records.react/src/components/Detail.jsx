@@ -19,7 +19,15 @@ const Detail = () => {
             if (response.status === 200) {
                 const album = response.data;
 
+            if(album.imageFilePath === "") 
+            {
+                album.imageFilePath = 'default.webp';
+            }
+
+    
+
                 const imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+              
 
                 const productData = {
                     albumId: album.albumId,

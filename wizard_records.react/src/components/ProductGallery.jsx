@@ -9,10 +9,13 @@ const fetchDataForCategory = () => {
         .then((response) => {
             if (response.status === 200) {
                 const albums = response.data;
+
+              
+
                 const albumPromises = albums.map((album) => {
                     return {
                         id: album.albumId,
-                        cover: album.imageFilePath,
+                        cover: album.imageFilePath === "" ? "default.webp" : album.imageFilePath,
                         media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                         artistName: album.artistName,
                         albumTitle: album.title,
