@@ -85,7 +85,7 @@ function ProductGallery() {
     const [selectedTypeFilterOption, setSelectedTypeFilterOption] = useState('default');
     
     const productsPerPage = 12;
-
+    
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
         setCurrentPage(1);
@@ -144,8 +144,11 @@ function ProductGallery() {
     };
 
     const nextPage = () => {
-        if (currentPage < Math.ceil(products.length / productsPerPage)) {
-            setCurrentPage(currentPage + 1);
+        if(currentPage >= Math.ceil(sortedProducts.length / productsPerPage)){
+            setCurrentPage(Math.ceil(sortedProducts.length / productsPerPage));
+        }
+        else if (currentPage < Math.ceil(products.length / productsPerPage)) {
+                    setCurrentPage(currentPage + 1);
         }
     };
 
