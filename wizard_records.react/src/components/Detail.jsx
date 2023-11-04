@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Detail.css';
+import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
 
 const Detail = () => {
     const { id } = useParams();
@@ -23,8 +24,12 @@ const Detail = () => {
             {
                 album.imageFilePath = 'default.webp';
             }
-
-    
+            
+           
+            AlbumGenre.map((genre) => (genre.value === album.albumGenre) && (album.albumGenre = genre.label))
+            ArtistGenre.map((genre) => (genre.value === album.artistGenre) && (album.artistGenre = genre.label))
+            Grade.map((grade) => (grade.value === album.mediaGrade) && (album.mediaGrade = grade.label))
+            Grade.map((grade) => (grade.value === album.sleeveGrade) && (album.sleeveGrade = grade.label))
 
                 const imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
               
@@ -38,7 +43,15 @@ const Detail = () => {
                     albumTitle: album.title,
                     isUsed: album.isUsed === false ? 'New' : 'Used',
                     price: album.price.toFixed(2),
-                    quantity: album.quantity
+                    quantity: album.quantity,
+                    mediaGrade : album.mediaGrade,
+                    sleeveGrade : album.sleeveGrade,
+                    catalogNumber : album.catalogNumber ? 'None' : album.catalogNumber,
+                    matrixNumber : album.matrixNumber ? 'None' : album.matrixNumber,
+                    artistGenre : album.artistGenre,
+                    albumGenre  : album.albumGenre,
+                    //Format : album.format Ajouter le format dans la bd ? il est dans les constantes de react
+
                 };
 
                 setProduct(productData);
@@ -77,6 +90,7 @@ const Detail = () => {
                 Title: editedProduct.albumTitle,
                 Quantity: editedProduct.quantity,
                 Price: editedProduct.price
+
             };
 
             console.log(albumUpdate);
@@ -144,6 +158,20 @@ const Detail = () => {
                         <div className="detail-information">
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
+                            <br />
+                            <i>Album Genre</i> : {product.albumGenre}
+                            <br />
+                            <i>Artist Genre</i> : {product.artistGenre}
+                            <br />
+                            <i>Media Condition</i> : {product.mediaGrade}
+                            <br />
+                            <i>Sleeve Condition</i> : {product.sleeveGrade} 
+                            <br />
+                            <i>Catalog Number</i> : {product.catalogNumber} 
+                            <br />
+                            <i>Matrix Number</i> : {product.matrixNumber}
+                            <br />
+                            <i>Quantity</i> : {product.quantity}
                             <br />
                             <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</i></p>
                         </div>
