@@ -9,10 +9,13 @@ const fetchDataForCategory = () => {
         .then((response) => {
             if (response.status === 200) {
                 const albums = response.data;
+
+              
+
                 const albumPromises = albums.map((album) => {
                     return {
                         id: album.albumId,
-                        cover: album.imageFilePath,
+                        cover: album.imageFilePath === "" ? "default.webp" : album.imageFilePath,
                         media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                         artistName: album.artistName,
                         albumTitle: album.title,
@@ -24,10 +27,54 @@ const fetchDataForCategory = () => {
 
                 return Promise.all(albumPromises);
             } else {
-                throw new Error(`Failed to fetch albums with status: ${response.status}`);
+                throw Error(`Failed to fetch albums with status: ${response.status}`);
             }
         });
 };
+
+function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
+    const pageNumbers = [];
+
+    if (totalPages <= 5) {
+        for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(i);
+        }
+    } else if (currentPage <= 5) {
+        pageNumbers.push(1, 2, 3, 4, 5, '...', totalPages);
+    } else if (currentPage >= totalPages - 4) {
+        pageNumbers.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    } else {
+        pageNumbers.push(1, '...', currentPage - 2, currentPage - 1, currentPage, currentPage + 1,currentPage + 2, '...', totalPages);
+    }
+
+    const renderPageNumbers = () => {
+        return pageNumbers.map((pageNumber, index) => {
+            if (pageNumber === '...') {
+                return <span key={index}>...</span>;
+            } else {
+                return (
+                    <span
+                        key={index}
+                        className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
+                        onClick={() => {
+                            if (pageNumber !== '...') {
+                                setCurrentPage(pageNumber);
+                            }
+                        }}
+                    >
+                        {pageNumber}
+                    </span>
+                );
+            }
+        });
+    };
+
+    return (
+        <div className="page-numbers">
+            {renderPageNumbers()}
+        </div>
+    );
+}
 
 function ProductGallery() {
     const [allProducts, setAllProducts] = useState([]);
@@ -41,6 +88,7 @@ function ProductGallery() {
 
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
+        setCurrentPage(1);
     }
 
     useEffect(() => {
@@ -85,12 +133,14 @@ function ProductGallery() {
         console.log("handle_type: :" + event.target.value);
         setSelectedTypeFilterOption(event.target.value);
         setProducts(filteredProducts);
+        setCurrentPage(1);
     };
 
     const handleCategoryFilterChange = (event) => {
         console.log("handle_cat: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
         setProducts(filteredProducts);
+        setCurrentPage(1);
     };
 
     const nextPage = () => {
@@ -113,7 +163,6 @@ function ProductGallery() {
                 <h1>All products</h1>
             </div>
             <div className="filters">
-                
                 <div className="row">
                     <div className="col-md left">
                         <div className="sort-bar">
@@ -153,6 +202,7 @@ function ProductGallery() {
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
                 <div className="pagination">
                     <button className="page-button" onClick={prevPage}>Previous</button>
+                    {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
                     <button className="page-button" onClick={nextPage}>Next</button>
                 </div>
             </div>

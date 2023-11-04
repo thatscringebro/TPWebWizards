@@ -19,7 +19,15 @@ const Detail = () => {
             if (response.status === 200) {
                 const album = response.data;
 
+            if(album.imageFilePath === "") 
+            {
+                album.imageFilePath = 'default.webp';
+            }
+
+    
+
                 const imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+              
 
                 const productData = {
                     albumId: album.albumId,
@@ -45,9 +53,7 @@ const Detail = () => {
 
     const deleteProduct = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/crud/delete`, {
-                params: { title: product.albumTitle },
-            });
+            const response = await axios.delete(`${API_BASE_URL}/crud/delete/${product.albumId}`);
             if (response.status === 200) {
                 console.log('Album deleted successfully');
                 navigate('/products');

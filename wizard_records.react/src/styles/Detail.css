@@ -1,5 +1,10 @@
 ﻿﻿a {
     text-decoration: none !important;
+    color: black !important;
+}
+
+a:hover{
+    color: blue !important;
 }
 
 .detail-container h1 {
@@ -41,7 +46,7 @@
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     height: 100%;
     margin: 20px;
     min-width: 445px;

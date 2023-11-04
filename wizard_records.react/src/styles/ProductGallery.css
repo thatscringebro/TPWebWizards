@@ -1,4 +1,16 @@
-﻿.page-button {
+﻿.button:focus {
+    box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
+}
+
+.filters {
+    display: flex;
+}
+
+.filter-bar {
+    margin-left: auto;
+}
+
+.page-button {
     margin: 4px;
     width: 150px;
     align-items: center !important;
@@ -40,22 +52,10 @@
         outline: 0;
     }
 
-.button:focus {
-    box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
-}
-
 .pagination {
     justify-content: center;
     margin-bottom: 20px;
     display: flex;
-}
-
-.sort-bar {
-    float: left;
-}
-
-.filter-bar {
-    margin-left: auto;
 }
 
 .right {
@@ -68,8 +68,8 @@
     align-items: center;
 }
 
-.filters {
-    display: flex;
+.sort-bar {
+    float: left;
 }
 
 #sortDropdown, #filterDropdown {
@@ -84,4 +84,31 @@
     .page-button {
         height: 48px;
     }
+}
+
+
+
+.page-number {
+    color: black; 
+    cursor: pointer;
+    font-size: 18px; 
+    margin: 2px;
+    text-decoration: none;
+    transition: color 0.2s; 
+}
+
+
+.page-number.current-page {
+    color: darkred; /* Couleur du texte en rouge foncé pour la page actuelle */
+}
+
+.page-number:hover {
+    color: #0056b3; /* Couleur du texte au survol */
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+
+/* CSS pour les points de suspension */
+span:contains("...") {
+    font-weight: bold;
 }
