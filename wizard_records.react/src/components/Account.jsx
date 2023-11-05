@@ -35,6 +35,10 @@ function Account() {
                 });
             } else {
                 response = await axios.post(`${API_BASE_URL}/account/register`, formData);
+                alert(response.status)
+                if (response.status === 200){
+                    setIsLogin(true)
+                }
             }
             console.log("Response data:", response.data);
             if (response.data.token) {
@@ -59,6 +63,7 @@ function Account() {
                 <h1>{isLogin ? 'Login' : 'Register'}</h1>
                 <Form onSubmit={handleSubmit}>
                     {!isLogin && (
+                        // affichage register
                         <>
                             <FormGroup>
                                 <Label for="FirstName">First Name</Label>
@@ -92,6 +97,7 @@ function Account() {
                             </FormGroup>
                         </>
                     )}
+                    {/* affichage login */}
                     <FormGroup>
                         <Label for="UserName">Username</Label>
                         <Input
