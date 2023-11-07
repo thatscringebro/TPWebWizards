@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WizardRecords.Core;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api;
+using WizardRecords.Api.Domain.Entities;
 using WizardRecords.Repositories;
-using WizardRecords.Web.Repositories;
+using WizardRecords.Api.Repositories;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using WizardRecords.Api.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"]);

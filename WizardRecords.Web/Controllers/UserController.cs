@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
 using WizardRecords.Dtos;
 
 namespace WizardRecords.Controllers {

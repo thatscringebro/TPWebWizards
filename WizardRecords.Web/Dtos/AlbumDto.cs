@@ -1,6 +1,6 @@
-﻿using static WizardRecords.Core.Data.Constants;
+﻿using static WizardRecords.Api.Data.Constants;
 
-namespace WizardRecords.Web.Dtos {
+namespace WizardRecords.Api.Dtos {
     public record AlbumDto(
          Guid AlbumId,
          string ArtistName,

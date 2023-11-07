@@ -1,5 +1,6 @@
-﻿using WizardRecords.Core.Domain.Entities;
-using static WizardRecords.Core.Data.Constants;
+﻿using WizardRecords.Api.Domain.Entities;
+
+using static WizardRecords.Api.Data.Constants;
 
 namespace WizardRecords.Repositories {
     public interface IAlbumRepository {

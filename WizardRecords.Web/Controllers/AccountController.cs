@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Dtos;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
 
 namespace WizardRecords.Controllers {
     [ApiController]

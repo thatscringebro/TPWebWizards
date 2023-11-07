@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WizardRecords.Repositories;
-using WizardRecords.Web.Dtos;
-using static WizardRecords.Core.Data.Constants;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Dtos;
+using static WizardRecords.Api.Data.Constants;
+using WizardRecords.Api.Domain.Entities;
 
-namespace WizardRecords.Web.Controllers {
+namespace WizardRecords.Api.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class AlbumController : ControllerBase {

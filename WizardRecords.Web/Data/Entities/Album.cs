@@ -1,6 +1,6 @@
-﻿using static WizardRecords.Core.Data.Constants;
+﻿using static WizardRecords.Api.Data.Constants;
 
-namespace WizardRecords.Core.Domain.Entities {
+namespace WizardRecords.Api.Domain.Entities {
     public class Album {
         public Guid AlbumId { get; set; }
         public string ArtistName { get; set; } = "-";

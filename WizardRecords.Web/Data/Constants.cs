@@ -1,4 +1,4 @@
-﻿namespace WizardRecords.Core.Data {
+﻿namespace WizardRecords.Api.Data {
     public class Constants {
         public enum Media {
             VINYL,

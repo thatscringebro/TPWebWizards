@@ -112,6 +112,50 @@ const Detail = () => {
         }
     };
 
+    const AddToCart = async () => {
+        try {   
+            const cart = {
+                albumId: product.albumId,
+   
+                cartId: 0
+            };
+       
+
+           
+            const creationPanier = await axios.post(`${API_BASE_URL}/cart/create`, cart, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (creationPanier.status === 200) {
+                console.log('Panier créé avec succès');
+                cart.cartId = creationPanier.data.cartId;
+            }
+            else {
+                console.error('Échec de la création du panier avec le statut:', creationPanier.status);
+            }
+
+
+        const response = await axios.post(`${API_BASE_URL}/cart/add/${cart.cartId}/${cart.albumId}`, cart, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.status === 200) {
+            console.log('Album added to cart successfully');
+           
+        }
+        else {
+            console.error('Failed to add album to cart with status:', response.status);
+        }
+    }
+        catch (error) {
+            console.error('Error adding album to cart:', error);
+        }
+
+    };
+
+
     useEffect(() => {
         fetchDataForDetail(id);
     }, [id]);
@@ -183,7 +227,7 @@ const Detail = () => {
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className="button-cart">Add to Cart</button>
+                    <button className="button-cart" onClick={AddToCart}>Add to Cart</button>
                 </div>
             </div>
     </div>

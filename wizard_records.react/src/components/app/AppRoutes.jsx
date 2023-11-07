@@ -6,6 +6,7 @@ import Home from "../Home";
 import SearchResults from "../SearchResults";
 import ProductGallery from "../ProductGallery";
 import AddProductForm from "../AddProductForm";
+import Cart from "../Cart";
 import Account from "../Account";
 
 
@@ -46,6 +47,10 @@ const AppRoutes = [
     {
         path: '/account',
         element: <Account />
+    },
+    {
+        path: '/cart',
+        element: <Cart />
     }
 
 ];
