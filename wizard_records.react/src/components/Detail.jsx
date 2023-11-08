@@ -159,9 +159,7 @@ const Detail = () => {
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
                             <br />
-                            <i>Album Genre</i> : {product.albumGenre}
-                            <br />
-                            <i>Artist Genre</i> : {product.artistGenre}
+                            <i>Genre</i> : {product.artistGenre} {product.albumGenre}
                             <br />
                             <i>Media Condition</i> : {product.mediaGrade}
                             <br />
@@ -171,9 +169,7 @@ const Detail = () => {
                             <br />
                             <i>Matrix Number</i> : {product.matrixNumber}
                             <br />
-                            <i>Quantity</i> : {product.quantity}
-                            <br />
-                            <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</i></p>
+                            <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
@@ -183,7 +179,7 @@ const Detail = () => {
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className="button-cart">Add to Cart</button>
+                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
                 </div>
             </div>
     </div>

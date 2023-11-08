@@ -7,11 +7,6 @@ a:hover{
     color: blue !important;
 }
 
-.detail-container h1 {
-    padding: 20px 0 5px;
-    color: #333;
-}
-
 .button-cart {
     background-color: #4CAF50;
     bottom: 30px;
@@ -40,6 +35,14 @@ a:hover{
         background-color: #20add8;
     }
 
+.button-unavailable {
+    background-color: red;
+}
+
+    .button-unavailable:hover {
+        background-color: #ff5b4f;
+    }
+
 .detail-container {
     background-color: #fff;
     border: 2px solid #333;
@@ -53,6 +56,11 @@ a:hover{
     padding: 20px;
     position: relative;
 }
+
+    .detail-container h1 {
+        padding: 20px 0 5px;
+        color: #333;
+    }
 
 .detail-content {
     display: flex;

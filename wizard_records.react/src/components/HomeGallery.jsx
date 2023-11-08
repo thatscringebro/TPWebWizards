@@ -20,7 +20,8 @@ const fetchDataForCategory = async (count = 3, media = null, isUsed = null) => {
             artistName: album.artistName,
             albumTitle: album.title,
             price: album.price.toFixed(2),
-            category: album.category,
+            isUsed: album.isUsed,
+            quantity: album.quantity
         }));
     }
     else {

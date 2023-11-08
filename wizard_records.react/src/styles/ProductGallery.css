@@ -2,8 +2,12 @@
     box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
 }
 
-.filters {
-    display: flex;
+.dropdown-container {
+    display
+    
+    .dropdown-label {
+        margin-right: 50px;
+    }: flex;
 }
 
 .filter-bar {
@@ -62,17 +66,11 @@
     text-align: right;
 }
 
-.section-category {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .sort-bar {
     float: left;
 }
 
-#sortDropdown, #filterDropdown {
+#dropdown-main, #filterDropdown {
     margin-left: 10px;
     border: none;
     background-color: #24262b;

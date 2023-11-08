@@ -10,8 +10,6 @@ const fetchDataForCategory = () => {
             if (response.status === 200) {
                 const albums = response.data;
 
-              
-
                 const albumPromises = albums.map((album) => {
                     return {
                         id: album.albumId,
@@ -162,25 +160,19 @@ function ProductGallery() {
 
     return (
         <div>
-            <div className="section-category">
-                <h1>All products</h1>
-            </div>
-            <div className="filters">
-                <div className="row">
-                    <div className="col-md left">
-                        <div className="sort-bar">
-                            <label htmlFor="sortDropdown">Sort by: </label>
-                            <select id="sortDropdown" value={selectedSortOption} onChange={handleSortChange}>
-                                <option value="default">Default</option>
-                                <option value="priceLowToHigh">Price: Low to High</option>
-                                <option value="priceHighToLow">Price: High to Low</option>
-                                <option value="AlbumNameAsc">Album Name: A..Z</option>
-                                <option value="AlbumNameDesc">Album Name: Z..A</option>
-                                <option value="ArtistNameAsc">Artist Name: A..Z</option>
-                                <option value="ArtistNameDesc">Artis Name: Z..A</option>
-                            </select>
-                        </div>
-                    </div>
+            <h1>All products</h1>
+            <div className="dropdown-container">
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">Sort by: </label>
+                    <select id="dropdown-main" value={selectedSortOption} onChange={handleSortChange}>
+                        <option value="default">Default</option>
+                        <option value="priceLowToHigh">Price: Low to High</option>
+                        <option value="priceHighToLow">Price: High to Low</option>
+                        <option value="AlbumNameAsc">Album Name: A..Z</option>
+                        <option value="AlbumNameDesc">Album Name: Z..A</option>
+                        <option value="ArtistNameAsc">Artist Name: A..Z</option>
+                        <option value="ArtistNameDesc">Artis Name: Z..A</option>
+                    </select>
                 </div>
                 <div className="col-md right">
                 <div className="filter-bar">

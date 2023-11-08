@@ -25,12 +25,11 @@ const Product = ({ product }) => {
                         <div className="card-info">
                             <CardTitle className="card-artist">{product.artistName}</CardTitle>
                             <CardSubtitle className="card-album">{product.albumTitle}</CardSubtitle>
-                            {/* <CardSubtitle className="card-album"> {isAvailable ? 'Available' : 'Not Available'} </CardSubtitle> */}
                         </div>
                         <div className="card-divider"></div>
                         <div className="card-purchase">
                             <CardTitle className="card-price"><b>${product.price}</b></CardTitle>
-                            <CardSubtitle className="card-basket">Add to cart</CardSubtitle>
+                            <CardSubtitle className={`card-basket ${product.quantity === 0 ? 'card-unavailable' : ''}`}>{product.quantity === 0 ? 'Sold Out' : 'Add to cart'}</CardSubtitle>
                         </div>
                     </CardBody>
                 </Card>
