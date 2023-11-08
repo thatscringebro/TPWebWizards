@@ -1,13 +1,4 @@
-﻿﻿a {
-    text-decoration: none !important;
-    color: black !important;
-}
-
-a:hover{
-    color: blue !important;
-}
-
-.button-cart {
+﻿﻿.button-cart {
     background-color: #4CAF50;
     bottom: 30px;
     position: absolute;
@@ -57,8 +48,9 @@ a:hover{
     position: relative;
 }
 
-    .detail-container h1 {
-        padding: 20px 0 5px;
+    .detail-container a {
+        text-decoration: none;
+        padding: 20px 0;
         color: #333;
     }
 

@@ -3,13 +3,10 @@ import { Link } from 'react-router-dom';
 import Product from './Product';
 
 const ProductList = ({ title, products = [], isHomeGallery = false }) => {
-    console.log("Title being used in ProductList: ", title);
     const formattedTitle = title.replace(/\s+/g, '-').toLowerCase();
 
-    // Extract parameters from title
     const [category, media] = title.split(' ');
 
-    // Map the extracted values to the actual parameters
     const isUsed = (category === "Used") ? "true" : "false";
     const mediaType = (media === "Vinyl") ? "Vinyl" : "CD";
 

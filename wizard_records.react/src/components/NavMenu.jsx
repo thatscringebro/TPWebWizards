@@ -26,7 +26,7 @@ const NavMenu = () => {
     };
 
     return (
-        <header id="header_container">
+        <header id="container">
             {/* Display for desktop/tablets */}
             <div className="desktop">
                 <div className="container">
@@ -55,7 +55,7 @@ const NavMenu = () => {
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
                     <section className="hero-banner">
                         <Container>
-                            <p className="slogan">"From yesterday's vinyls to today's hits."</p>
+                            <p className="slogan">"Where your Crate-digging adventures begin"</p>
                         </Container>
                     </section>
                     <NavbarToggler onClick={toggleNavbar} className="mr-2" />

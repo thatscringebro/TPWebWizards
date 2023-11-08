@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from './utils/config';
 import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
 import axios from 'axios';
 import '../styles/Detail.css';
-import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
+import '../styles/Home.css';
 
 const Detail = () => {
     const { id } = useParams();
@@ -19,21 +20,20 @@ const Detail = () => {
             const response = await axios.get(`${API_BASE_URL}/album/${id}`);
             if (response.status === 200) {
                 const album = response.data;
-
-            if(album.imageFilePath === "") 
-            {
-                album.imageFilePath = 'default.webp';
-            }
             
-           
-            AlbumGenre.map((genre) => (genre.value === album.albumGenre) && (album.albumGenre = genre.label))
-            ArtistGenre.map((genre) => (genre.value === album.artistGenre) && (album.artistGenre = genre.label))
-            Grade.map((grade) => (grade.value === album.mediaGrade) && (album.mediaGrade = grade.label))
-            Grade.map((grade) => (grade.value === album.sleeveGrade) && (album.sleeveGrade = grade.label))
+                AlbumGenre.map((genre) => (genre.value === album.albumGenre) && (album.albumGenre = genre.label))
+                ArtistGenre.map((genre) => (genre.value === album.artistGenre) && (album.artistGenre = genre.label))
+                Grade.map((grade) => (grade.value === album.mediaGrade) && (album.mediaGrade = grade.label))
+                Grade.map((grade) => (grade.value === album.sleeveGrade) && (album.sleeveGrade = grade.label))
 
-                const imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+                let imagePath;
+                try {
+                    imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+                } catch (error) {
+                    console.error(`Error requiring image file for ${album.imageFilePath}`, error);
+                    imagePath = require('../assets/images/covers/default.webp');
+                }
               
-
                 const productData = {
                     albumId: album.albumId,
                     imageFilePath: imagePath,
@@ -44,14 +44,13 @@ const Detail = () => {
                     isUsed: album.isUsed === false ? 'New' : 'Used',
                     price: album.price.toFixed(2),
                     quantity: album.quantity,
-                    mediaGrade : album.mediaGrade,
-                    sleeveGrade : album.sleeveGrade,
-                    catalogNumber : album.catalogNumber ? 'None' : album.catalogNumber,
-                    matrixNumber : album.matrixNumber ? 'None' : album.matrixNumber,
+                    mediaGrade : formatGrade(album.mediaGrade),
+                    sleeveGrade : formatGrade(album.sleeveGrade),
+                    catalogNumber : album.catalogNumber === '' || album.catalogNumber === 'None' ? 'None' : album.catalogNumber,
+                    matrixNumber : album.matrixNumber === '' || album.matrixNumber === 'None' ? 'None' : album.matrixNumber,
                     artistGenre : album.artistGenre,
                     albumGenre  : album.albumGenre,
                     //Format : album.format Ajouter le format dans la bd ? il est dans les constantes de react
-
                 };
 
                 setProduct(productData);
@@ -120,10 +119,12 @@ const Detail = () => {
         return <div>Loading product details...</div>;
     }
 
+
     return (
         <div className="detail-container">
             <div className="detail-image">
-                <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
+            <img src={product?.imageFilePath || 'path_to_default_image.webp'}
+                 alt={`${product?.albumTitle || 'Unknown'} cover`} />
             </div>
             <div className="detail-content">
                 {isEditing ? (
@@ -159,7 +160,7 @@ const Detail = () => {
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
                             <br />
-                            <i>Genre</i> : {product.artistGenre} {product.albumGenre}
+                            <i>Genre</i> : {product.artistGenre} / {product.albumGenre}
                             <br />
                             <i>Media Condition</i> : {product.mediaGrade}
                             <br />
@@ -185,5 +186,13 @@ const Detail = () => {
     </div>
     );
 };
+
+const formatGrade = (grade) => {
+    const gradeMap = {
+        'VG_PLUS' : 'VG+',
+        'G_PLUS!' : 'G+!',
+    };
+    return gradeMap[grade] || grade;
+}
 
 export default Detail;

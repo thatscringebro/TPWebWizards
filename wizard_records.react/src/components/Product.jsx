@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Product = ({ product }) => {
     let coverImageSrc, formatImageSrc;
+    
     try {
         formatImageSrc = require(`../assets/images/format/${product.media}`);
     } catch (err) {
@@ -10,9 +11,14 @@ const Product = ({ product }) => {
     }
 
     try {
-        coverImageSrc = require(`../assets/images/covers/${product.cover}`);
+        const coverImageFile = require(`../assets/images/covers/${product.cover}`);
+
+        if (coverImageFile) {
+            coverImageSrc = coverImageFile;
+        }
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
+        coverImageSrc = require('../assets/images/covers/default.webp');
     }
 
     return (

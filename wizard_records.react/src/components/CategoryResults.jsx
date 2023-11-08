@@ -13,7 +13,7 @@ const fetchDataForCategory = (media, isUsed) => {
         queryParameters.append('isUsed', isUsed);
     }
     const queryString = queryParameters.toString();
-    console.log("Fetching for Media:", media, "IsUsed:", isUsed, "Constructed Query String:", queryString);
+    
     return axios.get(`${API_BASE_URL}/category?${queryString}`)
         .then((response) => {
             if (response.status === 200) {
@@ -28,7 +28,7 @@ const fetchDataForCategory = (media, isUsed) => {
                         albumTitle: album.title,
                         isUsed: album.isUsed,
                         price: album.price.toFixed(2),
-                        stockQuantity: album.stockQuantity
+                        quantity: album.quantity
                     };
                 });
             } else {
@@ -42,7 +42,6 @@ function CategoryResults() {
     const queryParams = new URLSearchParams(location.search);
     const media = queryParams.get('media');
     const isUsed = queryParams.get('isUsed');
-    console.log("Extracted URL Parameters - Media:", media, "IsUsed:", isUsed);
 
     let mediaLabel = "";
     if (media === 'Vinyl') {
@@ -54,7 +53,6 @@ function CategoryResults() {
     }
 
     const categoryLabel = isUsed === 'true' ? 'used' : 'new';
-
     const titleString = `Results for ${categoryLabel} ${mediaLabel}`;
 
     const [products, setProducts] = useState([]);

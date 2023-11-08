@@ -22,8 +22,8 @@ const fetchDataForCategory = () => {
                         quantity: album.quantity
                     };
                 });
-
                 return Promise.all(albumPromises);
+
             } else {
                 throw Error(`Failed to fetch albums with status: ${response.status}`);
             }
@@ -33,22 +33,37 @@ const fetchDataForCategory = () => {
 function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
     const pageNumbers = [];
 
-    if (totalPages <= 5) {
-        for (let i = 1; i <= totalPages; i++) {
-            pageNumbers.push(i);
-        }
-    } else if (currentPage <= 5) {
-        pageNumbers.push(1, 2, 3, 4, 5, '...', totalPages);
-    } else if (currentPage >= totalPages - 4) {
-        pageNumbers.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-    } else {
-        pageNumbers.push(1, '...', currentPage - 2, currentPage - 1, currentPage, currentPage + 1,currentPage + 2, '...', totalPages);
+    pageNumbers.push(1);
+
+    let startPage = Math.max(2, currentPage - 2);
+    let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+    if (currentPage <= 4) {
+        startPage = 2;
+        endPage = 5;
     }
+
+    if (currentPage >= totalPages - 4) {
+        startPage = totalPages - 5;
+        endPage = totalPages - 1;
+    }
+
+    if (startPage > 2) {
+        pageNumbers.push('...');
+    }
+    for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+    }
+    if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+    }
+
+    pageNumbers.push(totalPages);
 
     const renderPageNumbers = () => {
         return pageNumbers.map((pageNumber, index) => {
             if (pageNumber === '...') {
-                return <span key={index}>...</span>;
+                return <span key={`ellipsis-${index}`}>...</span>;
             } else {
                 return (
                     <span
@@ -79,8 +94,9 @@ function ProductGallery() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSortOption, setSelectedSortOption] = useState('default');
+    const [selectedFormatFilterOption, setSelectedFormatFilterOption] = useState('default');
     const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
-    const [selectedTypeFilterOption, setSelectedTypeFilterOption] = useState('default');
+    const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
     
     const productsPerPage = 12;
     
@@ -99,19 +115,28 @@ function ProductGallery() {
     // Filters
     let filteredProducts = [...allProducts];
 
+    // Format filter
+    if (selectedFormatFilterOption === 'cdOnly') {
+        filteredProducts = filteredProducts.filter((product) => product.media === 'CDBase.png');
+    } else if (selectedFormatFilterOption === 'vinylOnly') {
+        filteredProducts = filteredProducts.filter((product) => product.media === 'VinylBase.png');
+    }
+
+    // Category filter
     if (selectedCategoryFilterOption === 'newOnly') {
         filteredProducts = filteredProducts.filter((product) => product.isUsed === false);
     } else if (selectedCategoryFilterOption === 'usedOnly') {
         filteredProducts = filteredProducts.filter((product) => product.isUsed === true);
     }
 
-    if (selectedTypeFilterOption === 'cdOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.media === 'CDBase.png');
-    } else if (selectedTypeFilterOption === 'vinylOnly') {
-        filteredProducts = filteredProducts.filter((product) => product.media === 'VinylBase.png');
+    // Availability filter
+    if (selectedAvailabilityFilterOption === 'availableOnly') {
+        filteredProducts = filteredProducts.filter((product) => product.quantity > 0);
+    } else if (selectedAvailabilityFilterOption === 'unavailableOnly') {
+        filteredProducts = filteredProducts.filter((product) => product.quantity === 0);
     }
 
-    // Sorts
+    // Sorting options
     const sortedProducts = [...filteredProducts];
     if (selectedSortOption === 'priceLowToHigh') {
         sortedProducts.sort((a, b) => a.price - b.price);
@@ -127,16 +152,23 @@ function ProductGallery() {
         sortedProducts.sort((a, b) => -1 * a.artistName.localeCompare(b.artistName));
     }
 
-    const handleTypeFilterChange = (event) => {
-        console.log("handle_type: :" + event.target.value);
-        setSelectedTypeFilterOption(event.target.value);
+    const handleFormatFilterChange = (event) => {
+        console.log("handle_format: :" + event.target.value);
+        setSelectedFormatFilterOption(event.target.value);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
 
     const handleCategoryFilterChange = (event) => {
-        console.log("handle_cat: :" + event.target.value);
+        console.log("handle_category: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
+        setProducts(filteredProducts);
+        setCurrentPage(1);
+    };
+
+    const handleAvailabilityFilterChange = (event) => {
+        console.log("handle_availability: :" + event.target.value);
+        setSelectedAvailabilityFilterOption(event.target.value);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
@@ -163,7 +195,7 @@ function ProductGallery() {
             <h1>All products</h1>
             <div className="dropdown-container">
                 <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">Sort by: </label>
+                    <label htmlFor="dropdown-label">SORTING OPTIONS: </label>
                     <select id="dropdown-main" value={selectedSortOption} onChange={handleSortChange}>
                         <option value="default">Default</option>
                         <option value="priceLowToHigh">Price: Low to High</option>
@@ -174,32 +206,43 @@ function ProductGallery() {
                         <option value="ArtistNameDesc">Artis Name: Z..A</option>
                     </select>
                 </div>
-                <div className="col-md right">
-                <div className="filter-bar">
-                        <label htmlFor="filterDropdown">Filter by Format: </label>
-                        <select id="filterDropdown" value={selectedTypeFilterOption} onChange={handleTypeFilterChange}>
-                            <option value="default">Default</option>
-                            <option value="cdOnly">CD Only</option>
-                            <option value="vinylOnly">Vinyl Only</option>
-                        </select>
-                    </div>
-                    <div className="filter-bar">
-                        <label htmlFor="filterDropdown">Filter by Condition: </label>
-                        <select id="filterDropdown" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
-                            <option value="default">Default</option>
-                            <option value="newOnly">New Only</option>
-                            <option value="usedOnly">Used Only</option>
-                        </select>
-                    </div>
+
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY FORMAT: </label>
+                    <select id="dropdown-media" value={selectedFormatFilterOption} onChange={handleFormatFilterChange}>
+                        <option value="default">All formats</option>
+                        <option value="cdOnly">CD only</option>
+                        <option value="vinylOnly">Vinyl only</option>
+                    </select>
+                </div>
+
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY AVAILABILITY: </label>
+                    <select id="dropdown-availability" value={selectedAvailabilityFilterOption} onChange={handleAvailabilityFilterChange}>
+                        <option value="default">All</option>
+                        <option value="availableOnly">Available only</option>
+                        <option value="unavailableOnly">Unavailable only</option>
+                    </select>
+                </div>
+
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY CATEGORY: </label>
+                    <select id="dropdown-condition" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
+                        <option value="default">Any category</option>
+                        <option value="newOnly">New only</option>
+                        <option value="usedOnly">Used only</option>
+                    </select>
                 </div>
             </div>
             <div>
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
-                <div className="pagination">
-                    <button className="page-button" onClick={prevPage}>Previous</button>
-                    {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
-                    <button className="page-button" onClick={nextPage}>Next</button>
-                </div>
+                {Math.ceil(sortedProducts.length / productsPerPage) > 1 && (
+                    <div className="pagination">
+                        <button className="page-button" onClick={prevPage}>Previous</button>
+                        {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
+                        <button className="page-button" onClick={nextPage}>Next</button>
+                    </div>
+                )}
             </div>
         </div>
     );
