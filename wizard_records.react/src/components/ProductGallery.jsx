@@ -45,8 +45,12 @@ function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
     let endPage = Math.min(totalPages - 1, currentPage + 2);
 
     if (currentPage <= 4) {
-        endPage = Math.min(5, totalPages - 1);
         startPage = 2;
+        endPage = Math.min(5, totalPages - 1);
+    }
+
+    if (totalPages < 5) {
+        endPage = totalPages - 1;
     }
 
     const showStartEllipsis = startPage > 2;
@@ -64,21 +68,20 @@ function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
         pageNumbers.push('...');
     }
 
-    if (totalPages > 1) {
+    if (totalPages > 1 && !pageNumbers.includes(totalPages)) {
         pageNumbers.push(totalPages);
     }
-
-    pageNumbers.push(totalPages);
 
     const renderPageNumbers = pageNumbers.map((pageNumber, index) => {
         if (pageNumber === '...') {
             return <span key={`ellipsis-${index}`}>...</span>;
         } else {
+            const handleClick = pageNumber !== '...' ? () => setCurrentPage(pageNumber) : undefined;
             return (
                 <span
                     key={pageNumber}
                     className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
-                    onClick={() => setCurrentPage(pageNumber)}
+                    onClick={handleClick}
                 >
                     {pageNumber}
                 </span>
@@ -103,7 +106,6 @@ function ProductGallery() {
     const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
     const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
     
-    const productsPerPage = 12;
     
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
@@ -114,7 +116,6 @@ function ProductGallery() {
         fetchDataForCategory().then((data) => {
             setAllProducts(data); 
             setProducts(data);
-            console.log(data);
         });
     }, []);
 
@@ -195,6 +196,8 @@ function ProductGallery() {
         sortedProducts.sort((a, b) => -1 * a.artistName.localeCompare(b.artistName));
     }
 
+    const productsPerPage = 12;
+
     const handleGenreFilterChange = (event) => {
         console.log("handle_genre: :" + event.target.value);
         setSelectedGenreFilterOption(event.target.value);
@@ -224,17 +227,16 @@ function ProductGallery() {
     };
 
     const nextPage = () => {
-        if(currentPage >= Math.ceil(sortedProducts.length / productsPerPage)){
-            setCurrentPage(Math.ceil(sortedProducts.length / productsPerPage));
-        }
-        else if (currentPage < Math.ceil(products.length / productsPerPage)) {
-                    setCurrentPage(currentPage + 1);
-        }
+        const totalSortedPages = Math.ceil(products.length / productsPerPage);
+    if (currentPage < totalSortedPages) {
+        setCurrentPage(currentPage + 1);
+    }
     };
 
     const prevPage = () => {
         if (currentPage > 1) { setCurrentPage(currentPage - 1); }
     };
+
 
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -297,18 +299,29 @@ function ProductGallery() {
             {currentProducts.length > 0 ? (
             <div>
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
-                {Math.ceil(sortedProducts.length / productsPerPage) > 1 && (
-                <div className="pagination">
-                    <button className="page-button" onClick={prevPage}>Previous</button>
-                    {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
-                    <button className="page-button" onClick={nextPage}>Next</button>
-                </div>
-                )}
+                    {Math.ceil(sortedProducts.length / productsPerPage) > 1 && (
+                        <div className="pagination">
+                            <button 
+                                className="page-button" 
+                                onClick={prevPage} 
+                                disabled={currentPage === 1}>
+                                Previous
+                            </button>
+                            {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
+                            <button 
+                                className="page-button" 
+                                onClick={nextPage} 
+                                disabled={currentPage >= Math.ceil(sortedProducts.length / productsPerPage)}>
+                                Next
+                            </button>
+                        </div>
+                    )}
+                )
             </div>) : (
-            <div className="no-results">
-                <h1>No matching results!</h1>
-            </div>
-        )}
+                <div className="no-results">
+                    <h1>No matching results!</h1>
+                </div>
+            )}
         </div>
     );
 }
