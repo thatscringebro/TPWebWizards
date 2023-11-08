@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from './utils/config';
 import ProductList from './ProductList';
+import { ArtistGenre } from './utils/constants';
 import axios from 'axios';
 import '../styles/ProductGallery.css';
 
@@ -16,6 +17,7 @@ const fetchDataForCategory = () => {
                         cover: album.imageFilePath === "" ? "default.webp" : album.imageFilePath,
                         media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
                         artistName: album.artistName,
+                        artistGenre: album.artistGenre,
                         albumTitle: album.title,
                         isUsed: album.isUsed,
                         price: album.price.toFixed(2),
@@ -33,58 +35,60 @@ const fetchDataForCategory = () => {
 function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
     const pageNumbers = [];
 
+    if (totalPages <= 1) {
+        return null;
+    }
+
     pageNumbers.push(1);
 
     let startPage = Math.max(2, currentPage - 2);
     let endPage = Math.min(totalPages - 1, currentPage + 2);
 
     if (currentPage <= 4) {
+        endPage = Math.min(5, totalPages - 1);
         startPage = 2;
-        endPage = 5;
     }
 
-    if (currentPage >= totalPages - 4) {
-        startPage = totalPages - 5;
-        endPage = totalPages - 1;
-    }
+    const showStartEllipsis = startPage > 2;
+    const showEndEllipsis = endPage < totalPages - 1;
 
-    if (startPage > 2) {
+    if (showStartEllipsis) {
         pageNumbers.push('...');
     }
+
     for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
     }
-    if (endPage < totalPages - 1) {
+
+    if (showEndEllipsis) {
         pageNumbers.push('...');
+    }
+
+    if (totalPages > 1) {
+        pageNumbers.push(totalPages);
     }
 
     pageNumbers.push(totalPages);
 
-    const renderPageNumbers = () => {
-        return pageNumbers.map((pageNumber, index) => {
-            if (pageNumber === '...') {
-                return <span key={`ellipsis-${index}`}>...</span>;
-            } else {
-                return (
-                    <span
-                        key={index}
-                        className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
-                        onClick={() => {
-                            if (pageNumber !== '...') {
-                                setCurrentPage(pageNumber);
-                            }
-                        }}
-                    >
-                        {pageNumber}
-                    </span>
-                );
-            }
-        });
-    };
+    const renderPageNumbers = pageNumbers.map((pageNumber, index) => {
+        if (pageNumber === '...') {
+            return <span key={`ellipsis-${index}`}>...</span>;
+        } else {
+            return (
+                <span
+                    key={pageNumber}
+                    className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
+                    onClick={() => setCurrentPage(pageNumber)}
+                >
+                    {pageNumber}
+                </span>
+            );
+        }
+    });
 
     return (
         <div className="page-numbers">
-            {renderPageNumbers()}
+            {renderPageNumbers}
         </div>
     );
 }
@@ -94,6 +98,7 @@ function ProductGallery() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSortOption, setSelectedSortOption] = useState('default');
+    const [selectedGenreFilterOption, setSelectedGenreFilterOption] = useState('default');
     const [selectedFormatFilterOption, setSelectedFormatFilterOption] = useState('default');
     const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
     const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
@@ -109,11 +114,49 @@ function ProductGallery() {
         fetchDataForCategory().then((data) => {
             setAllProducts(data); 
             setProducts(data);
+            console.log(data);
         });
     }, []);
 
     // Filters
     let filteredProducts = [...allProducts];
+
+    // Genre filter
+    if (selectedGenreFilterOption === 'rock') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 0);
+    } else if (selectedGenreFilterOption === 'pop') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 1);
+    } else if (selectedGenreFilterOption === 'jazz') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 2);
+    } else if (selectedGenreFilterOption === 'hiphop') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 3);
+    } else if (selectedGenreFilterOption === 'alternative') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 4);
+    } else if (selectedGenreFilterOption === 'classical') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 5);
+    } else if (selectedGenreFilterOption === 'francophone') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 6);
+    } else if (selectedGenreFilterOption === 'metal') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 7);
+    } else if (selectedGenreFilterOption === 'punk') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 8);
+    } else if (selectedGenreFilterOption === 'blues') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 9);
+    } else if (selectedGenreFilterOption === 'world') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 10);
+    } else if (selectedGenreFilterOption === 'folk') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 11);
+    }else if (selectedGenreFilterOption === 'country') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 12);
+    } else if (selectedGenreFilterOption === 'soul') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 13);
+    } else if (selectedGenreFilterOption === 'funk') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 14);
+    } else if (selectedGenreFilterOption === 'electronica') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 15);
+    } else if (selectedGenreFilterOption === 'soundtrack') {
+        filteredProducts = filteredProducts.filter((product) => product.artistGenre === 16);
+    }
 
     // Format filter
     if (selectedFormatFilterOption === 'cdOnly') {
@@ -151,6 +194,13 @@ function ProductGallery() {
     } else if (selectedSortOption === 'ArtistNameDesc') {
         sortedProducts.sort((a, b) => -1 * a.artistName.localeCompare(b.artistName));
     }
+
+    const handleGenreFilterChange = (event) => {
+        console.log("handle_genre: :" + event.target.value);
+        setSelectedGenreFilterOption(event.target.value);
+        setProducts(filteredProducts);
+        setCurrentPage(1);
+    };
 
     const handleFormatFilterChange = (event) => {
         console.log("handle_format: :" + event.target.value);
@@ -203,8 +253,18 @@ function ProductGallery() {
                         <option value="AlbumNameAsc">Album Name: A..Z</option>
                         <option value="AlbumNameDesc">Album Name: Z..A</option>
                         <option value="ArtistNameAsc">Artist Name: A..Z</option>
-                        <option value="ArtistNameDesc">Artis Name: Z..A</option>
+                        <option value="ArtistNameDesc">Artist Name: Z..A</option>
                     </select>
+                </div>
+
+                <div className="dropdown-group">
+                    <label htmlFor="dropdown-label">FILTER BY GENRE: </label>
+                    <select id="dropdown-genre" value={selectedGenreFilterOption} onChange={handleGenreFilterChange}>
+                    <option value="default">Any genre</option>
+                        {ArtistGenre.map((genre) => (
+                            <option key={genre.value} value={genre.label.toLowerCase()}>{genre.label}</option>
+                        ))}
+                </select>
                 </div>
 
                 <div className="dropdown-group">
@@ -218,7 +278,7 @@ function ProductGallery() {
 
                 <div className="dropdown-group">
                     <label htmlFor="dropdown-label">FILTER BY AVAILABILITY: </label>
-                    <select id="dropdown-availability" value={selectedAvailabilityFilterOption} onChange={handleAvailabilityFilterChange}>
+                    <select id="dropdown-availability" value={selectedFormatFilterOption} onChange={handleAvailabilityFilterChange}>
                         <option value="default">All</option>
                         <option value="availableOnly">Available only</option>
                         <option value="unavailableOnly">Unavailable only</option>
@@ -234,16 +294,21 @@ function ProductGallery() {
                     </select>
                 </div>
             </div>
+            {currentProducts.length > 0 ? (
             <div>
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
                 {Math.ceil(sortedProducts.length / productsPerPage) > 1 && (
-                    <div className="pagination">
-                        <button className="page-button" onClick={prevPage}>Previous</button>
-                        {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
-                        <button className="page-button" onClick={nextPage}>Next</button>
-                    </div>
+                <div className="pagination">
+                    <button className="page-button" onClick={prevPage}>Previous</button>
+                    {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
+                    <button className="page-button" onClick={nextPage}>Next</button>
+                </div>
                 )}
+            </div>) : (
+            <div className="no-results">
+                <h1>No matching results!</h1>
             </div>
+        )}
         </div>
     );
 }

@@ -123,8 +123,8 @@ const Detail = () => {
     return (
         <div className="detail-container">
             <div className="detail-image">
-            <img src={product?.imageFilePath || 'path_to_default_image.webp'}
-                 alt={`${product?.albumTitle || 'Unknown'} cover`} />
+            <img src={product?.imageFilePath || 'default.webp'}
+                 alt={`${product?.albumTitle || 'Default'} cover`} />
             </div>
             <div className="detail-content">
                 {isEditing ? (
@@ -172,6 +172,7 @@ const Detail = () => {
                             <br />
                             <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
+                        {/*Make available for admin or staff only!*/}
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
                             <button className="button-delete" onClick={deleteProduct}>Delete</button>
