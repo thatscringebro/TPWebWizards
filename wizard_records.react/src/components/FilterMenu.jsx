@@ -28,42 +28,42 @@ const FilterMenu = ({
                 </select>
             </div>
 
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY GENRE: </label>
-                    <select id="dropdown-genre" value={selectedGenreFilterOption} onChange={handleGenreFilterChange}>
-                        <option value="default">Any genre</option>
-                        {ArtistGenre.map((genre) => (
-                            <option key={genre.value} value={genre.label.toLowerCase()}>{genre.label}</option>
-                        ))}
+            <div className="dropdown-group">
+                <label htmlFor="dropdown-label">FILTER BY GENRE: </label>
+                <select id="dropdown-genre" value={selectedGenreFilterOption} onChange={handleGenreFilterChange}>
+                    <option value="default">Any genre</option>
+                    {ArtistGenre.map((genre) => (
+                        <option key={genre.value} value={genre.label.toLowerCase()}>{genre.label}</option>
+                    ))}
+            </select>
+            </div>
+
+            <div className="dropdown-group">
+                <label htmlFor="dropdown-label">FILTER BY FORMAT: </label>
+                <select id="dropdown-media" value={selectedFormatFilterOption} onChange={handleFormatFilterChange}>
+                    <option value="default">All formats</option>
+                    <option value="cdOnly">CD only</option>
+                    <option value="vinylOnly">Vinyl only</option>
                 </select>
-                </div>
+            </div>
 
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY FORMAT: </label>
-                    <select id="dropdown-media" value={selectedFormatFilterOption} onChange={handleFormatFilterChange}>
-                        <option value="default">All formats</option>
-                        <option value="cdOnly">CD only</option>
-                        <option value="vinylOnly">Vinyl only</option>
-                    </select>
-                </div>
+            <div className="dropdown-group">
+                <label htmlFor="dropdown-label">FILTER BY AVAILABILITY: </label>
+                <select id="dropdown-availability" value={selectedAvailabilityFilterOption} onChange={handleAvailabilityFilterChange}>
+                    <option value="default">All</option>
+                    <option value="availableOnly">Available only</option>
+                    <option value="unavailableOnly">Unavailable only</option>
+                </select>
+            </div>
 
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY AVAILABILITY: </label>
-                    <select id="dropdown-availability" value={selectedAvailabilityFilterOption} onChange={handleAvailabilityFilterChange}>
-                        <option value="default">All</option>
-                        <option value="availableOnly">Available only</option>
-                        <option value="unavailableOnly">Unavailable only</option>
-                    </select>
-                </div>
-
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY CATEGORY: </label>
-                    <select id="dropdown-condition" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
-                        <option value="default">Any category</option>
-                        <option value="newOnly">New only</option>
-                        <option value="usedOnly">Used only</option>
-                    </select>
-                </div>
+            <div className="dropdown-group">
+                <label htmlFor="dropdown-label">FILTER BY CATEGORY: </label>
+                <select id="dropdown-condition" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
+                    <option value="default">Any category</option>
+                    <option value="newOnly">New only</option>
+                    <option value="usedOnly">Used only</option>
+                </select>
+            </div>
         </div>);
 };
 
