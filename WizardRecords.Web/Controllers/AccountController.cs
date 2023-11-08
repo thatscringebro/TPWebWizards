@@ -17,6 +17,8 @@ namespace WizardRecords.Controllers {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+      
+       
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration) {
             _userManager = userManager;

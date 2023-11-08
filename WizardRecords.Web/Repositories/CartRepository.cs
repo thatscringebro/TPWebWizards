@@ -117,13 +117,21 @@ namespace WizardRecords.Api.Repositories
         {
             try
             {
-                var cart = await _dbContext.Carts.Where(c => c.UserId == userId).FirstOrDefaultAsync();
+                var cart = await _dbContext.Carts
+            .Include(c => c.Albums) // Inclure les albums associés au panier
+            .Where(c => c.UserId == userId)
+            .FirstOrDefaultAsync();
+
+               
                 if (cart == null)
                 {
                     return null;
                 }
-                else 
+                else
+                {
+                   
                     return cart;
+                }
             }
             catch (Exception)
             {
