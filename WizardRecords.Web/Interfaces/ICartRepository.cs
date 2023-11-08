@@ -5,7 +5,9 @@ namespace WizardRecords.Api.Interfaces
 {
     public interface ICartRepository
     {
-        Task<IEnumerable<Cart>> GetAllItemAsync(); 
+        Task<IEnumerable<Cart>> GetAllItemAsync();
+
+        Task<IEnumerable<Cart>> GetCartByIdAsync(Guid cartId);
 
         //CRUD
         Task<Cart?> DeleteItemByIdAsync(Guid cartId, Guid AlbumId);

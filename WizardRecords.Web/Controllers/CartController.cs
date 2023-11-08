@@ -35,7 +35,7 @@ namespace WizardRecords.Api.Controllers
         {
             try
             {
-                var cart = await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
+                var cart = await _cartRepository.GetCartByIdAsync(cartId);
                 if (cart != null)
                 {
                     await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
@@ -52,12 +52,12 @@ namespace WizardRecords.Api.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{cartId}/{AlbumId}")]
         public async Task<ActionResult<Cart>> DeleteItem(Guid cartId, Guid AlbumId)
         {
             try
             {
-                var cart = await _cartRepository.DeleteItemByIdAsync(cartId, AlbumId);
+                var cart = await _cartRepository.GetCartByIdAsync(cartId);
                 if (cart != null)
                 {
                     await _cartRepository.DeleteItemByIdAsync(cartId, AlbumId);
@@ -80,7 +80,7 @@ namespace WizardRecords.Api.Controllers
             try
             {
 
-                var cart = await _cartRepository.AddItemByIdAsync(cartId, AlbumId);
+                var cart = await _cartRepository.GetCartByIdAsync(cartId);
                 if (cart != null)
                 {
                     await _cartRepository.AddItemByIdAsync(cartId, AlbumId);
