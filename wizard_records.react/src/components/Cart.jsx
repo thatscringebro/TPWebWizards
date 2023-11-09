@@ -48,6 +48,17 @@ function calculateTotal(cart) {
 
 }
 
+function calculateTotalAlbum(album, quantity) {
+
+  let total = 0;
+  total = album* quantity;
+  return total.toFixed(2);
+
+
+
+}
+
+
 function GetImgageSRC(cart) {
 
   const coverImg = require(`../assets/images/covers/${cart.cover}`);
@@ -132,6 +143,7 @@ function CartPage() {
   const [cart, setCart] = useState([]);
   const [totalPanier, setTotalPanier] = useState(0);
 
+
   useEffect(() => {
     fetchDataForCart()
       .then((data) => {
@@ -167,8 +179,8 @@ else{
                 <img src={GetImgageSRC(album)} alt={`${cart.album} cover`} />
             </div>
           <div>Nom de l'album: {album.albumTitle}</div>
-          
-          <div>Sous-total: {album.price} $</div>
+          <div>Artiste: {album.artistName}</div>
+          <div>Sous-total: {calculateTotalAlbum(album.price, album.quantity)} $</div>
           <button onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}>Retirer du panier</button>
           <div>Quantité: {album.quantity}</div>
           <bouton onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</bouton>
