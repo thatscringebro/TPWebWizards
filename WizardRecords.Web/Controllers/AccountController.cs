@@ -42,14 +42,14 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model) {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-            if (!result.Succeeded)
+        public async Task<IActionResult> Login([FromBody] LoginDto login) {
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            if (user == null)
                 return BadRequest("Invalid login attempt.");
 
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user == null)
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, login.RememberMe, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
                 return BadRequest("Invalid login attempt.");
 
             var token = GenerateJwtToken(user);
@@ -71,7 +71,7 @@ namespace WizardRecords.Controllers {
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         }),
-                Expires = DateTime.UtcNow.AddHours(2),  // Token expiration, adjust as necessary.
+                Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

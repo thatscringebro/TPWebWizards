@@ -13,8 +13,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 var builder = WebApplication.CreateBuilder(args);
 
 // Set a specific port
-builder.WebHost.ConfigureKestrel(options =>
-{
+builder.WebHost.ConfigureKestrel(options => {
     options.Listen(System.Net.IPAddress.Loopback, 7206);
 });
 

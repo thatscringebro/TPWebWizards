@@ -49,8 +49,7 @@ const Detail = () => {
                     catalogNumber : album.catalogNumber === '' || album.catalogNumber === 'None' ? 'None' : album.catalogNumber,
                     matrixNumber : album.matrixNumber === '' || album.matrixNumber === 'None' ? 'None' : album.matrixNumber,
                     artistGenre : album.artistGenre,
-                    albumGenre  : album.albumGenre,
-                    //Format : album.format Ajouter le format dans la bd ? il est dans les constantes de react
+                    albumGenre  : album.albumGenre
                 };
 
                 setProduct(productData);

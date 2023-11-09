@@ -1,6 +1,6 @@
 ﻿namespace WizardRecords.Dtos {
     public record LoginDto(
-        string UserName, 
+        string Email, 
         string Password, 
         bool RememberMe
     );

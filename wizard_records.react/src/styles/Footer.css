@@ -9,8 +9,15 @@ body {
     box-sizing: border-box;
 }
 
+.bg-light {
+    position: relative;
+    margin-bottom: 0;
+    bottom: 0;
+    width: 100%;
+}
+
 .container {
-    max-width: 1170px;
+    max-width: 100%;
 }
 
 .row {
@@ -93,17 +100,3 @@ ul {
             display: block;
             margin: auto;
         }
-
-/*responsive*/
-/* @media(max-width: 767px) {
-    .footer-col {
-        width: 50%;
-        margin-bottom: 30px;
-    }
-}
-
-@media(max-width: 574px) {
-    .footer-col {
-        width: 100%;
-    }
-} */

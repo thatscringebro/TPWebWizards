@@ -7,8 +7,3 @@
     margin-left: 0;
  }
 
-#FirstName, #LastName, #Email,#UserName, #Password {
-    background-color: #24262b;
-    color: #E4E6Eb;
-    max-width: 50%;
-}
