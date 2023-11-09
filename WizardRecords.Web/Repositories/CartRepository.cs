@@ -14,16 +14,34 @@ namespace WizardRecords.Api.Repositories
             _dbContext = context;
         }
 
-            public async Task<Cart?> AddItemByIdAsync(Guid cartId, Guid AlbumId)
-            {
+        public async Task<Cart?> AddItemByIdAsync(Guid cartId, Guid albumId)
+        {
             try
             {
-                var cart = await _dbContext.Carts.Where(c => c.CartId == cartId).FirstOrDefaultAsync();
-                var album = await _dbContext.Albums.Where(a => a.AlbumId == AlbumId).FirstOrDefaultAsync();
+                var cart = await _dbContext.Carts
+                    .Include(c => c.CartItems)
+                    .Where(c => c.CartId == cartId)
+                    .FirstOrDefaultAsync();
+
+                var album = await _dbContext.Albums.Where(a => a.AlbumId == albumId).FirstOrDefaultAsync();
+
                 if (cart != null && album != null)
                 {
-                    cart.Albums.Add(album);
-                    cart.Quantity++;
+                    var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Album.AlbumId == albumId);
+
+                    if (cartItem == null)
+                    {
+                        cartItem = new CartItem();
+                        cartItem.CartId = cart.CartId;
+                        cartItem.Album = album;
+                        cartItem.Quantity = 1;
+                        cart.CartItems.Add(cartItem);
+                    }
+                    else
+                    {
+                        cartItem.Quantity++;
+                    }
+
                     await _dbContext.SaveChangesAsync();
                     return cart;
                 }
@@ -32,9 +50,9 @@ namespace WizardRecords.Api.Repositories
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.Error.WriteLine($"Une erreur s'est produite dans AddItemByIdAsync : {ex.Message}");
                 throw;
             }
         }
@@ -75,19 +93,34 @@ namespace WizardRecords.Api.Repositories
         //Faire en sorte que quand l'item est acheter il disparait de la bd !!!
         //Ca va se faire dans le formulaire de commande
 
-    
 
-        public async Task<Cart?> DeleteItemByIdAsync(Guid cartId, Guid AlbumId)
+
+        public async Task<Cart?> DeleteItemByIdAsync(Guid cartId, Guid albumId)
         {
             try
             {
-                var cart = await _dbContext.Carts.Where(c => c.CartId == cartId).FirstOrDefaultAsync();
-                var album = await _dbContext.Albums.Where(a => a.AlbumId == AlbumId).FirstOrDefaultAsync();
-                if (cart != null && album != null)
+                var cart = await _dbContext.Carts
+.Include(c => c.CartItems) // Inclure les cart items
+.ThenInclude(ci => ci.Album) // Inclure les albums pour chaque cart item
+.FirstOrDefaultAsync();
+                if (cart != null)
                 {
-                    cart.Albums.Remove(album);
-                    cart.Quantity--;
-                    await _dbContext.SaveChangesAsync();
+                    var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Album.AlbumId == albumId);
+
+                    if (cartItem != null)
+                    {
+                        if (cartItem.Quantity > 1)
+                        {
+                            cartItem.Quantity--;
+                        }
+                        else
+                        {
+                            cart.CartItems.Remove(cartItem);
+                        }
+
+                        await _dbContext.SaveChangesAsync();
+                    }
+
                     return cart;
                 }
                 else
@@ -99,9 +132,8 @@ namespace WizardRecords.Api.Repositories
             {
                 return null;
             }
-        
-
         }
+
 
         public async Task<IEnumerable<Cart>> GetAllItemAsync()
         {
@@ -110,7 +142,7 @@ namespace WizardRecords.Api.Repositories
 
         public async Task<IEnumerable<Cart>> GetCartByIdAsync(Guid cartId)
         {
-            return await _dbContext.Carts.Include(c => c.Albums).Where(a => a.CartId == cartId).ToListAsync();
+            return await _dbContext.Carts.Include(c => c.CartItems).Where(a => a.CartId == cartId).ToListAsync();
         }
 
         public async Task<User> GetUserByNameAsync(string username)
@@ -123,18 +155,18 @@ namespace WizardRecords.Api.Repositories
             try
             {
                 var cart = await _dbContext.Carts
-            .Include(c => c.Albums) // Inclure les albums associés au panier
-            .Where(c => c.UserId == userId)
-            .FirstOrDefaultAsync();
+     .Include(c => c.CartItems) // Inclure les cart items
+         .ThenInclude(ci => ci.Album) // Inclure les albums pour chaque cart item
+     .Where(c => c.UserId == userId)
+     .FirstOrDefaultAsync();
 
-               
                 if (cart == null)
                 {
                     return null;
                 }
                 else
                 {
-                   
+
                     return cart;
                 }
             }
@@ -143,21 +175,30 @@ namespace WizardRecords.Api.Repositories
 
                 throw;
             }
-          
+
 
         }
 
-        public async Task<Cart?> UpdateItemByIdAsync(Guid cartId, Guid AlbumId, int qty)
+        public async Task<Cart?> UpdateItemByIdAsync(Guid cartId, Guid albumId, int qty)
         {
             try
             {
-                var cart = await _dbContext.Carts.Where(c => c.CartId == cartId).FirstOrDefaultAsync();
-                var album = await _dbContext.Albums.Where(a => a.AlbumId == AlbumId).FirstOrDefaultAsync();
-                if (cart != null && album != null)
-                {
+                var cart = await _dbContext.Carts
+                    .Include(c => c.CartItems)
+                    .Where(c => c.CartId == cartId)
+                    .FirstOrDefaultAsync();
 
-                    cart.Quantity = qty;
-                    await _dbContext.SaveChangesAsync();
+                if (cart != null)
+                {
+                    var cartItem = cart.CartItems.FirstOrDefault(ci => ci.AlbumId == albumId);
+
+                    if (cartItem != null)
+                    {
+                        cartItem.Quantity = qty;
+
+                        await _dbContext.SaveChangesAsync();
+                    }
+
                     return cart;
                 }
                 else
@@ -169,7 +210,6 @@ namespace WizardRecords.Api.Repositories
             {
                 return null;
             }
-            
         }
     }
 }

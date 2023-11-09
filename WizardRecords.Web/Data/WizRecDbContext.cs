@@ -4,6 +4,7 @@ using WizardRecords.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using WizardRecords.Api.Data;
 using WizardRecords.Api.Data.Entities;
+using System.Reflection.Emit;
 
 namespace WizardRecords.Api {
     public class WizRecDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid> {
@@ -16,6 +17,9 @@ namespace WizardRecords.Api {
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
+
+        
+
             builder.LoadSeed();
         }
     }

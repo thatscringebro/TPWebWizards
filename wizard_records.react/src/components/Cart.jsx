@@ -15,15 +15,15 @@ const fetchDataForCart = () => {
           const transformedCart = {
             user: cart.user,
             cartId: cart.cartId,
-            albums: cart.albums.map((album) => ({
-              id: album.albumId,
-              cover: album.imageFilePath === "" ? "default.webp" : album.imageFilePath,
-              media: album.media === 0 ? "VinylBase.png" : "CDBase.png",
-              artistName: album.artistName,
-              albumTitle: album.title,
-              isUsed: album.isUsed,
-              price: album.price.toFixed(2),
-              quantity: album.quantity // Assurez-vous que c'est bien la quantité de l'album
+            albums: cart.cartItems.map((item) => ({
+              id: item.album.albumId,
+              cover: item.album.imageFilePath === "" ? "default.webp" : item.album.imageFilePath,
+              media: item.album.media === 0 ? "VinylBase.png" : "CDBase.png",
+              artistName: item.album.artistName,
+              albumTitle: item.album.title,
+              isUsed: item.album.isUsed,
+              price: item.album.price.toFixed(2),
+              quantity: item.quantity // Assurez-vous que c'est bien la quantité de l'album
             }))
           };
 
@@ -55,14 +55,62 @@ function GetImgageSRC(cart) {
 
 }
 
+const AddToCart = async (album, cart, setCart, setTotalPanier) => {
+
+  try{
+      const reponse = await axios.post(`${API_BASE_URL}/cart/add/${cart.cartId}/${album}`);
+      if(reponse.status === 200)
+      {
+        console.log('Album added successfully');
+
+        const updatedCart = { ...cart };
+        const updatedAlbums = updatedCart.albums.map((item) => {
+          if(item.id === album){
+            item.quantity = item.quantity + 1;
+          }
+          else 
+          {
+            return null;
+          }
+        return item;
+        });
+        updatedCart.albums = updatedAlbums.filter((item) => item !== null);
+        setCart(updatedCart);
+        setTotalPanier(calculateTotal(updatedCart.albums));
+      }
+  }
+  catch(error){
+  
+  }
+
+
+}
+
+
+
 const deleteAlbum = async (album, cart, setCart, setTotalPanier) => {
 
 try {
   const response = await axios.delete(`${API_BASE_URL}/cart/delete/${cart.cartId}/${album}`);
   if (response.status === 200) {
     console.log('Album deleted successfully');
+
     const updatedCart = { ...cart };
-      updatedCart.albums = updatedCart.albums.filter((item) => item.id !== album);
+    const updatedAlbums = updatedCart.albums.map((item) => {
+      if(item.id === album){
+        item.quantity = item.quantity - 1;
+      }
+      else 
+      {
+        return null;
+      }
+    return item;
+    });
+    
+    updatedCart.albums = updatedAlbums.filter((item) => item !== null);
+    updatedCart.albums = updatedCart.albums.filter((item) => item.quantity !== 0);
+        // updatedCart.albums = updatedCart.albums.filter((item) => item.id !== album);
+  
       setCart(updatedCart);
       setTotalPanier(calculateTotal(updatedCart.albums));
     
@@ -119,9 +167,11 @@ else{
                 <img src={GetImgageSRC(album)} alt={`${cart.album} cover`} />
             </div>
           <div>Nom de l'album: {album.albumTitle}</div>
-          <div>Quantité: {album.quantity}</div>
+          
           <div>Sous-total: {album.price} $</div>
           <button onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}>Retirer du panier</button>
+          <div>Quantité: {album.quantity}</div>
+          <bouton onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</bouton>
         </li>
       ))}
     </ul>
