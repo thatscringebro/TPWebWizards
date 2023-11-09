@@ -26,10 +26,19 @@ namespace WizardRecords.Controllers {
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = new User(model.UserName) {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email = model.Email
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                AddressNum = model.AddressNum,
+                StreetName = model.StreetName,
+                City = model.City,
+                Province = model.Province,
+                PostalCode = model.PostalCode
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -42,12 +51,14 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto login) {
-            var user = await _userManager.FindByEmailAsync(login.Email);
+        public async Task<IActionResult> Login([FromBody] LoginDto model) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
                 return BadRequest("Invalid login attempt.");
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, login.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (!result.Succeeded)
                 return BadRequest("Invalid login attempt.");

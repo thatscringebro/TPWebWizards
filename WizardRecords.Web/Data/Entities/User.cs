@@ -12,7 +12,10 @@ namespace WizardRecords.Core.Domain.Entities {
         public string FirstName { get; set; } = "-";
         public string LastName { get; set; } = "-";
         public string FullName => $"{FirstName} {LastName}";
-        public bool IsInitialPwd { get; set; } = true;
-        public string? ProfileImagePath { get; set; } = "default.webp"; // TODO: Find default image
+        public int AddressNum { get; set; }
+        public string StreetName { get; set; }
+        public string City { get; set; }
+        public Province Province { get; set; }
+        public string PostalCode { get; set; }
     }
 }

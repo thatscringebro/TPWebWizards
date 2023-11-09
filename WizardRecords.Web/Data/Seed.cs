@@ -14,7 +14,18 @@ namespace WizardRecords.Core.Data {
             var validEmail = "Admin123@wizardrecords.com";
             var validPassword = "Admin123!";
 
-            var adminUser = AddUser(builder, "Ti-Coq", "Tremblay", validUserName, validEmail, validPassword);
+            var adminUser = AddUser(builder, 
+                                    "Ti-Coq", 
+                                    "Tremblay", 
+                                    validUserName, 
+                                    validEmail, 
+                                    "555-555-5555", 
+                                    666, 
+                                    "Rue Delarue", 
+                                    "Sainte-Grosse-Rcohe-De-L'Achigan", 
+                                    Province.QC, 
+                                    validPassword
+                                    );
             AddUserToRole(builder, adminUser, adminRole);
             SeedAll(builder);
         }
@@ -30,10 +41,20 @@ namespace WizardRecords.Core.Data {
             return newRole;
         }
 
-        private static User AddUser(ModelBuilder builder, string firstName, string lastName, string username, string email, string password) {
+        private static User AddUser(ModelBuilder builder,
+                                    string firstName, 
+                                    string lastName, 
+                                    string username, 
+                                    string email, 
+                                    string phone, 
+                                    int addressNum, 
+                                    string streetName,
+                                    string city,
+                                    Province province,
+                                    string password
+                                    ) {
             var hasher = new PasswordHasher<User>();
-            var newUser = new User(username)
-            {
+            var newUser = new User(username) {
                 Id = Guid.NewGuid(),
                 UserName = username,
                 NormalizedUserName = username.ToUpper(),
@@ -43,9 +64,14 @@ namespace WizardRecords.Core.Data {
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 FirstName = firstName,
                 LastName = lastName,
-                IsInitialPwd = true,
-                ProfileImagePath = null
+                PhoneNumber = phone,
+                AddressNum = addressNum,
+                StreetName = streetName,
+                City = city,
+                Province = province,
+                PostalCode = "J0K 3H0"
             };
+
             newUser.PasswordHash = hasher.HashPassword(newUser, password);
             builder.Entity<User>().HasData(newUser);
 

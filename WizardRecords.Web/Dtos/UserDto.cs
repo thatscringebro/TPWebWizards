@@ -2,8 +2,7 @@
     public record UserDto(
         Guid UserId,
         string FirstName,
-        string LastName,
-        string? ProfileImagePath
+        string LastName
     ) {
         public string FullName => $"{FirstName} {LastName}";
     };

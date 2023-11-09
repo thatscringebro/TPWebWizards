@@ -131,3 +131,20 @@ export const Grade = [
     { label: "P", value: 7 },
     { label: "NONE", value: 8 }
 ];
+
+export const Province = [
+    {label: "BC", value: "British Columbia"},
+    {label: "AB", value: "Alberta"},
+    {label: "SK", value: "Saskatchewan"},
+    {label: "MB", value: "Manitoba"},
+    {label: "ON", value: "Ontario"},
+    {label: "QC", value: "Quebec"},
+    {label: "NB", value: "New Brunswick"},
+    {label: "NS", value: "Nova Scotia"},
+    {label: "PE", value: "Prince Edward Island"},
+    {label: "NL", value: "Newfoundland and Labrador"},
+    {label: "YT", value: "Yukon"},
+    {label: "NT", value: "Northwest Territories"},
+    {label: "Nu", value: "Nunavut"},
+    {label: "YT", value: "Yukon"}
+];
