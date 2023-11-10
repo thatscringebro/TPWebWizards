@@ -4,6 +4,7 @@ import ProductList from './ProductList';
 import { ArtistGenre } from './utils/constants';
 import axios from 'axios';
 import '../styles/ProductGallery.css';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 const fetchDataForCategory = () => {
     return axios.get(`${API_BASE_URL}/album/all`)
@@ -105,7 +106,15 @@ function ProductGallery() {
     const [selectedFormatFilterOption, setSelectedFormatFilterOption] = useState('default');
     const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
     const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
-    
+
+    //get token
+    var token = sessionStorage.getItem('token');
+
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        var role = decodedToken["role"];
+    }
     
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
@@ -244,7 +253,12 @@ function ProductGallery() {
 
     return (
         <div>
-            <h1>All products</h1>
+            <div className="entete-allProducts">
+                <h1>All products</h1>
+                {role === "Administrator" &&
+                    <button id='add-item'>Add Item</button>
+                }
+            </div>
             <div className="dropdown-container">
                 <div className="dropdown-group">
                     <label htmlFor="dropdown-label">SORTING OPTIONS: </label>

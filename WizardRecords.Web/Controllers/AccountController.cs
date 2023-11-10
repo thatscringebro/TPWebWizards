@@ -83,6 +83,21 @@ namespace WizardRecords.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                //new Claim("firstName", user.FirstName),
+                //new Claim("lastName", user.LastName),
+                //new Claim("email", user.Email),
+                //new Claim("phoneNumber", user.PhoneNumber),
+                //TODO: ajouter adresse
+                //new Claim("address", user. ),
+                //TODO: ajouter ville
+                //new Claim("city", user. ),
+                //TODO: ajouter province
+                //new Claim("provinceState", user. ),
+                //TODO: ajouter pays
+                //new Claim("country", user. ),
+                //TODO: ajouter code postal
+                //new Claim("postalCode", user. ),
+
             };
 
             foreach (var role in roles)

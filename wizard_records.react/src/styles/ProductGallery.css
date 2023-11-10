@@ -156,3 +156,25 @@
 span:contains("...") {
     font-weight: bold;
 }
+.entete-allProducts{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+}
+#add-item{
+    float:right;
+    margin-right: 30px;
+    border-radius: 5px;
+    width: 120px;
+    height: 50px;
+    align-content: center;
+    justify-content: center;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+}
+    #add-item:hover{
+        background-color: #5ed162;
+    }
