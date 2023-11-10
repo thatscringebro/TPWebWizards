@@ -11,7 +11,7 @@ namespace WizardRecords.Dtos {
         int AddressNum,
         string StreetName,
         string City,
-        Province Province,
-        string PostalCode
+        string PostalCode,
+        Province Province
     );
 }

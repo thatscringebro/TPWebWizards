@@ -19,11 +19,16 @@ const registerSchema = Yup.object().shape({
     LastName: Yup.string().required('Last name is required'),
     Email: Yup.string().email('Invalid email').required('Email is required'),
     Password: Yup.string().required('Password is required'),
+    Confirm: Yup.string()
+        .oneOf([Yup.ref('Password'), null], 'Passwords must match')
+        .required('Password confirmation is required'),
     PhoneNumber: Yup.string().required('Phone number is required'),
     AddressNum: Yup.number().required('Address number is required'),
     StreetName: Yup.string().required('Street name is required'),
     City: Yup.string().required('City is required'),
-    Province: Yup.mixed().oneOf(Object.values(Province), 'Invalid province').required('Province is required'),
+    Province: Yup.number()
+      .oneOf(Province.map((_, index) => index), 'Invalid province')
+      .required('Province is required'),
     PostalCode: Yup.string().required('Postal code is required'),
 });
 
@@ -42,17 +47,18 @@ function Account() {
         LastName: '',
         Email: '',
         Password: '',
+        Confirm: '',
         PhoneNumber: '',
         AddressNum: '',
         StreetName: '',
         City: '',
-        Province: '',
-        PostalCode: ''
+        PostalCode: '',
+        Province: ''
     };
 
     const handleSubmit = async (values, actions) => {
         console.log("handleSubmit triggered!");
-
+        console.log("Form values:", values);
         try {
             let response;
 
@@ -62,13 +68,19 @@ function Account() {
                     Password: values.Password
                 });
             } else {
-                response = await axios.post(`${API_BASE_URL}/account/register`, values);
-                alert(response.status)
-                if (response.status === 200){
-                    setIsLogin(true)
-                }
+              const { Confirm, ...rest } = values;
+              const registrationData = {
+                ...rest,
+                Province: parseInt(rest.Province, 10)
+              };
+
+              response = await axios.post(`${API_BASE_URL}/account/register`, registrationData);
+              alert(response.status);
+              if (response.status === 200){
+                  alert('Registration successful!');
+                  setIsLogin(true);
+              }
             }
-            console.log("Response data:", response.data);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 alert('Authentication successful!');
@@ -133,6 +145,11 @@ function Account() {
                         <ErrorMessage name="Confirm" component="div" className="error-message"/>
                       </FormGroup>
                       <FormGroup>
+                        <Label for="PhoneNumber">Phone number</Label>
+                        <Field name="PhoneNumber" type="string" as={Input} placeholder="Phone number" className="field"/>
+                        <ErrorMessage name="PhoneNumber" component="div" className="error-message"/>
+                      </FormGroup>
+                      <FormGroup>
                         <Label for="AddressNum">Civic address number</Label>
                         <Field name="AddressNum" type="number" as={Input} placeholder="Civic address number" className="field"/>
                         <ErrorMessage name="AddressNum" component="div" className="error-message"/>
@@ -143,11 +160,21 @@ function Account() {
                         <ErrorMessage name="StreetName" component="div" className="error-message"/>
                       </FormGroup>
                       <FormGroup>
+                        <Label for="City">City</Label>
+                        <Field name="City" type="string" as={Input} placeholder="City, town, etc." className="field"/>
+                        <ErrorMessage name="City" component="div" className="error-message"/>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="PostalCode">Postal code</Label>
+                        <Field name="PostalCode" type="string" as={Input} placeholder="Postal code" className="field"/>
+                        <ErrorMessage name="PostalCode" component="div" className="error-message"/>
+                      </FormGroup>
+                      <FormGroup>
                         <Label for="Province">Province</Label><br />
                         <Field name="Province" as="select" className="field" id="provMenu">
                           <option value="">Select a Province</option>
                           {Province.map((province, index) => (
-                            <option key={index} value={province.label}>
+                            <option key={index} value={index}>
                               {province.value}
                             </option>
                           ))}
