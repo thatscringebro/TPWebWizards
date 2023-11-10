@@ -16,11 +16,13 @@ namespace WizardRecords.Controllers {
     public class AccountController : ControllerBase {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration) {
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration) {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -45,6 +47,11 @@ namespace WizardRecords.Controllers {
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "Guest");
+
+            if (!roleResult.Succeeded)
+                return BadRequest(roleResult.Errors);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             return Ok();

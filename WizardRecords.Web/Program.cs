@@ -26,6 +26,7 @@ builder.Services.AddDbContext<WizRecDbContext>(options =>
 
 // Identity services
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<WizRecDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
