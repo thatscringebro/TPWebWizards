@@ -90,7 +90,7 @@ function ProductGallery() {
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
         setCurrentPage(1);
-        updateUrl(selectedCategoryFilterOption, selectedTypeFilterOption);
+        updateUrl(selectedCategoryFilterOption, selectedTypeFilterOption, event.target.value);
     }
 
     useEffect(() => {
@@ -101,8 +101,17 @@ function ProductGallery() {
             const urlSearchParams = new URLSearchParams(window.location.search);
             const categoryParam = urlSearchParams.get('category');
             const mediaParam = urlSearchParams.get('media');
-
+            const sortParam = urlSearchParams.get('sort');
             
+            if (sortParam && sortParam !== 'default') {
+                setSelectedSortOption(sortParam);
+            } else {
+                setSelectedSortOption('default');
+            }
+
+
+
+
          if (categoryParam && categoryParam !== 'default') {
 
              if(categoryParam === 'New' || categoryParam === 'newOnly'){
@@ -135,6 +144,7 @@ function ProductGallery() {
             const urlSearchParams = new URLSearchParams(window.location.search);
             const categoryParam = urlSearchParams.get('category');
             const mediaParam = urlSearchParams.get('media');
+            const sortParam = urlSearchParams.get('sort');
 
             if (categoryParam && categoryParam !== 'default') {
                 setSelectedCategoryFilterOption(categoryParam);
@@ -146,6 +156,12 @@ function ProductGallery() {
                 setSelectedTypeFilterOption(mediaParam);
             } else {
                 setSelectedTypeFilterOption('default');
+            }
+
+            if (sortParam && sortParam !== 'default') {
+                setSelectedSortOption(sortParam);
+            } else {
+                setSelectedSortOption('default');
             }
         };
 
@@ -222,7 +238,7 @@ function ProductGallery() {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    const updateUrl = (category, media) => {
+    const updateUrl = (category, media, sort) => {
         const urlParams = new URLSearchParams();
 
         if (category !== 'default') {
@@ -231,6 +247,9 @@ function ProductGallery() {
 
         if (media !== 'default') {
             urlParams.set('media', media);
+        }
+        if (sort !== 'default') {
+            urlParams.set('sort', sort);
         }
 
         navigate(`?${urlParams.toString()}`);
