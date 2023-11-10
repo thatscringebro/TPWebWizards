@@ -109,12 +109,13 @@ function ProductGallery() {
                 setSelectedSortOption('default');
             }
 
-
-
-
          if (categoryParam && categoryParam !== 'default') {
 
-             if(categoryParam === 'New' || categoryParam === 'newOnly'){
+            if(categoryParam === 'Featured')
+            {
+                setSelectedCategoryFilterOption('newOnly');
+            }
+             else if(categoryParam === 'New' || categoryParam === 'newOnly'){
                 setSelectedCategoryFilterOption('newOnly');
              }
             else if(categoryParam === 'Used' || categoryParam === 'usedOnly'){
@@ -124,7 +125,10 @@ function ProductGallery() {
                 setSelectedCategoryFilterOption('default');
             }
         if (mediaParam && mediaParam !== 'default') {
-            if(mediaParam === 'Vinyl' || mediaParam === 'vinylOnly'){
+            if(mediaParam === 'Products'){
+                setSelectedTypeFilterOption('cdOnly');
+            }
+            else if(mediaParam === 'Vinyl' || mediaParam === 'vinylOnly'){
                  setSelectedTypeFilterOption('vinylOnly');
             }
             else if(mediaParam === 'CDs' || mediaParam === 'cdOnly'){
