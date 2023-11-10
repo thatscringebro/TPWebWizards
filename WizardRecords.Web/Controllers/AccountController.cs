@@ -60,8 +60,8 @@ namespace WizardRecords.Controllers
             if (user == null)
                 return BadRequest("Invalid login attempt.");
 
-            var token = GenerateJwtTokenAsync(user);
-            return Ok(new { Token = token });
+            var tokenString = GenerateJwtTokenAsync(user);
+            return Ok(new { token = tokenString });
         }
 
         [HttpPost("logout")]
@@ -87,7 +87,7 @@ namespace WizardRecords.Controllers
 
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("role", role));
             }
 
             var token = new JwtSecurityToken(
@@ -98,8 +98,8 @@ namespace WizardRecords.Controllers
                 signingCredentials: credentials
             );
 
-            // cette ligne la a chie
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            Console.WriteLine( tokenString );
             return tokenString;
         }
     }

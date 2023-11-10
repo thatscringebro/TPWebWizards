@@ -42,7 +42,7 @@ function Account() {
             }
             console.log("Response data:", response.data);
             if (response.data.token) {
-                localStorage.setItem('token', response.data.token); // LOWER FUCKING CASE!!!!
+                sessionStorage.setItem('token', JSON.stringify(response.data.token));
                 alert('Authentication successful!');
                 setLoggedIn(true);
             }

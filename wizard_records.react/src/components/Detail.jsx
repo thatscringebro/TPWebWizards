@@ -6,6 +6,7 @@ import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
 import axios from 'axios';
 import '../styles/Detail.css';
 import '../styles/Home.css';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 const Detail = () => {
     const { id } = useParams();
@@ -14,6 +15,14 @@ const Detail = () => {
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+
+    var token = sessionStorage.getItem('token');
+
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        var role = decodedToken["role"];
+    }
 
     const fetchDataForDetail = async  (id) => {
         try {
@@ -172,11 +181,12 @@ const Detail = () => {
                             <br />
                             <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
-                        {/*Make available for admin or staff only!*/}
+                        {role === "Administrator" &&
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
                             <button className="button-delete" onClick={deleteProduct}>Delete</button>
                         </div>
+                        }
                     </div>
                 )}
                 <div className="price-cart-container">
