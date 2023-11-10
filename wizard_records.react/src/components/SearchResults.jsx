@@ -10,10 +10,7 @@ const fetchDataForCategory = (searchQuery) => {
         if (response.status === 200) {
             const albums = response.data;
 
-            // if(albums.imageFilePath === "") 
-            // {
-            //     albums.imageFilePath = 'default.webp';
-            // }
+           
 
             const albumPromises = albums.map((album) => {
                 return {

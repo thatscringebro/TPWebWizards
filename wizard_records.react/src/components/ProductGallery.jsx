@@ -3,15 +3,13 @@ import { API_BASE_URL } from './utils/config';
 import ProductList from './ProductList';
 import axios from 'axios';
 import '../styles/ProductGallery.css';
+import { useNavigate } from 'react-router-dom';
 
 const fetchDataForCategory = () => {
     return axios.get(`${API_BASE_URL}/album/all`)
         .then((response) => {
             if (response.status === 200) {
                 const albums = response.data;
-
-              
-
                 const albumPromises = albums.map((album) => {
                     return {
                         id: album.albumId,
@@ -76,7 +74,10 @@ function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
     );
 }
 
+
+
 function ProductGallery() {
+    const navigate = useNavigate();
     const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -89,29 +90,88 @@ function ProductGallery() {
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
         setCurrentPage(1);
+        updateUrl(selectedCategoryFilterOption, selectedTypeFilterOption);
     }
 
     useEffect(() => {
         fetchDataForCategory().then((data) => {
             setAllProducts(data); 
-            setProducts(data);
+
+
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlSearchParams.get('category');
+            const mediaParam = urlSearchParams.get('media');
+
+            
+         if (categoryParam && categoryParam !== 'default') {
+
+             if(categoryParam === 'New' || categoryParam === 'newOnly'){
+                setSelectedCategoryFilterOption('newOnly');
+             }
+            else if(categoryParam === 'Used' || categoryParam === 'usedOnly'){
+                setSelectedCategoryFilterOption('usedOnly');
+             }
+            } else {
+                setSelectedCategoryFilterOption('default');
+            }
+        if (mediaParam && mediaParam !== 'default') {
+            if(mediaParam === 'Vinyl' || mediaParam === 'vinylOnly'){
+                 setSelectedTypeFilterOption('vinylOnly');
+            }
+            else if(mediaParam === 'CDs' || mediaParam === 'cdOnly'){
+                setSelectedTypeFilterOption('cdOnly');
+            }
+        } else {
+             setSelectedTypeFilterOption('default');
+        }
+
+        setProducts(data);  
         });
+      }, []);
+
+      useEffect(() => {
+        // Effect to handle URL changes (e.g., browser back button)
+        const handleUrlChange = () => {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlSearchParams.get('category');
+            const mediaParam = urlSearchParams.get('media');
+
+            if (categoryParam && categoryParam !== 'default') {
+                setSelectedCategoryFilterOption(categoryParam);
+            } else {
+                setSelectedCategoryFilterOption('default');
+            }
+
+            if (mediaParam && mediaParam !== 'default') {
+                setSelectedTypeFilterOption(mediaParam);
+            } else {
+                setSelectedTypeFilterOption('default');
+            }
+        };
+
+        window.addEventListener('popstate', handleUrlChange);
+
+        return () => {
+            window.removeEventListener('popstate', handleUrlChange);
+        };
     }, []);
 
+
+   
     // Filters
     let filteredProducts = [...allProducts];
-
     if (selectedCategoryFilterOption === 'newOnly') {
         filteredProducts = filteredProducts.filter((product) => product.isUsed === false);
     } else if (selectedCategoryFilterOption === 'usedOnly') {
         filteredProducts = filteredProducts.filter((product) => product.isUsed === true);
     }
-
-    if (selectedTypeFilterOption === 'cdOnly') {
+    if (selectedTypeFilterOption === 'cdOnly' ) {
         filteredProducts = filteredProducts.filter((product) => product.media === 'CDBase.png');
     } else if (selectedTypeFilterOption === 'vinylOnly') {
         filteredProducts = filteredProducts.filter((product) => product.media === 'VinylBase.png');
     }
+
+  
 
     // Sorts
     const sortedProducts = [...filteredProducts];
@@ -132,6 +192,7 @@ function ProductGallery() {
     const handleTypeFilterChange = (event) => {
         console.log("handle_type: :" + event.target.value);
         setSelectedTypeFilterOption(event.target.value);
+        updateUrl(selectedCategoryFilterOption, event.target.value);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
@@ -139,6 +200,7 @@ function ProductGallery() {
     const handleCategoryFilterChange = (event) => {
         console.log("handle_cat: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
+        updateUrl(event.target.value, selectedTypeFilterOption);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
@@ -159,6 +221,22 @@ function ProductGallery() {
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const updateUrl = (category, media) => {
+        const urlParams = new URLSearchParams();
+
+        if (category !== 'default') {
+            urlParams.set('category', category);
+        }
+
+        if (media !== 'default') {
+            urlParams.set('media', media);
+        }
+
+        navigate(`?${urlParams.toString()}`);
+    };
+
+
 
     return (
         <div>

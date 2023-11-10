@@ -8,7 +8,8 @@ namespace WizardRecords.Api.Data.Entities
     public class Cart
     {
         public Guid CartId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; } // créé un token ?pour les non connecter a voir 
+        //S'assurer de géré la bd pour savoir si l'article est disponible ou pas et la quantity qu'on peux prendre
 
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
