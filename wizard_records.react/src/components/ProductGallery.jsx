@@ -5,6 +5,7 @@ import { ArtistGenre } from './utils/constants';
 import axios from 'axios';
 import '../styles/ProductGallery.css';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 const fetchDataForCategory = () => {
     return axios.get(`${API_BASE_URL}/album/all`)
@@ -256,7 +257,7 @@ function ProductGallery() {
             <div className="entete-allProducts">
                 <h1>All products</h1>
                 {role === "Administrator" &&
-                    <button id='add-item'>Add Item</button>
+                    <Link className="text-light" to="/add-product"><button id='add-item'>Add Item</button></Link>
                 }
             </div>
             <div className="dropdown-container">

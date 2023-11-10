@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { API_BASE_URL } from './utils/config';
-import AddProductForm from './AddProductForm';
 import axios from 'axios';
 import '../styles/Account.css';
 
@@ -53,8 +52,12 @@ function Account() {
         }
     };
 
+    //A modifier pour pouvoir se logout: ne doit pas utiliser isLoggedIn car la variable est reset a chaque fois qu'on reviens sur la page
+    //devrait plutot regarder si le token est existant
     if (isLoggedIn) {
-        return <AddProductForm />
+        return <Button className="btn-submit" type="submit">
+            Logout
+        </Button>
     }
 
     return (
