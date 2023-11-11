@@ -68,6 +68,7 @@ namespace WizardRecords.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            Console.WriteLine("User disconnected");
             return Ok();
         }
 

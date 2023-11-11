@@ -109,7 +109,7 @@ function ProductGallery() {
     const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
 
     //get token
-    var token = sessionStorage.getItem('token');
+    var token = sessionStorage.getItem('userToken');
 
     if(token)
     {

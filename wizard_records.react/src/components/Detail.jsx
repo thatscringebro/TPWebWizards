@@ -16,7 +16,7 @@ const Detail = () => {
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
-    var token = sessionStorage.getItem('token');
+    var token = sessionStorage.getItem('userToken');
 
     if(token)
     {
