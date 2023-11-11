@@ -12,17 +12,20 @@ const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [role, setRole] = useState([]);
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
-    var token = sessionStorage.getItem('userToken');
-
-    if(token)
-    {
-        var decodedToken = jwt_decode(token);
-        var role = decodedToken["role"];
-    }
+    //get token
+    useEffect(() => {
+        var token = sessionStorage.getItem('userToken');
+        if(token)
+        {
+            var decodedToken = jwt_decode(token);
+            setRole(decodedToken["role"]);
+        }
+    }, []);
 
     const fetchDataForDetail = async  (id) => {
         try {
@@ -163,7 +166,7 @@ const Detail = () => {
                     </div>
                 ) : (
                     <div>
-                        <Link to={`/artist/${product.artistName}`}><h1>{product.artistName}</h1></Link>
+                        <Link to={`/artist/${product.artistName}`}><h1 className='artist-link'>{product.artistName}</h1></Link>
                         <h2 className="title-label-container">"{product.albumTitle}" ({product.albumLabel})</h2>
                         <div className="detail-information">
                             <br />
