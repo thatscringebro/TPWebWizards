@@ -37,7 +37,7 @@ function Account() {
             setIsLogin(false);
             sessionStorage.removeItem('userToken');
             alert("You have been successfully logged out");
-            navigate('/')
+            navigate('/');
           } else {
             alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
           }
@@ -71,6 +71,7 @@ function Account() {
                 sessionStorage.setItem('userToken', JSON.stringify(response.data.token));
                 alert('Authentication successful!');
                 setLoggedIn(true);
+                navigate('/');
             }
 
         } catch (error) {

@@ -99,6 +99,7 @@ function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
 }
 
 function ProductGallery() {
+    const [role, setRole] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -109,13 +110,14 @@ function ProductGallery() {
     const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
 
     //get token
-    var token = sessionStorage.getItem('userToken');
-
-    if(token)
-    {
-        var decodedToken = jwt_decode(token);
-        var role = decodedToken["role"];
-    }
+    useEffect(() => {
+        var token = sessionStorage.getItem('userToken');
+        if(token)
+        {
+            var decodedToken = jwt_decode(token);
+            setRole(decodedToken["role"]);
+        }
+    }, []);
     
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
@@ -331,7 +333,6 @@ function ProductGallery() {
                             </button>
                         </div>
                     )}
-                )
             </div>) : (
                 <div className="no-results">
                     <h1>No matching results!</h1>
