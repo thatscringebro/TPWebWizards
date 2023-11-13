@@ -8,7 +8,7 @@ import SearchResults from "../SearchResults";
 import ProductGallery from "../ProductGallery";
 import AddProductForm from "../AddProductForm";
 import Account from "../Account";
-
+import OrderPage from "../OrderPage";
 
 const AppRoutes = [
     {
@@ -51,6 +51,10 @@ const AppRoutes = [
     {
         path: '/account',
         element: <Account />
+    },
+    {
+        path: '/order',
+        element: <OrderPage />
     }
 
 ];
