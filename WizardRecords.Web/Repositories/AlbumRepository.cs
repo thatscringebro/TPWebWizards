@@ -48,11 +48,11 @@ namespace WizardRecords.Api.Repositories {
             IQueryable<Album> query = _context.Albums;
 
             if (media.HasValue) {
-                query = query.Where(a => a.Media == media);
+                query = query.Where(a => a.Media == media && a.Quantity > 0);
             }
 
             if (isUsed.HasValue) {
-                query = query.Where(a => a.IsUsed == isUsed.Value);
+                query = query.Where(a => a.IsUsed == isUsed.Value && a.Quantity > 0);
             }
 
             query = query.OrderBy(a => Guid.NewGuid()).Take(count);

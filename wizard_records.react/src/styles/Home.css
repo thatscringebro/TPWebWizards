@@ -71,7 +71,7 @@
 
         .card-href:hover .card-img-cover {
             transition: transform 0.3s ease;
-            transform: translate(32.4%, 10.6%) scale(1.05);
+            transform: translate(31.5%, 10%) scale(1.05);
         }
 
         .card-href:hover .card-artist,
@@ -83,11 +83,11 @@
 .card-img-cover {
     position: absolute;
     transition: transform 0.3s ease;
-    transform: translate(32.4%, 10.6%);
+    transform: translate(31.5%, 10%);
     top: 0;
     left: 0;
     height: auto;
-    max-width: 53.3333%;
+    max-width: 54.5%;
     height: contain;
 }
 
@@ -118,6 +118,32 @@
     align-items: flex-end;
 }
 
+.card-unavailable {
+    position: relative;
+    background-color: red;
+}
+
+    .card-unavailable:hover {
+        background-color: transparent;
+        color: transparent;         
+    }
+    
+        .card-unavailable:hover::after {
+            background-color: rgb(255, 64, 64);
+            border-radius: 5px;
+            content: "Order?";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
 .card-width {
     width: 100%;
 }
@@ -146,11 +172,10 @@
         color: #24262b;
     }
 
-    .section-category h3:hover {
-        font-weight: bold;
-    }
-
 .slogan {
     font-family: 'PatrenaRolane';
     font-size: calc(20px + (95 - 20) * ((100vw - 320px) / (1920 - 320)));
+}
+h3 a:hover{
+    color: darkred;
 }

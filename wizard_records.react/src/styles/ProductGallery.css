@@ -2,12 +2,72 @@
     box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
 }
 
-.filters {
+.dropdown-container {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 97.5%;
+    margin: 10px auto;
+    padding: 10px;
 }
 
-.filter-bar {
-    margin-left: auto;
+
+#dropdown-availability {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #24262b;
+    color: #E4E6Eb;
+}
+
+#dropdown-genre {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #24262b;
+    color: #E4E6Eb;
+}
+
+#dropdown-condition {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #24262b;
+    color: #E4E6Eb;
+}
+
+#dropdown-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #24262b;
+    color: #E4E6Eb;
+}
+
+#dropdown-media {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #24262b;
+    color: #E4E6Eb;
+}
+
+.no-results {
+    text-align: center;
+    margin: 20px;
 }
 
 .page-button {
@@ -62,22 +122,8 @@
     text-align: right;
 }
 
-.section-category {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .sort-bar {
     float: left;
-}
-
-#sortDropdown, #filterDropdown {
-    margin-left: 10px;
-    border: none;
-    background-color: #24262b;
-    color: #E4E6Eb;
-    border-radius: 2px
 }
 
 @media (max-width: 420px) {
@@ -86,25 +132,23 @@
     }
 }
 
-
-
 .page-number {
     color: black; 
     cursor: pointer;
-    font-size: 18px; 
-    margin: 2px;
+    font-size: 18px;
+    padding: 0px 10px;
     text-decoration: none;
     transition: color 0.2s; 
 }
 
-
-.page-number.current-page {
-    color: darkred; /* Couleur du texte en rouge foncé pour la page actuelle */
+.current-page {
+    color: darkred;
+    text-decoration:underline;
 }
 
 .page-number:hover {
-    color: #0056b3; /* Couleur du texte au survol */
-    text-decoration: underline; /* Soulignement au survol */
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 
@@ -112,3 +156,25 @@
 span:contains("...") {
     font-weight: bold;
 }
+.entete-allProducts{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+}
+#add-item{
+    float:right;
+    margin-right: 30px;
+    border-radius: 5px;
+    width: 120px;
+    height: 50px;
+    align-content: center;
+    justify-content: center;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+}
+    #add-item:hover{
+        background-color: #5ed162;
+    }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Product = ({ product }) => {
     let coverImageSrc, formatImageSrc;
+    
     try {
         formatImageSrc = require(`../assets/images/format/${product.media}`);
     } catch (err) {
@@ -10,9 +11,14 @@ const Product = ({ product }) => {
     }
 
     try {
-        coverImageSrc = require(`../assets/images/covers/${product.cover}`);
+        const coverImageFile = require(`../assets/images/covers/${product.cover}`);
+
+        if (coverImageFile) {
+            coverImageSrc = coverImageFile;
+        }
     } catch (err) {
         console.error(`Error requiring cover image for ${product.cover}`, err);
+        coverImageSrc = require('../assets/images/covers/default.webp');
     }
 
     return (
@@ -25,12 +31,11 @@ const Product = ({ product }) => {
                         <div className="card-info">
                             <CardTitle className="card-artist">{product.artistName}</CardTitle>
                             <CardSubtitle className="card-album">{product.albumTitle}</CardSubtitle>
-                            {/* <CardSubtitle className="card-album"> {isAvailable ? 'Available' : 'Not Available'} </CardSubtitle> */}
                         </div>
                         <div className="card-divider"></div>
                         <div className="card-purchase">
                             <CardTitle className="card-price"><b>${product.price}</b></CardTitle>
-                            <CardSubtitle className="card-basket">Add to cart</CardSubtitle>
+                            <CardSubtitle className={`card-basket ${product.quantity === 0 ? 'card-unavailable' : ''}`}>{product.quantity === 0 ? 'Sold Out' : 'Add to cart'}</CardSubtitle>
                         </div>
                     </CardBody>
                 </Card>

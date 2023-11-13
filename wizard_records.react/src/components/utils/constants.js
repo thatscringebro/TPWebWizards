@@ -9,24 +9,23 @@ export const Category = [
 ];
 
 export const ArtistGenre = [
-    { label: "ROCK", value: 0 },
-    { label: "POP", value: 1 },
-    { label: "JAZZ", value: 2 },
-    { label: "HIPHOP", value: 3 },
-    { label: "ALTERNATIVE", value: 4 },
-    { label: "CLASSICAL", value: 5 },
-    { label: "FRANCOPHONE", value: 6 },
-    { label: "METAL", value: 7 },
-    { label: "PUNK", value: 8 },
-    { label: "BLUES", value: 9 },
-    { label: "WORLD", value: 10 },
-    { label: "FOLK", value: 11 },
-    { label: "COUNTRY", value: 12 },
-    { label: "SOUL", value: 13 },
-    { label: "FUNK", value: 14 },
-    { label: "ELECTRONICA", value: 15 },
-    { label: "SOUNDTRACK", value: 16 },
-    { label: "UNSPECIFIED", value: 17 }
+    { label: "Rock", value: 0 },
+    { label: "Pop", value: 1 },
+    { label: "Jazz", value: 2 },
+    { label: "Hiphop", value: 3 },
+    { label: "Alternative", value: 4 },
+    { label: "Classical", value: 5 },
+    { label: "Francophone", value: 6 },
+    { label: "Metal", value: 7 },
+    { label: "Punk", value: 8 },
+    { label: "Blues", value: 9 },
+    { label: "World", value: 10 },
+    { label: "Folk", value: 11 },
+    { label: "Country", value: 12 },
+    { label: "Soul", value: 13 },
+    { label: "Funk", value: 14 },
+    { label: "Electronica", value: 15 },
+    { label: "Soundtrack", value: 16 },
 ];
 
 export const AlbumGenre = [

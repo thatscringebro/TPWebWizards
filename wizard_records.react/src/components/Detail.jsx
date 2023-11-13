@@ -2,38 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from './utils/config';
 import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
 import axios from 'axios';
 import '../styles/Detail.css';
-import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
+import '../styles/Home.css';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [role, setRole] = useState([]);
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+
+    //get token
+    useEffect(() => {
+        var token = sessionStorage.getItem('userToken');
+        if(token)
+        {
+            var decodedToken = jwt_decode(token);
+            setRole(decodedToken["role"]);
+        }
+    }, []);
 
     const fetchDataForDetail = async  (id) => {
         try {
             const response = await axios.get(`${API_BASE_URL}/album/${id}`);
             if (response.status === 200) {
                 const album = response.data;
-
-            if(album.imageFilePath === "") 
-            {
-                album.imageFilePath = 'default.webp';
-            }
             
-           
-            AlbumGenre.map((genre) => (genre.value === album.albumGenre) && (album.albumGenre = genre.label))
-            ArtistGenre.map((genre) => (genre.value === album.artistGenre) && (album.artistGenre = genre.label))
-            Grade.map((grade) => (grade.value === album.mediaGrade) && (album.mediaGrade = grade.label))
-            Grade.map((grade) => (grade.value === album.sleeveGrade) && (album.sleeveGrade = grade.label))
+                AlbumGenre.map((genre) => (genre.value === album.albumGenre) && (album.albumGenre = genre.label))
+                ArtistGenre.map((genre) => (genre.value === album.artistGenre) && (album.artistGenre = genre.label))
+                Grade.map((grade) => (grade.value === album.mediaGrade) && (album.mediaGrade = grade.label))
+                Grade.map((grade) => (grade.value === album.sleeveGrade) && (album.sleeveGrade = grade.label))
 
-                const imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+                let imagePath;
+                try {
+                    imagePath = require(`../assets/images/covers/${album.imageFilePath}`);
+                } catch (error) {
+                    console.error(`Error requiring image file for ${album.imageFilePath}`, error);
+                    imagePath = require('../assets/images/covers/default.webp');
+                }
               
-
                 const productData = {
                     albumId: album.albumId,
                     imageFilePath: imagePath,
@@ -44,14 +56,13 @@ const Detail = () => {
                     isUsed: album.isUsed === false ? 'New' : 'Used',
                     price: album.price.toFixed(2),
                     quantity: album.quantity,
-                    mediaGrade : album.mediaGrade,
-                    sleeveGrade : album.sleeveGrade,
-                    catalogNumber : album.catalogNumber ? 'None' : album.catalogNumber,
-                    matrixNumber : album.matrixNumber ? 'None' : album.matrixNumber,
+                    mediaGrade : formatGrade(album.mediaGrade),
+                    sleeveGrade : formatGrade(album.sleeveGrade),
+                    catalogNumber : album.catalogNumber === '' || album.catalogNumber === 'None' ? 'None' : album.catalogNumber,
+                    matrixNumber : album.matrixNumber === '' || album.matrixNumber === 'None' ? 'None' : album.matrixNumber,
                     artistGenre : album.artistGenre,
                     albumGenre  : album.albumGenre,
                     //Format : album.format Ajouter le format dans la bd ? il est dans les constantes de react
-
                 };
 
                 setProduct(productData);
@@ -128,11 +139,11 @@ const Detail = () => {
                 },
             });
             if (creationPanier.status === 200) {
-                console.log('Panier créé avec succès');
+                console.log('Panier cr�� avec succ�s');
                 cart.cartId = creationPanier.data.cartId;
             }
             else {
-                console.error('Échec de la création du panier avec le statut:', creationPanier.status);
+                console.error('�chec de la cr�ation du panier avec le statut:', creationPanier.status);
             }
 
 
@@ -164,10 +175,12 @@ const Detail = () => {
         return <div>Loading product details...</div>;
     }
 
+
     return (
         <div className="detail-container">
             <div className="detail-image">
-                <img src={product.imageFilePath} alt={`${product.albumTitle} cover`} />
+            <img src={product?.imageFilePath || 'default.webp'}
+                 alt={`${product?.albumTitle || 'Default'} cover`} />
             </div>
             <div className="detail-content">
                 {isEditing ? (
@@ -197,15 +210,13 @@ const Detail = () => {
                     </div>
                 ) : (
                     <div>
-                        <Link to={`/artist/${product.artistName}`}><h1>{product.artistName}</h1></Link>
+                        <Link to={`/artist/${product.artistName}`}><h1 className='artist-link'>{product.artistName}</h1></Link>
                         <h2 className="title-label-container">"{product.albumTitle}" ({product.albumLabel})</h2>
                         <div className="detail-information">
                             <br />
                             <p><i>Section</i> : {product.isUsed} {product.media}
                             <br />
-                            <i>Album Genre</i> : {product.albumGenre}
-                            <br />
-                            <i>Artist Genre</i> : {product.artistGenre}
+                            <i>Genre</i> : {product.artistGenre} / {product.albumGenre}
                             <br />
                             <i>Media Condition</i> : {product.mediaGrade}
                             <br />
@@ -215,23 +226,31 @@ const Detail = () => {
                             <br />
                             <i>Matrix Number</i> : {product.matrixNumber}
                             <br />
-                            <i>Quantity</i> : {product.quantity}
-                            <br />
-                            <i>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</i></p>
+                            <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
+                        {role === "Administrator" &&
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
                             <button className="button-delete" onClick={deleteProduct}>Delete</button>
                         </div>
+                        }
                     </div>
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className="button-cart" onClick={AddToCart}>Add to Cart</button>
+                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
                 </div>
             </div>
     </div>
     );
 };
+
+const formatGrade = (grade) => {
+    const gradeMap = {
+        'VG_PLUS' : 'VG+',
+        'G_PLUS!' : 'G+!',
+    };
+    return gradeMap[grade] || grade;
+}
 
 export default Detail;

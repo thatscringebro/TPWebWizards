@@ -3,7 +3,6 @@ import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Media, Category, ArtistGenre, AlbumGenre, Grade } from './utils/constants'
 import { API_BASE_URL } from './utils/config'
 import axios from 'axios';
-//import "../styles/ProductManager.css"
 
 function AddProductForm() {
     const [product, setProduct] = useState({
@@ -26,8 +25,6 @@ function AddProductForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log('Request body:', product);
 
         try {
             const response = await axios.post(`${API_BASE_URL}/crud/create`, {

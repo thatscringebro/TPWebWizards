@@ -112,7 +112,7 @@ namespace WizardRecords.Api.Controllers {
             }
         }
 
-        [HttpGet("/filtered")]
+        [HttpGet("/category")]
         public async Task<ActionResult<IEnumerable<AlbumDto>>> GetAlbumsByMediaAndCondition([FromQuery] Media? media = null, [FromQuery] bool? isUsed = null) {
             var albums = await _albumRepository.GetAlbumsByMediaAndConditionAsync(media, isUsed);
 
