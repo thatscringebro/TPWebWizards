@@ -76,15 +76,11 @@ const AddToCart = async (album, cart, setCart, setTotalPanier) => {
 
         const updatedCart = { ...cart };
         const updatedAlbums = updatedCart.albums.map((item) => {
-          if(item.id === album){
+          if (item.id === album) {
             item.quantity = item.quantity + 1;
           }
-          else 
-          {
-            return null;
-          }
-        return item;
-        });
+          return item;
+        }).filter((item) => item.quantity !== 0);
         updatedCart.albums = updatedAlbums.filter((item) => item !== null);
         setCart(updatedCart);
         setTotalPanier(calculateTotal(updatedCart.albums));
@@ -159,17 +155,17 @@ function CartPage() {
 if(cart.albums === undefined){
 
   return (
-  <div>
-  <h2>Votre Panier</h2>
-  <h3>Votre panier est vide</h3>
-  </div>
+    <div>
+      <h2>Votre Panier</h2>
+      <h3>Votre panier est vide</h3>
+    </div>
   );
 }
 else{
 
 
   return (
-    <div>
+  <div>
     <h2>Votre Panier</h2>
 
     <ul>
@@ -183,7 +179,7 @@ else{
           <div>Sous-total: {calculateTotalAlbum(album.price, album.quantity)} $</div>
           <button onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}>Retirer du panier</button>
           <div>Quantité: {album.quantity}</div>
-          <bouton onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</bouton>
+          <button onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</button>
         </li>
       ))}
     </ul>
