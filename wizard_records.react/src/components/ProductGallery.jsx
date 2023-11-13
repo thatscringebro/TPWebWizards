@@ -106,11 +106,11 @@ function ProductGallery() {
     const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedSortOption, setSelectedSortOption] = useState('default');
-    const [selectedGenreFilterOption, setSelectedGenreFilterOption] = useState('default');
-    const [selectedFormatFilterOption, setSelectedFormatFilterOption] = useState('default');
-    const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('default');
-    const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('default');
+    const [selectedSortOption, setSelectedSortOption] = useState('default'); // sort
+    const [selectedGenreFilterOption, setSelectedGenreFilterOption] = useState('any genre'); //rock ou wtv
+    const [selectedFormatFilterOption, setSelectedFormatFilterOption] = useState('all formats'); //cd ou vynil media
+    const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] = useState('any category'); //new ou used category
+    const [selectedAvailabilityFilterOption, setSelectedAvailabilityFilterOption] = useState('all'); //disponible ou pas
 
     //get token
     useEffect(() => {
@@ -125,7 +125,7 @@ function ProductGallery() {
     const handleSortChange = (event) => {
         setSelectedSortOption(event.target.value);
         setCurrentPage(1);
-        updateUrl(selectedCategoryFilterOption, selectedTypeFilterOption, event.target.value);
+        updateUrl(selectedCategoryFilterOption, selectedFormatFilterOption, event.target.value, selectedGenreFilterOption, selectedAvailabilityFilterOption, selectedAvailabilityFilterOption);
     }
 
     useEffect(() => {
@@ -137,6 +137,8 @@ function ProductGallery() {
             const categoryParam = urlSearchParams.get('category');
             const mediaParam = urlSearchParams.get('media');
             const sortParam = urlSearchParams.get('sort');
+            const genreParam = urlSearchParams.get('genre');
+            const availableParam = urlSearchParams.get('available');
             
             if (sortParam && sortParam !== 'default') {
                 setSelectedSortOption(sortParam);
@@ -144,7 +146,7 @@ function ProductGallery() {
                 setSelectedSortOption('default');
             }
 
-         if (categoryParam && categoryParam !== 'default') {
+             if (categoryParam && categoryParam !== 'any category') {
 
             if(categoryParam === 'Featured')
             {
@@ -157,22 +159,31 @@ function ProductGallery() {
                 setSelectedCategoryFilterOption('usedOnly');
              }
             } else {
-                setSelectedCategoryFilterOption('default');
+                setSelectedCategoryFilterOption('any category');
             }
-        if (mediaParam && mediaParam !== 'default') {
+        if (mediaParam && mediaParam !== 'all formats') {
             if(mediaParam === 'Products'){
-                setSelectedTypeFilterOption('cdOnly');
+                setSelectedFormatFilterOption('cdOnly');
             }
             else if(mediaParam === 'Vinyl' || mediaParam === 'vinylOnly'){
-                 setSelectedTypeFilterOption('vinylOnly');
+                 setSelectedFormatFilterOption('vinylOnly');
             }
             else if(mediaParam === 'CDs' || mediaParam === 'cdOnly'){
-                setSelectedTypeFilterOption('cdOnly');
+                setSelectedFormatFilterOption('cdOnly');
             }
-        } else {
-             setSelectedTypeFilterOption('default');
-        }
 
+         if(genreParam && genreParam !== 'any genre'){
+             setSelectedGenreFilterOption(genreParam);
+         } else {
+                setSelectedGenreFilterOption('any genre');
+            }
+            if(availableParam && availableParam !== 'all'){
+                setSelectedAvailabilityFilterOption(availableParam);
+            } else {
+                setSelectedAvailabilityFilterOption('all');
+            }
+      
+        }
         setProducts(data);  
         });
       }, []);
@@ -184,17 +195,31 @@ function ProductGallery() {
             const categoryParam = urlSearchParams.get('category');
             const mediaParam = urlSearchParams.get('media');
             const sortParam = urlSearchParams.get('sort');
+            const genreParam = urlSearchParams.get('genre');
+            const availableParam = urlSearchParams.get('available');
 
-            if (categoryParam && categoryParam !== 'default') {
+            if(genreParam && genreParam !== 'any genre'){
+                setSelectedGenreFilterOption(genreParam);
+            }
+            else{
+                setSelectedGenreFilterOption('any genre');
+            }
+            if(availableParam && availableParam !== 'all'){
+                setSelectedAvailabilityFilterOption(availableParam);
+            }
+            else{
+                setSelectedAvailabilityFilterOption('all');
+            }
+            if (categoryParam && categoryParam !== 'any category') {
                 setSelectedCategoryFilterOption(categoryParam);
             } else {
-                setSelectedCategoryFilterOption('default');
+                setSelectedCategoryFilterOption('any category');
             }
 
-            if (mediaParam && mediaParam !== 'default') {
-                setSelectedTypeFilterOption(mediaParam);
+            if (mediaParam && mediaParam !== 'all formats') {
+                setSelectedFormatFilterOption(mediaParam);
             } else {
-                setSelectedTypeFilterOption('default');
+                setSelectedFormatFilterOption('all formats');
             }
 
             if (sortParam && sortParam !== 'default') {
@@ -292,17 +317,20 @@ function ProductGallery() {
 
     const productsPerPage = 12;
 
+
+    //GENRE
     const handleGenreFilterChange = (event) => {
         console.log("handle_genre: :" + event.target.value);
         setSelectedGenreFilterOption(event.target.value);
+        updateUrl(selectedCategoryFilterOption, selectedFormatFilterOption, selectedSortOption,  event.target.value, selectedAvailabilityFilterOption);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
 
-    const handleTypeFilterChange = (event) => {
+    const handleFormatFilterChange = (event) => {
         console.log("handle_type: :" + event.target.value);
-        setSelectedTypeFilterOption(event.target.value);
-        updateUrl(selectedCategoryFilterOption, event.target.value);
+        setSelectedFormatFilterOption(event.target.value);
+        updateUrl(selectedCategoryFilterOption, event.target.value,selectedSortOption, selectedGenreFilterOption, selectedAvailabilityFilterOption);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
@@ -310,13 +338,14 @@ function ProductGallery() {
     const handleCategoryFilterChange = (event) => {
         console.log("handle_category: :" + event.target.value);
         setSelectedCategoryFilterOption(event.target.value);
-        updateUrl(event.target.value, selectedTypeFilterOption);
+        updateUrl(event.target.value, selectedFormatFilterOption,selectedSortOption,  selectedGenreFilterOption, selectedAvailabilityFilterOption);
         setProducts(filteredProducts);
         setCurrentPage(1);
     };
 
     const handleAvailabilityFilterChange = (event) => {
         console.log("handle_availability: :" + event.target.value);
+        updateUrl(selectedCategoryFilterOption, selectedFormatFilterOption ,selectedSortOption, selectedGenreFilterOption, event.target.value);
         setSelectedAvailabilityFilterOption(event.target.value);
         setProducts(filteredProducts);
         setCurrentPage(1);
@@ -338,18 +367,24 @@ function ProductGallery() {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    const updateUrl = (category, media, sort) => {
+    const updateUrl = (category, media, sort, genre, available) => {
         const urlParams = new URLSearchParams();
 
-        if (category !== 'default') {
+        if (category !== 'any category') {
             urlParams.set('category', category);
         }
 
-        if (media !== 'default') {
+        if (media !== 'all formats') {
             urlParams.set('media', media);
         }
         if (sort !== 'default') {
             urlParams.set('sort', sort);
+        }
+        if(genre !== 'any genre'){
+            urlParams.set('genre', genre);
+        }
+        if(available !== 'all'){
+            urlParams.set('available', available);
         }
 
         navigate(`?${urlParams.toString()}`);
