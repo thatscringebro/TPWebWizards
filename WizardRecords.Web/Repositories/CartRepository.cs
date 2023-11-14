@@ -3,6 +3,8 @@ using WizardRecords.Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WizardRecords.Api.Domain.Entities;
 
+
+
 namespace WizardRecords.Api.Repositories
 {
     public class CartRepository : ICartRepository
@@ -19,7 +21,7 @@ namespace WizardRecords.Api.Repositories
             try
             {
                 var cart = await _dbContext.Carts
-                    .Include(c => c.CartItems)
+                    .Include(c => c.CartItems).ThenInclude(ci => ci.Album)
                     .Where(c => c.CartId == cartId)
                     .FirstOrDefaultAsync();
 
@@ -90,6 +92,31 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
+        public async Task<User> CreateUserGuest()
+        {
+            try
+            {
+                User guest = new(userName: "Guest")
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = "Guest",
+                    Email = ""
+                };
+
+                await _dbContext.Client.AddAsync(guest);
+                await _dbContext.SaveChangesAsync();
+
+                // Créer une session pour cet utilisateur guest
+                //  HttpContext.Session.SetString("GuestUserId", guest.Id.ToString());
+
+                return guest;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         //Faire en sorte que quand l'item est acheter il disparait de la bd !!!
         //Ca va se faire dans le formulaire de commande
 
@@ -100,26 +127,27 @@ namespace WizardRecords.Api.Repositories
             try
             {
                 var cart = await _dbContext.Carts
-.Include(c => c.CartItems) // Inclure les cart items
-.ThenInclude(ci => ci.Album) // Inclure les albums pour chaque cart item
-.FirstOrDefaultAsync();
-                if (cart != null)
+                  .Include(c => c.CartItems).ThenInclude(ci => ci.Album)
+                  .Where(c => c.CartId == cartId)
+                  .FirstOrDefaultAsync();
+
+                var album = await _dbContext.Albums.Where(a => a.AlbumId == albumId).FirstOrDefaultAsync();
+
+                var cartItem = cart.CartItems.FirstOrDefault(c => c.Album.AlbumId == album.AlbumId);
+
+                if (cartItem != null)
                 {
-                    var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Album.AlbumId == albumId);
-
-                    if (cartItem != null)
+                    if (cartItem.Quantity > 1)
                     {
-                        if (cartItem.Quantity > 1)
-                        {
-                            cartItem.Quantity--;
-                        }
-                        else
-                        {
-                            cart.CartItems.Remove(cartItem);
-                        }
-
-                        await _dbContext.SaveChangesAsync();
+                        cartItem.Quantity--;
                     }
+                    else
+                    {
+                        cart.CartItems.Remove(cartItem);
+                    }
+
+                    await _dbContext.SaveChangesAsync();
+
 
                     return cart;
                 }
@@ -134,6 +162,25 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
+        public async Task<User> DeleteUserGuest(Guid userId)
+        {
+            var use = await _dbContext.Client.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            if (use != null)
+            {
+                _dbContext.Client.Remove(use);
+                await _dbContext.SaveChangesAsync();
+                return use;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Task<string> GenerateJwtTokenAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<IEnumerable<Cart>> GetAllItemAsync()
         {
@@ -142,12 +189,12 @@ namespace WizardRecords.Api.Repositories
 
         public async Task<IEnumerable<Cart>> GetCartByIdAsync(Guid cartId)
         {
-            return await _dbContext.Carts.Include(c => c.CartItems).Where(a => a.CartId == cartId).ToListAsync();
+            return await _dbContext.Carts.Include(c => c.CartItems).ThenInclude(ci => ci.Album).Where(a => a.CartId == cartId).ToListAsync();
         }
 
-        public async Task<User> GetUserByNameAsync(string username)
+        public async Task<User> GetUserByIdAsync(Guid userId)
         {
-            return await _dbContext.Client.Where(u => u.UserName == username).FirstOrDefaultAsync();
+            return await _dbContext.Client.Where(u => u.Id == userId).FirstOrDefaultAsync();
         }
 
         public async Task<Cart?> GetUserCartAsync(Guid userId)

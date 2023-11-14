@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using WizardRecords.Api.Data.Entities;
 using WizardRecords.Api.Domain.Entities;
 using WizardRecords.Api.Interfaces;
@@ -14,12 +19,15 @@ namespace WizardRecords.Api.Controllers
         //pas sur pour l'album.. 
         private readonly IAlbumRepository _albumRepository;
         private readonly ICartRepository _cartRepository;
-      
+        private readonly UserManager<User> _userManager;
 
-        public CartController(IAlbumRepository albumRepository, ICartRepository cartRepository)
+
+
+        public CartController(IAlbumRepository albumRepository, ICartRepository cartRepository, UserManager<User> userManager)
         {
             _cartRepository = cartRepository;
             _albumRepository = albumRepository;
+            _userManager = userManager;
         }
 
         [HttpGet("all")]
@@ -30,29 +38,29 @@ namespace WizardRecords.Api.Controllers
             return Ok(cart);
         }
 
-        [HttpPut("update/{cartId}/{AlbumId}/{quanity}")]
-        public async Task<ActionResult<Cart>> UpdateItem(Guid cartId, Guid AlbumId, int quantity)
-        {
-            try
-            {
-                var cart = await _cartRepository.GetCartByIdAsync(cartId);
-                if (cart != null)
-                {
-                    await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
-            }
-        }
+        //[HttpPut("update/{cartId}/{AlbumId}/{quanity}")]
+        //public async Task<ActionResult<Cart>> UpdateItem(Guid cartId, Guid AlbumId, int quantity)
+        //{
+        //    try
+        //    {
+        //        var cart = await _cartRepository.GetCartByIdAsync(cartId);
+        //        if (cart != null)
+        //        {
+        //            await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
+        //            return Ok();
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+        //    }
+        //}
 
-        [HttpDelete("delete/{cartId}/{AlbumId}")]
+        [HttpDelete("delete/{cartId}/{AlbumId}")] //Delete l'item au panier
         public async Task<ActionResult<Cart>> DeleteItem(Guid cartId, Guid AlbumId)
         {
             try
@@ -74,7 +82,7 @@ namespace WizardRecords.Api.Controllers
             }
         }
 
-        [HttpPost("add/{cartId}/{AlbumId}")]
+        [HttpPost("add/{cartId}/{AlbumId}")] //Cart Ajouter l'item au panier
         public async Task<ActionResult<Cart>> AddItem(Guid cartId, Guid AlbumId)
         {
             try
@@ -98,34 +106,66 @@ namespace WizardRecords.Api.Controllers
         }
 
 
-        //create cart A REVOIR AVEC LE USER
-        [HttpPost("create")]
-        public async Task<ActionResult<Cart>> CreateCart(int userId)
+        [HttpPost("createpanier/{userId}")] //Créer le panier apres la création du token et user
+        public async Task<ActionResult<Cart>> CreateCart(Guid userId)
+        {
+            var user = await _cartRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            else
+            {
+                var cart = await _cartRepository.CreateCartAsync(user.Id);
+                return Ok(cart);
+            }
+        }
+        
+
+        [HttpPost("create")] //Detail, pour créé user et Tokem ( retourne token ) 
+        public async Task<ActionResult<string>> CreateUser()
         {
             try
             {
-                if (userId == 0)
-                {
-                    //modifier quand on aura le login
-                    var use = await _cartRepository.GetUserByNameAsync("UserUndefined");
-                    var panier = await _cartRepository.CreateCartAsync(use.Id);
+                
+                    var user = await _cartRepository.CreateUserGuest();
+                    //Faut que je créé mon user en dehors d'ici Create Guest va return le TOKEN
+                    var tokenString = GenerateJwtTokenAsync(user);
+                    return Ok(new { token = tokenString });
 
-                    if (panier != null)
-                        return Ok(panier);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+
+
+
+        [HttpGet("user/{userId}")] //CART pour aller chercher le panier
+        public async Task<ActionResult<Cart>> GetUserCart(Guid userId)
+        {
+            try
+            {
+                var user = await _cartRepository.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                   throw new Exception("User not found");
+                }
+                else
+                {
+                    var cart = await _cartRepository.GetUserCartAsync(user.Id);
+
+                    if (cart != null)
+                    {
+                        return Ok(cart);
+                    }
                     else
-                        return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create a cart.");
-
-                }
-                else
-                {
-                    var user = await _cartRepository.GetUserByNameAsync("UserUndefined");
-                    var panier =await _cartRepository.GetUserCartAsync(user.Id);
-                    //var panier = await _cartRepository.CreateCartAsync(userId);
-                    return Ok(panier);
-                   
-                }
-
-            
+                    {
+                        return NotFound(); // Ajustez ce comportement en fonction de vos besoins
+                    }
+                }               
             }
             catch (Exception)
             {
@@ -133,33 +173,51 @@ namespace WizardRecords.Api.Controllers
             }
         }
 
-        [HttpGet("user/{username}")]
-        public async Task<ActionResult<Cart>> GetUserCart(string username)
+        private async Task<string> GenerateJwtTokenAsync(User user)
         {
-            try
-            {
-                // a modifier quand on aura le login, changer le string par un guid pour le id du user
-                // plus faire le repo et modifier le repo pour qu'il prenne un guid en parametre
-                // plus changer le code de la page cart pour qu'il prennent un id au lieu du nom 
-                var user = await _cartRepository.GetUserByNameAsync(username);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperFunHappySlide!!!"));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+           // var roles = await _userManager.GetRolesAsync(user);
+
+            // Créez un ClaimsIdentity avec les réclamations existantes et ajoutez la réclamation du rôle.
+            var claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("id", user.Id.ToString()),
+                //new Claim("firstName", user.FirstName),
+                //new Claim("lastName", user.LastName),
+                //new Claim("email", user.Email),
+                //new Claim("phoneNumber", user.PhoneNumber),
+                //TODO: ajouter adresse
+                //new Claim("address", user. ),
+                //TODO: ajouter ville
+                //new Claim("city", user. ),
+                //TODO: ajouter province
+                //new Claim("provinceState", user. ),
+                //TODO: ajouter pays
+                //new Claim("country", user. ),
+                //TODO: ajouter code postal
+                //new Claim("postalCode", user. ),
+                new Claim("role", "Guest")
+            };
 
 
-                // Récupérez le panier de l'utilisateur en fonction de userId
-                var cart = await _cartRepository.GetUserCartAsync(user.Id);
+            //claims.Add(new Claim("role", "Guest"));
+            
 
-                if (cart != null)
-                {
-                    return Ok(cart);
-                }
-                else
-                {
-                    return NotFound(); // Ajustez ce comportement en fonction de vos besoins
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
-            }
+            var token = new JwtSecurityToken(
+                issuer: "VotreIssuer",
+                audience: "VotreAudience",
+                claims: claims,
+                expires: DateTime.Now.AddHours(1), // Temps d'expiration du token
+                signingCredentials: credentials
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            Console.WriteLine(tokenString);
+            return tokenString;
         }
+
     }
 }

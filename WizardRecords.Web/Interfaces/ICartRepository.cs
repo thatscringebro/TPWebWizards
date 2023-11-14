@@ -18,6 +18,9 @@ namespace WizardRecords.Api.Interfaces
         Task<Cart> CreateCartAsync(Guid userId);
         Task<Cart?> GetUserCartAsync(Guid userId);
 
-        Task<User> GetUserByNameAsync(string username);
+        Task<User> GetUserByIdAsync(Guid userId);
+        Task<User> CreateUserGuest();
+        Task<User> DeleteUserGuest(Guid userId);
+
     }
 }

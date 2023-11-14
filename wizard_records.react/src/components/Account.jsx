@@ -22,6 +22,7 @@ function Account() {
         if(token)
         {
             setLoggedIn(true);
+            sessionStorage.removeItem('guestToken');
         }
     }, []);
 
@@ -71,6 +72,7 @@ function Account() {
                 sessionStorage.setItem('userToken', JSON.stringify(response.data.token));
                 alert('Authentication successful!');
                 setLoggedIn(true);
+                sessionStorage.removeItem('guestToken');
                 navigate('/');
             }
 

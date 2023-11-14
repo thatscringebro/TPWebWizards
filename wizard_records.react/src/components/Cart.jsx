@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 
-const fetchDataForCart = () => {
-  const username = "UserUndefined"; // à modifier lorsque vous aurez la gestion de l'authentification
 
-  if (username) {
-    return axios.get(`${API_BASE_URL}/cart/user/${username}`)
+const fetchDataForCart = (user) => {
+
+  if (user) {
+    return axios.get(`${API_BASE_URL}/cart/user/${user}`)
       .then((response) => {
         if (response.status === 200) {
-          const cart = response.data; // Assurez-vous que c'est un seul panier         
+          const cart = response.data;      
 
           const transformedCart = {
             user: cart.user,
@@ -23,19 +24,19 @@ const fetchDataForCart = () => {
               albumTitle: item.album.title,
               isUsed: item.album.isUsed,
               price: item.album.price.toFixed(2),
-              quantity: item.quantity // Assurez-vous que c'est bien la quantité de l'album
+              quantity: item.quantity 
             }))
           };
 
         
-          return transformedCart; // Retournez directement l'objet du panier transformé
+          return transformedCart; 
         } else {
           throw Error(`Failed to fetch cart with status: ${response.status}`);
         }
       })
       .catch((error) => {
         console.error(error);
-        throw error; // Propagez l'erreur pour qu'elle puisse être gérée correctement
+        throw error; 
       });
   }
 };
@@ -98,54 +99,64 @@ const AddToCart = async (album, cart, setCart, setTotalPanier) => {
 }
 
 
+const deleteAlbum = async (albumId, cart, setCart, setTotalPanier) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/cart/delete/${cart.cartId}/${albumId}`);
+    if (response.status === 200) {
+      console.log('Album deleted successfully');
 
-const deleteAlbum = async (album, cart, setCart, setTotalPanier) => {
+      const updatedCart = { ...cart };
+      updatedCart.albums = updatedCart.albums.map((item) => {
+        if (item.id === albumId) {
+          item.quantity = item.quantity - 1;
+        }
+        return item;
+      });
 
-try {
-  const response = await axios.delete(`${API_BASE_URL}/cart/delete/${cart.cartId}/${album}`);
-  if (response.status === 200) {
-    console.log('Album deleted successfully');
+      updatedCart.albums = updatedCart.albums.filter((item) => item.quantity !== 0);
 
-    const updatedCart = { ...cart };
-    const updatedAlbums = updatedCart.albums.map((item) => {
-      if(item.id === album){
-        item.quantity = item.quantity - 1;
-      }
-      else 
-      {
-        return null;
-      }
-    return item;
-    });
-    
-    updatedCart.albums = updatedAlbums.filter((item) => item !== null);
-    updatedCart.albums = updatedCart.albums.filter((item) => item.quantity !== 0);
-        // updatedCart.albums = updatedCart.albums.filter((item) => item.id !== album);
-  
       setCart(updatedCart);
       setTotalPanier(calculateTotal(updatedCart.albums));
-    
-   
-  } else {
-    console.error('Failed to delete album with status:', response.status);
+    } else {
+      console.error('Failed to delete album with status:', response.status);
+    }
+  } catch (error) {
+    console.error('Error deleting album:', error.message);
   }
-
-}
-catch (error) {
-  console.error('Error deleting album:', error.message);
-}
-
-}
+};
 
 
 
 function CartPage() {
+  const [user, GetUser] = useState();
   const [cart, setCart] = useState([]);
   const [totalPanier, setTotalPanier] = useState(0);
 
 
+
+   //get token
+   useEffect(() => {
+    var token = sessionStorage.getItem('userToken');
+    var tokenGuest = sessionStorage.getItem('guestToken');
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        GetUser(decodedToken["id"]);
+
+    }else if(tokenGuest){     
+      var decodedTokenGuest = jwt_decode(tokenGuest);
+      GetUser(decodedTokenGuest["id"]);
+    }
+    else {
+      GetUser("Undefined");
+    }
+}, []);
+
+
+
   useEffect(() => {
-    fetchDataForCart()
+    if(user){
+      fetchDataForCart(user)
       .then((data) => {
         setCart(data);
         setTotalPanier(calculateTotal(data.albums));
@@ -153,7 +164,9 @@ function CartPage() {
       .catch((error) => {
         console.error("Failed to fetch cart data:", error);
       });
-  }, []);
+    }
+    
+  }, [user]);
 
 
 if(cart.albums === undefined){
@@ -183,7 +196,7 @@ else{
           <div>Sous-total: {calculateTotalAlbum(album.price, album.quantity)} $</div>
           <button onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}>Retirer du panier</button>
           <div>Quantité: {album.quantity}</div>
-          <bouton onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</bouton>
+          <button onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</button>
         </li>
       ))}
     </ul>

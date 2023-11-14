@@ -85,7 +85,7 @@ namespace WizardRecords.Controllers
             var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim("id", user.Id.ToString()),
                 //new Claim("firstName", user.FirstName),
                 //new Claim("lastName", user.LastName),
                 //new Claim("email", user.Email),
