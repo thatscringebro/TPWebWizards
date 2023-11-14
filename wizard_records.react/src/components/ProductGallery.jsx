@@ -331,7 +331,6 @@ function ProductGallery() {
     return (
         <div>
         <div className="entete-allProducts">
-                <h1>All products</h1>
                 {role === "Administrator" &&
                     <Link className="text-light" to="/add-product"><button id='add-item'>Add Item</button></Link>
                 }
