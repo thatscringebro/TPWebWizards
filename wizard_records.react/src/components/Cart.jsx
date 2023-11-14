@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-
-
+import '../styles/Cart.css';
 
 const fetchDataForCart = (user) => {
 
@@ -178,30 +177,49 @@ else{
 
 
   return (
-  <div>
-    <h2>Votre Panier</h2>
-
-    <ul>
-      {cart.albums.map((album) => ( 
-        <li id={album.id} >
-           <div className="detail-image">
-                <img src={GetImgageSRC(album)} alt={`${cart.album} cover`} />
+  <div className="cart-container">
+    <h2 className="cart-heading">Votre Panier</h2>
+    {cart.albums ? (
+      <ul className="cart-list">
+        {cart.albums.map((album) => (
+          <li className="cart-item" key={album.id}>
+            <div className="cart-item-image">
+              <img src={GetImgageSRC(album)} alt={`${cart.album} cover`} />
             </div>
-          <div>Nom de l'album: {album.albumTitle}</div>
-          <div>Artiste: {album.artistName}</div>
-          <div>Sous-total: {calculateTotalAlbum(album.price, album.quantity)} $</div>
-          <button onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}>Retirer du panier</button>
-          <div>Quantité: {album.quantity}</div>
-          <button onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}>Ajouter au panier</button>
-        </li>
-      ))}
-    </ul>
-    <div>
-      <h3 >Total du panier : {totalPanier} $</h3>
-      <button>Passer à la caisse</button>
+            <div className="cart-item-details">
+              <div>Nom de l'album: {album.albumTitle}</div>
+              <div>Artiste: {album.artistName}</div>
+              <div>Quantité: {album.quantity}</div>
+              <div>Sous-total: {calculateTotalAlbum(album.price, album.quantity)} $</div>
+              <div className="flexDiv">
+              <button
+                className="cart-button"
+                onClick={() => AddToCart(album.id, cart, setCart, setTotalPanier)}
+              >
+                Ajouter au panier
+              </button>
+              <button
+                className="cart-button"
+                onClick={() => deleteAlbum(album.id, cart, setCart, setTotalPanier)}
+              >
+                Retirer du panier
+              </button>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div>
+        <h3 className="cart-message">Votre panier est vide</h3>
+      </div>
+    )}
+    <div className="flexDiv">
+      <h3 className="cart-total">Total du panier : {totalPanier} $</h3>
+      <button className="checkout-button">Passer à la caisse</button>
     </div>
   </div>
-  );
+);
  
 }
 
