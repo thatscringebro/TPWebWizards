@@ -21,6 +21,7 @@ namespace WizardRecords.Api.Repositories
             try
             {
                 var cart = await _dbContext.Carts
+
                     .Include(c => c.CartItems).ThenInclude(ci => ci.Album)
                     .Where(c => c.CartId == cartId)
                     .FirstOrDefaultAsync();

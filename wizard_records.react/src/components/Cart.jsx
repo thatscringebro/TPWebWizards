@@ -77,15 +77,11 @@ const AddToCart = async (album, cart, setCart, setTotalPanier) => {
 
         const updatedCart = { ...cart };
         const updatedAlbums = updatedCart.albums.map((item) => {
-          if(item.id === album){
+          if (item.id === album) {
             item.quantity = item.quantity + 1;
           }
-          else 
-          {
-            return null;
-          }
-        return item;
-        });
+          return item;
+        }).filter((item) => item.quantity !== 0);
         updatedCart.albums = updatedAlbums.filter((item) => item !== null);
         setCart(updatedCart);
         setTotalPanier(calculateTotal(updatedCart.albums));
@@ -172,17 +168,17 @@ function CartPage() {
 if(cart.albums === undefined){
 
   return (
-  <div>
-  <h2>Votre Panier</h2>
-  <h3>Votre panier est vide</h3>
-  </div>
+    <div>
+      <h2>Votre Panier</h2>
+      <h3>Votre panier est vide</h3>
+    </div>
   );
 }
 else{
 
 
   return (
-    <div>
+  <div>
     <h2>Votre Panier</h2>
 
     <ul>
