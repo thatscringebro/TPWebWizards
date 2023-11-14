@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from './utils/config';
-import ProductList from './ProductList';
 import { ArtistGenre } from './utils/constants';
+import FilterMenu from './FilterMenu';
+import Pagination from './Pagination';
+import ProductList from './ProductList';
 import axios from 'axios';
 import '../styles/ProductGallery.css';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
@@ -33,72 +35,6 @@ const fetchDataForCategory = () => {
             }
         });
 };
-
-function generatePageNumbers(totalPages, currentPage, setCurrentPage) {
-    const pageNumbers = [];
-
-    if (totalPages <= 1) {
-        return null;
-    }
-
-    pageNumbers.push(1);
-
-    let startPage = Math.max(2, currentPage - 2);
-    let endPage = Math.min(totalPages - 1, currentPage + 2);
-
-    if (currentPage <= 4) {
-        startPage = 2;
-        endPage = Math.min(5, totalPages - 1);
-    }
-
-    if (totalPages < 5) {
-        endPage = totalPages - 1;
-    }
-
-    const showStartEllipsis = startPage > 2;
-    const showEndEllipsis = endPage < totalPages - 1;
-
-    if (showStartEllipsis) {
-        pageNumbers.push('...');
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-    }
-
-    if (showEndEllipsis) {
-        pageNumbers.push('...');
-    }
-
-    if (totalPages > 1 && !pageNumbers.includes(totalPages)) {
-        pageNumbers.push(totalPages);
-    }
-
-    const renderPageNumbers = pageNumbers.map((pageNumber, index) => {
-        if (pageNumber === '...') {
-            return <span key={`ellipsis-${index}`}>...</span>;
-        } else {
-            const handleClick = pageNumber !== '...' ? () => setCurrentPage(pageNumber) : undefined;
-            return (
-                <span
-                    key={pageNumber}
-                    className={`page-number ${pageNumber === currentPage ? 'current-page' : ''}`}
-                    onClick={handleClick}
-                >
-                    {pageNumber}
-                </span>
-            );
-        }
-    });
-
-    return (
-        <div className="page-numbers">
-            {renderPageNumbers}
-        </div>
-    );
-}
-
-
 
 function ProductGallery() {
     const navigate = useNavigate();
@@ -394,82 +330,38 @@ function ProductGallery() {
 
     return (
         <div>
-            <div className="entete-allProducts">
+        <div className="entete-allProducts">
                 <h1>All products</h1>
                 {role === "Administrator" &&
                     <Link className="text-light" to="/add-product"><button id='add-item'>Add Item</button></Link>
                 }
             </div>
-            <div className="dropdown-container">
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">SORTING OPTIONS: </label>
-                    <select id="dropdown-main" value={selectedSortOption} onChange={handleSortChange}>
-                        <option value="default">Default</option>
-                        <option value="priceLowToHigh">Price: Low to High</option>
-                        <option value="priceHighToLow">Price: High to Low</option>
-                        <option value="AlbumNameAsc">Album Name: A..Z</option>
-                        <option value="AlbumNameDesc">Album Name: Z..A</option>
-                        <option value="ArtistNameAsc">Artist Name: A..Z</option>
-                        <option value="ArtistNameDesc">Artist Name: Z..A</option>
-                    </select>
-                </div>
-
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY GENRE: </label>
-                    <select id="dropdown-genre" value={selectedGenreFilterOption} onChange={handleGenreFilterChange}>
-                    <option value="default">Any genre</option>
-                        {ArtistGenre.map((genre) => (
-                            <option key={genre.value} value={genre.label.toLowerCase()}>{genre.label}</option>
-                        ))}
-                </select>
-                </div>
-
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY FORMAT: </label>
-                    <select id="dropdown-media" value={selectedFormatFilterOption} onChange={handleFormatFilterChange}>
-                        <option value="default">All formats</option>
-                        <option value="cdOnly">CD only</option>
-                        <option value="vinylOnly">Vinyl only</option>
-                    </select>
-                </div>
-
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY AVAILABILITY: </label>
-                    <select id="dropdown-availability" value={selectedFormatFilterOption} onChange={handleAvailabilityFilterChange}>
-                        <option value="default">All</option>
-                        <option value="availableOnly">Available only</option>
-                        <option value="unavailableOnly">Unavailable only</option>
-                    </select>
-                </div>
-
-                <div className="dropdown-group">
-                    <label htmlFor="dropdown-label">FILTER BY CATEGORY: </label>
-                    <select id="dropdown-condition" value={selectedCategoryFilterOption} onChange={handleCategoryFilterChange}>
-                        <option value="default">Any category</option>
-                        <option value="newOnly">New only</option>
-                        <option value="usedOnly">Used only</option>
-                    </select>
-                </div>
-            </div>
+               
+            <h1>All products</h1>
+            <FilterMenu
+                selectedSortOption={selectedSortOption}
+                handleSortChange={handleSortChange}
+                selectedGenreFilterOption={selectedGenreFilterOption}
+                handleGenreFilterChange={handleGenreFilterChange}
+                selectedFormatFilterOption={selectedFormatFilterOption}
+                handleFormatFilterChange={handleFormatFilterChange}
+                selectedCategoryFilterOption={selectedCategoryFilterOption}
+                handleCategoryFilterChange={handleCategoryFilterChange}
+                selectedAvailabilityFilterOption={selectedAvailabilityFilterOption}
+                handleAvailabilityFilterChange={handleAvailabilityFilterChange}
+                ArtistGenre={ArtistGenre}
+            />
             {currentProducts.length > 0 ? (
             <div>
                 <ProductList title="All products" products={currentProducts} isHomeGallery={false}/>
                     {Math.ceil(sortedProducts.length / productsPerPage) > 1 && (
-                        <div className="pagination">
-                            <button 
-                                className="page-button" 
-                                onClick={prevPage} 
-                                disabled={currentPage === 1}>
-                                Previous
-                            </button>
-                            {generatePageNumbers(Math.ceil(sortedProducts.length / productsPerPage), currentPage, setCurrentPage)}
-                            <button 
-                                className="page-button" 
-                                onClick={nextPage} 
-                                disabled={currentPage >= Math.ceil(sortedProducts.length / productsPerPage)}>
-                                Next
-                            </button>
-                        </div>
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={Math.ceil(sortedProducts.length / productsPerPage)}
+                            setCurrentPage={setCurrentPage}
+                            prevPage={prevPage}
+                            nextPage={nextPage}
+                        />
                     )}
             </div>) : (
                 <div className="no-results">
