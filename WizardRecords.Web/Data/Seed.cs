@@ -26,8 +26,10 @@ namespace WizardRecords.Core.Data {
                 "555-555-5555",
                 666,
                 "Rue Delarue",
-                "Sainte-Grosse-Rcohe-De-L'Achigan",
+                "Sainte-Grosse-Roche-De-L'Achigan",
                 Province.QC,
+                "J0K 3H0",
+                "Canada",
                 "Admin123!"
             );
 
@@ -59,6 +61,8 @@ namespace WizardRecords.Core.Data {
                 string streetName,
                 string city,
                 Province province,
+                string postalCode,
+                string country,
                 string password
             ) {
             var newUser = new User(username) {
@@ -76,7 +80,8 @@ namespace WizardRecords.Core.Data {
                 StreetName = streetName,
                 City = city,
                 Province = province,
-                PostalCode = "J0K 3H0"
+                PostalCode = postalCode,
+                Country = country
             };
 
             newUser.PasswordHash = PASSWORD_HASHER.HashPassword(newUser, password);
