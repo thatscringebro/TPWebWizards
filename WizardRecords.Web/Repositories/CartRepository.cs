@@ -259,5 +259,39 @@ namespace WizardRecords.Api.Repositories
                 return null;
             }
         }
+
+        public async Task<List<Order>> GetUserOrdersAsync(Guid userId) {
+            try
+            {
+                var orders = await _dbContext.Orders
+                    .Include(c => c.CartItems)
+                    .Where(c => c.UserId == userId)
+                    .ToListAsync();
+
+                if (orders != null)
+                {
+                    return orders;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Order> GetOrderByIdAsync(Guid orderId)
+        {
+            return await _dbContext.Orders.FindAsync(orderId);
+        }
+
+        public async Task UpdateOrderAsync(Order order)
+        {
+            _dbContext.Orders.Update(order);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -22,5 +22,8 @@ namespace WizardRecords.Api.Interfaces
         Task<User> CreateUserGuest();
         Task<User> DeleteUserGuest(Guid userId);
 
+        Task<List<Order>> GetUserOrdersAsync(Guid userId);
+        Task<Order> GetOrderByIdAsync(Guid orderId);
+        Task UpdateOrderAsync(Order order);
     }
 }

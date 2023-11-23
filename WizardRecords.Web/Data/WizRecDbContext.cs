@@ -10,6 +10,7 @@ namespace WizardRecords.Api {
     public class WizRecDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid> {
         public DbSet<Album> Albums { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<User> Client { get; set; }
 
         public WizRecDbContext(DbContextOptions<WizRecDbContext> options) :

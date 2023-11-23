@@ -10,6 +10,7 @@ import AddProductForm from "../AddProductForm";
 import Cart from "../Cart";
 import Account from "../Account";
 import OrderPage from "../OrderPage";
+import PreviousOrdersPage from "../PreviousOrdersPage";
 
 const AppRoutes = [
     {
@@ -61,7 +62,10 @@ const AppRoutes = [
 	{
         path: '/order',
         element: <OrderPage />
-
+    },
+    {
+        path: '/previous_orders',
+        element: <PreviousOrdersPage />
     }
 
 ];
