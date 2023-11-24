@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 
 const OrderPage = () => {
   const [orderData, setOrderData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '', // Champ pour le numéro de téléphone
     address: '',
     city: '',
     zipCode: '',
-    country: '',
+    country: 'Canada',
+    province: '', // Champ pour la province
     // Ajoutez d'autres champs si nécessaire
   });
   const [errors, setErrors] = useState({});
@@ -19,8 +22,10 @@ const OrderPage = () => {
     // Chargez les données nécessaires pour la page de commande, si nécessaire
   }, []);
 
-  const countries = [
-    "France", "Canada", "United State", "Germany", "United Kingdom",
+  // Liste des provinces canadiennes pour le menu déroulant
+  const provinces = [
+    "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
+    "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
   ];
 
   const validate = (data) => {
@@ -97,12 +102,22 @@ const OrderPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="fullName">Full Name:</label>
+        <label htmlFor="firstName">First Name:</label>
         <input
           type="text"
-          id="fullName"
-          name="fullName"
-          value={orderData.fullName}
+          id="firstName"
+          name="firstName"
+          value={orderData.firstName}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value={orderData.lastName}
           onChange={handleInputChange}
         />
       </div>
@@ -113,6 +128,16 @@ const OrderPage = () => {
           id="email"
           name="email"
           value={orderData.email}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="phone">Phone:</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          value={orderData.phone}
           onChange={handleInputChange}
         />
       </div>
@@ -137,6 +162,32 @@ const OrderPage = () => {
         />
       </div>
       <div>
+        <label htmlFor="country">Country:</label>
+        <input
+          type="text"
+          id="country"
+          name="country"
+          value="Canada" // Toujours afficher Canada
+          readOnly // Rendre le champ en lecture seule
+          style={{ backgroundColor: '#e0e0e0' }} // Style en ligne pour la couleur de fond grise
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="province">Province:</label>
+        <select
+          id="province"
+          name="province"
+          value={orderData.province}
+          onChange={handleInputChange}
+        >
+          <option value="">Select a province</option>
+          {provinces.map((province, index) => (
+            <option key={index} value={province}>{province}</option>
+          ))}
+        </select>
+      </div>
+      <div>
         <label htmlFor="zipCode">ZIP Code:</label>
         <input
           type="text"
@@ -146,20 +197,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
-        <label htmlFor="country">Country:</label>
-        <select
-          id="country"
-          name="country"
-          value={orderData.country}
-          onChange={handleInputChange}
-        >
-          <option value="">Select a country</option>
-          {countries.map((country, index) => (
-            <option key={index} value={country}>{country}</option>
-          ))}
-        </select>
-      </div>
+      
       {errors.fullName && <div className="error">{errors.fullName}</div>}
       {errors.email && <div className="error">{errors.email}</div>}
       {errors.address && <div className="error">{errors.address}</div>}
@@ -168,7 +206,6 @@ const OrderPage = () => {
       {errors.country && <div className="error">{errors.country}</div>}
 
 
-      {/* Ajoutez d'autres champs de formulaire si nécessaire */}
       <button type="submit">Send</button>
     </form>
   );
