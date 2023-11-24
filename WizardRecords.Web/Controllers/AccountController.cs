@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Dtos;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
 
 namespace WizardRecords.Controllers {
     [ApiController]
@@ -16,13 +16,11 @@ namespace WizardRecords.Controllers {
     public class AccountController : ControllerBase {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration) {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -75,8 +73,10 @@ namespace WizardRecords.Controllers {
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout() {
+        public async Task<IActionResult> Logout()
+        {
             await _signInManager.SignOutAsync();
+            Console.WriteLine("User disconnected");
             return Ok();
         }
 

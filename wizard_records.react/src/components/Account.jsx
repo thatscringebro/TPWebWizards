@@ -56,7 +56,24 @@ function Account() {
         Province: ''
     };
 
-    const handleSubmit = async (values, actions) => {
+    const handleLogout = async () => {     
+        try {
+          const response = await axios.post(`${API_BASE_URL}/account/logout`);
+          if (response.status === 200) {
+            setIsLogin(false);
+            sessionStorage.removeItem('userToken');
+            alert("You have been successfully logged out");
+            navigate('/');
+          } else {
+            alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+        }
+      };
+
+    const handleSubmit = async (e) => {
         console.log("handleSubmit triggered!");
         console.log("Form values:", values);
         try {
