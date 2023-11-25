@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/OrderPage.css';
 
 
 const OrderPage = () => {
@@ -100,8 +101,9 @@ const OrderPage = () => {
   if (error) return <div>Erreur: {error.message}</div>;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <div className="grid-container">
+    <form onSubmit={handleSubmit} className="form-container">
+      <div className="form-field">
         <label htmlFor="firstName">First Name:</label>
         <input
           type="text"
@@ -111,7 +113,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="lastName">Last Name:</label>
         <input
           type="text"
@@ -121,7 +123,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -131,7 +133,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="phone">Phone:</label>
         <input
           type="tel"
@@ -141,7 +143,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="address">Address:</label>
         <input
           type="text"
@@ -151,7 +153,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="city">City:</label>
         <input
           type="text"
@@ -161,7 +163,7 @@ const OrderPage = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="country">Country:</label>
         <input
           type="text"
@@ -172,8 +174,7 @@ const OrderPage = () => {
           style={{ backgroundColor: '#e0e0e0' }} // Style en ligne pour la couleur de fond grise
         />
       </div>
-      
-      <div>
+      <div className="form-field">
         <label htmlFor="province">Province:</label>
         <select
           id="province"
@@ -187,7 +188,7 @@ const OrderPage = () => {
           ))}
         </select>
       </div>
-      <div>
+      <div className="form-field">
         <label htmlFor="zipCode">ZIP Code:</label>
         <input
           type="text"
@@ -206,8 +207,14 @@ const OrderPage = () => {
       {errors.country && <div className="error">{errors.country}</div>}
 
 
-      <button type="submit">Send</button>
+      <button type="submit" className="primary-button">Send</button>
     </form>
+      <div className="right-content">
+      {/* Future content goes here */}
+      <h1>test</h1>
+      </div>
+    </div>
+
   );
 };
 
