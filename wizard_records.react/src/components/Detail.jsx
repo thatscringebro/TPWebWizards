@@ -299,7 +299,7 @@ const Detail = () => {
                             <br />
                             <i>Matrix Number</i> : {product.matrixNumber}
                             <br />
-                            <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
+                            <i>Availability</i> : <b>{product.quantity > 0 ? `There ${product.quantity === 1 ? 'is' : 'are'} currently ${product.quantity} copie${product.quantity === 1 ? '' : 's'} available` : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
                         {role === "Administrator" &&
                         <div className="edit-delete-container">
