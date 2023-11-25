@@ -102,7 +102,11 @@ namespace WizardRecords.Api.Repositories
                     Id = Guid.NewGuid(),
                     UserName = "Guest",
                     Email = "",
-                    City = ""
+                    City = "",
+                    PostalCode = "",
+                    StreetName = ""
+
+                    
                 };
 
                 await _dbContext.Client.AddAsync(guest);
