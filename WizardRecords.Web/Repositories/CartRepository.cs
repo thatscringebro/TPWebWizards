@@ -104,9 +104,11 @@ namespace WizardRecords.Api.Repositories
                     Email = "",
                     City = "",
                     PostalCode = "",
-                    StreetName = ""
-
-                    
+                    StreetName = "",
+                    PhoneNumber = "",
+                    FirstName = "",
+                    LastName = "",
+                    AddressNum = 0
                 };
 
                 await _dbContext.Client.AddAsync(guest);
