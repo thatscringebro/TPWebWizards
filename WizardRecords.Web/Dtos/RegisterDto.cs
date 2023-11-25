@@ -1,4 +1,4 @@
-﻿using static WizardRecords.Core.Data.Constants;
+﻿using static WizardRecords.Api.Data.Constants;
 
 namespace WizardRecords.Dtos {
     public record RegisterDto(

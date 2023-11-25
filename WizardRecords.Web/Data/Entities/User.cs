@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using static WizardRecords.Api.Data.Constants;
 
 namespace WizardRecords.Api.Domain.Entities
 {

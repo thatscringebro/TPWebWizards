@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { API_BASE_URL } from './utils/config';
 import { useNavigate } from 'react-router-dom';
 import { Province } from './utils/constants';
-import AddProductForm from './AddProductForm';
+
 import axios from 'axios';
 import '../styles/Account.css';
 
@@ -56,9 +56,7 @@ function Account() {
         City: '',
         PostalCode: '',
         Province: ''
-        FirstName: '',
-        LastName: ''
-    });
+    }, [formData, setFormData] = useState(initRegisterValues);
 
     useEffect(() => {
         var token = sessionStorage.getItem('userToken');
@@ -91,7 +89,7 @@ function Account() {
         }
       };
 
-    const handleSubmit = async (e) => {
+    // const handleSubmit = async (e) => {
     const handleSubmit = async (values, actions) => {
         console.log("handleSubmit triggered!");
         console.log("Form values:", values);

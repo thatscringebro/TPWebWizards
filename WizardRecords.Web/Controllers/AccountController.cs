@@ -62,6 +62,8 @@ namespace WizardRecords.Controllers
             return Ok();
         }
 
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model) {
             if (!ModelState.IsValid)
@@ -73,10 +75,6 @@ namespace WizardRecords.Controllers
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (!result.Succeeded)
-                return BadRequest("Invalid login attempt.");
-
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user == null)
                 return BadRequest("Invalid login attempt.");
 
             var tokenString = GenerateJwtTokenAsync(user);
