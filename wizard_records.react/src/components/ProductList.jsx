@@ -5,11 +5,6 @@ import Product from './Product';
 const ProductList = ({ title, products = [], isHomeGallery = false }) => {
     const formattedTitle = title.replace(/\s+/g, '-').toLowerCase();
 
-    const [category, media] = title.split(' ');
-
-    const isUsed = (category === "Used") ? "true" : "false";
-    const mediaType = (media === "Vinyl") ? "Vinyl" : "CD";
-
     return (
         <section className={`product-list section-${formattedTitle}`}>
             <Container>
@@ -17,7 +12,7 @@ const ProductList = ({ title, products = [], isHomeGallery = false }) => {
                     <div className="section-category" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h1>{title}</h1>
                         <h3>
-                            <Link to={`/category?isUsed=${isUsed}&media=${mediaType}`}>
+                            <Link to={`/products?category=${title.split(' ')[0]}&media=${title.split(' ')[1]}&sort=${title.split(' ')[2]}&genre=${title.split(' ')[3]}&available=${title.split(' ')[4]}`}>
                                 Click for more {'->'}
                             </Link>
                         </h3>

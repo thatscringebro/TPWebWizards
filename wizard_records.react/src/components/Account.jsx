@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { API_BASE_URL } from './utils/config';
+import { useNavigate } from 'react-router-dom';
 import { Province } from './utils/constants';
 import AddProductForm from './AddProductForm';
 import axios from 'axios';
@@ -33,6 +34,7 @@ const registerSchema = Yup.object().shape({
 });
 
 function Account() {
+    const navigate = useNavigate(); 
     const [isLogin, setIsLogin] = useState(true);
     const [isLoggedIn, setLoggedIn] = useState(false);
 
@@ -54,8 +56,42 @@ function Account() {
         City: '',
         PostalCode: '',
         Province: ''
+        FirstName: '',
+        LastName: ''
+    });
+
+    useEffect(() => {
+        var token = sessionStorage.getItem('userToken');
+        if(token)
+        {
+            setLoggedIn(true);
+            sessionStorage.removeItem('guestToken');
+        }
+    }, []);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
     };
 
+    const handleLogout = async () => {     
+        try {
+          const response = await axios.post(`${API_BASE_URL}/account/logout`);
+          if (response.status === 200) {
+            setIsLogin(false);
+            sessionStorage.removeItem('userToken');
+            alert("You have been successfully logged out");
+            navigate('/');
+          } else {
+            alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+        }
+      };
+
+    const handleSubmit = async (e) => {
     const handleSubmit = async (values, actions) => {
         console.log("handleSubmit triggered!");
         console.log("Form values:", values);
@@ -82,9 +118,11 @@ function Account() {
               }
             }
             if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('userToken', JSON.stringify(response.data.token));
                 alert('Authentication successful!');
                 setLoggedIn(true);
+                sessionStorage.removeItem('guestToken');
+                navigate('/');
             }
 
         } catch (error) {
@@ -96,8 +134,17 @@ function Account() {
         actions.setSubmitting(false);
     };
 
+    //A modifier pour pouvoir se logout: ne doit pas utiliser isLoggedIn car la variable est reset a chaque fois qu'on reviens sur la page
+    //devrait plutot regarder si le token est existant
     if (isLoggedIn) {
-        return <AddProductForm />
+        return (
+            <div className='logout-div'>
+                <h1>Do you want to log out?</h1>
+                <Button className="btn-submit" type="submit" onClick={() => handleLogout()}>
+                    Logout
+                </Button>
+            </div>
+        )
     }
 
     return (

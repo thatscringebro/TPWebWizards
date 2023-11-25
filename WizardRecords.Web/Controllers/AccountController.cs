@@ -8,18 +8,23 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Dtos;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
 
-namespace WizardRecords.Controllers {
+namespace WizardRecords.Controllers
+{
     [ApiController]
     [Route("[controller]")]
-    public class AccountController : ControllerBase {
+    public class AccountController : ControllerBase
+    {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
+      
+       
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration) {
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration)
+        {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -70,31 +75,67 @@ namespace WizardRecords.Controllers {
             if (!result.Succeeded)
                 return BadRequest("Invalid login attempt.");
 
-            var token = GenerateJwtToken(user);
-            return Ok(new { Token = token });
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+                return BadRequest("Invalid login attempt.");
+
+            var tokenString = GenerateJwtTokenAsync(user);
+            return Ok(new { token = tokenString });
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout() {
+        public async Task<IActionResult> Logout()
+        {
             await _signInManager.SignOutAsync();
+            Console.WriteLine("User disconnected");
             return Ok();
         }
 
-        private string GenerateJwtToken(User user) {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]);
-            var tokenDescriptor = new SecurityTokenDescriptor {
-                Subject = new ClaimsIdentity(new[] {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        }),
-                Expires = DateTime.UtcNow.AddHours(2),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        private async Task<string> GenerateJwtTokenAsync(User user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperFunHappySlide!!!"));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            // Créez un ClaimsIdentity avec les réclamations existantes et ajoutez la réclamation du rôle.
+            var claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("id", user.Id.ToString()),
+                //new Claim("firstName", user.FirstName),
+                //new Claim("lastName", user.LastName),
+                //new Claim("email", user.Email),
+                //new Claim("phoneNumber", user.PhoneNumber),
+                //TODO: ajouter adresse
+                //new Claim("address", user. ),
+                //TODO: ajouter ville
+                //new Claim("city", user. ),
+                //TODO: ajouter province
+                //new Claim("provinceState", user. ),
+                //TODO: ajouter pays
+                //new Claim("country", user. ),
+                //TODO: ajouter code postal
+                //new Claim("postalCode", user. ),
+
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim("role", role));
+            }
+
+            var token = new JwtSecurityToken(
+                issuer: "VotreIssuer",
+                audience: "VotreAudience",
+                claims: claims,
+                expires: DateTime.Now.AddHours(1), // Temps d'expiration du token
+                signingCredentials: credentials
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            Console.WriteLine( tokenString );
+            return tokenString;
         }
     }
 }

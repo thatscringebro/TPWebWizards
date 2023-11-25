@@ -176,3 +176,6 @@
     font-family: 'PatrenaRolane';
     font-size: calc(20px + (95 - 20) * ((100vw - 320px) / (1920 - 320)));
 }
+h3 a:hover{
+    color: darkred;
+}

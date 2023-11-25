@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
 using WizardRecords.Repositories;
-using WizardRecords.Web.Dtos;
+using WizardRecords.Api.Dtos;
 
-namespace WizardRecords.Web.Controllers {
+namespace WizardRecords.Api.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class CRUDController : ControllerBase {

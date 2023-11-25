@@ -10,6 +10,8 @@ const fetchDataForCategory = (searchQuery) => {
         if (response.status === 200) {
             const albums = response.data;
 
+           
+
             const albumPromises = albums.map((album) => {
                 return {
                     id: album.albumId,

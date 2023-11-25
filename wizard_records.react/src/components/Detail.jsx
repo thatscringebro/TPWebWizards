@@ -6,14 +6,38 @@ import { AlbumGenre, ArtistGenre, Grade } from './utils/constants';
 import axios from 'axios';
 import '../styles/Detail.css';
 import '../styles/Home.css';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const [user, SetUser] = useState([]);
+    const [role, setRole] = useState([]);
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+
+ 
+
+    //get token
+    useEffect(() => {
+        var token = sessionStorage.getItem('userToken');
+        var tokenGuest = sessionStorage.getItem('guestToken');
+        if(token)
+        {
+            var decodedToken = jwt_decode(token);
+            setRole(decodedToken["role"]);
+            SetUser(decodedToken["id"]);
+        }
+        else if(tokenGuest){
+            var decodedTokenGuest = jwt_decode(tokenGuest);
+            setRole(decodedTokenGuest["role"]);
+            SetUser(decodedTokenGuest["id"]);
+        }else{
+            console.log(`Personne est logger`);
+            SetUser(null);
+        }
+    }, []);
 
     const fetchDataForDetail = async  (id) => {
         try {
@@ -110,6 +134,111 @@ const Detail = () => {
         }
     };
 
+    const AddToCart = async () => {
+        try {   
+            const cart = {
+                albumId: product.albumId,
+                cartId: 0
+            };
+                        
+           //Faire une comparaison pour le userId = user du token          
+            
+            console.log(user);
+
+           if(user !== null){
+             //Creation panier
+             const creationPanier = await axios.post(`${API_BASE_URL}/cart/createpanier/${user}`, cart, {
+            headers: {
+             'Content-Type': 'application/json',
+            },
+            });
+            if(creationPanier.status === 200)
+            {
+                console.log('Cart Creer');
+                cart.cartId = creationPanier.data.cartId;
+            }
+            else {
+                console.error('Echec de creation du panier avec le statut:', creationPanier.status);
+            }
+
+            //Album
+            const addToCart = await axios.post(`${API_BASE_URL}/cart/add/${cart.cartId}/${cart.albumId}`, cart, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+            if (addToCart.status === 200) {
+            console.log('Album added to cart successfully');
+
+            }
+            else {
+            console.error('Failed to add album to cart with status:', addToCart.status);
+            }
+         } 
+         else {
+
+            //CREATION USER
+            const creationUser = await axios.post(`${API_BASE_URL}/cart/create`, cart, {
+                headers: {
+                   'Content-Type': 'application/json',
+               },
+           });
+           if (creationUser.status === 200) {
+           console.log('User Creer');
+
+            sessionStorage.setItem('guestToken', JSON.stringify(creationUser.data.token));
+             var token = sessionStorage.getItem('guestToken');
+            var decodedToken = jwt_decode(token);
+            cart.userId = decodedToken["id"];
+            SetUser(decodedToken["id"]);
+            console.log(user);
+
+            }
+           else {
+           console.error('Echec de creation du user avec le statut:', creationUser.status);
+           }
+
+
+          
+           const creationPanier = await axios.post(`${API_BASE_URL}/cart/createpanier/${cart.userId}`, cart, {
+            headers: {
+             'Content-Type': 'application/json',
+            },
+            });
+            if(creationPanier.status === 200)
+            {
+                console.log('Cart Creer');
+                cart.cartId = creationPanier.data.cartId;
+            }
+            else {
+                console.error('Echec de creation du panier avec le statut:', creationPanier.status);
+            }
+
+            //Album
+            const addToCart = await axios.post(`${API_BASE_URL}/cart/add/${cart.cartId}/${cart.albumId}`, cart, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+            if (addToCart.status === 200) {
+            console.log('Album added to cart successfully');
+
+            }
+            else {
+            console.error('Failed to add album to cart with status:', addToCart.status);
+            }
+
+
+
+         }          
+             }
+             catch (error) {
+                console.error('Error adding album to cart:', error);
+            }
+
+            
+    };    
+
     useEffect(() => {
         fetchDataForDetail(id);
     }, [id]);
@@ -153,7 +282,7 @@ const Detail = () => {
                     </div>
                 ) : (
                     <div>
-                        <Link to={`/artist/${product.artistName}`}><h1>{product.artistName}</h1></Link>
+                        <Link to={`/artist/${product.artistName}`}><h1 className='artist-link'>{product.artistName}</h1></Link>
                         <h2 className="title-label-container">"{product.albumTitle}" ({product.albumLabel})</h2>
                         <div className="detail-information">
                             <br />
@@ -171,16 +300,17 @@ const Detail = () => {
                             <br />
                             <i>Availability</i> : <b>{product.quantity > 0 ? 'This item is currently AVAILABLE and ready to ship!' : 'Sorry! This item is currently OUT OF STOCK.'}</b></p>
                         </div>
-                        {/*Make available for admin or staff only!*/}
+                        {role === "Administrator" &&
                         <div className="edit-delete-container">
                             <button className="button-edit" onClick={editProduct}>Edit</button>
                             <button className="button-delete" onClick={deleteProduct}>Delete</button>
                         </div>
+                        }
                     </div>
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
+                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
                 </div>
             </div>
     </div>

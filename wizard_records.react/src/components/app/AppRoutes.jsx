@@ -7,8 +7,9 @@ import CategoryResults from "../CategoryResults";
 import SearchResults from "../SearchResults";
 import ProductGallery from "../ProductGallery";
 import AddProductForm from "../AddProductForm";
+import Cart from "../Cart";
 import Account from "../Account";
-
+import OrderPage from "../OrderPage";
 
 const AppRoutes = [
     {
@@ -51,6 +52,16 @@ const AppRoutes = [
     {
         path: '/account',
         element: <Account />
+    },
+    {
+
+        path: '/cart',
+        element: <Cart />
+	},
+	{
+        path: '/order',
+        element: <OrderPage />
+
     }
 
 ];

@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WizardRecords.Core;
-using WizardRecords.Core.Data;
-using WizardRecords.Core.Domain.Entities;
+using WizardRecords.Api.Domain.Entities;
+using WizardRecords.Api.Data;
 using WizardRecords.Repositories;
 
-namespace WizardRecords.Web.Repositories {
+namespace WizardRecords.Api.Repositories {
     public class AlbumRepository : IAlbumRepository {
 
         private readonly WizRecDbContext _context;

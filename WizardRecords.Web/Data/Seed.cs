@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WizardRecords.Core.Domain.Entities;
-using static WizardRecords.Core.Data.Constants;
+using WizardRecords.Api.Domain.Entities;
+using static WizardRecords.Api.Data.Constants;
 
-namespace WizardRecords.Core.Data {
+namespace WizardRecords.Api.Data {
     public static class Seed {
         public static readonly PasswordHasher<User> PASSWORD_HASHER = new();
         private static readonly List<string> Roles = new List<string> {
