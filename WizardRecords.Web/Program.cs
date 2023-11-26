@@ -23,7 +23,7 @@ builder.WebHost.ConfigureKestrel(options => {
 builder.Services.AddControllers();
 // Database context
 builder.Services.AddDbContext<WizRecDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity services
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
