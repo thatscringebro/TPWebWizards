@@ -26,5 +26,6 @@ namespace WizardRecords.Api.Interfaces
         Task<Order> GetOrderByIdAsync(Guid orderId);
         Task UpdateOrderAsync(Order order);
         Task CancelOrderAsync(Order order);
+        Task<Order> CreateOrderAsync(Cart cart);
     }
 }

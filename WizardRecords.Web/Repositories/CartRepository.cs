@@ -310,5 +310,14 @@ namespace WizardRecords.Api.Repositories
             
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<Order> CreateOrderAsync(Cart cart) 
+        {
+            Order order = new Order(cart);
+            cart.CartItems.Clear();
+
+            _dbContext.SaveChangesAsync();
+            return order;
+        }
     }
 }

@@ -27,6 +27,38 @@ namespace WizardRecords.Controllers
          _userManager = userManager;
       }
 
+      [HttpPost("Order/{cartId}/{orderDto}")]
+      public async Task<ActionResult> CreateOrder(Guid cartId, OrderDto orderDto)
+      {
+         try
+         {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            if (cart == null)
+            {
+               throw new Exception("User not found");
+            }
+            else
+            {
+               Order order = await _cartRepository.CreateOrderAsync(cart.FirstOrDefault());
+
+               if (order != null)
+               {
+                  order.UpdateFromDto(orderDto);
+                  await _cartRepository.UpdateOrderAsync(order);
+                  return Ok();
+               }
+               else
+               {
+                  return NotFound();
+               }
+            }               
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+         }
+      }
+
       [HttpGet("orders/user/{userId}")]
       public async Task<ActionResult<List<Order>>> GetUserOrders(Guid userId)
       {
