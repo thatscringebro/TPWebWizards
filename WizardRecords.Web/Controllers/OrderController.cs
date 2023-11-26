@@ -72,8 +72,7 @@ namespace WizardRecords.Controllers
             // Check if the order is in a cancellable state (Confirmed or InPrep)
             if (order.State == OrderState.Confirmée || order.State == OrderState.EnPrep)
             {
-               order.State = OrderState.Annulée;
-               await _cartRepository.UpdateOrderAsync(order);
+               await _cartRepository.CancelOrderAsync(order);
       
                return Ok("Order canceled successfully");
             }

@@ -285,12 +285,22 @@ namespace WizardRecords.Api.Repositories
 
         public async Task<Order> GetOrderByIdAsync(Guid orderId)
         {
-            return await _dbContext.Orders.FindAsync(orderId);
+            return await _dbContext.Orders.Include(x => x.CartItems)
+                                          .FirstOrDefaultAsync(x => x.OrderId == orderId);
         }
 
         public async Task UpdateOrderAsync(Order order)
         {
             _dbContext.Orders.Update(order);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task CancelOrderAsync(Order order)
+        {
+            Cart cart = _dbContext.Carts.FirstOrDefault(x => x.UserId == order.UserId);
+            order.State = OrderState.Annulée;
+            cart.CartItems.AddRange(order.CartItems);
+            
             await _dbContext.SaveChangesAsync();
         }
     }
