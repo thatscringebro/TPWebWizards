@@ -6,34 +6,66 @@ using static WizardRecords.Api.Data.Constants;
 namespace WizardRecords.Api.Data {
     public static class Seed {
         public static readonly PasswordHasher<User> PASSWORD_HASHER = new();
+        private static readonly List<string> Roles = new List<string> {
+            "Administrator",
+            "Manager",
+            "Staff",
+            "Guest"
+        };
 
         public static void LoadSeed(this ModelBuilder builder) {
-            var adminRole = AddRole(builder, "Administrator");
+            foreach (var role in Roles) {
+                AddRole(builder, role);
+            }
 
-            var validUserName = "Admin123";
-            var validEmail = "Admin123@wizardrecords.com";
-            var validPassword = "Admin123!";
+            var adminUser = AddUser(builder,
+                "Ti-Coq",
+                "Tremblay",
+                "Admin123",
+                "Admin123@wizardrecords.com",
+                "555-555-5555",
+                666,
+                "Rue Delarue",
+                "Sainte-Grosse-Roche-De-L'Achigan",
+                Province.QC,
+                "J0K 3H0",
+                "Canada",
+                "Admin123!"
+            );
 
-            var adminUser = AddUser(builder, "Ti-Coq", "Tremblay", validUserName, validEmail, validPassword);
-            AddUserToRole(builder, adminUser, adminRole);
+            AddUserToRole(builder, adminUser, "Administrator");
             SeedAll(builder);
         }
 
-        private static IdentityRole<Guid> AddRole(ModelBuilder builder, string name) {
-            var newRole = new IdentityRole<Guid> {
-                Id = Guid.NewGuid(),
-                Name = name,
-                NormalizedName = name.ToUpper()
-            };
-            builder.Entity<IdentityRole<Guid>>().HasData(newRole);
+        private static void AddRole(ModelBuilder builder, string roleName) {
+            var role = builder.Model.FindEntityType(typeof(IdentityRole<Guid>))
+                .GetSeedData().FirstOrDefault(sd => sd.Values.Contains(roleName.ToUpper()));
 
-            return newRole;
+            if (role == null) {
+                builder.Entity<IdentityRole<Guid>>().HasData(new IdentityRole<Guid> {
+                    Id = Guid.NewGuid(),
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper()
+                });
+            }
         }
 
-        private static User AddUser(ModelBuilder builder, string firstName, string lastName, string username, string email, string password) {
-            var hasher = new PasswordHasher<User>();
-            var newUser = new User(username)
-            {
+        private static User AddUser(
+                ModelBuilder builder,
+                string firstName,
+                string lastName,
+                string username,
+                string email,
+                string phone,
+                int addressNum,
+                string streetName,
+                string city,
+                Province province,
+                string postalCode,
+                string country,
+                string password
+            ) {
+            var newUser = new User(username) {
                 Id = Guid.NewGuid(),
                 UserName = username,
                 NormalizedUserName = username.ToUpper(),
@@ -43,20 +75,31 @@ namespace WizardRecords.Api.Data {
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 FirstName = firstName,
                 LastName = lastName,
-                IsInitialPwd = true,
-                ProfileImagePath = null
+                PhoneNumber = phone,
+                AddressNum = addressNum,
+                StreetName = streetName,
+                City = city,
+                Province = province,
+                PostalCode = postalCode,
+                Country = country
             };
-            newUser.PasswordHash = hasher.HashPassword(newUser, password);
+
+            newUser.PasswordHash = PASSWORD_HASHER.HashPassword(newUser, password);
             builder.Entity<User>().HasData(newUser);
 
             return newUser;
         }
 
-        private static void AddUserToRole(ModelBuilder builder, User user, IdentityRole<Guid> role) {
-            builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid> {
-                UserId = user.Id,
-                RoleId = role.Id,
-            });
+        private static void AddUserToRole(ModelBuilder builder, User user, string roleName) {
+            var role = builder.Model.FindEntityType(typeof(IdentityRole<Guid>))
+                .GetSeedData().FirstOrDefault(sd => sd.Values.Contains(roleName.ToUpper()));
+
+            if (role != null) {
+                builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid> {
+                    UserId = user.Id,
+                    RoleId = (Guid)role["Id"]
+                });
+            }
         }
 
         private static void SeedAll(this ModelBuilder builder) {

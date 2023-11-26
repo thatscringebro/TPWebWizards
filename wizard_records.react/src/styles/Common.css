@@ -21,6 +21,16 @@ code {
   border-color: #1861ac;
 }
 
+.form-control, .form-select {
+  background-color: #24262b !important;
+  color: rgba(255, 255, 255, 0.685) !important;
+  max-width: 50%;
+}
+
+  .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.685) !important;
+  }
+
 h1, h2, h3 {
   font-family: 'PatrenaRolane';
   padding: 10px;

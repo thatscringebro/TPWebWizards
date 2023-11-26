@@ -35,10 +35,6 @@ header {
     }
 }
 
-.form-control {
-    background-color: #121212;
-}
-
 /* Navbar styles */
 header {
     background-color: darkred;
@@ -103,23 +99,3 @@ header .input-group-append button {
             margin: 10px 0;
         }
 }
-
-/*footer*/
-.bg-light {
-    position: relative;
-    margin-bottom: 0;
-    bottom: 0;
-    width: 100%;
-}
-
-.search-input {
-    background-color: #24262b;
-    color: #E4E6Eb; /* Pour que le texte soit visible sur un arrière-plan noir */
-}
-
-    .search-input:focus {
-        background-color: #24262b;
-        color: #E4E6Eb;
-        outline: none; /* Pour supprimer le contour bleu/autre couleur par défaut du navigateur */
-        box-shadow: none; /* Pour supprimer tout effet d'ombre que le navigateur pourrait ajouter */
-    }

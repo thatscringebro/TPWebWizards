@@ -25,8 +25,7 @@ namespace WizardRecords.Controllers {
             var userDetails = new UserDto(
                 user.Id,
                 user.FirstName,
-                user.LastName,
-                user.ProfileImagePath
+                user.LastName
             );
 
             return Ok(userDetails);
@@ -42,7 +41,6 @@ namespace WizardRecords.Controllers {
 
             user.FirstName = userDetails.FirstName;
             user.LastName = userDetails.LastName;
-            user.ProfileImagePath = userDetails.ProfileImagePath;
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)

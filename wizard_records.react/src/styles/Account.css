@@ -2,6 +2,21 @@
     margin:25px;
  }
 
+ .error-message {
+   color:red;
+   font-style:italic;
+ }
+
+
+ #provMenu {
+   background-color: #24262b;
+   color: rgba(255, 255, 255, 0.685);
+   border-radius: 5px;
+   padding: 7px;
+   width: 100%;
+   max-width: 50%;
+ }
+
  Form Button{
     margin:20px;
     margin-left: 0;

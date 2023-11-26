@@ -14,8 +14,7 @@ using WizardRecords.Api.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Set a specific port
-builder.WebHost.ConfigureKestrel(options =>
-{
+builder.WebHost.ConfigureKestrel(options => {
     options.Listen(System.Net.IPAddress.Loopback, 7206);
 });
 
@@ -28,6 +27,7 @@ builder.Services.AddDbContext<WizRecDbContext>(options =>
 
 // Identity services
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<WizRecDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();

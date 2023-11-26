@@ -32,13 +32,20 @@ namespace WizardRecords.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
-        {
-            var user = new User(model.UserName)
-            {
+        public async Task<IActionResult> Register([FromBody] RegisterDto model) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = new User(model.UserName) {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email = model.Email
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                AddressNum = model.AddressNum,
+                StreetName = model.StreetName,
+                City = model.City,
+                Province = model.Province,
+                PostalCode = model.PostalCode
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -46,20 +53,28 @@ namespace WizardRecords.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
+            var roleResult = await _userManager.AddToRoleAsync(user, "Guest");
+
+            if (!roleResult.Succeeded)
+                return BadRequest(roleResult.Errors);
+
             await _signInManager.SignInAsync(user, isPersistent: false);
             return Ok();
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
-        {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-            if (!result.Succeeded)
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto model) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
                 return BadRequest("Invalid login attempt.");
 
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user == null)
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
                 return BadRequest("Invalid login attempt.");
 
             var tokenString = GenerateJwtTokenAsync(user);

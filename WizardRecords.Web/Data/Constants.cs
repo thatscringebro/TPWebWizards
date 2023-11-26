@@ -2,8 +2,7 @@
     public class Constants {
         public enum Media {
             VINYL,
-            CD,
-            UNSPECIFIED
+            CD
         }
 
         // Represents the in-store section of the artist
@@ -100,6 +99,8 @@
             UNSPECIFIED
         }
 
+
+
         public enum Format {
             RPM_33,
             RPM_45,
@@ -132,6 +133,22 @@
             F,
             P,
             NONE
+        }
+
+        public enum Province {
+            BC,
+            AB,
+            SK,
+            MB,
+            ON,
+            QC,
+            NB,
+            NS,
+            PE,
+            NL,
+            NT,
+            NU,
+            YT
         }
     }
 }
