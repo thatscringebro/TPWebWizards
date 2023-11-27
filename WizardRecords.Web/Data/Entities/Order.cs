@@ -32,14 +32,14 @@ namespace WizardRecords.Api.Data.Entities
          }
 
          public void UpdateFromDto(OrderDto dto){
-            UserName = dto.UserName;
-            UserEmail = dto.UserEmail;
-            UserPhone = dto.UserPhone;
-            Adress = dto.Adress;
-            City = dto.City;
-            Country = dto.Country;
-            Province = dto.Province;
-            ZipCode =  dto.ZipCode;
+            UserName = dto.firstName + ' ' + dto.lastName;
+            UserEmail = dto.email;
+            UserPhone = dto.phone;
+            Adress = dto.address;
+            City = dto.city;
+            Country = dto.country;
+            Province = dto.province;
+            ZipCode =  dto.zipCode;
          }
     }
 

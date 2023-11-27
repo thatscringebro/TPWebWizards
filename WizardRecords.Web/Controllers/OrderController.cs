@@ -27,19 +27,19 @@ namespace WizardRecords.Controllers
          _userManager = userManager;
       }
 
-      [HttpPost("Order/{cartId}/{orderDto}")]
-      public async Task<ActionResult> CreateOrder(Guid cartId, OrderDto orderDto)
+      [HttpPost("Order/")]
+      public async Task<ActionResult> CreateOrder([FromBody] OrderDto orderDto)
       {
          try
          {
-            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            var cart = await _cartRepository.GetCartByUserIdAsync(orderDto.userId);
             if (cart == null)
             {
                throw new Exception("User not found");
             }
             else
             {
-               Order order = await _cartRepository.CreateOrderAsync(cart.FirstOrDefault());
+               Order order = await _cartRepository.CreateOrderAsync(cart);
 
                if (order != null)
                {

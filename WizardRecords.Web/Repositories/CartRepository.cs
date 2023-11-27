@@ -200,6 +200,11 @@ namespace WizardRecords.Api.Repositories
             return await _dbContext.Carts.Include(c => c.CartItems).ThenInclude(ci => ci.Album).Where(a => a.CartId == cartId).ToListAsync();
         }
 
+        public async Task<Cart> GetCartByUserIdAsync(Guid userId)
+        {
+            return await _dbContext.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(a => a.UserId == userId);
+        }
+
         public async Task<User> GetUserByIdAsync(Guid userId)
         {
             return await _dbContext.Client.Where(u => u.Id == userId).FirstOrDefaultAsync();

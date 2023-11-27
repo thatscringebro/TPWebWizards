@@ -8,6 +8,7 @@ namespace WizardRecords.Api.Interfaces
         Task<IEnumerable<Cart>> GetAllItemAsync();
 
         Task<IEnumerable<Cart>> GetCartByIdAsync(Guid cartId);
+        Task<Cart> GetCartByUserIdAsync(Guid userId);
 
         //CRUD
         Task<Cart?> DeleteItemByIdAsync(Guid cartId, Guid AlbumId);

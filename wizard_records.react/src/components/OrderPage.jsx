@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/OrderPage.css';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
+import { API_BASE_URL } from './utils/config'
+import axios from 'axios';
 
 const OrderPage = () => {
   const [user, GetUser] = useState();
@@ -57,7 +59,8 @@ const OrderPage = () => {
     let errors = {};
   
     // Vérification du nom complet
-    if (!data.fullName.trim()) errors.fullName = "The full name is required";
+    if (!data.firstName.trim()) errors.firstName = "The first name is required";
+    if (!data.lastName.trim()) errors.lastName = "The last name is required";
   
     // Vérification de l'email
     if (!data.email.trim()) {
@@ -91,35 +94,43 @@ const OrderPage = () => {
     const { name, value } = event.target;
     setOrderData({ ...orderData, [name]: value });
   };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formErrors = validate(orderData);
+  
     if (Object.keys(formErrors).length === 0) {
       setLoading(true);
-    try {
-      const response = await fetch('/api/order', {
-        method: 'POST',
-        body: JSON.stringify(orderData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+  
+      try {
+        const response = await axios.post(`${API_BASE_URL}/Order/Order`, {
+          userId: user,
+          firstName: orderData.firstName,
+          lastName: orderData.lastName,
+          email: orderData.email,
+          phone: orderData.phone,
+          address: orderData.address,
+          city: orderData.city,
+          country: orderData.country,
+          province: orderData.province,
+          zipCode: orderData.zipCode
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        // Gérer la réponse ici
+        setLoading(false);
+        // Peut-être naviguer vers une page de succès ou afficher un message de succès
+      } catch (e) {
+        setError(e);
+        setLoading(false);
       }
-      // Gérer la réponse ici
-      setLoading(false);
-      // Peut-être naviguer vers une page de succès ou afficher un message de succès
-    } catch (e) {
-      setError(e);
-      setLoading(false);
+    } else {
+      setErrors(formErrors);
     }
-    }
-    else {
-        setErrors(formErrors);
-      }
   };
+
 
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur: {error.message}</div>;
@@ -223,7 +234,8 @@ const OrderPage = () => {
         />
       </div>
       
-      {errors.fullName && <div className="error">{errors.fullName}</div>}
+      {errors.firstName && <div className="error">{errors.firstName}</div>}
+      {errors.lastName && <div className="error">{errors.lastName}</div>}
       {errors.email && <div className="error">{errors.email}</div>}
       {errors.address && <div className="error">{errors.address}</div>}
       {errors.city && <div className="error">{errors.city}</div>}
