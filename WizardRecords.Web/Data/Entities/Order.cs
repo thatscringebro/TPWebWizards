@@ -12,14 +12,14 @@ namespace WizardRecords.Api.Data.Entities
         public Guid UserId { get; set; }
         public OrderState State { get; set; }  
 
-        public String UserName { get; set; }
-        public String UserEmail { get; set; }
-        public String UserPhone { get; set; }
-        public String Adress { get; set; }
-        public String City { get; set; }
-        public String Country { get; set; } = "Canada";
-        public String Province { get; set; }
-        public String ZipCode { get; set; } 
+        public String? UserName { get; set; }
+        public String? UserEmail { get; set; }
+        public String? UserPhone { get; set; }
+        public String? Adress { get; set; }
+        public String? City { get; set; }
+        public String? Country { get; set; } = "Canada";
+        public String? Province { get; set; }
+        public String? ZipCode { get; set; } 
 
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 

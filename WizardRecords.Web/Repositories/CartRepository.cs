@@ -277,6 +277,7 @@ namespace WizardRecords.Api.Repositories
             {
                 var orders = _dbContext.Orders
                     .Include(c => c.CartItems)
+                    .ThenInclude(c => c.Album)
                     .Where(c => c.UserId == userId)
                     .ToList();
 
@@ -330,8 +331,10 @@ namespace WizardRecords.Api.Repositories
             Order order = new Order(cart);
             
             _dbContext.Carts.Remove(cart);
+            _dbContext.Orders.Add(order);
 
             _dbContext.SaveChanges();
+
             return order;
         }
     }
