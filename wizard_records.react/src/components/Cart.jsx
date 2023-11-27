@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import '../styles/Cart.css';
+import Swal from 'sweetalert2'
 
 const fetchDataForCart = (user) => {
 
@@ -124,10 +125,12 @@ const deleteAlbum = async (albumId, cart, setCart, setTotalPanier) => {
 
 
 function CartPage() {
+  const navigate = useNavigate();
   const [user, GetUser] = useState();
+  const [role, GetRole] = useState();
   const [cart, setCart] = useState([]);
   const [totalPanier, setTotalPanier] = useState(0);
-
+ 
 
 
    //get token
@@ -142,6 +145,7 @@ function CartPage() {
     }else if(tokenGuest){     
       var decodedTokenGuest = jwt_decode(tokenGuest);
       GetUser(decodedTokenGuest["id"]);
+      GetRole(decodedTokenGuest["role"]);
     }
     else {
       GetUser("Undefined");
@@ -164,6 +168,42 @@ function CartPage() {
     
   }, [user]);
 
+  const goToCheckout = async () => {
+    if (role === "Guest") {
+      // Afficher la boîte de dialogue pour le choix de l'utilisateur
+      const result = await Swal.fire({
+        title: 'Welcome Guest!',
+        text: 'Do you want to stay as a Guest, log in, or register?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Stay Guest',
+        cancelButtonText: 'Log In',
+        showCloseButton: true,
+        cancelButtonAriaLabel: 'Log In',
+        cancelButtonColor: '#3085d6',
+        reverseButtons: true,
+        // Ajout d'un troisième bouton pour s'enregistrer
+        showDenyButton: true,
+        denyButtonText: 'Register',
+      });
+
+      // Traiter le choix de l'utilisateur
+      if (result.isConfirmed) {
+        // L'utilisateur a choisi de rester en tant qu'invité
+        navigate('/order');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // L'utilisateur a choisi de se connecter
+        navigate('/account?isLogin=true');
+      } else {
+        // L'utilisateur a choisi de s'enregistrer
+        navigate('/account?isLogin=false');
+      }
+    } else {
+      // Utilisateur non invité, rediriger directement vers /order
+      navigate('/order');
+    }
+  };
+  
 
 if(cart.albums === undefined){
 
@@ -223,8 +263,11 @@ else{
     )}
     <div className="flexDiv">
       <h3 className="cart-total">Cart total : {totalPanier} $</h3>
-      <button className="checkout-button">Go to checkout</button>
+      <button className="checkout-button" onClick={() => goToCheckout()} >Go to checkout</button>
     </div>
+    
+    
+   
   </div>
 );
  
