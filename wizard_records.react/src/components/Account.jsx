@@ -38,6 +38,21 @@ function Account() {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoggedIn, setLoggedIn] = useState(false);
 
+
+    useEffect(() => {
+      
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const isLoginParam = urlSearchParams.get('isLogin');
+    
+    // Vérifier si la valeur est "true" ou "false"
+    if (isLoginParam === 'true') {
+        setIsLogin(true);
+    } else if (isLoginParam === 'false') {
+        setIsLogin(false);
+    }
+
+    },[setIsLogin]);
+
     const initLoginValues = {
         Email: '',
         Password: '',

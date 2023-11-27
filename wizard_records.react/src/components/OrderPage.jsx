@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/OrderPage.css';
-
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 const OrderPage = () => {
+  const [user, GetUser] = useState();
   const [orderData, setOrderData] = useState({
     firstName: '',
     lastName: '',
@@ -18,6 +19,29 @@ const OrderPage = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+
+
+
+   //get token
+   useEffect(() => {
+    var token = sessionStorage.getItem('userToken');
+    var tokenGuest = sessionStorage.getItem('guestToken');
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        GetUser(decodedToken["id"]);
+
+    }else if(tokenGuest){     
+      var decodedTokenGuest = jwt_decode(tokenGuest);
+      GetUser(decodedTokenGuest["id"]);
+    }
+    else {
+      GetUser("Undefined");
+    }
+}, []);
+
+
 
   useEffect(() => {
     // Chargez les données nécessaires pour la page de commande, si nécessaire
