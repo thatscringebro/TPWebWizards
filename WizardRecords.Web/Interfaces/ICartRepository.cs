@@ -23,10 +23,10 @@ namespace WizardRecords.Api.Interfaces
         Task<User> CreateUserGuest();
         Task<User> DeleteUserGuest(Guid userId);
 
-        Task<List<Order>> GetUserOrdersAsync(Guid userId);
-        Task<Order> GetOrderByIdAsync(Guid orderId);
-        Task UpdateOrderAsync(Order order);
-        Task CancelOrderAsync(Order order);
-        Task<Order> CreateOrderAsync(Cart cart);
+        List<Order> GetUserOrders(Guid userId);
+        Order GetOrderById(Guid orderId);
+        void UpdateOrder(Order order);
+        void CancelOrder(Order order);
+        Order CreateOrder(Cart cart);
     }
 }

@@ -272,13 +272,13 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
-        public async Task<List<Order>> GetUserOrdersAsync(Guid userId) {
+        public List<Order> GetUserOrders(Guid userId) {
             try
             {
-                var orders = await _dbContext.Orders
+                var orders = _dbContext.Orders
                     .Include(c => c.CartItems)
                     .Where(c => c.UserId == userId)
-                    .ToListAsync();
+                    .ToList();
 
                 if (orders != null)
                 {
@@ -295,33 +295,43 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
-        public async Task<Order> GetOrderByIdAsync(Guid orderId)
+        public Order GetOrderById(Guid orderId)
         {
-            return await _dbContext.Orders.Include(x => x.CartItems)
-                                          .FirstOrDefaultAsync(x => x.OrderId == orderId);
+            return _dbContext.Orders.Include(x => x.CartItems)
+                                          .FirstOrDefault(x => x.OrderId == orderId);
         }
 
-        public async Task UpdateOrderAsync(Order order)
+        public void UpdateOrder(Order order)
         {
             _dbContext.Orders.Update(order);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
-        public async Task CancelOrderAsync(Order order)
+        public void CancelOrder(Order order)
         {
             Cart cart = _dbContext.Carts.FirstOrDefault(x => x.UserId == order.UserId);
             order.State = OrderState.Annulée;
-            cart.CartItems.AddRange(order.CartItems);
+
+            if(cart != null)
+                cart.CartItems.AddRange(order.CartItems);
+            else
+            {
+                cart = new Cart();
+                cart.CartItems.AddRange(order.CartItems);
+                cart.UserId = order.UserId;
+                _dbContext.Carts.Add(cart);
+            }
             
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
-        public async Task<Order> CreateOrderAsync(Cart cart) 
+        public Order CreateOrder(Cart cart) 
         {
             Order order = new Order(cart);
-            cart.CartItems.Clear();
+            
+            _dbContext.Carts.Remove(cart);
 
-            _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             return order;
         }
     }

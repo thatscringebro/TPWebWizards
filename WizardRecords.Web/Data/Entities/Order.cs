@@ -26,7 +26,7 @@ namespace WizardRecords.Api.Data.Entities
         public Order() {}
 
          public Order(Cart cart) {
-            CartItems = cart.CartItems;
+            CartItems.AddRange(cart.CartItems);
             UserId = cart.UserId;
             State = OrderState.Confirmée;
          }

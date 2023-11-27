@@ -39,12 +39,12 @@ namespace WizardRecords.Controllers
             }
             else
             {
-               Order order = await _cartRepository.CreateOrderAsync(cart);
-
+               Order order = _cartRepository.CreateOrder(cart);
+               
                if (order != null)
                {
                   order.UpdateFromDto(orderDto);
-                  await _cartRepository.UpdateOrderAsync(order);
+                  _cartRepository.UpdateOrder(order);
                   return Ok();
                }
                else
@@ -71,7 +71,7 @@ namespace WizardRecords.Controllers
             }
             else
             {
-               var orders = await _cartRepository.GetUserOrdersAsync(user.Id);
+               var orders = _cartRepository.GetUserOrders(user.Id);
 
                if (orders != null)
                {
@@ -91,11 +91,11 @@ namespace WizardRecords.Controllers
       }
 
       [HttpPut("orders/cancel/{orderId}")]
-      public async Task<ActionResult> CancelOrder(Guid orderId)
+      public ActionResult CancelOrder(Guid orderId)
       {
          try
          {
-            var order = await _cartRepository.GetOrderByIdAsync(orderId);
+            var order = _cartRepository.GetOrderById(orderId);
             if (order == null)
             {
                return NotFound("Order not found");
@@ -104,7 +104,7 @@ namespace WizardRecords.Controllers
             // Check if the order is in a cancellable state (Confirmed or InPrep)
             if (order.State == OrderState.Confirmée || order.State == OrderState.EnPrep)
             {
-               await _cartRepository.CancelOrderAsync(order);
+               _cartRepository.CancelOrder(order);
       
                return Ok("Order canceled successfully");
             }
