@@ -15,7 +15,7 @@ namespace WizardRecords.Api.Interfaces
         Task<Cart?> AddItemByIdAsync(Guid cartId, Guid AlbumId);
 
 
-        Task<Cart> CreateCartAsync(Guid userId);
+        Task<Cart> CreateCartAsync(Guid userId, Cart existingCart = null);
         Task<Cart?> GetUserCartAsync(Guid userId);
 
         Task<User> GetUserByIdAsync(Guid userId);

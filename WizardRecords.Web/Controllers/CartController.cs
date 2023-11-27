@@ -38,27 +38,7 @@ namespace WizardRecords.Api.Controllers
             return Ok(cart);
         }
 
-        //[HttpPut("update/{cartId}/{AlbumId}/{quanity}")]
-        //public async Task<ActionResult<Cart>> UpdateItem(Guid cartId, Guid AlbumId, int quantity)
-        //{
-        //    try
-        //    {
-        //        var cart = await _cartRepository.GetCartByIdAsync(cartId);
-        //        if (cart != null)
-        //        {
-        //            await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
-        //            return Ok();
-        //        }
-        //        else
-        //        {
-        //            return NotFound();
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
-        //    }
-        //}
+
 
         [HttpDelete("delete/{cartId}/{AlbumId}")] //Delete l'item au panier
         public async Task<ActionResult<Cart>> DeleteItem(Guid cartId, Guid AlbumId)
@@ -105,22 +85,40 @@ namespace WizardRecords.Api.Controllers
             }
         }
 
-
-        [HttpPost("createpanier/{userId}")] //Créer le panier apres la création du token et user
+        [HttpPost("createpanier/{userId}")]
         public async Task<ActionResult<Cart>> CreateCart(Guid userId)
         {
-            var user = await _cartRepository.GetUserByIdAsync(userId);
-            if (user == null)
+            try
             {
-                throw new Exception("User not found");
+                var user = await _cartRepository.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new Exception("User not found");
+                }
+                else
+                {
+                    var existingCart = await _cartRepository.GetUserCartAsync(user.Id);
+
+                    if (existingCart != null)
+                    {
+                        // Utilisez la méthode CreateCartAsync pour créer un nouveau panier avec les éléments du panier existant
+                        var createdCart = await _cartRepository.CreateCartAsync(user.Id, existingCart);
+                        return Ok(createdCart);
+                    }
+                    else
+                    {
+                        // L'utilisateur n'a pas de panier existant, créez un nouveau panier
+                        var cart = await _cartRepository.CreateCartAsync(user.Id);
+                        return Ok(cart);
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                var cart = await _cartRepository.CreateCartAsync(user.Id);
-                return Ok(cart);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
-        
+
 
         [HttpPost("create")] //Detail, pour créé user et Tokem ( retourne token ) 
         public async Task<ActionResult<string>> CreateUser()

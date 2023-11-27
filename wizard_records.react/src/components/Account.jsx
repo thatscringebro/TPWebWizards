@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { API_BASE_URL } from './utils/config';
 import { useNavigate } from 'react-router-dom';
 import { Province } from './utils/constants';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 import axios from 'axios';
 import '../styles/Account.css';
@@ -37,6 +38,138 @@ function Account() {
     const navigate = useNavigate(); 
     const [isLogin, setIsLogin] = useState(true);
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [user, GetUser] = useState();
+     const [role, GetRole] = useState();
+    // const [cart, addCart] = useState();
+  
+
+
+   //get token
+   useEffect(() => {
+    var token = sessionStorage.getItem('userToken');
+    var tokenGuest = sessionStorage.getItem('guestToken');
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        GetUser(decodedToken["id"]);
+
+    }else if(tokenGuest){     
+      var decodedTokenGuest = jwt_decode(tokenGuest);
+      GetUser(decodedTokenGuest["id"]);
+      GetRole(decodedTokenGuest["role"]);
+
+    //   const fetchGuestCart = async () => {
+    //     if (tokenGuest) {
+    //         try {
+    //             var decodedTokenGuest = jwt_decode(tokenGuest);
+    //             var usercart = await axios.get(`${API_BASE_URL}/cart/user/${decodedTokenGuest["id"]}`);
+                
+    //             if (usercart != null) {
+    //                 addCartToUser(usercart);
+    //             } else {
+    //                 console.log('Guest cart does not exist');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching guest cart:', error.message);
+    //         }
+    //     }
+    // };
+
+    // fetchGuestCart();
+
+    }
+    else {
+      GetUser("Undefined");
+    }
+}, []);
+
+
+
+    // const addCartToUser = async (cart) => {
+
+
+    //   if(user != null){
+    //    try {
+     
+      
+    //    var usercart = axios.get(`${API_BASE_URL}/cart/user/${user}`);
+    //    if(usercart == null){
+    //      const creationPanier = await axios.post(`${API_BASE_URL}/cart/createpanier/${user}`, cart, {
+    //        headers: {
+    //         'Content-Type': 'application/json',
+    //        },
+    //        });
+    //      if(creationPanier.status === 200){
+    //        console.log('Cart Creer');    
+     
+    //      }
+    //      else {
+    //        console.error('Failed to create cart with status:', creationPanier.status);
+    //      }
+    //    }
+    //    else {
+     
+    //      console.log('Cart existe deja');
+    //    }
+    //    } catch (error) {
+    //      console.error('Error creating cart:', error.message);
+    //    }
+    //  }
+    // }
+  
+
+
+// const isGuest = () => { 
+
+//  if(role === "Guest"){
+//     return true;
+//  }
+//  else {
+//     return false;
+//  }
+
+// }
+
+   //get token
+   useEffect(() => {
+    var token = sessionStorage.getItem('userToken');
+    var tokenGuest = sessionStorage.getItem('guestToken');
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        GetUser(decodedToken["id"]);
+
+    }else if(tokenGuest){     
+      var decodedTokenGuest = jwt_decode(tokenGuest);
+      GetUser(decodedTokenGuest["id"]);
+      GetRole(decodedTokenGuest["role"]);
+
+    //   const fetchGuestCart = async () => {
+    //     if (tokenGuest) {
+    //         try {
+    //             var decodedTokenGuest = jwt_decode(tokenGuest);
+    //             var usercart = await axios.get(`${API_BASE_URL}/cart/user/${decodedTokenGuest["id"]}`);
+                
+    //             if (usercart != null) {
+    //                 addCartToUser(usercart);
+    //             } else {
+    //                 console.log('Guest cart does not exist');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching guest cart:', error.message);
+    //         }
+    //     }
+    // };
+
+    // fetchGuestCart();
+
+    }
+    else {
+      GetUser("Undefined");
+    }
+}, []);
+
+
 
 
     useEffect(() => {
@@ -44,12 +177,14 @@ function Account() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const isLoginParam = urlSearchParams.get('isLogin');
     
-    // Vérifier si la valeur est "true" ou "false"
     if (isLoginParam === 'true') {
         setIsLogin(true);
     } else if (isLoginParam === 'false') {
         setIsLogin(false);
     }
+    else {
+        setIsLogin(true);
+      }
 
     },[setIsLogin]);
 
@@ -80,7 +215,10 @@ function Account() {
             setLoggedIn(true);
             sessionStorage.removeItem('guestToken');
         }
-    }, []);
+    },[]);
+
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -270,5 +408,6 @@ function Account() {
         </section>
     );
 }
+
 
 export default Account;
