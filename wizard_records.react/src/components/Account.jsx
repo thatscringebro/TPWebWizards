@@ -337,7 +337,7 @@ async function addCartToUser(cart) {
             console.error("Authentication error:", error);
             swal.fire({
               title: "Authentication failed", 
-              html: "Authentication failed, please try again", 
+              html: "Authentication failed, please try again, your email or username may already be in use. ", 
               icon: "error"
             });
             actions.setErrors({ general: 'Authentication failed. Please try again.' });
