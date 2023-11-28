@@ -23,14 +23,14 @@ const OrderPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [role, setRole] = useState(null);
-    var boolcheckEmail;
+   
 
 
     const provinces = [
         "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
         "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
     ];
-    
+
     //get token
     useEffect(() => {
         var token = sessionStorage.getItem('userToken');
@@ -65,13 +65,12 @@ const OrderPage = () => {
                     console.error(error);
                     throw error;
                 });
-                boolcheckEmail = false;
+              
 
         } else if (tokenGuest) {
             var decodedTokenGuest = jwt_decode(tokenGuest);
             GetUser(decodedTokenGuest["id"]);
             setRole(decodedTokenGuest["role"]);
-            boolcheckEmail = true;
         } else {
             GetUser("Undefined");
         }
@@ -104,7 +103,7 @@ const OrderPage = () => {
             errors.email = "Email required";
         } else if (!data.email.includes('@')) {
             errors.email = "Invalid Email";
-        } else if(boolcheckEmail){
+        } else if(role === "Guest"){
             try {
                 var emailExists = await checkEmail(data.email);
                 if (emailExists) {
