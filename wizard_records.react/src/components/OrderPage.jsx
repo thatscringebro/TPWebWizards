@@ -122,7 +122,7 @@ const OrderPage = () => {
 
             const orderInfoHtml = `
             <div style="display:flex;">
-                <div>
+                <div style="width: 100%">
                 <h1>User info</h1>
                 <p>First Name: ${orderData.firstName}</p>
                 <p>Last Name: ${orderData.lastName}</p>
@@ -134,7 +134,7 @@ const OrderPage = () => {
                 <p>Province: ${orderData.province}</p>
                 <p>Zip Code: ${orderData.zipCode}</p>
                 </div>
-                <div>
+                <div style="width:100%">
                 <h1>Items info</h1>
                 ${responseData.items.map(item => `
                     <div>
