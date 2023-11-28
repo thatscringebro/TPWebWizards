@@ -6,6 +6,7 @@ import { API_BASE_URL } from './utils/config';
 import {  useNavigate } from 'react-router-dom';
 import { Province } from './utils/constants';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
+import swal from 'sweetalert2';
 
 import axios from 'axios';
 import '../styles/Account.css';
@@ -23,7 +24,10 @@ const registerSchema = Yup.object().shape({
     FirstName: Yup.string().required('First name is required'),
     LastName: Yup.string().required('Last name is required'),
     Email: Yup.string().email('Invalid email').required('Email is required'),
-    Password: Yup.string().required('Password is required'),
+    Password: Yup.string().required('Password is required').matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),
     Confirm: Yup.string()
         .oneOf([Yup.ref('Password'), null], 'Passwords must match')
         .required('Password confirmation is required'),
@@ -34,7 +38,7 @@ const registerSchema = Yup.object().shape({
     Province: Yup.number()
       .oneOf(Province.map((_, index) => index), 'Invalid province')
       .required('Province is required'),
-    PostalCode: Yup.string().required('Postal code is required'),
+    PostalCode: Yup.string().required('Postal code is required').matches(/^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$/, "postal code invalid"),
 });
 
 function Account() {
@@ -254,14 +258,26 @@ async function addCartToUser(cart) {
           if (response.status === 200) {
             setIsLogin(false);
             sessionStorage.removeItem('userToken');
-            alert("You have been successfully logged out");
+            swal.fire({
+              title:"Success!", 
+              html: "You have been successfully logged out!", 
+              icon: "success"
+            });
             navigate('/');
           } else {
-            alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+            swal.fire({
+              title: "An error has occurred during the logout process...", 
+              html: "If the error persists, you can close this window to disconnect this person.", 
+              icon: "error"
+            });
           }
         } catch (error) {
           console.error("Logout error:", error);
-          alert("An error has occurred during the logout process... please try again.\n\nIf the error persists, you can close this window to disconnect this person.");
+          swal.fire({
+            title: "An error has occurred during the logout process...", 
+            html: "If the error persists, you can close this window to disconnect this person.", 
+            icon: "error"
+          });
         }
       };
 
@@ -288,15 +304,22 @@ async function addCartToUser(cart) {
               };
 
               response = await axios.post(`${API_BASE_URL}/account/register`, registrationData);
-              alert(response.status);
               if (response.status === 200){
-                  alert('Registration successful!');
+                  swal.fire({
+                    title: "Success!", 
+                    html: "You have been successfully registered!", 
+                    icon: "success"
+                  });
                   setIsLogin(true);
               }
             }
             if (response.data.token) {
                 sessionStorage.setItem('userToken', JSON.stringify(response.data.token));
-                alert('Authentication successful!');
+                swal.fire({
+                  title: "Success!", 
+                  html: "You have been successfully logged in!", 
+                  icon: "success"
+                });
                 setLoggedIn(true);              
                 sessionStorage.removeItem('guestToken');
                 var token = sessionStorage.getItem('userToken');
@@ -312,7 +335,11 @@ async function addCartToUser(cart) {
 
         } catch (error) {
             console.error("Authentication error:", error);
-            alert('Authentication failed.');
+            swal.fire({
+              title: "Authentication failed", 
+              html: "Authentication failed, please try again", 
+              icon: "error"
+            });
             actions.setErrors({ general: 'Authentication failed. Please try again.' });
         }
 
