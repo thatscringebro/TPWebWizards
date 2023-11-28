@@ -75,7 +75,7 @@ namespace WizardRecords.Controllers
 
                if (orders != null)
                {
-                  return Ok(orders);
+                  return Ok(orders.OrderByDescending(x => x.OrderId));
                }
                else
                {
