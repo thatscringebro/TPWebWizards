@@ -229,6 +229,11 @@ const Detail = () => {
             });
             if (addToCart.status === 200) {
             console.log('Album added to cart successfully');
+            Swal.fire({
+                icon: 'success',
+                title: 'Item Added to Cart!',
+                text: 'The item has been added to your cart successfully.',
+            });
 
             }
             else {

@@ -109,12 +109,28 @@ async function addCartToUser(cart) {
 
         for (const album of cart.cartItems) {
           try {
-            const response = await axios.post(`${API_BASE_URL}/cart/add/${OldCart.cartId}/${album.album.albumId}`);
-            if (response.status === 200) {
-              console.log('Album ajouté au panier');
-            } else {
-              console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+
+            if(album.quantity === 1)
+            {
+              const response = await axios.post(`${API_BASE_URL}/cart/add/${OldCart.cartId}/${album.album.albumId}`);
+              if (response.status === 200) {
+                console.log('Album ajouté au panier');
+              } else {
+                console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+              }
+            }else {
+              for(let i = 0; i < album.quantity; i++)
+              {
+                const response = await axios.post(`${API_BASE_URL}/cart/add/${OldCart.cartId}/${album.album.albumId}`);
+                if (response.status === 200) {
+                  console.log('Album ajouté au panier');
+                } else {
+                  console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+                }
+              }
+
             }
+           
           } catch (error) {
             console.error('Erreur lors de l\'ajout de l\'album au panier :', error.message);
           }
@@ -138,12 +154,25 @@ async function addCartToUser(cart) {
 
         for (const album of cart.cartItems) {
           try {
-            const response = await axios.post(`${API_BASE_URL}/cart/add/${newPanier.cartId}/${album.album.albumId}`);
-            if (response.status === 200) {
-              console.log('Album ajouté au panier');
+            if(album.quantity === 1)
+            {
+              const response = await axios.post(`${API_BASE_URL}/cart/add/${newPanier.cartId}/${album.album.albumId}`);
+              if (response.status === 200) {
+                console.log('Album ajouté au panier');
+              } else {
+                console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+              }
+            }else {
+              for(let i = 0; i < album.quantity; i++)
+              {
+                const response = await axios.post(`${API_BASE_URL}/cart/add/${newPanier.cartId}/${album.album.albumId}`);
+                if (response.status === 200) {
+                  console.log('Album ajouté au panier');
+                } else {
+                  console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+                }
+              }
 
-            } else {
-              console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
             }
           } catch (error) {
             console.error('Erreur lors de l\'ajout de l\'album au panier :', error.message);
