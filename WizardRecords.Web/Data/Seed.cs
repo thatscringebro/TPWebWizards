@@ -9,7 +9,7 @@ namespace WizardRecords.Api.Data {
         private static readonly List<string> Roles = new List<string> {
             "Administrator",
             "Manager",
-            "Staff",
+            "Client",
             "Guest"
         };
 

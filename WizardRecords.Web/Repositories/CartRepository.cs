@@ -118,8 +118,6 @@ namespace WizardRecords.Api.Repositories
                 await _dbContext.Client.AddAsync(guest);
                 await _dbContext.SaveChangesAsync();
 
-                // Créer une session pour cet utilisateur guest
-                //  HttpContext.Session.SetString("GuestUserId", guest.Id.ToString());
 
                 return guest;
             }
