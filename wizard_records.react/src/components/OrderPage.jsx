@@ -76,20 +76,37 @@ const OrderPage = () => {
         "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
     ];
 
-    const validate = (data) => {
+    const checkEmail = async (email) => {
+        var response =  await axios.get(`${API_BASE_URL}/order/order/checkemail/${email}`);
+        return response.data;
+    }
+
+    const validate = async (data) => {
         let errors = {};
 
         // Vérification du nom complet
         if (!data.firstName.trim()) errors.firstName = "The first name is required";
         if (!data.lastName.trim()) errors.lastName = "The last name is required";
+  
 
         // Vérification de l'email
         if (!data.email.trim()) {
             errors.email = "Email required";
         } else if (!data.email.includes('@')) {
-            errors.email = "invalid Email";
+            errors.email = "Invalid Email";
+        } else {
+            try {
+                var emailExists = await checkEmail(data.email);
+                if (emailExists) {
+                    errors.email = "Email already exists";
+                }
+            } catch (error) {
+                console.error("Error checking email:", error);
+                // Gérez les erreurs d'appel API ici si nécessaire
+            }
         }
 
+     
         // Vérification de l'adresse
         if (!data.address.trim()) errors.address = "adress required";
 
@@ -122,7 +139,7 @@ const OrderPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formErrors = validate(orderData);
+        const formErrors = await validate(orderData);
 
         if (Object.keys(formErrors).length === 0) {
             var responseCart = await axios.get(`${API_BASE_URL}/Order/OrderInfo/${user}`);
@@ -196,14 +213,12 @@ const OrderPage = () => {
         }
     };
 
-
-
     if (loading) return <div>Chargement...</div>;
     if (error) return <div>Erreur: {error.message}</div>;
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
-            <div className="grid-container">
+            <div className="OP-grid-container">
                 <div className="grid-column">
                     <div className="form-field">
                         <label htmlFor="firstName">First Name:</label>

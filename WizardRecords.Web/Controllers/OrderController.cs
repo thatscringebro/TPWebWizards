@@ -7,6 +7,7 @@ using System.Text;
 using WizardRecords.Api.Data.Entities;
 using WizardRecords.Api.Domain.Entities;
 using WizardRecords.Api.Interfaces;
+using WizardRecords.Api.Repositories;
 using WizardRecords.Dtos;
 using WizardRecords.Repositories;
 
@@ -147,6 +148,29 @@ namespace WizardRecords.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
+
+        [HttpGet("order/checkemail/{email}")]
+        public Task<ActionResult<bool>> CheckEmail(string email)
+        {
+            try
+            {
+                var userExists = _cartRepository.FindByEmail(email);
+                if (userExists)
+                {
+                    return Task.FromResult<ActionResult<bool>>(Ok(true));
+                }
+                else
+                {
+                    return Task.FromResult<ActionResult<bool>>(Ok(false));
+                }
+            }
+            catch (Exception)
+            {
+                return Task.FromResult<ActionResult<bool>>(StatusCode(StatusCodes.Status500InternalServerError, "Database Failure"));
+            }
+        }
+    }
+}
 
         [HttpGet("orders/userInfo/{userId}")]
         public async Task<IActionResult> GetUserInfo(Guid userId) 

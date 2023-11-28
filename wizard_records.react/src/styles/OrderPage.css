@@ -39,26 +39,11 @@
     color: white;
   }
 
-.cancel-button {
-    padding: 10px 20px;
-    border: 2px solid #AA0000; /* Use the same color as your primary button for consistency */
-    background-color: transparent;
-    color: #AA0000;
-    text-transform: uppercase;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-    .cancel-button:hover {
-        background-color: #AA0000;
-        color: white;
-    }
-
-  .grid-container {
+.OP-grid-container {
     display: grid;
     grid-template-columns: auto auto auto; /* The first column for the form and second for future content */
     gap: 1em; /* Space between the grid columns */
-  }
+}
   /* Style the form to have some padding and ensure contents are aligned */
 .form-container {
     display: flex;

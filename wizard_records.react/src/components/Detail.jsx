@@ -113,11 +113,41 @@ const Detail = () => {
             const albumUpdate = {
                 Title: editedProduct.albumTitle,
                 Quantity: editedProduct.quantity,
-                Price: editedProduct.price
-
+                Price: editedProduct.price,
+                AlbumGenre: editedProduct.albumGenre,
+                ArtistGenre: editedProduct.artistGenre,
+                MediaGrade: editedProduct.mediaGrade,
+                SleeveGrade: editedProduct.sleeveGrade,
+                CatalogNumber: editedProduct.catalogNumber,
+                MatrixNumber: editedProduct.matrixNumber,
+                ArtistName: editedProduct.artistName,
+                LabelName: editedProduct.albumLabel,
+                IsUsed: editedProduct.isUsed,
+                Media: editedProduct.media
             };
 
             console.log(albumUpdate);
+
+            if(albumUpdate.Price < 0)
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'The price must be greater than 0!',
+                });
+                return;
+            }
+
+            if(albumUpdate.Quantity < 0)
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'The quantity must be greater than 0!',
+                });
+                return;
+            }
+
 
             const response = await axios.put(`${API_BASE_URL}/crud/update/${product.albumId}`, albumUpdate, {
                 headers: {
@@ -276,25 +306,107 @@ const Detail = () => {
             </div>
             <div className="detail-content">
                 {isEditing ? (
-                    <div className="input-container">
+                    <div className="input-container" >
+
+                       
+                        <label htmlFor="albumTitle" className="detail-label">Album Title:</label>
                         <input
                             type="text"
                             className="detail-input"
                             value={editedProduct.albumTitle}
                             onChange={(e) => setEditedProduct({ ...editedProduct, albumTitle: e.target.value })}
                         />
+                        <label htmlFor="quantity" className="detail-label">Quantity:</label>
                         <input
                             type="number"
                             className="detail-input"
                             value={editedProduct.quantity}
                             onChange={(e) => setEditedProduct({ ...editedProduct, quantity: e.target.value })}
                         />
+                        <label htmlFor="price" className="detail-label">Price:</label>
                         <input
                             type="number"
                             className="detail-input"
                             value={editedProduct.price}
                             onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })}
                         />
+                        <label htmlFor="albumGenre" className="detail-label">Album Genre:</label>
+                         <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.albumGenre}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, albumGenre: e.target.value })}
+                        />
+                        <label htmlFor="artistGenre" className="detail-label">Artist Genre:</label>
+                         <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.artistGenre}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, artistGenre: e.target.value })}
+                        />
+                        <label htmlFor="mediaGrade" className="detail-label">Media Grade:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.mediaGrade}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, mediaGrade: e.target.value })}
+                        />
+                       
+
+               
+
+                        <label htmlFor="sleeveGrade" className="detail-label">Sleeve Grade:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.sleeveGrade}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, sleeveGrade: e.target.value })}
+                        />
+                        <label htmlFor="catalogNumber" className="detail-label">Catalog Number:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.catalogNumber}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, catalogNumber: e.target.value })}
+                        />
+                        <label htmlFor="albumTitle" className="detail-label">Album Title:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.MatrixNumber}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, MatrixNumber: e.target.value })}
+                        />
+                        <label htmlFor="MatrixNumber" className="detail-label">Matrix Number:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.artistName}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, artistName: e.target.value })}
+                        />
+                        <label htmlFor="albumLabel" className="detail-label">Album Label:</label>
+                        <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.albumLabel}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, albumLabel: e.target.value })}
+                        />
+                        <label htmlFor="isUsed" className="detail-label">is Used?:</label>
+                          <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.isUsed}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, isUsed: e.target.value })}
+                        />
+                        <label htmlFor="Media" className="detail-label">Media:</label>
+                          <input
+                            type="text"
+                            className="detail-input"
+                            value={editedProduct.Media}
+                            onChange={(e) => setEditedProduct({ ...editedProduct, Media: e.target.value })}
+                        />
+                        
+                      
+                       
                         <div className="save-cancel-container">
                             <button className="button-save" onClick={updateProduct}>Save</button>
                             <button className="button-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
