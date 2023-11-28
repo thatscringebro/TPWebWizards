@@ -44,7 +44,39 @@ const OrderPage = () => {
     }
 }, []);
 
+useEffect(() => {
+  async function fetchUserData(userId) {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/user/${userId}`);
+      const userData = response.data;
+      setOrderData({
+        ...orderData,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        phone: userData.phone,
+        address: userData.address,
+        city: userData.city,
+        zipCode: userData.zipCode,
+        country: userData.country || 'Canada',
+        province: userData.province,
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setError(error);
+    }
+  }
 
+  var token = sessionStorage.getItem('userToken');
+  var tokenGuest = sessionStorage.getItem('guestToken');
+  if (token || tokenGuest) {
+    var decodedToken = jwt_decode(token || tokenGuest);
+    GetUser(decodedToken.id);
+    fetchUserData(decodedToken.id);
+  } else {
+    GetUser("Undefined");
+  }
+}, []);
 
   useEffect(() => {
     // Chargez les données nécessaires pour la page de commande, si nécessaire
@@ -74,7 +106,7 @@ const OrderPage = () => {
     if (!data.address.trim()) errors.address = "adress required";
   
     // Vérification de la ville
-    if (!data.city.trim()) errors.city = "town required";
+    if (!data.city.trim()) errors.city = "city required";
   
     // Vérification du code postal
     const postalCodeRegex = /^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$/;
