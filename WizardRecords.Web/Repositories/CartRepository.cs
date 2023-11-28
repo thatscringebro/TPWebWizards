@@ -339,5 +339,11 @@ namespace WizardRecords.Api.Repositories
 
             return order;
         }
+
+        public bool FindByEmail(string email)
+        {
+            var user = _dbContext.Client.Where(u => u.Email == email).FirstOrDefault();
+            return user != null;
+        }
     }
 }
