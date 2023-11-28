@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Cart.css';
 import Swal from 'sweetalert2'
 
@@ -210,9 +210,7 @@ if(cart.albums === undefined){
   return (
     <div>
       <h2>Your cart</h2>
-      <Link to="/previous_orders">
-        <button className="previous-orders-button">Previous Orders</button>
-      </Link>
+      <button className="previous-orders-button" onClick={() => navigate("/previous_orders")}>Previous Orders</button>
       <h3>Your cart is empty</h3>
     </div>
   );
@@ -223,9 +221,7 @@ else{
   return (
   <div className="cart-container">
     <h2 className="cart-heading">Your cart</h2>
-    <Link to="/previous_orders">
-      <button className="previous-orders-button">Previous Orders</button>
-    </Link>
+      <button className="previous-orders-button" onClick={() => navigate("/previous_orders")}>Previous Orders</button>
     {cart.albums ? (
       <ul className="cart-list">
         {cart.albums.map((album) => (

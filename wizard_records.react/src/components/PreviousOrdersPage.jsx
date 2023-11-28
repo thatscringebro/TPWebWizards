@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Cart.css';
 
 const OrderState = {
@@ -30,6 +30,7 @@ const fetchPreviousOrders = (userId) => {
 };
 
 function PreviousOrdersPage() {
+    const navigate = useNavigate();
     const [user, setUser] = useState();
     const [previousOrders, setPreviousOrders] = useState([]);
 
@@ -117,9 +118,7 @@ function PreviousOrdersPage() {
             ) : (
                 <h3>No previous orders found</h3>
             )}
-            <Link to="/cart">
-                <button className="primary-button">Back to Cart</button>
-            </Link>
+                <button className="previous-orders-button" onClick={()=>navigate("/cart")}>Back to Cart</button>
         </div>
     );
 }

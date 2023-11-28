@@ -60,6 +60,7 @@
   margin: 1px;
   cursor: pointer;
   border-radius: 4px;
+  height: max-content;
   transition: background-color 0.3s ease;
 }
 
@@ -76,20 +77,39 @@
 
 .checkout-button {
   position: relative;
-  background-color: #28a745;
+  background-color: #4CAF50;
   color: #fff;
   margin-left: 37%;
   border: none;
-  padding: 15px;
+  padding: 10px;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  height: max-content;
+  transition: background-color 0.2s ease;
 }
 
 .checkout-button:hover {
-  background-color: #218838;
+  background-color: #5ed162;
 }
 
 .flexDiv {
   display: flex;
+  align-items: center;
+}
+
+.previous-orders-button{
+  color: #fff;
+  border:none;
+  margin-bottom: 20px;
+  /* width: 150px;
+  height: 40px; */
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #6c757d;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+.previous-orders-button:hover{
+  color: #fff;
+  background-color: #5a6268;
 }
