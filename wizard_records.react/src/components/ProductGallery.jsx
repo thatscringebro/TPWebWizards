@@ -326,17 +326,18 @@ function ProductGallery() {
         navigate(`?${urlParams.toString()}`);
     };
 
-
-
     return (
         <div>
-        <div className="entete-allProducts">
-                {role === "Administrator" &&
-                    <Link className="text-light" to="/add-product"><button id='add-item'>Add Item</button></Link>
-                }
+            <div className="entete-allProducts">
+                <h1>All products</h1>
+                <div>
+                    {role === "Administrator" &&
+                        <Link className="text-light" to="/add-product"><button id='add-item'>Add Item</button></Link>
+                    }
+                </div>
             </div>
                
-            <h1>All products</h1>
+            
             <FilterMenu
                 selectedSortOption={selectedSortOption}
                 handleSortChange={handleSortChange}
