@@ -26,12 +26,13 @@ namespace WizardRecords.Controllers
 
 
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration, ICartRepository cartRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _cartRepository = cartRepository;
         }
 
         [HttpPost("register")]
@@ -51,12 +52,13 @@ namespace WizardRecords.Controllers
                 PostalCode = model.PostalCode
             };
 
+
+            if (_cartRepository.FindByEmail(user.Email))
+                return BadRequest();
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
-                return BadRequest(result.Errors);
-
-            if (_cartRepository.FindByEmail(user.Email))
                 return BadRequest(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Guest");
