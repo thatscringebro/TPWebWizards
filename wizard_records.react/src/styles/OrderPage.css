@@ -4,6 +4,7 @@
 .primary-button {
     padding: 10px 20px;
     border: none;
+    margin:10px;
     background-color: #24262b;
     color: white;
     font-size: 1em;
@@ -37,16 +38,32 @@
     background-color: #007bff;
     color: white;
   }
+
+.cancel-button {
+    padding: 10px 20px;
+    border: 2px solid #AA0000; /* Use the same color as your primary button for consistency */
+    background-color: transparent;
+    color: #AA0000;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+    .cancel-button:hover {
+        background-color: #AA0000;
+        color: white;
+    }
+
   .grid-container {
     display: grid;
-    grid-template-columns: auto 1fr; /* The first column for the form and second for future content */
+    grid-template-columns: auto auto auto; /* The first column for the form and second for future content */
     gap: 1em; /* Space between the grid columns */
   }
   /* Style the form to have some padding and ensure contents are aligned */
 .form-container {
     display: flex;
     flex-direction: column;
-    max-width: 300px; /* Adjust the width as needed */
+    max-width: 66%; /* Adjust the width as needed */
     margin: 0 auto; /* This centers your form on the page */
   }
   
@@ -56,10 +73,7 @@
   }
   
   /* Style the input fields and select box */
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  select {
+.order-form-field {
     width: 100%; /* Full width */
     padding: 10px; /* Padding inside the fields */
     margin: 5px 0; /* Margin for top and bottom */
@@ -67,13 +81,15 @@
     border: 1px solid #ccc; /* Border color */
     border-radius: 4px; /* Rounded corners */
     box-sizing: border-box; /* Box-sizing property */
-  }
+}
   
   /* Style the input fields and select box on focus */
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="tel"]:focus,
-  select:focus {
+.order-form-field:focus {
     border-color: #666; /* Border color on focus */
-  }
-  
+ }
+
+.order-form-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
