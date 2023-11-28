@@ -22,10 +22,15 @@ const OrderPage = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [role, setRole] = useState(null);
+    var boolcheckEmail;
 
 
-
-
+    const provinces = [
+        "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
+        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
+    ];
+    
     //get token
     useEffect(() => {
         var token = sessionStorage.getItem('userToken');
@@ -33,6 +38,8 @@ const OrderPage = () => {
         if (token) {
             var decodedToken = jwt_decode(token);
             var id = decodedToken["id"];
+            GetUser(id);
+            
             //call bd 
             axios.get(`${API_BASE_URL}/order/orders/userInfo/${id}`)
                 .then((response) => {
@@ -46,7 +53,7 @@ const OrderPage = () => {
                             email: data.email,
                             phone: data.phone,
                             address: data.address,
-                            province: data.province,
+                            province: provinces[data.province],
                             city: data.city,
                             zipCode: data.zipCode,
                         });
@@ -58,9 +65,13 @@ const OrderPage = () => {
                     console.error(error);
                     throw error;
                 });
+                boolcheckEmail = false;
+
         } else if (tokenGuest) {
             var decodedTokenGuest = jwt_decode(tokenGuest);
             GetUser(decodedTokenGuest["id"]);
+            setRole(decodedTokenGuest["role"]);
+            boolcheckEmail = true;
         } else {
             GetUser("Undefined");
         }
@@ -71,14 +82,14 @@ const OrderPage = () => {
     }, []);
 
     // Liste des provinces canadiennes pour le menu déroulant
-    const provinces = [
-        "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
-        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
-    ];
+ 
 
     const checkEmail = async (email) => {
-        var response =  await axios.get(`${API_BASE_URL}/order/order/checkemail/${email}`);
-        return response.data;
+       
+
+            var response =  await axios.get(`${API_BASE_URL}/order/order/checkemail/${email}`);
+            return response.data;
+        
     }
 
     const validate = async (data) => {
@@ -88,13 +99,12 @@ const OrderPage = () => {
         if (!data.firstName.trim()) errors.firstName = "The first name is required";
         if (!data.lastName.trim()) errors.lastName = "The last name is required";
   
-
         // Vérification de l'email
         if (!data.email.trim()) {
             errors.email = "Email required";
         } else if (!data.email.includes('@')) {
             errors.email = "Invalid Email";
-        } else {
+        } else if(boolcheckEmail){
             try {
                 var emailExists = await checkEmail(data.email);
                 if (emailExists) {
@@ -121,6 +131,7 @@ const OrderPage = () => {
             errors.zipCode = "Postal code invalid";
         }
 
+        // if(!data.province) errors.province = "Province required";
         // Vérification du pays
         if (!data.country.trim()) errors.country = "Country required";
 
