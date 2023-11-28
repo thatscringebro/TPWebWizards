@@ -28,7 +28,7 @@ namespace WizardRecords.Api.Data {
                 "Rue Delarue",
                 "Sainte-Grosse-Roche-De-L'Achigan",
                 Province.QC,
-                "J0K 3H0",
+                "J0K3H0",
                 "Canada",
                 "Admin123!"
             );
