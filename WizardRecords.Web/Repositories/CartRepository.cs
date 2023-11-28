@@ -82,7 +82,10 @@ namespace WizardRecords.Api.Repositories
                         await _dbContext.Carts.AddAsync(new Cart { UserId = user.Id });
                         await _dbContext.SaveChangesAsync();
                         cart = await _dbContext.Carts.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
+
+
                     }
+                    
                 }
 
                 return cart;
@@ -105,6 +108,7 @@ namespace WizardRecords.Api.Repositories
                     City = "",
                     PostalCode = "",
                     StreetName = "",
+
                     PhoneNumber = "",
                     FirstName = "",
                     LastName = "",

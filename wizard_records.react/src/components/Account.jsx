@@ -3,11 +3,15 @@ import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { API_BASE_URL } from './utils/config';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { Province } from './utils/constants';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 import axios from 'axios';
 import '../styles/Account.css';
+
+//PLACER LE NAVIGATE SI PAS DE GUEST TOKEN
+
 
 const loginSchema = Yup.object().shape({
     Email: Yup.string().required('Email is required'),
@@ -37,6 +41,124 @@ function Account() {
     const navigate = useNavigate(); 
     const [isLogin, setIsLogin] = useState(true);
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [user, GetUser] = useState();
+    const [cart, setCart] = useState();
+    const [userNew, SetUser] = useState();
+    const [role , setRole] = useState();
+
+  
+
+   //get token
+   useEffect(() => {
+    var token = sessionStorage.getItem('userToken');
+    var tokenGuest = sessionStorage.getItem('guestToken');
+    if(token)
+    {
+        var decodedToken = jwt_decode(token);
+        GetUser(decodedToken["id"]);
+
+    }else if(tokenGuest){     
+      var decodedTokenGuest = jwt_decode(tokenGuest);
+      GetUser(decodedTokenGuest["id"]);
+      setRole(decodedTokenGuest["role"]);
+
+    }
+    else {
+      GetUser("Undefined");
+      
+    }
+}, []);
+
+
+
+useEffect(() => {
+  const fetchCart = async () => {
+     try {
+        const carts = await axios.get(`${API_BASE_URL}/cart/user/${user}`);
+        if (carts.status === 200) {
+           setCart(carts.data);  
+           console.log('Panier ajouté à la variable');
+        }
+     } catch (error) {
+        console.error('Erreur lors de la récupération du panier:', error.message);
+     }
+  };
+
+  if (role === 'Guest') {
+     fetchCart();
+  }
+}, [role, user]);
+
+
+useEffect(() => {
+  if (role === 'Guest' && userNew !== undefined && cart !== undefined) {
+     addCartToUser(cart);
+  }
+}, [role, userNew, cart]);
+
+
+async function addCartToUser(cart) {
+  if (userNew !== null) {
+    try {
+      // Vérifier si le panier existe pour l'utilisateur
+      const usercart = await axios.get(`${API_BASE_URL}/cart/user/${userNew}`);
+
+      if (usercart.data && usercart.data.cartId) {
+        console.log('Le panier existe déjà');
+        var OldCart = usercart.data;
+
+        for (const album of cart.cartItems) {
+          try {
+            const response = await axios.post(`${API_BASE_URL}/cart/add/${OldCart.cartId}/${album.album.albumId}`);
+            if (response.status === 200) {
+              console.log('Album ajouté au panier');
+            } else {
+              console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+            }
+          } catch (error) {
+            console.error('Erreur lors de l\'ajout de l\'album au panier :', error.message);
+          }
+        }
+        navigate('/');
+      }
+       
+    } catch (error) {
+
+      console.log('Le panier n\'existe pas');
+      // Si le panier n'existe pas, le créer
+      const creationPanier = await axios.post(`${API_BASE_URL}/cart/createpanier/${userNew}`, cart, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (creationPanier.status === 200) {
+        console.log('Panier créé');
+        var newPanier = creationPanier.data;
+
+        for (const album of cart.cartItems) {
+          try {
+            const response = await axios.post(`${API_BASE_URL}/cart/add/${newPanier.cartId}/${album.album.albumId}`);
+            if (response.status === 200) {
+              console.log('Album ajouté au panier');
+
+            } else {
+              console.error('Échec de l\'ajout de l\'album au panier avec le statut :', response.status);
+            }
+          } catch (error) {
+            console.error('Erreur lors de l\'ajout de l\'album au panier :', error.message);
+          }
+        }
+        navigate('/');
+      } else {
+        console.error('Échec de la création du panier avec le statut :', creationPanier.status);
+      }
+    }
+    
+  }
+  navigate('/');
+}
+  
 
 
     useEffect(() => {
@@ -44,14 +166,21 @@ function Account() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const isLoginParam = urlSearchParams.get('isLogin');
     
-    // Vérifier si la valeur est "true" ou "false"
     if (isLoginParam === 'true') {
         setIsLogin(true);
     } else if (isLoginParam === 'false') {
         setIsLogin(false);
     }
+    else {
+        setIsLogin(true);
+      }
 
     },[setIsLogin]);
+
+   
+  
+  
+
 
     const initLoginValues = {
         Email: '',
@@ -77,10 +206,13 @@ function Account() {
         var token = sessionStorage.getItem('userToken');
         if(token)
         {
-            setLoggedIn(true);
+            setLoggedIn(true);  
             sessionStorage.removeItem('guestToken');
         }
-    }, []);
+    },[]);
+
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -108,6 +240,9 @@ function Account() {
     const handleSubmit = async (values, actions) => {
         console.log("handleSubmit triggered!");
         console.log("Form values:", values);
+        
+       
+
         try {
             let response;
 
@@ -133,9 +268,17 @@ function Account() {
             if (response.data.token) {
                 sessionStorage.setItem('userToken', JSON.stringify(response.data.token));
                 alert('Authentication successful!');
-                setLoggedIn(true);
+                setLoggedIn(true);              
                 sessionStorage.removeItem('guestToken');
-                navigate('/');
+                var token = sessionStorage.getItem('userToken');
+                if(token)
+                {
+                    var decodedToken = jwt_decode(token);
+                    SetUser(decodedToken["id"]);
+                }
+                if(role !== 'Guest'){
+                  navigate('/');}
+               
             }
 
         } catch (error) {
@@ -146,6 +289,7 @@ function Account() {
 
         actions.setSubmitting(false);
     };
+    
 
     //A modifier pour pouvoir se logout: ne doit pas utiliser isLoggedIn car la variable est reset a chaque fois qu'on reviens sur la page
     //devrait plutot regarder si le token est existant
@@ -270,5 +414,6 @@ function Account() {
         </section>
     );
 }
+
 
 export default Account;
