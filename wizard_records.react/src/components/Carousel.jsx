@@ -5,9 +5,10 @@ import '../styles/Carousel.css';
 const Carousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const images = [
-        { src: require("../assets/images/carousel/PubImage1.jpg"), alt: "placeholder1" },
-        { src: require("../assets/images/carousel/PubImage2.jpg"), alt: "placeholder2" },
-        { src: require("../assets/images/carousel/PubImage3.jpg"), alt: "placeholder3" },
+        { src: require("../assets/images/carousel/PubImage4.jpg"), alt: "Karl Tremblay" },
+        { src: require("../assets/images/carousel/PubImage1.jpg"), alt: "New Rock Arrivals" },
+        { src: require("../assets/images/carousel/PubImage2.jpg"), alt: "Get Together 2023" },
+        { src: require("../assets/images/carousel/PubImage3.jpg"), alt: "Weekly Jazz Recommendations" },
     ];
     const length = images.length;
 
