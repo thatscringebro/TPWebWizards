@@ -101,7 +101,7 @@ const handleSubmit = async (event) => {
   const formErrors = validate(orderData);
 
   if (Object.keys(formErrors).length === 0) {
-    const responseCart = await axios.post(`${API_BASE_URL}/Order/CartInfo/{user}`);
+   // const responseCart = await axios.post(`${API_BASE_URL}/Order/CartInfo/{user}`);
 
     const orderInfoHtml = `
       <div style="display:flex;">
