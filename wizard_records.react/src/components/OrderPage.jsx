@@ -188,14 +188,12 @@ const OrderPage = () => {
         }
     };
 
-
-
     if (loading) return <div>Chargement...</div>;
     if (error) return <div>Erreur: {error.message}</div>;
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
-            <div className="grid-container">
+            <div className="OP-grid-container">
                 <div className="grid-column">
                     <div className="form-field">
                         <label htmlFor="firstName">First Name:</label>
