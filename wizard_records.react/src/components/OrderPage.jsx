@@ -32,18 +32,39 @@ const OrderPage = () => {
         var tokenGuest = sessionStorage.getItem('guestToken');
         if (token) {
             var decodedToken = jwt_decode(token);
-            GetUser(decodedToken["id"]);
-
+            var id = decodedToken["id"];
+            //call bd 
+            axios.get(`${API_BASE_URL}/order/orders/userInfo/${id}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data)
+                        var data = response.data;
+                        setOrderData({
+                            ...orderData,
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            email: data.email,
+                            phone: data.phone,
+                            address: data.address,
+                            province: data.province,
+                            city: data.city,
+                            zipCode: data.zipCode,
+                        });
+                    } else {
+                        throw Error(`Failed to fetch previous orders with status: ${response.status}`);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    throw error;
+                });
         } else if (tokenGuest) {
             var decodedTokenGuest = jwt_decode(tokenGuest);
             GetUser(decodedTokenGuest["id"]);
-        }
-        else {
+        } else {
             GetUser("Undefined");
         }
     }, []);
-
-
 
     useEffect(() => {
         // Chargez les données nécessaires pour la page de commande, si nécessaire
@@ -89,6 +110,10 @@ const OrderPage = () => {
         return errors;
     };
 
+    const handleProvinceChange = (event) => {
+        const { value } = event.target;
+        setOrderData({ ...orderData, province: value });
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -264,16 +289,10 @@ const OrderPage = () => {
                     </div>
                     <div className="form-field">
                         <label htmlFor="province">Province:</label>
-                        <select
-                            className="order-form-field"
-                            id="province"
-                            name="province"
-                            value={orderData.province}
-                            onChange={handleInputChange}
-                        >
+                        <select className="order-form-field" id="province" name="province" value={orderData.province} onChange={handleProvinceChange}>
                             <option value="">Select a province</option>
                             {provinces.map((province, index) => (
-                                <option key={index} value={province}>{province}</option>
+                            <option key={index} value={province}>{province}</option>
                             ))}
                         </select>
                     </div>
