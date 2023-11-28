@@ -12,34 +12,34 @@ namespace WizardRecords.Api.Data.Entities
         public Guid UserId { get; set; }
         public OrderState State { get; set; }  
 
-        public String UserName { get; set; }
-        public String UserEmail { get; set; }
-        public String UserPhone { get; set; }
-        public String Adress { get; set; }
-        public String City { get; set; }
-        public String Country { get; set; } = "Canada";
-        public String Province { get; set; }
-        public String ZipCode { get; set; } 
+        public String? UserName { get; set; }
+        public String? UserEmail { get; set; }
+        public String? UserPhone { get; set; }
+        public String? Adress { get; set; }
+        public String? City { get; set; }
+        public String? Country { get; set; } = "Canada";
+        public String? Province { get; set; }
+        public String? ZipCode { get; set; } 
 
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
         public Order() {}
 
          public Order(Cart cart) {
-            CartItems = cart.CartItems;
+            CartItems.AddRange(cart.CartItems);
             UserId = cart.UserId;
             State = OrderState.Confirmée;
          }
 
          public void UpdateFromDto(OrderDto dto){
-            UserName = dto.UserName;
-            UserEmail = dto.UserEmail;
-            UserPhone = dto.UserPhone;
-            Adress = dto.Adress;
-            City = dto.City;
-            Country = dto.Country;
-            Province = dto.Province;
-            ZipCode =  dto.ZipCode;
+            UserName = dto.firstName + ' ' + dto.lastName;
+            UserEmail = dto.email;
+            UserPhone = dto.phone;
+            Adress = dto.address;
+            City = dto.city;
+            Country = dto.country;
+            Province = dto.province;
+            ZipCode =  dto.zipCode;
          }
     }
 

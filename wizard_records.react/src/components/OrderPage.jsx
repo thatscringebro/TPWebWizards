@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/OrderPage.css';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
+import { API_BASE_URL } from './utils/config'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const OrderPage = () => {
   const [user, GetUser] = useState();
@@ -57,7 +60,8 @@ const OrderPage = () => {
     let errors = {};
   
     // Vérification du nom complet
-    if (!data.fullName.trim()) errors.fullName = "The full name is required";
+    if (!data.firstName.trim()) errors.firstName = "The first name is required";
+    if (!data.lastName.trim()) errors.lastName = "The last name is required";
   
     // Vérification de l'email
     if (!data.email.trim()) {
@@ -92,34 +96,72 @@ const OrderPage = () => {
     setOrderData({ ...orderData, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formErrors = validate(orderData);
-    if (Object.keys(formErrors).length === 0) {
-      setLoading(true);
-    try {
-      const response = await fetch('/api/order', {
-        method: 'POST',
-        body: JSON.stringify(orderData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // Gérer la réponse ici
-      setLoading(false);
-      // Peut-être naviguer vers une page de succès ou afficher un message de succès
-    } catch (e) {
-      setError(e);
-      setLoading(false);
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const formErrors = validate(orderData);
+
+  if (Object.keys(formErrors).length === 0) {
+   // const responseCart = await axios.post(`${API_BASE_URL}/Order/CartInfo/{user}`);
+
+    const orderInfoHtml = `
+      <div style="display:flex;">
+        <div>
+          <h1>User info</h1>
+          <p>First Name: ${orderData.firstName}</p>
+          <p>Last Name: ${orderData.lastName}</p>
+          <p>Email: ${orderData.email}</p>
+          <p>Phone: ${orderData.phone}</p>
+          <p>Address: ${orderData.address}</p>
+          <p>City: ${orderData.city}</p>
+          <p>Country: ${orderData.country}</p>
+          <p>Province: ${orderData.province}</p>
+          <p>Zip Code: ${orderData.zipCode}</p>
+        </div>
+        <div>
+          <h1>Items info</h1>
+        </div>
+      </div>
+    `;
+
+    // Show SweetAlert modal with custom content
+    const result = await Swal.fire({
+      title: 'Confirm Order',
+      html: orderInfoHtml,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
+      
+        setLoading(true);
+
+        const response = await axios.post(`${API_BASE_URL}/Order/Order`, {
+          userId: user,
+          firstName: orderData.firstName,
+          lastName: orderData.lastName,
+          email: orderData.email,
+          phone: orderData.phone,
+          address: orderData.address,
+          city: orderData.city,
+          country: orderData.country,
+          province: orderData.province,
+          zipCode: orderData.zipCode,
+        });
+
+        document.location.href = '/previous_orders';
+
+        setLoading(false);
+    } else {
+      document.location.href = '/cart';
     }
-    }
-    else {
-        setErrors(formErrors);
-      }
-  };
+  } else {
+    setErrors(formErrors);
+  }
+};
+
+
 
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur: {error.message}</div>;
@@ -223,7 +265,8 @@ const OrderPage = () => {
         />
       </div>
       
-      {errors.fullName && <div className="error">{errors.fullName}</div>}
+      {errors.firstName && <div className="error">{errors.firstName}</div>}
+      {errors.lastName && <div className="error">{errors.lastName}</div>}
       {errors.email && <div className="error">{errors.email}</div>}
       {errors.address && <div className="error">{errors.address}</div>}
       {errors.city && <div className="error">{errors.city}</div>}

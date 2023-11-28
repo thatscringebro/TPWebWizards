@@ -97,20 +97,8 @@ namespace WizardRecords.Api.Controllers
                 }
                 else
                 {
-                    var existingCart = await _cartRepository.GetUserCartAsync(user.Id);
-
-                    if (existingCart != null)
-                    {
-                        // Utilisez la méthode CreateCartAsync pour créer un nouveau panier avec les éléments du panier existant
-                        var createdCart = await _cartRepository.CreateCartAsync(user.Id, existingCart);
-                        return Ok(createdCart);
-                    }
-                    else
-                    {
-                        // L'utilisateur n'a pas de panier existant, créez un nouveau panier
-                        var cart = await _cartRepository.CreateCartAsync(user.Id);
-                        return Ok(cart);
-                    }
+                    var cart = await _cartRepository.CreateCartAsync(user.Id);
+                    return Ok(cart);
                 }
             }
             catch (Exception)

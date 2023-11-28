@@ -8,6 +8,7 @@ namespace WizardRecords.Api.Interfaces
         Task<IEnumerable<Cart>> GetAllItemAsync();
 
         Task<IEnumerable<Cart>> GetCartByIdAsync(Guid cartId);
+        Task<Cart> GetCartByUserIdAsync(Guid userId);
 
         //CRUD
         Task<Cart?> DeleteItemByIdAsync(Guid cartId, Guid AlbumId);
@@ -15,17 +16,17 @@ namespace WizardRecords.Api.Interfaces
         Task<Cart?> AddItemByIdAsync(Guid cartId, Guid AlbumId);
 
 
-        Task<Cart> CreateCartAsync(Guid userId, Cart existingCart = null);
+        Task<Cart> CreateCartAsync(Guid userId);
         Task<Cart?> GetUserCartAsync(Guid userId);
 
         Task<User> GetUserByIdAsync(Guid userId);
         Task<User> CreateUserGuest();
         Task<User> DeleteUserGuest(Guid userId);
 
-        Task<List<Order>> GetUserOrdersAsync(Guid userId);
-        Task<Order> GetOrderByIdAsync(Guid orderId);
-        Task UpdateOrderAsync(Order order);
-        Task CancelOrderAsync(Order order);
-        Task<Order> CreateOrderAsync(Cart cart);
+        List<Order> GetUserOrders(Guid userId);
+        Order GetOrderById(Guid orderId);
+        void UpdateOrder(Order order);
+        void CancelOrder(Order order);
+        Order CreateOrder(Cart cart);
     }
 }

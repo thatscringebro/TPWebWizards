@@ -28,7 +28,9 @@ namespace WizardRecords.Api.Data.Entities
         [Key]
         public Guid AlbumId { get; set; }
         [ForeignKey("CartId")]
-        public Guid CartId { get; set; }
+        public Guid? CartId { get; set; }
+        [ForeignKey("OrderId")]
+        public Guid? OrderId { get; set; }
         public Album? Album { get; set; }
         public int Quantity { get; set; }
     }
