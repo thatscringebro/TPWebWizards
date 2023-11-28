@@ -202,7 +202,7 @@ namespace WizardRecords.Api.Repositories
 
         public async Task<Cart> GetCartByUserIdAsync(Guid userId)
         {
-            return await _dbContext.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(a => a.UserId == userId);
+            return await _dbContext.Carts.Include(x => x.CartItems).ThenInclude(c => c.Album).FirstOrDefaultAsync(a => a.UserId == userId);
         }
 
         public async Task<User> GetUserByIdAsync(Guid userId)

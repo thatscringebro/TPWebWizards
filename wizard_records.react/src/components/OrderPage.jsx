@@ -101,27 +101,38 @@ const handleSubmit = async (event) => {
   const formErrors = validate(orderData);
 
   if (Object.keys(formErrors).length === 0) {
-    const responseCart = await axios.post(`${API_BASE_URL}/Order/CartInfo/{user}`);
+    var responseCart = await axios.get(`${API_BASE_URL}/Order/CartInfo/${user}`);
+const orderData = responseCart.data;
 
-    const orderInfoHtml = `
-      <div style="display:flex;">
+const orderInfoHtml = `
+  <div style="display:flex;">
+    <div>
+      <h1>User info</h1>
+      <p>First Name: ${orderData.firstName}</p>
+      <p>Last Name: ${orderData.lastName}</p>
+      <p>Email: ${orderData.email}</p>
+      <p>Phone: ${orderData.phone}</p>
+      <p>Address: ${orderData.address}</p>
+      <p>City: ${orderData.city}</p>
+      <p>Country: ${orderData.country}</p>
+      <p>Province: ${orderData.province}</p>
+      <p>Zip Code: ${orderData.zipCode}</p>
+    </div>
+    <div>
+      <h1>Items info</h1>
+      ${orderData.items.map(item => `
         <div>
-          <h1>User info</h1>
-          <p>First Name: ${orderData.firstName}</p>
-          <p>Last Name: ${orderData.lastName}</p>
-          <p>Email: ${orderData.email}</p>
-          <p>Phone: ${orderData.phone}</p>
-          <p>Address: ${orderData.address}</p>
-          <p>City: ${orderData.city}</p>
-          <p>Country: ${orderData.country}</p>
-          <p>Province: ${orderData.province}</p>
-          <p>Zip Code: ${orderData.zipCode}</p>
+          <p>Album Title: ${item.album.title}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Price: ${item.album.price}</p>
         </div>
-        <div>
-          <h1>Items info</h1>
-        </div>
-      </div>
-    `;
+      `).join('')}
+      <p>Total Before Taxes: ${orderData.totalAvTaxes}</p>
+      <p>Total Taxes: ${orderData.totalTaxes}</p>
+      <p>Total After Taxes: ${orderData.totalApTaxes}</p>
+    </div>
+  </div>
+`;
 
     // Show SweetAlert modal with custom content
     const result = await Swal.fire({
