@@ -101,8 +101,8 @@ const handleSubmit = async (event) => {
   const formErrors = validate(orderData);
 
   if (Object.keys(formErrors).length === 0) {
-    var responseCart = await axios.get(`${API_BASE_URL}/Order/CartInfo/${user}`);
-const orderData = responseCart.data;
+    var responseCart = await axios.get(`${API_BASE_URL}/Order/OrderInfo/${user}`);
+const responseData = responseCart.data;
 
 const orderInfoHtml = `
   <div style="display:flex;">
@@ -120,16 +120,16 @@ const orderInfoHtml = `
     </div>
     <div>
       <h1>Items info</h1>
-      ${orderData.items.map(item => `
+      ${responseData.items.map(item => `
         <div>
           <p>Album Title: ${item.album.title}</p>
           <p>Quantity: ${item.quantity}</p>
           <p>Price: ${item.album.price}</p>
         </div>
       `).join('')}
-      <p>Total Before Taxes: ${orderData.totalAvTaxes}</p>
-      <p>Total Taxes: ${orderData.totalTaxes}</p>
-      <p>Total After Taxes: ${orderData.totalApTaxes}</p>
+      <p>Total Before Taxes: ${responseData.totalAvTaxes}</p>
+      <p>Total Taxes: ${responseData.totalTaxes}</p>
+      <p>Total After Taxes: ${responseData.totalApTaxes}</p>
     </div>
   </div>
 `;
