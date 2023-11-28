@@ -17,7 +17,7 @@ const Detail = () => {
     const [product, setProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
  
 
     //get token
@@ -171,10 +171,14 @@ const Detail = () => {
             });
             if (addToCart.status === 200) {
             console.log('Album added to cart successfully');
+            setShowSuccessPopup(true);
             Swal.fire({
                 icon: 'success',
                 title: 'Item Added to Cart!',
                 text: 'The item has been added to your cart successfully.',
+                
+            }).then(() => {
+                setShowSuccessPopup(false); // Réactive le bouton après la fermeture du pop-up
             });
 
             }
@@ -229,10 +233,14 @@ const Detail = () => {
             });
             if (addToCart.status === 200) {
             console.log('Album added to cart successfully');
+            setShowSuccessPopup(true);
             Swal.fire({
                 icon: 'success',
                 title: 'Item Added to Cart!',
                 text: 'The item has been added to your cart successfully.',
+                
+            }).then(() => {
+                setShowSuccessPopup(false); // Réactive le bouton après la fermeture du pop-up
             });
 
             }
@@ -322,7 +330,8 @@ const Detail = () => {
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
+                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart} disabled={showSuccessPopup}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
+               
                 </div>
             </div>
     </div>
