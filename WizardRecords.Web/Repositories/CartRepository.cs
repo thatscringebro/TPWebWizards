@@ -60,7 +60,7 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
-        public async Task<Cart> CreateCartAsync(Guid userId, Cart existingCart = null)
+        public async Task<Cart> CreateCartAsync(Guid userId)
         {
             try
             {
@@ -75,36 +75,17 @@ namespace WizardRecords.Api.Repositories
                 }
                 else
                 {
-                    cart = await _dbContext.Carts.Include(c => c.CartItems).Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
+                    cart = await _dbContext.Carts.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
 
                     if (cart == null)
                     {
-                        if (existingCart != null && existingCart.CartItems.Any())
-                        {
-                           
-                            cart = new Cart { UserId = user.Id, CartItems = new List<CartItem>() };
+                        await _dbContext.Carts.AddAsync(new Cart { UserId = user.Id });
+                        await _dbContext.SaveChangesAsync();
+                        cart = await _dbContext.Carts.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
 
-                            foreach (var existingCartItem in existingCart.CartItems)
-                            {
-                                cart.CartItems.Add(new CartItem
-                                {
-                                    AlbumId = existingCartItem.AlbumId,
-                                    Quantity = existingCartItem.Quantity,
-                                    Album = existingCartItem.Album
-                                });
-                            }
 
-                            _dbContext.Carts.Add(cart);
-                            await _dbContext.SaveChangesAsync();
-                        }
-                        else
-                        {
-                           
-                            cart = new Cart { UserId = user.Id };
-                            _dbContext.Carts.Add(cart);
-                            await _dbContext.SaveChangesAsync();
-                        }
                     }
+                    
                 }
 
                 return cart;
@@ -127,6 +108,7 @@ namespace WizardRecords.Api.Repositories
                     City = "",
                     PostalCode = "",
                     StreetName = "",
+
                     PhoneNumber = "",
                     FirstName = "",
                     LastName = "",
@@ -289,7 +271,8 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
-        public async Task<List<Order>> GetUserOrdersAsync(Guid userId) {
+        public async Task<List<Order>> GetUserOrdersAsync(Guid userId)
+        {
             try
             {
                 var orders = await _dbContext.Orders
@@ -329,11 +312,11 @@ namespace WizardRecords.Api.Repositories
             Cart cart = _dbContext.Carts.FirstOrDefault(x => x.UserId == order.UserId);
             order.State = OrderState.Annulée;
             cart.CartItems.AddRange(order.CartItems);
-            
+
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Order> CreateOrderAsync(Cart cart) 
+        public async Task<Order> CreateOrderAsync(Cart cart)
         {
             Order order = new Order(cart);
             cart.CartItems.Clear();
