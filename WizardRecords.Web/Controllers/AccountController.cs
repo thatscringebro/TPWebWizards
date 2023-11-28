@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Dtos;
 using WizardRecords.Api.Domain.Entities;
+using WizardRecords.Api.Interfaces;
 
 namespace WizardRecords.Controllers
 {
@@ -20,8 +21,10 @@ namespace WizardRecords.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
-      
-       
+        private readonly ICartRepository _cartRepository;
+
+
+
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration)
         {
@@ -51,6 +54,9 @@ namespace WizardRecords.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            if (_cartRepository.FindByEmail(user.Email))
                 return BadRequest(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Guest");

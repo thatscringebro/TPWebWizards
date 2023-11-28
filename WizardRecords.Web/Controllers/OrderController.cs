@@ -169,11 +169,9 @@ namespace WizardRecords.Controllers
                 return Task.FromResult<ActionResult<bool>>(StatusCode(StatusCodes.Status500InternalServerError, "Database Failure"));
             }
         }
-    }
-}
 
         [HttpGet("orders/userInfo/{userId}")]
-        public async Task<IActionResult> GetUserInfo(Guid userId) 
+        public async Task<IActionResult> GetUserInfo(Guid userId)
         {
             User user = await _cartRepository.GetUserByIdAsync(userId);
             if (user == null) { return NotFound(); }
@@ -181,3 +179,4 @@ namespace WizardRecords.Controllers
         }
     }
 }
+
