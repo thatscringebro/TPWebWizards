@@ -7,6 +7,7 @@ import axios from 'axios';
 import '../styles/Detail.css';
 import '../styles/Home.css';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
+import Swal from 'sweetalert2';
 
 const Detail = () => {
     const { id } = useParams();
@@ -170,6 +171,11 @@ const Detail = () => {
             });
             if (addToCart.status === 200) {
             console.log('Album added to cart successfully');
+            Swal.fire({
+                icon: 'success',
+                title: 'Item Added to Cart!',
+                text: 'The item has been added to your cart successfully.',
+            });
 
             }
             else {
