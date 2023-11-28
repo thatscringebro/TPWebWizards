@@ -59,6 +59,35 @@ namespace WizardRecords.Controllers
          }
       }
 
+        [HttpGet("OrderInfo/{userId}")]
+        public async Task<IActionResult> GetOrderInfo(Guid userId)
+        {
+            try
+            {
+                var cart = await _cartRepository.GetCartByUserIdAsync(userId);
+                
+                if (cart == null)
+                    throw new Exception("Cart not found");
+
+                float totalAvTaxes = 0;
+                float totalTaxes = 0;
+                float totalApTaxes = 0;
+
+                foreach (var item in cart.CartItems)
+                {
+                    totalAvTaxes += item.Quantity * item.Album.Price;
+                }
+                totalTaxes = totalAvTaxes * 0.15f;
+                totalApTaxes = totalAvTaxes + totalTaxes;
+
+                return new OkObjectResult(new { totalAvTaxes = totalAvTaxes, totalTaxes = totalTaxes, totalApTaxes = totalApTaxes, items = cart.CartItems });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
       [HttpGet("orders/user/{userId}")]
       public async Task<ActionResult<List<Order>>> GetUserOrders(Guid userId)
       {
