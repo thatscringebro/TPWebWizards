@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Cart.css';
+import '../styles/PreviousOrderPage.css';
 
 const OrderState = {
     0: 'Confirmed',
@@ -30,6 +31,7 @@ const fetchPreviousOrders = (userId) => {
 };
 
 function PreviousOrdersPage() {
+    const navigate = useNavigate();
     const [user, setUser] = useState();
     const [previousOrders, setPreviousOrders] = useState([]);
 
@@ -87,39 +89,45 @@ function PreviousOrdersPage() {
         <div>
             <h2>Previous Orders</h2>
             {previousOrders.length > 0 ? (
-                <ul>
+                <ul className="POP-grid-container">
                     {previousOrders.map((order) => (
-                        <li key={order.orderId}>
-                            <div>
-                                <strong>Order Number:</strong> {order.orderId}
+                        <li key={order.orderId} className="card POP-card grid-column">
+                            <div className="test">
+                                <div>
+                                    <strong>Order Number:</strong> {order.orderId}
+                                </div>
+                                <div>
+                                    <strong>Cart Items:</strong>
+                                    <ul>
+                                        {order.cartItems.map((cartItem) => (
+                                            <li key={cartItem.album.albumId}>
+                                                {cartItem.album.title} - Quantity: {cartItem.quantity}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                {(order.state === 0 || order.state === 2) && (
+                                    <div className="btn-container">
+                                        <button className="cancel-button" onClick={() => cancelOrder(order.orderId)}>
+                                            Cancel Order
+                                        </button>
+                                    </div>
+                                )}
+                                {order.state === 1 && (
+                                    <div className="btn-container">
+                                        <button className="cancel-button-disabled" disabled>
+                                            Order Canceled
+                                        </button>
+                                    </div>
+                                )}
                             </div>
-                            <div>
-                                <strong>Status:</strong> {OrderState[order.state]}
-                            </div>
-                            <div>
-                                <strong>Cart Items:</strong>
-                                <ul>
-                                    {order.cartItems.map((cartItem) => (
-                                        <li key={cartItem.album.albumId}>
-                                            {cartItem.album.title} - Quantity: {cartItem.quantity}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            {(order.state === 0 || order.state === 2) && (
-                                <button className="cancel-button" onClick={() => cancelOrder(order.orderId)}>
-                                    Cancel Order
-                                </button>
-                            )}
                         </li>
                     ))}
                 </ul>
             ) : (
                 <h3>No previous orders found</h3>
             )}
-            <Link to="/cart">
-                <button className="primary-button">Back to Cart</button>
-            </Link>
+            <button className="previous-orders-button" onClick={() => navigate("/cart")}>Back to Cart</button>
         </div>
     );
 }

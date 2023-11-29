@@ -159,8 +159,8 @@ span:contains("...") {
 .entete-allProducts{
     display: flex;
     width: 100%;
-    justify-content: flex-end;
-    height: 70px;
+    justify-content: space-between;
+    height: 100px;
     align-items: center;
 }
 #add-item{

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WizardRecords.Dtos;
 using WizardRecords.Api.Domain.Entities;
+using WizardRecords.Api.Interfaces;
 
 namespace WizardRecords.Controllers
 {
@@ -20,15 +21,18 @@ namespace WizardRecords.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
-      
-       
+        private readonly ICartRepository _cartRepository;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration)
+
+
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<Guid>> roleManager, IConfiguration configuration, ICartRepository cartRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _cartRepository = cartRepository;
         }
 
         [HttpPost("register")]
@@ -47,6 +51,10 @@ namespace WizardRecords.Controllers
                 Province = model.Province,
                 PostalCode = model.PostalCode
             };
+
+
+            if (_cartRepository.FindByEmail(user.Email))
+                return BadRequest();
 
             var result = await _userManager.CreateAsync(user, model.Password);
 

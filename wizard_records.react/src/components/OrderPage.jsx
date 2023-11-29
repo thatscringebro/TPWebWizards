@@ -22,9 +22,14 @@ const OrderPage = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [role, setRole] = useState(null);
+   
 
 
-
+    const provinces = [
+        "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
+        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
+    ];
 
     //get token
     useEffect(() => {
@@ -32,43 +37,85 @@ const OrderPage = () => {
         var tokenGuest = sessionStorage.getItem('guestToken');
         if (token) {
             var decodedToken = jwt_decode(token);
-            GetUser(decodedToken["id"]);
+            var id = decodedToken["id"];
+            GetUser(id);
+            
+            //call bd 
+            axios.get(`${API_BASE_URL}/order/orders/userInfo/${id}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data)
+                        var data = response.data;
+                        setOrderData({
+                            ...orderData,
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            email: data.email,
+                            phone: data.phone,
+                            address: data.address,
+                            province: provinces[data.province],
+                            city: data.city,
+                            zipCode: data.zipCode,
+                        });
+                    } else {
+                        throw Error(`Failed to fetch previous orders with status: ${response.status}`);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    throw error;
+                });
+              
 
         } else if (tokenGuest) {
             var decodedTokenGuest = jwt_decode(tokenGuest);
             GetUser(decodedTokenGuest["id"]);
-        }
-        else {
+            setRole(decodedTokenGuest["role"]);
+        } else {
             GetUser("Undefined");
         }
     }, []);
-
-
 
     useEffect(() => {
         // Chargez les données nécessaires pour la page de commande, si nécessaire
     }, []);
 
     // Liste des provinces canadiennes pour le menu déroulant
-    const provinces = [
-        "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
-        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
-    ];
+ 
 
-    const validate = (data) => {
+    const checkEmail = async (email) => {
+       
+
+            var response =  await axios.get(`${API_BASE_URL}/order/order/checkemail/${email}`);
+            return response.data;
+        
+    }
+
+    const validate = async (data) => {
         let errors = {};
 
         // Vérification du nom complet
         if (!data.firstName.trim()) errors.firstName = "The first name is required";
         if (!data.lastName.trim()) errors.lastName = "The last name is required";
-
+  
         // Vérification de l'email
         if (!data.email.trim()) {
             errors.email = "Email required";
         } else if (!data.email.includes('@')) {
-            errors.email = "invalid Email";
+            errors.email = "Invalid Email";
+        } else if(role === "Guest"){
+            try {
+                var emailExists = await checkEmail(data.email);
+                if (emailExists) {
+                    errors.email = "Email already exists";
+                }
+            } catch (error) {
+                console.error("Error checking email:", error);
+                // Gérez les erreurs d'appel API ici si nécessaire
+            }
         }
 
+     
         // Vérification de l'adresse
         if (!data.address.trim()) errors.address = "adress required";
 
@@ -83,12 +130,17 @@ const OrderPage = () => {
             errors.zipCode = "Postal code invalid";
         }
 
+        // if(!data.province) errors.province = "Province required";
         // Vérification du pays
         if (!data.country.trim()) errors.country = "Country required";
 
         return errors;
     };
 
+    const handleProvinceChange = (event) => {
+        const { value } = event.target;
+        setOrderData({ ...orderData, province: value });
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -97,7 +149,7 @@ const OrderPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formErrors = validate(orderData);
+        const formErrors = await validate(orderData);
 
         if (Object.keys(formErrors).length === 0) {
             var responseCart = await axios.get(`${API_BASE_URL}/Order/OrderInfo/${user}`);
@@ -105,7 +157,7 @@ const OrderPage = () => {
 
             const orderInfoHtml = `
             <div style="display:flex;">
-                <div>
+                <div style="width: 100%">
                 <h1>User info</h1>
                 <p>First Name: ${orderData.firstName}</p>
                 <p>Last Name: ${orderData.lastName}</p>
@@ -117,7 +169,7 @@ const OrderPage = () => {
                 <p>Province: ${orderData.province}</p>
                 <p>Zip Code: ${orderData.zipCode}</p>
                 </div>
-                <div>
+                <div style="width:100%">
                 <h1>Items info</h1>
                 ${responseData.items.map(item => `
                     <div>
@@ -171,14 +223,12 @@ const OrderPage = () => {
         }
     };
 
-
-
     if (loading) return <div>Chargement...</div>;
     if (error) return <div>Erreur: {error.message}</div>;
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
-            <div className="grid-container">
+            <div className="OP-grid-container">
                 <div className="grid-column">
                     <div className="form-field">
                         <label htmlFor="firstName">First Name:</label>
@@ -264,16 +314,10 @@ const OrderPage = () => {
                     </div>
                     <div className="form-field">
                         <label htmlFor="province">Province:</label>
-                        <select
-                            className="order-form-field"
-                            id="province"
-                            name="province"
-                            value={orderData.province}
-                            onChange={handleInputChange}
-                        >
+                        <select className="order-form-field" id="province" name="province" value={orderData.province} onChange={handleProvinceChange}>
                             <option value="">Select a province</option>
                             {provinces.map((province, index) => (
-                                <option key={index} value={province}>{province}</option>
+                            <option key={index} value={province}>{province}</option>
                             ))}
                         </select>
                     </div>
