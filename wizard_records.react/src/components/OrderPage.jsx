@@ -28,7 +28,7 @@ const OrderPage = () => {
 
     const provinces = [
         "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
-        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
+        "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon"
     ];
 
     //get token
@@ -130,7 +130,7 @@ const OrderPage = () => {
             errors.zipCode = "Postal code invalid";
         }
 
-        // if(!data.province) errors.province = "Province required";
+        
         // Vérification du pays
         if (!data.country.trim()) errors.country = "Country required";
 
@@ -343,7 +343,7 @@ const OrderPage = () => {
                 {errors.zipCode && <div className="error">{errors.zipCode}</div>}
                 {errors.country && <div className="error">{errors.country}</div>}
 
-
+                
                 <button type="submit" className="primary-button">Send</button>
             </div>
         </form>
