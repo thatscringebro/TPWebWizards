@@ -15,61 +15,79 @@ const OrderState = {
     5: 'Returned'
 };
 
-const fetchPreviousOrders = (userId) => {
-    return axios.get(`${API_BASE_URL}/order/orders/user/${userId}`)
-        .then((response) => {
-            if (response.status === 200) {
-                return response.data;
-            } else {
-                throw Error(`Failed to fetch previous orders with status: ${response.status}`);
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-            throw error;
-        });
+const fetchPreviousOrders = (userId, role) => {
+    if (role === "Administrator") {
+        return axios.get(`${API_BASE_URL}/order/orders/all`)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    throw Error(`Failed to fetch all orders with status: ${response.status}`);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                throw error;
+            });
+    } else {
+        return axios.get(`${API_BASE_URL}/order/orders/user/${userId}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    throw Error(`Failed to fetch previous orders with status: ${response.status}`);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                throw error;
+            });
+    }
 };
 
 function PreviousOrdersPage() {
     const navigate = useNavigate();
     const [user, setUser] = useState();
+    const [role, setRole] = useState();
     const [previousOrders, setPreviousOrders] = useState([]);
 
-    // Get token and decode user ID
     useEffect(() => {
-        const token = sessionStorage.getItem('userToken');
-        const tokenGuest = sessionStorage.getItem('guestToken');
+    const token = sessionStorage.getItem('userToken');
+    const tokenGuest = sessionStorage.getItem('guestToken');
 
-        if (token) {
-            const decodedToken = jwt_decode(token);
-            setUser(decodedToken["id"]);
-        } else if (tokenGuest) {
-            const decodedTokenGuest = jwt_decode(tokenGuest);
-            setUser(decodedTokenGuest["id"]);
-        } else {
-            setUser("Undefined");
-        }
-    }, []);
+    if (token) {
+        const decodedToken = jwt_decode(token);
+        setUser(decodedToken["id"]);
+        setRole(decodedToken["role"]);
+    } else if (tokenGuest) {
+        const decodedTokenGuest = jwt_decode(tokenGuest);
+        setUser(decodedTokenGuest["id"]);
+        setRole(decodedTokenGuest["role"]);
+    } else {
+        setUser("Undefined");
+    }
+}, []);
 
-    // Fetch previous orders for the user
+
     useEffect(() => {
-        if (user) {
-            fetchPreviousOrders(user)
-                .then((data) => {
-                    setPreviousOrders(data);
-                })
-                .catch((error) => {
-                    console.error("Failed to fetch previous orders:", error);
-                });
-        }
-    }, [user]);
+    if (user) {
+        fetchPreviousOrders(user, role)
+            .then((data) => {
+                setPreviousOrders(data);
+            })
+            .catch((error) => {
+                console.error("Failed to fetch previous orders:", error);
+            });
+    }
+}, [user, role]);
+
 
     const cancelOrder = async (orderId) => {
         try {
             const response = await axios.put(`${API_BASE_URL}/order/orders/cancel/${orderId}`);
             if (response.status === 200) {
                 // Refresh the list of orders after cancellation
-                fetchPreviousOrders(user)
+                fetchPreviousOrders(user, role)
                     .then((data) => {
                         setPreviousOrders(data);
                     })
@@ -85,45 +103,60 @@ function PreviousOrdersPage() {
         }
     };
 
+
+     const groupedOrders = {};
+    previousOrders.forEach((order) => {
+        const userName = order.userName || "Undefined";
+        if (!groupedOrders[userName]) {
+            groupedOrders[userName] = [];
+        }
+        groupedOrders[userName].push(order);
+    });
+
     return (
         <div>
-            <h2>Previous Orders</h2>
-            {previousOrders.length > 0 ? (
-                <ul className="POP-grid-container">
-                    {previousOrders.map((order) => (
-                        <li key={order.orderId} className="card POP-card grid-column">
-                            <div className="test">
-                                <div>
-                                    <strong>Order Number:</strong> {order.orderId}
-                                </div>
-                                <div>
-                                    <strong>Cart Items:</strong>
-                                    <ul>
-                                        {order.cartItems.map((cartItem) => (
-                                            <li key={cartItem.album.albumId}>
-                                                {cartItem.album.title} - Quantity: {cartItem.quantity}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                {(order.state === 0 || order.state === 2) && (
-                                    <div className="btn-container">
-                                        <button className="cancel-button" onClick={() => cancelOrder(order.orderId)}>
-                                            Cancel Order
-                                        </button>
+            <h1>Previous Orders</h1>
+            {Object.keys(groupedOrders).length > 0 ? (
+                Object.keys(groupedOrders).map((userName) => (
+                    <div key={userName}>
+                        {role === "Administrator" && <h2>{userName}</h2>}
+                        <ul className="POP-grid-container">
+                            {groupedOrders[userName].map((order) => (
+                                <li key={order.OrderId} className="card POP-card grid-column">
+                                    <div className="test">
+                                        <div>
+                                            <strong>Order Number:</strong> {order.orderId}
+                                        </div>
+                                        <div>
+                                            <strong>Cart Items:</strong>
+                                            <ul>
+                                                {order.cartItems.map((cartItem) => (
+                                                    <li key={cartItem.album.albumId}>
+                                                        {cartItem.album.title} - Quantity: {cartItem.quantity}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        {(order.state === 0 || order.state === 2) && (
+                                            <div className="btn-container">
+                                                <button className="cancel-button" onClick={() => cancelOrder(order.orderId)}>
+                                                    Cancel Order
+                                                </button>
+                                            </div>
+                                        )}
+                                        {order.state === 1 && (
+                                            <div className="btn-container">
+                                                <button className="cancel-button-disabled" disabled>
+                                                    Order Canceled
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                                {order.state === 1 && (
-                                    <div className="btn-container">
-                                        <button className="cancel-button-disabled" disabled>
-                                            Order Canceled
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
             ) : (
                 <h3>No previous orders found</h3>
             )}

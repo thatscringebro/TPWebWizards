@@ -120,6 +120,30 @@ namespace WizardRecords.Controllers
             }
         }
 
+        [HttpGet("orders/all")]
+        public async Task<ActionResult<List<Order>>> GetAllOrders()
+        {
+            try
+            {
+                Console.WriteLine("Fetching all orders");
+                var orders = _cartRepository.GetAllOrders();
+                
+                if (orders != null)
+                {
+                    return Ok(orders.OrderByDescending(x => x.UserName));
+                }
+                else
+                {
+                    Console.WriteLine("oh no");
+                     return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
         [HttpPut("orders/cancel/{orderId}")]
         public ActionResult CancelOrder(Guid orderId)
         {

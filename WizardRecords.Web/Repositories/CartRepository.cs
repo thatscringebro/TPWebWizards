@@ -298,6 +298,29 @@ namespace WizardRecords.Api.Repositories
             }
         }
 
+        public List<Order> GetAllOrders() {
+            try
+            {
+                var orders = _dbContext.Orders
+                    .Include(c => c.CartItems)
+                    .ThenInclude(c => c.Album)
+                    .ToList();
+
+                if (orders != null)
+                {
+                    return orders;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public Order GetOrderById(Guid orderId)
         {
             return _dbContext.Orders.Include(x => x.CartItems)
