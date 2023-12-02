@@ -24,6 +24,7 @@ namespace WizardRecords.Api.Interfaces
         Task<User> DeleteUserGuest(Guid userId);
 
         List<Order> GetUserOrders(Guid userId);
+        List<Order> GetAllOrders();
         Order GetOrderById(Guid orderId);
         void UpdateOrder(Order order);
         void CancelOrder(Order order);
