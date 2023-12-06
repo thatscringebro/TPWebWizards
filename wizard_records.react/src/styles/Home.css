@@ -49,6 +49,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.h-100:hover {
+    box-shadow: 0 0 0 3px darkred;
+}
 
 .card-divider {
     margin: 0 5px;
@@ -59,11 +62,6 @@
     text-decoration: none;
     color: #24262b;
 }
-
-    .card-href:hover {
-        box-shadow: 0 0 0 3px darkred;
-    }
-
         .card-href:hover .card-img-format {
             transform: scale(1.05);
             transition: transform 0.3s ease;

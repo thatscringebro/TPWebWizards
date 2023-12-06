@@ -21,8 +21,6 @@ namespace WizardRecords.Api.Controllers
         private readonly ICartRepository _cartRepository;
         private readonly UserManager<User> _userManager;
 
-
-
         public CartController(IAlbumRepository albumRepository, ICartRepository cartRepository, UserManager<User> userManager)
         {
             _cartRepository = cartRepository;
@@ -38,7 +36,22 @@ namespace WizardRecords.Api.Controllers
             return Ok(cart);
         }
 
-
+        [HttpPut("update/{cartId}/{AlbumId}")] //change l'item au panier
+        public async Task<ActionResult<Cart>> UpdateItem(Guid cartId, Guid AlbumId, int quantity) {
+            try {
+                var cart = await _cartRepository.GetCartByIdAsync(cartId);
+                if(cart != null) {
+                    await _cartRepository.UpdateItemByIdAsync(cartId, AlbumId, quantity);
+                    return Ok();
+                }
+                else {
+                    return NotFound();
+                }
+            }
+            catch(Exception) {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
 
         [HttpDelete("delete/{cartId}/{AlbumId}")] //Delete l'item au panier
         public async Task<ActionResult<Cart>> DeleteItem(Guid cartId, Guid AlbumId)
@@ -125,9 +138,6 @@ namespace WizardRecords.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
-
-
-
 
         [HttpGet("user/{userId}")] //CART pour aller chercher le panier
         public async Task<ActionResult<Cart>> GetUserCart(Guid userId)

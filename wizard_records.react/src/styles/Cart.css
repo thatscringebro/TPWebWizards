@@ -113,3 +113,14 @@
   color: #fff;
   background-color: #5a6268;
 }
+
+.Quantity-inputs-div {
+    display: flex;
+}
+.Quantity-inputs {
+    margin-left: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    min-width: 20px;
+    justify-content:center;
+}
