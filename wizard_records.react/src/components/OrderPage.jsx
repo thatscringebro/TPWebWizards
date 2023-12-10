@@ -123,7 +123,7 @@ const OrderPage = () => {
         if (!data.city.trim()) errors.city = "town required";
 
         // Vérification du code postal
-        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$/;
+        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z](?: \d)?[A-Za-z]\d$/;
         if (!data.zipCode.trim()) {
             errors.zipCode = "Postal Code required";
         } else if (!postalCodeRegex.test(data.zipCode)) {
