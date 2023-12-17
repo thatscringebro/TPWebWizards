@@ -11,7 +11,8 @@ import Cart from "../Cart";
 import Account from "../Account";
 import OrderPage from "../OrderPage";
 import PreviousOrdersPage from "../PreviousOrdersPage";
-import Payment from "../Payment";
+import CheckoutScreen from "../CheckoutScreen";
+import Confirmation from "../Confirmation";
 
 const AppRoutes = [
     {
@@ -69,8 +70,12 @@ const AppRoutes = [
         element: <PreviousOrdersPage />
     },
     {
-        path: '/payment',
-        element: <Payment />
+        path: '/checkout/:orderId',
+        element: <CheckoutScreen />
+    },
+    {
+        path: '/confirmation',
+        element: <Confirmation />
     }
   
 

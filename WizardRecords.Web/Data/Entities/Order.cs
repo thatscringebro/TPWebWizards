@@ -10,8 +10,10 @@ namespace WizardRecords.Api.Data.Entities
     {
         public Guid OrderId { get; set; }
         public Guid UserId { get; set; }
-        public OrderState State { get; set; }  
-        public float Total { get; set; }
+        public OrderState State { get; set; }
+        public float TotalAvTaxes { get; set; }
+        public float Taxes { get; set; }
+        public float TotalApTaxes { get; set; }
         public String? UserName { get; set; }
         public String? UserEmail { get; set; }
         public String? UserPhone { get; set; }
@@ -27,7 +29,9 @@ namespace WizardRecords.Api.Data.Entities
 
          public Order(Cart cart) {
             CartItems.AddRange(cart.CartItems);
-            Total = cart.total;
+            TotalApTaxes = cart.TotalApTaxes;
+            TotalAvTaxes = cart.TotalAvTaxes;
+            Taxes = cart.Taxes;
             UserId = cart.UserId;
             State = OrderState.Confirmée;
          }

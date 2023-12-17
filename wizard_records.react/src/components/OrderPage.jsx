@@ -4,9 +4,12 @@ import { jwtDecode as jwt_decode } from 'jwt-decode';
 import { API_BASE_URL } from './utils/config'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+
 
 const OrderPage = () => {
     const [user, GetUser] = useState();
+   const navigate = useNavigate();
     const [orderData, setOrderData] = useState({
         firstName: '',
         lastName: '',
@@ -21,10 +24,17 @@ const OrderPage = () => {
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [role, setRole] = useState(null);
+    const [orderId, setOrderId] = useState(null);
+    const [error, setError] = useState(null);
+    // const { initPaymentSheet, presentPaymentSheet } = useStripe();
+ 
    
-
+useEffect(() => {
+    if (orderId !== null) {
+        navigate(`/checkout/${orderId}`);
+    }
+  }, [orderId, navigate]);
 
     const provinces = [
         "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
@@ -76,12 +86,6 @@ const OrderPage = () => {
         }
     }, []);
 
-    useEffect(() => {
-        
-    }, []);
-
-
- 
 
     const checkEmail = async (email) => {
        
@@ -201,6 +205,9 @@ const OrderPage = () => {
 
                 const response = await axios.post(`${API_BASE_URL}/Order/Order`, {
                     userId: user,
+                    TotalAvTaxes : responseData.totalAvTaxes,
+                    TotalTaxes : responseData.totalTaxes,
+                    TotalApTaxes : responseData.totalApTaxes,
                     firstName: orderData.firstName,
                     lastName: orderData.lastName,
                     email: orderData.email,
@@ -212,8 +219,14 @@ const OrderPage = () => {
                     zipCode: orderData.zipCode,
                 });
 
-                document.location.href = '/previous_orders';
 
+                if (response.status === 200) {
+                    
+                    setOrderId(response.data.orderId);
+                }
+              
+          
+                
                 setLoading(false);
             } else {
                 document.location.href = '/cart';
@@ -222,6 +235,61 @@ const OrderPage = () => {
             setErrors(formErrors);
         }
     };
+
+
+    // const fetchPaymentSheetParams = async () => {
+    //     const response = await fetch(`${API_URL}/charge/${orderId}`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
+    //     const { paymentIntent, ephemeralKey, customer} = await response.json();
+    
+    //     return {
+    //       paymentIntent,
+    //       ephemeralKey,
+    //       customer,
+    //     };
+    //   };
+
+    //   const initializePaymentSheet = async () => {
+    //     const {
+    //       paymentIntent,
+    //       ephemeralKey,
+    //       customer,
+    //       publishableKey,
+    //     } = await fetchPaymentSheetParams();
+
+    //     const { error } = await initPaymentSheet({
+    //         merchantDisplayName: "WebWizard",
+    //         customerId: customer,
+    //         customerEphemeralKeySecret: ephemeralKey,
+    //         paymentIntentClientSecret: paymentIntent,
+    //         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+    //         //methods that complete payment after a delay, like SEPA Debit and Sofort.
+    //         allowsDelayedPaymentMethods: true,
+    //         defaultBillingDetails: {
+    //           name: orderData.firstName + " " + orderData.lastName,
+    //             email: orderData.email,
+    //             phone: orderData.phone,
+    //             address: {
+    //                 line1: orderData.address,
+    //                 city: orderData.city,
+    //                 state: orderData.province,
+    //                 country: orderData.country,
+    //                 postalCode: orderData.zipCode,
+    //             },
+            
+    //         }
+    //       });
+    //       if (!error) {
+    //         setLoading(true);
+    //       }
+    //     };
+    //     const openPaymentSheet = async () => {
+    //         // see below
+    //       };
 
     if (loading) return <div>Chargement...</div>;
     if (error) return <div>Erreur: {error.message}</div>;
@@ -344,7 +412,7 @@ const OrderPage = () => {
                 {errors.country && <div className="error">{errors.country}</div>}
 
                 
-                <button type="submit" className="primary-button">Send</button>
+                <button type="submit" className="primary-button" >Send</button>
             </div>
         </form>
     );

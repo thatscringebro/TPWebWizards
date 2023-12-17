@@ -39,12 +39,12 @@ namespace WizardRecords.Api.Repositories
                         cartItem.Album = album;
                         cartItem.Quantity = 1;
                         cart.CartItems.Add(cartItem);
-                        cart.total += album.Price;
+                      
                     }
                     else
                     {
                         cartItem.Quantity++;
-                        cart.total += album.Price;
+                   
                     }
 
                     await _dbContext.SaveChangesAsync();
@@ -151,12 +151,12 @@ namespace WizardRecords.Api.Repositories
                 {
                     if (cartItem.Quantity > 1)
                     {
-                        cart.total -= album.Price;
+                      
                         cartItem.Quantity--;
                     }
                     else
                     {
-                        cart.total -= album.Price;
+                
                         cart.CartItems.Remove(cartItem);
                     }
 

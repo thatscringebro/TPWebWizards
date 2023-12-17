@@ -11,6 +11,7 @@ using WizardRecords.Api.Repositories;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WizardRecords.Api.Interfaces;
 using WizardRecords.Api.Data;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,7 @@ builder.Services.AddAuthentication(x => {
 });
 
 
+StripeConfiguration.ApiKey = builder.Configuration["StripeOptions:SecretKey"];
 // CORS
 builder.Services.AddCors(options => {
 	options.AddPolicy(name: "AllowReactApp",
@@ -65,12 +67,11 @@ builder.Services.AddCors(options => {
                 .AllowCredentials();
 	});
 });
-
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

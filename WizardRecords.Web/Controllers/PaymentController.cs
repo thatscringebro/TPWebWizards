@@ -1,28 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Stripe;
+using Stripe.Climate;
 using WizardRecords.Api.Data;
+using WizardRecords.Api.Interfaces;
 
 namespace WizardRecords.Api.Controllers
 {
+    [ApiController]
     [Route("payment")]
     public class PaymentController : Controller
     {
         private readonly IOptions<StripeOptions> stripeOptions;
-        private readonly WizRecDbContext dbContext;
+        private readonly ICartRepository _cartRepository;
+        private readonly IConfiguration _configuration;
 
-        public PaymentController(IOptions<StripeOptions> stripeOps, WizRecDbContext context)
+        public PaymentController(IOptions<StripeOptions> stripeOps, ICartRepository cartrepo, IConfiguration configuration)
         {
-           
+           _configuration = configuration;
             stripeOptions = stripeOps;
-            dbContext = context;
+            _cartRepository = cartrepo;
 
         }
 
         [HttpPost("charge/{OrderId}")]
-        public IActionResult Charge(Guid OrderId, [FromBody] Payment payment)
+        public  IActionResult Charge(Guid OrderId, [FromBody] Payment payment)
         {
-            var order = dbContext.Orders.Find(OrderId);
+            var order = _cartRepository.GetOrderById(OrderId);
+
             if (order == null)
             {
                 return NotFound();
@@ -30,34 +35,21 @@ namespace WizardRecords.Api.Controllers
 
             StripeConfiguration.ApiKey = stripeOptions.Value.SecretKey;
 
-            var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+            var chargeOptions = new ChargeCreateOptions
             {
-                Amount = (long?)(order.Total * 100),
-                Currency = stripeOptions.Value.CurrencyCode,
-                AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
-                {
-                    Enabled = true,
-                },
-            }); 
+                Amount = (long?)(order.TotalApTaxes * 100), // Prix en cent
+                Description = payment.Name, // a revoir
+                Source = payment.Token,
+                Currency = stripeOptions.Value.CurrencyCode
+            };
 
-            //var chargeOptions = new ChargeCreateOptions
-            //{
-            //    Amount = (long?)(order.Total * 100),
-            //    Description = $"Order {order.OrderId} Payment",
-            //    Source = payment.Token,
-            //    Currency = stripeOptions.Value.CurrencyCode
-            //};
-            //var chargeService = new ChargeService();
-            //var charge = chargeService.Create(chargeOptions);
+            var chargeService = new ChargeService();
+            var charge = chargeService.Create(chargeOptions);
 
-            return Ok(paymentIntent);
-
+            return Ok(charge.ToJson());
         }
-        [HttpGet("confirmation")]
-        public IActionResult Confirmation()
-        {
-            return View();
-        }
+
+    
+      
     }
 }

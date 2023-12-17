@@ -46,7 +46,7 @@ namespace WizardRecords.Controllers
                     {
                         order.UpdateFromDto(orderDto);
                         _cartRepository.UpdateOrder(order);
-                        return Ok();
+                        return new OkObjectResult(new {orderId = order.OrderId});
                     }
                     else
                     {
@@ -80,6 +80,9 @@ namespace WizardRecords.Controllers
                 }
                 totalTaxes = totalAvTaxes * 0.15f;
                 totalApTaxes = totalAvTaxes + totalTaxes;
+                cart.TotalApTaxes = totalApTaxes;
+                cart.TotalAvTaxes = totalAvTaxes;
+                cart.Taxes = totalTaxes;
 
                 return new OkObjectResult(new { totalAvTaxes = totalAvTaxes, totalTaxes = totalTaxes, totalApTaxes = totalApTaxes, items = cart.CartItems });
             }
@@ -201,6 +204,14 @@ namespace WizardRecords.Controllers
             if (user == null) { return NotFound(); }
             return new OkObjectResult(new { firstName = user.FirstName, lastName = user.LastName, email = user.Email, phone = user.PhoneNumber, address = user.AddressNum + user.StreetName, city = user.City, country = user.Country, province = user.Province, zipCode = user.PostalCode });
         }
+
+        //[HttpGet("orderid/{orderId}")]
+        //public IActionResult GetOrderid(Guid orderId)
+        //{
+        //    Order order = _cartRepository.GetOrderById(orderId);
+        //    if (order == null) { return NotFound(); }
+        //    return  Ok(order);
+        //}   
     }
 }
 
