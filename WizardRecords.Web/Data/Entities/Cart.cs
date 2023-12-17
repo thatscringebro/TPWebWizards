@@ -11,6 +11,8 @@ namespace WizardRecords.Api.Data.Entities
         public Guid UserId { get; set; } // créé un token ?pour les non connecter a voir 
         //S'assurer de géré la bd pour savoir si l'article est disponible ou pas et la quantity qu'on peux prendre
 
+        public float total { get; set; }
+
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
         internal Cart() { }

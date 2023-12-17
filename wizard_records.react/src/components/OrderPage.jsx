@@ -77,10 +77,10 @@ const OrderPage = () => {
     }, []);
 
     useEffect(() => {
-        // Chargez les données nécessaires pour la page de commande, si nécessaire
+        
     }, []);
 
-    // Liste des provinces canadiennes pour le menu déroulant
+
  
 
     const checkEmail = async (email) => {
@@ -111,7 +111,7 @@ const OrderPage = () => {
                 }
             } catch (error) {
                 console.error("Error checking email:", error);
-                // Gérez les erreurs d'appel API ici si nécessaire
+                
             }
         }
 

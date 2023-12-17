@@ -11,6 +11,7 @@ import Cart from "../Cart";
 import Account from "../Account";
 import OrderPage from "../OrderPage";
 import PreviousOrdersPage from "../PreviousOrdersPage";
+import Payment from "../Payment";
 
 const AppRoutes = [
     {
@@ -66,7 +67,13 @@ const AppRoutes = [
     {
         path: '/previous_orders',
         element: <PreviousOrdersPage />
+    },
+    {
+        path: '/payment',
+        element: <Payment />
     }
+  
+
 
 ];
 

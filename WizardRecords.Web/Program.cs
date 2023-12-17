@@ -10,12 +10,18 @@ using WizardRecords.Repositories;
 using WizardRecords.Api.Repositories;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WizardRecords.Api.Interfaces;
+using WizardRecords.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.Configure<StripeOptions>(options =>
+    builder.Configuration.GetSection("StripeOptions").Bind(options)
+);
+
 // Database context
 builder.Services.AddDbContext<WizRecDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
