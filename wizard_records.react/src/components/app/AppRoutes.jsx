@@ -14,6 +14,8 @@ import PreviousOrdersPage from "../PreviousOrdersPage";
 import CheckoutScreen from "../CheckoutScreen";
 import Confirmation from "../Confirmation";
 import PaymentFailed from "../Falied";
+import History from "../History";
+
 
 const AppRoutes = [
     {
@@ -81,6 +83,10 @@ const AppRoutes = [
     {
         path: '/failed/:orderId',
         element: <PaymentFailed />
+    },
+    {
+        path: '/history',
+        element: <History />
     }
   
 

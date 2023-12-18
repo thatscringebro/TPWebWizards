@@ -8,11 +8,12 @@ import '../styles/PreviousOrderPage.css';
 
 const OrderState = {
     0: 'Confirmed',
-    1: 'Canceled',
-    2: 'In Preparation',
-    3: 'In Delivery',
-    4: 'Delivered',
-    5: 'Returned'
+    1: 'Paid',
+    2: 'Canceled',
+    3: 'In Preparation',
+    4: 'In Delivery',
+    5: 'Delivered',
+    6: 'Returned'
 };
 
 const fetchPreviousOrders = (userId, role) => {
@@ -132,8 +133,11 @@ function PreviousOrdersPage() {
                                             <ul>
                                                 {order.cartItems.map((cartItem) => (
                                                     <li key={cartItem.album.albumId}>
-                                                        {cartItem.album.title} - Quantity: {cartItem.quantity}
+                                                        {cartItem.album.title} - Quantity: {cartItem.quantity} <br />
+                                                        State: {OrderState[order.state]}
+                                                            
                                                     </li>
+                                                    
                                                 ))}
                                             </ul>
                                         </div>

@@ -52,7 +52,9 @@ namespace WizardRecords.Api.Controllers
                 _cartRepository.UpdateOrder(order);
                 var CardLast4 = ((Card)charge.Source).Last4;
                 payment.Last4 = CardLast4;
-
+                payment.DateNow = DateTime.Now.ToString();
+                payment.OrderId = OrderId;
+                payment.UserId = order.UserId;
                  _cartRepository.addPayment(payment);
                 return Ok(charge.ToJson());
             }

@@ -27,7 +27,7 @@ const OrderPage = () => {
     const [role, setRole] = useState(null);
     const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
-    // const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
  
    
 useEffect(() => {
@@ -127,7 +127,7 @@ useEffect(() => {
         if (!data.city.trim()) errors.city = "town required";
 
         // Vérification du code postal
-        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z](?: \d)?[A-Za-z]\d$/;
+        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z](?:\d)?[A-Za-z]\d$/;
         if (!data.zipCode.trim()) {
             errors.zipCode = "Postal Code required";
         } else if (!postalCodeRegex.test(data.zipCode)) {
@@ -236,60 +236,6 @@ useEffect(() => {
         }
     };
 
-
-    // const fetchPaymentSheetParams = async () => {
-    //     const response = await fetch(`${API_URL}/charge/${orderId}`, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
-    //     const { paymentIntent, ephemeralKey, customer} = await response.json();
-    
-    //     return {
-    //       paymentIntent,
-    //       ephemeralKey,
-    //       customer,
-    //     };
-    //   };
-
-    //   const initializePaymentSheet = async () => {
-    //     const {
-    //       paymentIntent,
-    //       ephemeralKey,
-    //       customer,
-    //       publishableKey,
-    //     } = await fetchPaymentSheetParams();
-
-    //     const { error } = await initPaymentSheet({
-    //         merchantDisplayName: "WebWizard",
-    //         customerId: customer,
-    //         customerEphemeralKeySecret: ephemeralKey,
-    //         paymentIntentClientSecret: paymentIntent,
-    //         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-    //         //methods that complete payment after a delay, like SEPA Debit and Sofort.
-    //         allowsDelayedPaymentMethods: true,
-    //         defaultBillingDetails: {
-    //           name: orderData.firstName + " " + orderData.lastName,
-    //             email: orderData.email,
-    //             phone: orderData.phone,
-    //             address: {
-    //                 line1: orderData.address,
-    //                 city: orderData.city,
-    //                 state: orderData.province,
-    //                 country: orderData.country,
-    //                 postalCode: orderData.zipCode,
-    //             },
-            
-    //         }
-    //       });
-    //       if (!error) {
-    //         setLoading(true);
-    //       }
-    //     };
-    //     const openPaymentSheet = async () => {
-    //         // see below
-    //       };
 
     if (loading) return <div>Chargement...</div>;
     if (error) return <div>Erreur: {error.message}</div>;
@@ -409,9 +355,7 @@ useEffect(() => {
                 {errors.address && <div className="error">{errors.address}</div>}
                 {errors.city && <div className="error">{errors.city}</div>}
                 {errors.zipCode && <div className="error">{errors.zipCode}</div>}
-                {errors.country && <div className="error">{errors.country}</div>}
-
-                
+                {errors.country && <div className="error">{errors.country}</div>}                
                 <button type="submit" className="primary-button" >Send</button>
             </div>
         </form>
