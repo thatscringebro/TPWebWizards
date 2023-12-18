@@ -38,6 +38,7 @@ const CheckoutScreen = () => {
       await processPayment(token);
     } catch (error) {
       console.error("Error in form submission:", error);
+      document.location.href = `/failed/${orderId}`;
     }
   };
 
@@ -56,6 +57,7 @@ const CheckoutScreen = () => {
       document.location.href = '/confirmation';
     } catch (error) {
       console.error("Payment processing error:", error);
+      document.location.href = `/failed/${orderId}`;
     }
   };
 

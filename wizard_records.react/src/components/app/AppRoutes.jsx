@@ -13,6 +13,7 @@ import OrderPage from "../OrderPage";
 import PreviousOrdersPage from "../PreviousOrdersPage";
 import CheckoutScreen from "../CheckoutScreen";
 import Confirmation from "../Confirmation";
+import PaymentFailed from "../Falied";
 
 const AppRoutes = [
     {
@@ -76,6 +77,10 @@ const AppRoutes = [
     {
         path: '/confirmation',
         element: <Confirmation />
+    },
+    {
+        path: '/failed/:orderId',
+        element: <PaymentFailed />
     }
   
 

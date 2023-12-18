@@ -43,9 +43,17 @@ namespace WizardRecords.Api.Controllers
             };
 
             var chargeService = new ChargeService();
-            var charge = chargeService.Create(chargeOptions);
+            try
+            {
+                var charge = chargeService.Create(chargeOptions);
 
-            return Ok(charge.ToJson());
+                return Ok(charge.ToJson());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+            
         }
 
     
