@@ -37,7 +37,7 @@ namespace WizardRecords.Api.Controllers
             var chargeOptions = new ChargeCreateOptions
             {
                 Amount = (long?)(order.TotalApTaxes * 100), // Prix en cent
-                Description = payment.Name, // a revoir
+                Description = payment.NameOnCard, // a revoir
                 Source = payment.Token,
                 Currency = stripeOptions.Value.CurrencyCode
             };
