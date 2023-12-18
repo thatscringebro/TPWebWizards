@@ -24,7 +24,7 @@ namespace WizardRecords.Api.Controllers
         }
 
         [HttpPost("charge/{OrderId}")]
-        public  IActionResult Charge(Guid OrderId, [FromBody] Payment payment)
+        public async Task<IActionResult> ChargeAsync(Guid OrderId, [FromBody] Payment payment)
         {
             var order = _cartRepository.GetOrderById(OrderId);
 
@@ -41,7 +41,8 @@ namespace WizardRecords.Api.Controllers
                 Description = payment.NameOnCard, // a revoir
                 Source = payment.Token,
                 Currency = stripeOptions.Value.CurrencyCode
-            };
+                 
+        };
 
             var chargeService = new ChargeService();
             try
@@ -49,6 +50,10 @@ namespace WizardRecords.Api.Controllers
                 var charge = chargeService.Create(chargeOptions);
                 order.State = OrderState.Payée;
                 _cartRepository.UpdateOrder(order);
+                var CardLast4 = ((Card)charge.Source).Last4;
+                payment.Last4 = CardLast4;
+
+                 _cartRepository.addPayment(payment);
                 return Ok(charge.ToJson());
             }
             catch (StripeException e)

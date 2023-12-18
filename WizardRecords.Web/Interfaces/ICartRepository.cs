@@ -31,5 +31,7 @@ namespace WizardRecords.Api.Interfaces
         Order CreateOrder(Cart cart);
         bool FindByEmail(string email);
         void UpdatePriceCart(Cart cart);
+        void addPayment(Payment payment);
+        Task<IEnumerable<Payment>> GetAllPaymentsByUserId(Guid userId);
     }
 }

@@ -397,5 +397,17 @@ namespace WizardRecords.Api.Repositories
             _dbContext.Carts.Update(cart);
             _dbContext.SaveChanges();
         }
+
+        public void addPayment(Payment payment)
+        {
+            _dbContext.Payments.Add(payment);
+            _dbContext.SaveChanges();
+        }
+
+        public Task<IEnumerable<Payment>> GetAllPaymentsByUserId(Guid userId)
+        {
+            return Task.FromResult(_dbContext.Payments.Where(x => x.UserId == userId).ToList() as IEnumerable<Payment>);
+        }
+
     }
 }

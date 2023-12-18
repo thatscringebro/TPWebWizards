@@ -12,6 +12,7 @@ namespace WizardRecords.Api {
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<User> Client { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public WizRecDbContext(DbContextOptions<WizRecDbContext> options) :
             base(options) {}
 
