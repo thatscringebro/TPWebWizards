@@ -17,7 +17,7 @@ namespace WizardRecords.Api.Controllers
 
         public PaymentController(IOptions<StripeOptions> stripeOps, ICartRepository cartrepo, IConfiguration configuration)
         {
-           _configuration = configuration;
+            _configuration = configuration;
             stripeOptions = stripeOps;
             _cartRepository = cartrepo;
 
@@ -41,8 +41,8 @@ namespace WizardRecords.Api.Controllers
                 Description = payment.NameOnCard, // a revoir
                 Source = payment.Token,
                 Currency = stripeOptions.Value.CurrencyCode
-                 
-        };
+
+            };
 
             var chargeService = new ChargeService();
             try
@@ -53,19 +53,37 @@ namespace WizardRecords.Api.Controllers
                 var CardLast4 = ((Card)charge.Source).Last4;
                 payment.Last4 = CardLast4;
 
-                 _cartRepository.addPayment(payment);
+                _cartRepository.addPayment(payment);
                 return Ok(charge.ToJson());
             }
             catch (StripeException e)
             {
                 return BadRequest(e.Message);
             }
-           
 
-          
+
+
+        }
+        [HttpGet("payment/{userId}")]
+        public async Task<IActionResult> GetAllPayment(Guid userId)
+        {
+            try
+            {
+                var payment = await _cartRepository.GetAllPaymentsByUserId(userId);
+                if (payment != null)
+                {
+                    return Ok(payment);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
         }
 
-    
-      
     }
 }
