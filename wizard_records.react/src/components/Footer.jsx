@@ -22,8 +22,8 @@ export class Footer extends Component {
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">FAQ</a></li>
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">shipping</a></li>
                                 <li><a href="https://github.com/thatscringebro/TPWebWizards">returns</a></li>
-                                <li><a href="https://github.com/thatscringebro/TPWebWizards">order status</a></li>
-                                <li><a href="https://github.com/thatscringebro/TPWebWizards">payment options</a></li>
+                                <li><a href="/previous_orders">order status</a></li>
+                                <li><a href="https://stripe.com/docs">payment options</a></li>
                             </ul>
                         </div>
                         <div className="footer-col">

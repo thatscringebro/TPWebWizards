@@ -75,7 +75,7 @@ const Detail = () => {
                     matrixNumber : album.matrixNumber === '' || album.matrixNumber === 'None' ? 'None' : album.matrixNumber,
                     artistGenre : album.artistGenre,
                     albumGenre  : album.albumGenre,
-                    //Format : album.format Ajouter le format dans la bd ? il est dans les constantes de react
+                   
                 };
 
                 setProduct(productData);
@@ -442,7 +442,7 @@ const Detail = () => {
                 )}
                 <div className="price-cart-container">
                     <p className="detail-price">${product.price}</p>
-                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart} disabled={showSuccessPopup}>{product.quantity === 0 ? 'Order?' : 'Add to cart'}</button>
+                    <button className={`button-cart ${product.quantity === 0 ? 'button-unavailable' : ''}`} onClick={AddToCart} disabled={showSuccessPopup}>{product.quantity === 0 ? 'Out of stock' : 'Add to cart'}</button>
                
                 </div>
             </div>

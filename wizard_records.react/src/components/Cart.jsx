@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/config';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Cart.css';
 import Swal from 'sweetalert2'
 
@@ -76,7 +76,13 @@ const AddAlbumToCart = async (album, cart, setCart, setTotalPanier) => {
             setTotalPanier(calculateTotal(updatedCart.albums));
         }
     }
-    catch (error) { }
+    catch (error) { 
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You cannot add more of this album!',
+        });
+    }
 }
 
 const deleteAlbumFromCart = async (album, cart, setCart, setTotalPanier) => {
@@ -99,6 +105,7 @@ const deleteAlbumFromCart = async (album, cart, setCart, setTotalPanier) => {
             setTotalPanier(calculateTotal(updatedCart.albums));
         } else {
             console.error('Failed to delete album with status:', response.status);
+          
         }
     } catch (error) {
         console.error('Error deleting album:', error.message);

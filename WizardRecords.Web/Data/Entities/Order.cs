@@ -50,6 +50,7 @@ namespace WizardRecords.Api.Data.Entities
 
    public enum OrderState{
       Confirmée,
+      Payée,
       Annulée,
       EnPrep,
       EnLivraison,
