@@ -36,16 +36,33 @@ namespace WizardRecords.Api.Repositories
 
                     if (cartItem == null)
                     {
-                        cartItem = new CartItem();
-                        cartItem.CartId = cart.CartId;
-                        cartItem.Album = album;
-                        cartItem.Quantity = 1;
-                        cart.CartItems.Add(cartItem);
-                      
+                        if (album.Quantity == 0)
+                        {
+                            return null;
+                        }
+                        else {
+
+                            cartItem = new CartItem();
+                            cartItem.CartId = cart.CartId;
+                            cartItem.Album = album;
+                            cartItem.Quantity = 1;
+                            cart.CartItems.Add(cartItem);
+                            album.Quantity--;
+                        }
+                   
+                    
                     }
                     else
                     {
+                        if (album.Quantity == 0)
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            album.Quantity--;
                         cartItem.Quantity++;
+                        }
                    
                     }
 
@@ -153,7 +170,7 @@ namespace WizardRecords.Api.Repositories
                 {
                     if (cartItem.Quantity > 1)
                     {
-                      
+                       
                         cartItem.Quantity--;
                     }
                     else
@@ -161,7 +178,7 @@ namespace WizardRecords.Api.Repositories
                 
                         cart.CartItems.Remove(cartItem);
                     }
-
+                    album.Quantity++;
                     await _dbContext.SaveChangesAsync();
 
 

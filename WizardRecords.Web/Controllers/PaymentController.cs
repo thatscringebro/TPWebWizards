@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Climate;
 using WizardRecords.Api.Data;
+using WizardRecords.Api.Data.Entities;
 using WizardRecords.Api.Interfaces;
 
 namespace WizardRecords.Api.Controllers
@@ -46,14 +47,17 @@ namespace WizardRecords.Api.Controllers
             try
             {
                 var charge = chargeService.Create(chargeOptions);
-
+                order.State = OrderState.Payée;
+                _cartRepository.UpdateOrder(order);
                 return Ok(charge.ToJson());
             }
-            catch (Exception e)
+            catch (StripeException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
-            
+           
+
+          
         }
 
     

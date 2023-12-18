@@ -61,8 +61,16 @@ namespace WizardRecords.Api.Controllers
                 var cart = await _cartRepository.GetCartByIdAsync(cartId);
                 if (cart != null)
                 {
-                    await _cartRepository.DeleteItemByIdAsync(cartId, AlbumId);
-                    return Ok();
+                    var check = await _cartRepository.DeleteItemByIdAsync(cartId, AlbumId);
+                    if (check != null)
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                    
                 }
                 else
                 {
@@ -84,8 +92,16 @@ namespace WizardRecords.Api.Controllers
                 var cart = await _cartRepository.GetCartByIdAsync(cartId);
                 if (cart != null)
                 {
-                    await _cartRepository.AddItemByIdAsync(cartId, AlbumId);
-                    return Ok();
+                  var check =  await _cartRepository.AddItemByIdAsync(cartId, AlbumId);
+                    if(check != null)
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                    
                 }
                 else
                 {
