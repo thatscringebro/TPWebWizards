@@ -13,8 +13,5 @@ namespace WizardRecords.Api.Data.Entities
         public string Last4 { get; set; }
         [ForeignKey("UserId")]
         public Guid UserId { get; set; }
-        public DateTime DateNow { get; set; }
-        [ForeignKey("OrderId")]
-        public Guid OrderId { get; set; }
     }
 }
