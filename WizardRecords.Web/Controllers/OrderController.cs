@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -83,7 +84,7 @@ namespace WizardRecords.Controllers
                 cart.TotalApTaxes = totalApTaxes;
                 cart.TotalAvTaxes = totalAvTaxes;
                 cart.Taxes = totalTaxes;
-
+                _cartRepository.UpdatePriceCart(cart);
                 return new OkObjectResult(new { totalAvTaxes = totalAvTaxes, totalTaxes = totalTaxes, totalApTaxes = totalApTaxes, items = cart.CartItems });
             }
             catch (Exception)

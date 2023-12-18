@@ -16,6 +16,8 @@ namespace WizardRecords.Api.Repositories
             _dbContext = context;
         }
 
+
+      
         public async Task<Cart?> AddItemByIdAsync(Guid cartId, Guid albumId)
         {
             try
@@ -371,6 +373,12 @@ namespace WizardRecords.Api.Repositories
         {
             var user = _dbContext.Client.Where(u => u.Email == email).FirstOrDefault();
             return user != null;
+        }
+
+        public void UpdatePriceCart(Cart cart)
+        {
+            _dbContext.Carts.Update(cart);
+            _dbContext.SaveChanges();
         }
     }
 }

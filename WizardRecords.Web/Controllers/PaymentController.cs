@@ -8,7 +8,6 @@ using WizardRecords.Api.Interfaces;
 namespace WizardRecords.Api.Controllers
 {
     [ApiController]
-    [Route("payment")]
     public class PaymentController : Controller
     {
         private readonly IOptions<StripeOptions> stripeOptions;

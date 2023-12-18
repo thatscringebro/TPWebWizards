@@ -30,5 +30,6 @@ namespace WizardRecords.Api.Interfaces
         void CancelOrder(Order order);
         Order CreateOrder(Cart cart);
         bool FindByEmail(string email);
+        void UpdatePriceCart(Cart cart);
     }
 }
