@@ -50,7 +50,6 @@ const CheckoutScreen = () => {
         PhoneNumber: phoneNumber,
         Token: token.id,
         Last4: "",
-        DateNow :"",
       };
 
       const response = await axios.post(`${API_BASE_URL}/charge/${orderId}`, paymentData);
