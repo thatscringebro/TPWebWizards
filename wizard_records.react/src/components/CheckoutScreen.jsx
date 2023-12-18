@@ -131,7 +131,7 @@ const CheckoutScreen = () => {
                 <label htmlFor="creditCard" className="form-label">
                   Credit Card
                 </label>
-                <CardElement className="form-control" options={{ style: { base: { fontSize: '16px' } } }} onChange={handleCardChange} />
+                <CardElement className="form-control" options={{ hidePostalCode: true }} onChange={handleCardChange} />
                 <div role="alert" className="text-danger">
                   {cardError}
                 </div>
