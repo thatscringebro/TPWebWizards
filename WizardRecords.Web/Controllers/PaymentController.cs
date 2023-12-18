@@ -52,8 +52,10 @@ namespace WizardRecords.Api.Controllers
                 _cartRepository.UpdateOrder(order);
                 var CardLast4 = ((Card)charge.Source).Last4;
                 payment.Last4 = CardLast4;
-
-                _cartRepository.addPayment(payment);
+                payment.DateNow = DateTime.Now;
+                payment.OrderId = OrderId;
+                payment.UserId = order.UserId;
+                 _cartRepository.addPayment(payment);
                 return Ok(charge.ToJson());
             }
             catch (StripeException e)
@@ -84,6 +86,26 @@ namespace WizardRecords.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
-
+        [HttpGet("payment/{userId}")]
+        public async Task<IActionResult> GetAllPayment(Guid userId)
+        {
+            try
+            {
+                var payment = await _cartRepository.GetAllPaymentsByUserId(userId);
+                if (payment != null)
+                {
+                    return Ok(payment);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+      
     }
 }
