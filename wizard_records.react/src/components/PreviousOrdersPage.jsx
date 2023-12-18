@@ -137,14 +137,14 @@ function PreviousOrdersPage() {
                                                 ))}
                                             </ul>
                                         </div>
-                                        {(order.state === 0 || order.state === 2) && (
+                                        {(order.state === 0 || order.state === 3) && (
                                             <div className="btn-container">
                                                 <button className="cancel-button" onClick={() => cancelOrder(order.orderId)}>
                                                     Cancel Order
                                                 </button>
                                             </div>
                                         )}
-                                        {order.state === 1 && (
+                                        {order.state === 2 && (
                                             <div className="btn-container">
                                                 <button className="cancel-button-disabled" disabled>
                                                     Order Canceled

@@ -4,30 +4,33 @@ import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from './utils/config';
 
 const PaymentFailed = () => {
-    const { orderId } = useParams();
+  const { orderId } = useParams();
   const [countdown, setCountdown] = useState(5);
-  
+  const [isCleanupExecuted, setIsCleanupExecuted] = useState(false);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCountdown(prevCountdown => prevCountdown - 1);
 
       if (countdown <= 0) {
         clearInterval(intervalId);
-    
+
         document.location.href = '/';
       }
     }, 1000);
 
     return () => {
       clearInterval(intervalId);
-      cancelOrder(orderId);
+      if (!isCleanupExecuted) {
+        setIsCleanupExecuted(true);
+        cancelOrder(orderId);
+      }
     };
-  }, [countdown, orderId]);
+  }, [countdown, orderId, isCleanupExecuted]);
 
-
-  const cancelOrder = async  (orderId) =>{
-    await axios.put(`${API_BASE_URL}/order/orders/cancel/${orderId}`)
-  }
+  const cancelOrder = async (orderId) => {
+    await axios.put(`${API_BASE_URL}/order/orders/cancel/${orderId}`);
+  };
 
   return (
     <section className="row bg-light rounded">
